@@ -3,15 +3,15 @@ Object.defineProperty(exports, "__esModule", {
     value: !0
 }),
 (exports.ModManager = void 0);
-const puerts_1 = require("puerts"), //一个格子跳到game下
+const puerts_1 = require("puerts"), 
 UE = require("ue"),
 Info_1 = require("../../Core/Common/Info"),
 Log_1 = require("../../Core/Common/Log"),
 Protocol_1 = require("../../Core/Define/Net/Protocol"),
 InputSettings_1 = require("../InputSettings/InputSettings"),
 InputController_1 = require("../Input/InputController"),
-TeleportController_1 = require("../Module/Teleport/TeleportController"), //传送
-CreatureController_1 = require("../World/Controller/CreatureController"), //add
+TeleportController_1 = require("../Module/Teleport/TeleportController"), 
+CreatureController_1 = require("../World/Controller/CreatureController"), 
 ConfirmBoxController_1 = require("../Module/ConfirmBox/ConfirmBoxController"),
 ConfirmBoxDefine_1 = require("../Module/ConfirmBox/ConfirmBoxDefine"),
 ScrollingTipsController_1 = require("../Module/ScrollingTips/ScrollingTipsController"),
@@ -30,7 +30,7 @@ ModDebuger_1 = require("./ModFuncs/ModDebuger");
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
 class ModManager {
-    //functions  // download link： https://github.com/Gktwo/wuwa-mod
+
     static Settings = {
         ModEnabled: true,
         GodMode: true,
@@ -72,7 +72,6 @@ class ModManager {
         this.AddToggle("AntiDither", "NumPadOne");
 
 
-        //this.AddToggle("MarkTp","t");
     }
 
     static listenModsToggle() {
@@ -196,6 +195,7 @@ class ModManager {
         if (InputController_1.InputController.IsMyKeyUp(key)) {
             if (this.Settings.hasOwnProperty(func)) {
                 this.Settings[func] = !this.Settings[func];
+                ModUtils_1.ModUtils.PlayAudio("play_ui_fx_com_count_number");
                 this.ShowFuncStateTip(func, funcname)
             }
             return true;
@@ -203,8 +203,11 @@ class ModManager {
         return false;
     }
     static listenKey(desc, key) {
-
-        return InputController_1.InputController.IsMyKeyUp(key);
+        var press = InputController_1.InputController.IsMyKeyUp(key)
+        if(press){
+            ModUtils_1.ModUtils.PlayAudio("play_ui_fx_com_count_number");
+        }      
+        return press;
     }
 
     static TPtest() {
@@ -233,21 +236,13 @@ class ModManager {
 
     static ChangWeather(weatherID) {
         WeatherController_1.WeatherController.TestChangeWeather(weatherID);
-        //1.sunny 2.Cloudy 3.ThunderRain 4.Snow 5.rain
+        
     }
 
-    // static SetUidView(string){
-    //   //UidView_1.UidView.setlo
-    //   LguiUtil_1.LguiUtil.SetLocalText(
-    //     this.GetText(0),
-    //     "FriendMyUid",
-    //     string
-    //   );
 
-    // }
 
     static ShowConfirmBox(title, string, id) {
-        //封号那个窗口
+        
         var newBox = new ConfirmBoxDefine_1.ConfirmBoxDataNew(id);
         newBox.SetTextArgs(string);
         newBox.SetTitle(title);
@@ -257,16 +252,7 @@ class ModManager {
     static ShowTip(string) {
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(string);
     }
-    //MENU
-    // static getSettingName(value) {
-    //     let keys = Object.keys(this.Settings);
-    //     for(let i = 0; i < keys.length; i++) {
-    //         if(this.Settings[keys[i]] === value) {
-    //             return keys[i];
-    //         }
-    //     }
-    //     return null;
-    // }
+
 
     static FuncState(func, string) {
         if (func)
@@ -275,7 +261,7 @@ class ModManager {
             return string + ModTr(" : <color=red>OFF</color> |");
     }
     static ShowMenu() {
-        //类似封号那个窗口
+        
         var newBox = new ConfirmBoxDefine_1.ConfirmBoxDataNew(50);
         var state =
             this.FuncState(this.Settings.GodMode, ModTr("GodMode[F5]")) +
@@ -286,13 +272,11 @@ class ModManager {
             this.FuncState(this.Settings.PerceptionRange, ModTr("PerceptionRange[F10]")) +
             this.FuncState(this.Settings.NoCD, ModTr("NoCD[F11]")) +
             this.FuncState(this.Settings.PlayerSpeed, ModTr("PlayerSpeed[F12]")) +
-            //this.FuncState(this.Settings.MarkTp,"MarkTp")+
+            
             this.FuncState(this.Settings.CustomTp, ModTr("CustomTp[Ins]")) +
             this.FuncState(this.Settings.AutoLoot, ModTr("AutoLoot[Num0]")) +
             this.FuncState(this.Settings.AntiDither, ModTr("AntiDither[Num1]"))
-            //this.FuncState(this.Settings.InfiniteStamina,"InfiniteStamina")
 
-            //state = "<color=red>"+"<size=2vw>"+state+"</size>"+"</color>";
             newBox.SetTextArgs(state);
         newBox.SetTitle(ModTr("KunMods State[Home] DisableAntiCheat : <color=green>ON</color> "));
         ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(newBox);
@@ -312,18 +296,12 @@ class ModManager {
     static GetEntityList() {
         return ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     }
-    //example
-    // static SetTimeDilation(t) {
-    //   var e = ModelManager_1.ModelManager.CreatureModel;
-    //   for (const r of e.GetAllEntities()) r.IsInit && r.Entity.SetTimeDilation(t);
-    //   for (const a of e.DelayRemoveContainer.GetAllEntities())
-    //     a.IsInit && a.Entity.SetTimeDilation(t);
-    // }
+
     static SpawnEntity() {}
 
     static SetPlayerSpeed(value) {
         CharacterController_1.CharacterController.SetTimeDilation(value);
     }
-    //自定义传送
+    
 }
 exports.ModManager = ModManager;
