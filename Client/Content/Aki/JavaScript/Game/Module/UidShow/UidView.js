@@ -12,9 +12,13 @@ class UidView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     ModManager_1.ModManager.ModStart();
-
+    this.UpdateUid();
+  }
+  GetDefaultUid() {
+    return ModelManager_1.ModelManager.FunctionModel.PlayerId.toString()
+  }
+  UpdateUid() {
     const uidtext = ModManager_1.ModManager.Settings.Uid;
-
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "FriendMyUid", uidtext);
   }
 }

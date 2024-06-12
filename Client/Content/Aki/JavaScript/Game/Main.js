@@ -9,7 +9,9 @@ const puerts_1 = require("puerts"),
   GlobalData_1 = require("../Game/GlobalData"),
   GameProcedure_1 = require("./GameProcedure"),
   ModManager_1 = require("./Manager/ModManager"),
-  ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage");
+  ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage"),
+  UiManager_1 = require("./Ui/UiManager"),
+  UidView_1 = require("./Module/UidShow/UidView");
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage;
@@ -28,7 +30,7 @@ function main() {
 function IsKey(str) {
   var IsInputKeyDown_1 = InputSeeting_1.InputSettings.IsInputKeyDown(str);
   var IsInputKeyDown_LeftControl =
-    InputSeeting_1.InputSettings.IsInputKeyDown("LeftControl");
+    InputSeeting_1.InputSettings.IsInputKeyDown("LeftAlt");
   if (IsInputKeyDown_LeftControl && IsInputKeyDown_1 && !keyState) {
     IsInputKeyDown_1 = false;
     IsInputKeyDown_LeftControl = false;
@@ -42,13 +44,13 @@ function IsKey(str) {
   return false;
 }
 function onStart() {
-  InputSeeting_1.InputSettings.AddActionMapping("", "LeftControl");
-  InputSeeting_1.InputSettings.AddActionMapping("", "Home");
+  InputSeeting_1.InputSettings.AddActionMapping("", "LeftAlt");
+  InputSeeting_1.InputSettings.AddActionMapping("", "X");
 }
 
 function OnTick() {
   onStart();
-  if (IsKey("Home") === true) {
+  if (IsKey("X") === true) {
     if (isMenuLoaded == false) {
       puerts_1.logger.info("KUN-MOD Menu Loaded");
       isMenuLoaded = true;
@@ -90,14 +92,14 @@ function OnTick() {
         AutoLootText = Menu.AutoLootText,
         PerceptionRangeText = Menu.PerceptionRangeText,
         PlayerSpeedText = Menu.PlayerSpeedText,
-        CustomUidText = Menu.CustomUidText
+        CustomUidText = Menu.CustomUidText;
 
       // default value
       GodMode.SetIsChecked(ModManager.Settings.GodMode);
       AutoPickTreasure.SetIsChecked(ModManager.Settings.AutoPickTreasure);
       AutoAbsorb.SetIsChecked(ModManager.Settings.AutoAbsorb);
       HitMultiplier.SetIsChecked(ModManager.Settings.HitMultiplier);
-      HitMultiplierText.SetText(ModManager.Settings.Hitcount);
+      HitMultiplierCount.SetText(ModManager.Settings.Hitcount);
       KillAura.SetIsChecked(ModManager.Settings.killAura);
       AntiDither.SetIsChecked(ModManager.Settings.AntiDither);
       InfiniteStamina.SetIsChecked(ModManager.Settings.InfiniteStamina);
@@ -105,7 +107,7 @@ function OnTick() {
       PerceptionRange.SetIsChecked(ModManager.Settings.PerceptionRange);
       PlayerSpeed.SetIsChecked(ModManager.Settings.PlayerSpeed);
       PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
-      CustomUidValue.SetText(ModManager.Settings.Uid);
+      CustomUidValue.SetText("000000001");
 
       // translate
       GodModeText.SetText(ModText(15));
@@ -153,7 +155,6 @@ function OnTick() {
           puerts_1.logger.info("Hit Multiplier Count: " + value);
         } else {
           ModManager.Settings.Hitcount = 1;
-          HitMultiplierCount.SetText("1");
         }
       });
 
@@ -204,28 +205,51 @@ function OnTick() {
       PlayerSpeed.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.PlayerSpeed = isChecked;
         puerts_1.logger.info("Player Speed: " + isChecked);
+        updatePlayerSpeed();
       });
 
       PlayerSpeedValue.OnTextChanged.Add((value) => {
+        value = Number(value);
         if (typeof value === "number") {
           ModManager.Settings.playerSpeedValue = value;
           puerts_1.logger.info("Player Speed Value: " + value);
         } else {
           ModManager.Settings.playerSpeedValue = 1;
-          PlayerSpeedValue.SetText("1");
+          puerts_1.logger.info("Player Speed Value: 1");
+        }
+        updatePlayerSpeed();
+      });
+
+      CustomUid.OnCheckStateChanged.Add((isChecked) => {
+        if (isChecked) {
+          ModManager.ChangeUid(CustomUidValue.GetText());
+          puerts_1.logger.info("UID Changed to: " + ModManager.Settings.Uid);
+        } else {
+          ModManager.ChangeUid(new UidView_1.UidView().GetDefaultUid());
+          puerts_1.logger.info("Default UID: " + ModManager.Settings.Uid);
+        }
+      });
+
+      CustomUidValue.OnTextChanged.Add((value) => {
+        if (CustomUid.IsChecked()) {
+          ModManager.ChangeUid(value);
         }
       });
 
       Menu.AddToViewport();
       Menu.SetVisibility(0);
     } else {
-      if (isMenuShow) {
-        Menu.SetVisibility(2);
-      } else {
-        Menu.SetVisibility(0);
-      }
+      isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
     }
     isMenuShow = !isMenuShow;
+  }
+}
+
+function updatePlayerSpeed() {
+  if (ModManager.Settings.PlayerSpeed) {
+    ModManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
+  } else {
+    ModManager.SetPlayerSpeed(1);
   }
 }
 

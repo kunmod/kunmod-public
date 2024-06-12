@@ -52,10 +52,12 @@ class ModManager {
         ShowMenu: false,
         AutoLoot: false,
 
-        Uid: " | Github:https://github.com/Gktwo/wuwa-mod | Discord:https://discord.gg/QYu59wctHT",
+        Uid: "",
     };
 
     static ModStart() {
+        this.Settings.Uid = new UidView_1.UidView().GetDefaultUid();
+
         ModDebuger_1.ModDebuger.TestMethod();
         ModLanguage_1.ModLanguage.GetCurrLang();
         this.AddKey("ShowMenu", "Home");
