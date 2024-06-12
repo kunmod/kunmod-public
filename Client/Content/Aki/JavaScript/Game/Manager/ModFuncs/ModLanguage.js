@@ -105,42 +105,42 @@ class ModLanguage {
       ja: "オフ",
     },
     {
-      en: "GodMode",
+      en: "God Mode",
       chs: "无敌模式",
       ja: "神モードやで",
     },
     {
-      en: "HitMultiplier",
+      en: "Hit Multiplier",
       chs: "多倍攻击",
       ja: "ヒット倍率",
     },
     {
-      en: "AutoPickTreasure",
+      en: "Auto Pick Treasure",
       chs: "拾取宝箱",
       ja: "自動で宝を拾うんや",
     },
     {
-      en: "AutoAbsorb",
+      en: "Auto Absorb",
       chs: "自动吸收",
       ja: "自動で吸収すんや",
     },
     {
-      en: "killAura",
+      en: "Kill Aura",
       chs: "杀戮光环",
       ja: "キルオーラやで",
     },
     {
-      en: "PerceptionRange",
+      en: "Perception Range",
       chs: "感知范围",
       ja: "感知範囲やで",
     },
     {
-      en: "NoCD",
+      en: "No Cooldown",
       chs: "无冷却",
       ja: "クールダウンなしやで",
     },
     {
-      en: "PlayerSpeed",
+      en: "Player Speed",
       chs: "玩家速度",
       ja: "プレイヤーのスピードやで",
     },
@@ -150,7 +150,7 @@ class ModLanguage {
       ja: "てきとうな瞬間移動",
     },
     {
-      en: "AutoLoot",
+      en: "Auto Loot",
       chs: "自动拾取:",
       ja: "自動あっぷる",
     },
@@ -195,7 +195,7 @@ class ModLanguage {
       ja: "アンチディザ[Num1]",
     },
     {
-      en: "AntiDither",
+      en: "Anti Dither",
       chs: "反虚化",
       ja: "アンチディザ",
     },
