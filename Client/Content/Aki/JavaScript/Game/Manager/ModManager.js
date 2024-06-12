@@ -8,6 +8,7 @@ UE = require("ue"),
 Info_1 = require("../../Core/Common/Info"),
 Log_1 = require("../../Core/Common/Log"),
 Protocol_1 = require("../../Core/Define/Net/Protocol"),
+UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
 InputSettings_1 = require("../InputSettings/InputSettings"),
 InputController_1 = require("../Input/InputController"),
 TeleportController_1 = require("../Module/Teleport/TeleportController"), 
@@ -29,8 +30,7 @@ ModDebuger_1 = require("./ModFuncs/ModDebuger");
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
-class ModManager {
-
+class ModManager extends UiControllerBase_1.UiControllerBase {
     static Settings = {
         ModEnabled: true,
         GodMode: true,
@@ -303,6 +303,12 @@ class ModManager {
 
     static SetPlayerSpeed(value) {
         CharacterController_1.CharacterController.SetTimeDilation(value);
+    }
+
+    static async ChangeUid(string) {
+        this.Settings.Uid = string;
+        UiManager_1.UiManager.CloseView("UidView");
+        UiManager_1.UiManager.OpenView("UidView");
     }
     
 }
