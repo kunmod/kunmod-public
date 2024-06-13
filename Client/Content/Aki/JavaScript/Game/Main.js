@@ -20,7 +20,8 @@ let keyState = false,
   Menu = null,
   isMenuLoaded = false,
   isMenuShow = false,
-  currentLang = "en";
+  currentLang = "en",
+  loadMenuInterval = null
 
 function main() {
   var e = puerts_1.argv.getByName("GameInstance");
@@ -43,26 +44,41 @@ function IsKey(str) {
   }
   return false;
 }
-function onStart() {
+
+function listenKey() {
   InputSeeting_1.InputSettings.AddActionMapping("", "LeftAlt");
   InputSeeting_1.InputSettings.AddActionMapping("", "X");
+
+  if (IsKey("X") === true) {
+    isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
+    isMenuShow = !isMenuShow;
+  }
 }
 
 function OnTick() {
-  onStart();
-  if (IsKey("X") === true) {
-    if (isMenuLoaded == false) {
-      puerts_1.logger.info("KUN-MOD Menu Loaded");
-      isMenuLoaded = true;
+  if (!isMenuLoaded) {
+    currentLang = ModLanguage.GetCurrLang();
+    const MenuUI = ResourceSystem_1.ResourceSystem.Load(
+      "/Game/Aki/ModMenu.ModMenu_C",
+      UE.Class
+    );
+    const Yinlin = ResourceSystem_1.ResourceSystem.Load(
+      "/Game/Aki/Yinlin.Yinlin",
+      UE.Texture
+    );
+    const Gradient = ResourceSystem_1.ResourceSystem.Load(
+      "/Game/Aki/Gradient.Gradient",
+      UE.Texture
+    );
 
-      currentLang = ModLanguage.GetCurrLang();
+    Menu = UE.UMGManager.CreateWidget(GlobalData_1.GlobalData.World, MenuUI);
 
-      const MenuUI = ResourceSystem_1.ResourceSystem.Load(
-        "/Game/Aki/ModMenu.ModMenu_C",
-        UE.Class
-      );
+    if (Menu) {
+      const YinlinImage = Menu.Yinlin,
+        TitleBarImage = Menu.TitleBar;
 
-      Menu = UE.UMGManager.CreateWidget(GlobalData_1.GlobalData.World, MenuUI);
+      YinlinImage.SetBrushFromTexture(Yinlin);
+      TitleBarImage.SetBrushFromTexture(Gradient);
 
       let GodMode = Menu.GodModeCheck,
         NoCD = Menu.NoCDCheck,
@@ -237,11 +253,11 @@ function OnTick() {
       });
 
       Menu.AddToViewport();
-      Menu.SetVisibility(0);
-    } else {
-      isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
+      Menu.SetVisibility(2);
+      isMenuLoaded = true;
+      puerts_1.logger.info("KUN-MOD Menu Loaded!");
+      clearInterval(loadMenuInterval)
     }
-    isMenuShow = !isMenuShow;
   }
 }
 
@@ -285,6 +301,7 @@ function killAuraLang(lang) {
   }
 }
 
-setInterval(OnTick, 1);
+loadMenuInterval = setInterval(OnTick, 3000);
+setInterval(listenKey, 1);
 main();
 //# sourceMappingURL=Main.js.map

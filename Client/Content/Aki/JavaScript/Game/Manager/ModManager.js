@@ -22,6 +22,7 @@ CharacterController_1 = require("..//NewWorld/Character/CharacterController"),
 UidView_1 = require("../Module/UidShow/UidView"),
 LguiUtil_1 = require("../Module/Util/LguiUtil"),
 UiManager_1 = require("../../Ui/UiManager"),
+UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
 WeatherController_1 = require("../Module/Weather/WeatherController"),
 WorldDebugModel_1 = require("../World/Model/WorldDebugModel"), //
 ModCustomTp_1 = require("./ModFuncs/ModCustomTp"),
@@ -30,7 +31,7 @@ ModDebuger_1 = require("./ModFuncs/ModDebuger");
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
-class ModManager extends UiControllerBase_1.UiControllerBase {
+class ModManager extends UiTickViewBase_1.UiTickViewBase {
     static Settings = {
         ModEnabled: true,
         GodMode: true,
