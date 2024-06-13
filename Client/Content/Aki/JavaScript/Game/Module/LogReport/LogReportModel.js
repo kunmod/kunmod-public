@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LogReportModel = void 0);
 const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
-  // LogReportController_1 = require("./LogReportController"),
+  LogReportController_1 = require("./LogReportController"),
   LogReportDefine_1 = require("./LogReportDefine"),
   RECORD_HANG_UP_OFFSET = 30;
 class LogReportModel extends ModelBase_1.ModelBase {
@@ -19,11 +19,11 @@ class LogReportModel extends ModelBase_1.ModelBase {
     }
     e = (r - this.ufi) * TimeUtil_1.TimeUtil.Millisecond;
     e > RECORD_HANG_UP_OFFSET &&
-      (this._fi += e),
-      // 下面的代码行负责记录日志，已被注释掉以防止日志生成
-      /* ((o = new LogReportDefine_1.HangUpTimeLogData()).f_hang_up_time =
-        e.toString()),
-      LogReportController_1.LogReportController.LogReport(o)), */
+      ((this._fi += e),
+      ((o = new LogReportDefine_1.HangUpTimeLogData()).f_hang_up_time =
+        e.toString())
+      // LogReportController_1.LogReportController.LogReport(o)
+      ),
       (this.ufi = r);
   }
 }
