@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", {
     value: !0
 }),
 (exports.ModManager = void 0);
-const puerts_1 = require("puerts"), 
+const puerts_1 = require("puerts"),
 UE = require("ue"),
 Info_1 = require("../../Core/Common/Info"),
 Log_1 = require("../../Core/Common/Log"),
@@ -11,8 +11,8 @@ Protocol_1 = require("../../Core/Define/Net/Protocol"),
 UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
 InputSettings_1 = require("../InputSettings/InputSettings"),
 InputController_1 = require("../Input/InputController"),
-TeleportController_1 = require("../Module/Teleport/TeleportController"), 
-CreatureController_1 = require("../World/Controller/CreatureController"), 
+TeleportController_1 = require("../Module/Teleport/TeleportController"),
+CreatureController_1 = require("../World/Controller/CreatureController"),
 ConfirmBoxController_1 = require("../Module/ConfirmBox/ConfirmBoxController"),
 ConfirmBoxDefine_1 = require("../Module/ConfirmBox/ConfirmBoxDefine"),
 ScrollingTipsController_1 = require("../Module/ScrollingTips/ScrollingTipsController"),
@@ -46,6 +46,7 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
         Weather: false,
         WeatherType: 1,
         MarkTp: false,
+        MarkTpPosZ: 300,
         CustomTp: false,
         playerSpeedValue: 3,
         PlayerSpeed: false,
@@ -73,12 +74,9 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
         this.AddToggle("AutoLoot", "NumPadZero");
         this.AddToggle("AntiDither", "NumPadOne");
 
-
     }
 
     static listenModsToggle() {
-
-
 
         if (this.listenKey("ShowMenu", "Home")) {
             this.ShowMenu();
@@ -125,29 +123,28 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
             }
         }
         if (this.Settings.CustomTp) {
-              ModCustomTp_1.ModCustomTp.listenAuto();
-              ModCustomTp_1.ModCustomTp.listenSelect()
-              ModCustomTp_1.ModCustomTp.listenDelay()
- 
-                if (this.listenKey("ShowTpState", "Delete")) {
-                    ModCustomTp_1.ModCustomTp.ShowCtpState();
-                }
-                if (this.listenKey("PreviousFile", "PageUp")) {
-                    ModCustomTp_1.ModCustomTp.SubFile();
-                }
-                if (this.listenKey("NextFile", "PageDown")) {
-                    ModCustomTp_1.ModCustomTp.AddFile();
+            ModCustomTp_1.ModCustomTp.listenAuto();
+            ModCustomTp_1.ModCustomTp.listenSelect()
+            ModCustomTp_1.ModCustomTp.listenDelay()
 
-                }
-                if (this.listenKey("PreviousPos", "Up")) {
-                    ModCustomTp_1.ModCustomTp.SubPos();
-                    ModCustomTp_1.ModCustomTp.GoTp();
-                }
-                if (this.listenKey("NextPos", "Down")) {
-                    ModCustomTp_1.ModCustomTp.AddPos();
-                    ModCustomTp_1.ModCustomTp.GoTp();
-                }
-            
+            if (this.listenKey("ShowTpState", "Delete")) {
+                ModCustomTp_1.ModCustomTp.ShowCtpState();
+            }
+            if (this.listenKey("PreviousFile", "PageUp")) {
+                ModCustomTp_1.ModCustomTp.SubFile();
+            }
+            if (this.listenKey("NextFile", "PageDown")) {
+                ModCustomTp_1.ModCustomTp.AddFile();
+
+            }
+            if (this.listenKey("PreviousPos", "Up")) {
+                ModCustomTp_1.ModCustomTp.SubPos();
+                ModCustomTp_1.ModCustomTp.GoTp();
+            }
+            if (this.listenKey("NextPos", "Down")) {
+                ModCustomTp_1.ModCustomTp.AddPos();
+                ModCustomTp_1.ModCustomTp.GoTp();
+            }
 
         }
 
@@ -193,7 +190,7 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
         }
     }
 
-    static listenMod(func, key, funcname,) {
+    static listenMod(func, key, funcname, ) {
         if (InputController_1.InputController.IsMyKeyUp(key)) {
             if (this.Settings.hasOwnProperty(func)) {
                 this.Settings[func] = !this.Settings[func];
@@ -206,10 +203,10 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
     }
     static listenKey(desc, key) {
         var press = InputController_1.InputController.IsMyKeyUp(key)
-        if(press){
-            ModUtils_1.ModUtils.PlayAudio("play_ui_fx_com_count_number");
-        }      
-        return press;
+            if (press) {
+                ModUtils_1.ModUtils.PlayAudio("play_ui_fx_com_count_number");
+            }
+            return press;
     }
 
     static TPtest() {
@@ -238,13 +235,11 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
 
     static ChangWeather(weatherID) {
         WeatherController_1.WeatherController.TestChangeWeather(weatherID);
-        
+
     }
 
-
-
     static ShowConfirmBox(title, string, id) {
-        
+
         var newBox = new ConfirmBoxDefine_1.ConfirmBoxDataNew(id);
         newBox.SetTextArgs(string);
         newBox.SetTitle(title);
@@ -255,7 +250,6 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(string);
     }
 
-
     static FuncState(func, string) {
         if (func)
             return string + ModTr(" : <color=green>ON</color> |");
@@ -263,7 +257,7 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
             return string + ModTr(" : <color=red>OFF</color> |");
     }
     static ShowMenu() {
-        
+
         var newBox = new ConfirmBoxDefine_1.ConfirmBoxDataNew(50);
         var state =
             this.FuncState(this.Settings.GodMode, ModTr("GodMode[F5]")) +
@@ -274,7 +268,7 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
             this.FuncState(this.Settings.PerceptionRange, ModTr("PerceptionRange[F10]")) +
             this.FuncState(this.Settings.NoCD, ModTr("NoCD[F11]")) +
             this.FuncState(this.Settings.PlayerSpeed, ModTr("PlayerSpeed[F12]")) +
-            
+
             this.FuncState(this.Settings.CustomTp, ModTr("CustomTp[Ins]")) +
             this.FuncState(this.Settings.AutoLoot, ModTr("AutoLoot[Num0]")) +
             this.FuncState(this.Settings.AntiDither, ModTr("AntiDither[Num1]"))
@@ -310,6 +304,25 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
         UiManager_1.UiManager.CloseView("UidView");
         UiManager_1.UiManager.OpenView("UidView");
     }
-    
+    static Marktp() {
+        var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
+        logger.warn("[kunmod:]Marktp:", r);
+        var i = ModelManager_1.ModelManager.MapModel.GetMark(r[0], r[1]);
+        logger.warn("[kunmod:]Marktp:", i.TrackTarget);
+        var targetX = i.TrackTarget.X;
+        var targetY = i.TrackTarget.Y;
+        var posZ = 0;
+        var v = MapController_1.MapController.GetMarkPosition(targetX, targetY);
+        logger.warn("[kunmod:]Marktp:", v);
+        if (v.Z == 0) {
+            posZ = this.Settings.MarkTpPosZ;
+        } else {
+            posZ = v.Z
+        };
+
+        this.TeleportToPositionNoLoading(targetX, targetY, posZ);
+
+    }
+
 }
 exports.ModManager = ModManager;

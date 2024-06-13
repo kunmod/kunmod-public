@@ -48,11 +48,17 @@ function onStart() {
   InputSeeting_1.InputSettings.AddActionMapping("", "X");
 }
 
+
+function KunLog(string){
+  var info = string.toString();
+  puerts_1.logger.info("[KUNMOD:]"+info);
+}
+
 function OnTick() {
   onStart();
   if (IsKey("X") === true) {
     if (isMenuLoaded == false) {
-      puerts_1.logger.info("KUN-MOD Menu Loaded");
+      KunLog("KUN-MOD Menu Loaded");
       isMenuLoaded = true;
 
       currentLang = ModLanguage.GetCurrLang();
@@ -125,34 +131,34 @@ function OnTick() {
 
       GodMode.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.GodMode = isChecked;
-        puerts_1.logger.info("God Mode: " + isChecked);
+        KunLog("God Mode: " + isChecked);
       });
 
       NoCD.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.NoCD = isChecked;
-        puerts_1.logger.info("No Cooldown: " + isChecked);
+        KunLog("No Cooldown: " + isChecked);
       });
 
       AutoPickTreasure.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.AutoPickTreasure = isChecked;
-        puerts_1.logger.info("Auto Pick Treasure: " + isChecked);
+        KunLog("Auto Pick Treasure: " + isChecked);
       });
 
       AutoAbsorb.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.AutoAbsorb = isChecked;
-        puerts_1.logger.info("Auto Absorb: " + isChecked);
+        KunLog("Auto Absorb: " + isChecked);
       });
 
       HitMultiplier.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.HitMultiplier = isChecked;
-        puerts_1.logger.info("Hit Multiplier: " + isChecked);
+        KunLog("Hit Multiplier: " + isChecked);
       });
 
       HitMultiplierCount.OnTextChanged.Add((value) => {
         value = Number(value);
         if (typeof value === "number") {
           ModManager.Settings.Hitcount = value;
-          puerts_1.logger.info("Hit Multiplier Count: " + value);
+          KunLog("Hit Multiplier Count: " + value);
         } else {
           ModManager.Settings.Hitcount = 1;
         }
@@ -160,7 +166,7 @@ function OnTick() {
 
       KillAura.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.killAura = isChecked;
-        puerts_1.logger.info("Kill Aura: " + isChecked);
+        KunLog("Kill Aura: " + isChecked);
       });
 
       const killAuraOption = {
@@ -178,33 +184,33 @@ function OnTick() {
         const value = killAuraOption[selectedItem];
         if (selectedItem) {
           CheatState.Settings.KillAuraValue = value.value;
-          puerts_1.logger.info("Kill Aura Value: " + selectedItem);
+          KunLog("Kill Aura Value: " + selectedItem);
         }
       });
 
       AntiDither.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.AntiDither = isChecked;
-        puerts_1.logger.info("Anti Dither: " + isChecked);
+        KunLog("Anti Dither: " + isChecked);
       });
 
       InfiniteStamina.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.InfiniteStamina = isChecked;
-        puerts_1.logger.info("Inifnite Stamina: " + isChecked);
+        KunLog("Inifnite Stamina: " + isChecked);
       });
 
       AutoLoot.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.AutoLoot = isChecked;
-        puerts_1.logger.info("Auto Loot: " + isChecked);
+        KunLog("Auto Loot: " + isChecked);
       });
 
       PerceptionRange.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.PerceptionRange = isChecked;
-        puerts_1.logger.info("Perception Range: " + isChecked);
+        KunLog("Perception Range: " + isChecked);
       });
 
       PlayerSpeed.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.PlayerSpeed = isChecked;
-        puerts_1.logger.info("Player Speed: " + isChecked);
+        KunLog("Player Speed: " + isChecked);
         updatePlayerSpeed();
       });
 
@@ -212,10 +218,10 @@ function OnTick() {
         value = Number(value);
         if (typeof value === "number") {
           ModManager.Settings.playerSpeedValue = value;
-          puerts_1.logger.info("Player Speed Value: " + value);
+          KunLog("Player Speed Value: " + value);
         } else {
           ModManager.Settings.playerSpeedValue = 1;
-          puerts_1.logger.info("Player Speed Value: 1");
+          KunLog("Player Speed Value: 1");
         }
         updatePlayerSpeed();
       });
@@ -223,10 +229,10 @@ function OnTick() {
       CustomUid.OnCheckStateChanged.Add((isChecked) => {
         if (isChecked) {
           ModManager.ChangeUid(CustomUidValue.GetText());
-          puerts_1.logger.info("UID Changed to: " + ModManager.Settings.Uid);
+          KunLog("UID Changed to: " + ModManager.Settings.Uid);
         } else {
           ModManager.ChangeUid(new UidView_1.UidView().GetDefaultUid());
-          puerts_1.logger.info("Default UID: " + ModManager.Settings.Uid);
+          KunLog("Default UID: " + ModManager.Settings.Uid);
         }
       });
 
