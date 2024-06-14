@@ -47,7 +47,7 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
         PerceptionRange: false,
         Weather: false,
         WeatherType: 1,
-        MarkTp: true,
+        MarkTp: false,
         MarkX:0,
         MarkY:0,
         MarkZ:0,
@@ -60,6 +60,7 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
         HideHUD: false,
         HideDmgUi: true,
         Uid: "000000001",
+        AutoMine:false,
     };
 
     static ModStart() {
