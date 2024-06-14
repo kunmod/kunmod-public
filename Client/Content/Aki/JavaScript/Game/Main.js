@@ -164,12 +164,12 @@ class MainMenu {
           });
 
           for (const option in MainMenu.killAura()) {
-            Menu.KillAuraValue.AddOption(option);
+            Menu.KillAuraValue.AddOption(MainMenu.killAura()[option]);
           }
 
           Menu.KillAuraValue.OnSelectionChanged.Add((selectedItem) => {
             if (selectedItem) {
-              ModManager.Settings.KillAuraValue =
+              ModManager.Settings.killAuraState =
                 MainMenu.killAura().indexOf(selectedItem);
               MainMenu.KunLog("Kill Aura Value: " + selectedItem);
             }
@@ -220,6 +220,7 @@ class MainMenu {
           });
 
           Menu.HideHUDCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.HideHUD = isChecked;
             if (isChecked) {
               UiManager_1.UiManager.CloseView("BattleView");
               UiManager_1.UiManager.CloseView("UidView");
@@ -239,6 +240,17 @@ class MainMenu {
             ModManager.Settings.AutoMine = isChecked;
             MainMenu.KunLog("Auto Mine: " + isChecked);
           });
+
+          Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.CustomTp = isChecked;
+            MainMenu.KunLog("Custom Teleport: " + isChecked);
+          });
+
+          Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
+          Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
+          Menu.HitMultiplierCount.SetText(ModManager.Settings.Hitcount);
+          Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
+
         } catch (e) {
           MainMenu.KunLog(e);
         }
@@ -260,20 +272,14 @@ class MainMenu {
     );
     Menu.AutoAbsorbEchoCheck.SetIsChecked(ModManager.Settings.AutoAbsorb);
     Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
-    Menu.HitMultiplierCount.SetText(ModManager.Settings.Hitcount);
     Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
     Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
     Menu.InfiniteStaminaCheck.SetIsChecked(ModManager.Settings.InfiniteStamina);
     Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
     Menu.PerceptionRangeCheck.SetIsChecked(ModManager.Settings.PerceptionRange);
     Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
-    Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
     Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
     Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
-    Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
-    Menu.KillAuraValue.SetSelectedIndex(
-      MainMenu.killAura()[ModManager.Settings.killAuraState]
-    );
     Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
   }
 
