@@ -51,7 +51,12 @@ class MainMenu {
     InputSetting_1.InputSettings.AddActionMapping("", "X");
 
     if (MainMenu.IsKey("X") === true) {
-      isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
+      if (isMenuShow) {
+        Menu.RemoveFromViewport();
+        isMenuLoaded = false
+      } else {
+        MainMenu.Start();
+      }
       isMenuShow = !isMenuShow;
     }
     MainMenu.updateMenuState();
@@ -62,7 +67,7 @@ class MainMenu {
     puerts_1.logger.info("[KUNMOD:]" + info);
   }
 
-  static OnTick() {
+  static Start() {
     if (!isMenuLoaded) {
       currentLang = ModLanguage.GetCurrLang();
 
@@ -96,7 +101,8 @@ class MainMenu {
           Menu.HeadingPlayer.SetText(ModLanguage.ModTr("Player"));
           Menu.HeadingWorld.SetText(ModLanguage.ModTr("World"));
           Menu.HeadingUI.SetText(ModLanguage.ModTr("UI"));
-          Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode[F5]"));
+          Menu.HeadingTeleport.SetText(ModLanguage.ModTr("Teleport"));
+          Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
           Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
           Menu.AutoPickTreasureText.SetText(
             ModLanguage.ModTr("Auto Pick Treasure [F7]")
@@ -250,13 +256,14 @@ class MainMenu {
           Menu.MarkTPCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.MarkTp = isChecked;
             MainMenu.KunLog("Mark Teleport: " + isChecked);
-          })
+          });
 
-          Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
+          Menu.KillAuraValue.SetSelectedIndex(
+            ModManager.Settings.killAuraState
+          );
           Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
           Menu.HitMultiplierCount.SetText(ModManager.Settings.Hitcount);
           Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
-
         } catch (e) {
           MainMenu.KunLog(e);
         }
@@ -265,7 +272,6 @@ class MainMenu {
         Menu.SetVisibility(0);
         isMenuLoaded = true;
         MainMenu.KunLog("KUN-MOD Menu Loaded!");
-        puerts_1.logger.info(UE.KuroStaticLibrary);
         clearInterval(loadMenuInterval);
       }
     }
@@ -303,7 +309,7 @@ class MainMenu {
   }
 }
 
-loadMenuInterval = setInterval(MainMenu.OnTick, 3000);
+loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
 main();
 
