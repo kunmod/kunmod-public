@@ -190,9 +190,9 @@ class ModLanguage {
       ja: " |つぎのポジション[Down]",
     },
     {
-      en: "Anti Dither [Num1]",
-      chs: "反虚化[Num1]",
-      ja: "アンチディザ[Num1]",
+      en: "Anti Dither",
+      chs: "反虚化",
+      ja: "アンチディザ",
     },
     {
       en: "Anti Dither",
@@ -333,6 +333,11 @@ class ModLanguage {
       en: "Infinity",
       chs: "无穷",
       ja: "無限"
+    },
+    {
+      en: "Auto Mine [Num1]",
+      chs: "自动地雷[Num1]",
+      ja: "オートマイン[Num1]"
     },
   ];
 

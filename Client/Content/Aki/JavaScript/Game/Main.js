@@ -108,7 +108,7 @@ class MainMenu {
             ModLanguage.ModTr("Hit Multiplier [F6]")
           );
           Menu.KillAuraText.SetText(ModLanguage.ModTr("Kill Aura [F9]"));
-          Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither [Num1]"));
+          Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
           Menu.InfiniteStaminaText.SetText(
             ModLanguage.ModTr("Infinite Stamina")
           );
@@ -122,6 +122,7 @@ class MainMenu {
           Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
           Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
           Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
+          Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mine [Num1]"));
 
           Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.GodMode = isChecked;

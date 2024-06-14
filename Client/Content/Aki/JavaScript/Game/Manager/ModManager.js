@@ -62,7 +62,6 @@ class ModManager {
         HideDmgUi: true,
         AutoMine: false,
         Uid: "000000001",
-        AutoMine:false,
     };
 
     static ModStart() {
@@ -79,7 +78,7 @@ class ModManager {
         this.AddToggle("PlayerSpeed", "F12");
         this.AddToggle("CustomTp", "Insert");
         this.AddToggle("AutoLoot", "NumPadZero");
-        this.AddToggle("AntiDither", "NumPadOne");
+        this.AddToggle("AutoMine", "NumPadOne");
         this.AddKey("MarkTp", "t");
 
     }
@@ -156,7 +155,7 @@ class ModManager {
         }
 
         this.listenMod('AutoLoot', "NumPadZero", "AutoLoot");
-        this.listenMod('AntiDither', "NumPadOne", "AntiDither");
+        this.listenMod('AutoMine', "NumPadOne", "AutoMine");
         ModDebuger_1.ModDebuger.EnableDebug();
         if (ModDebuger_1.ModDebuger.Setting.EnableDebug) {
             ModDebuger_1.ModDebuger.ListenDebug();
@@ -278,7 +277,7 @@ class ModManager {
 
             this.FuncState(this.Settings.CustomTp, ModTr("CustomTp[Ins]")) +
             this.FuncState(this.Settings.AutoLoot, ModTr("AutoLoot[Num0]")) +
-            this.FuncState(this.Settings.AntiDither, ModTr("AntiDither[Num1]"))
+            this.FuncState(this.Settings.AntiDither, ModTr("AntiDither"))
 
             newBox.SetTextArgs(state);
         newBox.SetTitle(ModTr("KunMods State[Home] DisableAntiCheat : <color=green>ON</color> "));
