@@ -10,8 +10,7 @@ const puerts_1 = require("puerts"),
   GameProcedure_1 = require("./GameProcedure"),
   ModManager_1 = require("./Manager/ModManager"),
   ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage"),
-  UiManager_1 = require("./Ui/UiManager"),
-  UidView_1 = require("./Module/UidShow/UidView");
+  UiManager_1 = require("./Ui/UiManager");
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage;
@@ -135,6 +134,9 @@ function OnTick() {
       PlayerSpeed.SetIsChecked(ModManager.Settings.PlayerSpeed);
       PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
       CustomUidValue.SetText("000000001");
+      HideHUD.SetIsChecked(ModManager.Settings.HideHUD)
+      HideDmg.SetIsChecked(ModManager.Settings.HideDmgUi)
+
 
       // translate
       HeadingPlayer.SetText("Player");

@@ -52,7 +52,8 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
         PlayerSpeed: false,
         ShowMenu: false,
         AutoLoot: false,
-        HideDmgUi: false,
+        HideHUD: false,
+        HideDmgUi: true,
         Uid: "000000001",
     };
 
