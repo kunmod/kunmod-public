@@ -10,8 +10,7 @@ const puerts_1 = require("puerts"),
   GameProcedure_1 = require("./GameProcedure"),
   ModManager_1 = require("./Manager/ModManager"),
   ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage"),
-  UiManager_1 = require("./Ui/UiManager"),
-  UidView_1 = require("./Module/UidShow/UidView");
+  UiManager_1 = require("./Ui/UiManager");
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage;
@@ -21,7 +20,7 @@ let keyState = false,
   isMenuLoaded = false,
   isMenuShow = false,
   currentLang = "en",
-  loadMenuInterval = null
+  loadMenuInterval = null;
 
 function main() {
   var e = puerts_1.argv.getByName("GameInstance");
@@ -88,6 +87,7 @@ function OnTick() {
       YinlinImage.SetBrushFromTexture(Yinlin);
       TitleBarImage.SetBrushFromTexture(Gradient);
 
+      // CHECKBOX, INPUTBOX, SLIDER, BUTTON, ETC
       let GodMode = Menu.GodModeCheck,
         NoCD = Menu.NoCDCheck,
         AutoPickTreasure = Menu.AutoPickTreasureCheck,
@@ -102,9 +102,12 @@ function OnTick() {
         PerceptionRange = Menu.PerceptionRangeCheck,
         PlayerSpeed = Menu.PlayerSpeedCheck,
         PlayerSpeedValue = Menu.PlayerSpeedValue,
-        CustomUid = Menu.CustomUidCheck,
-        CustomUidValue = Menu.CustomUidValue;
+        CustomUidValue = Menu.CustomUidValue,
+        CustomUidSubmit = Menu.CustomUidSubmit,
+        HideHUD = Menu.HideHUDCheck,
+        HideDmg = Menu.HideDmgCheck;
 
+      // TEXT
       let GodModeText = Menu.GodModeText,
         NoCDText = Menu.NoCDText,
         AutoPickTreasureText = Menu.AutoPickTreasureText,
@@ -116,7 +119,14 @@ function OnTick() {
         AutoLootText = Menu.AutoLootText,
         PerceptionRangeText = Menu.PerceptionRangeText,
         PlayerSpeedText = Menu.PlayerSpeedText,
-        CustomUidText = Menu.CustomUidText;
+        CustomUidText = Menu.CustomUidText,
+        HideHUDText = Menu.HideHUDText,
+        HideDmgText = Menu.HideDmgText
+
+      // HEADING
+      let HeadingPlayer = Menu.HeadingPlayer,
+        HeadingWorld = Menu.HeadingWorld,
+        HeadingUI = Menu.HeadingUI;
 
       // default value
       GodMode.SetIsChecked(ModManager.Settings.GodMode);
@@ -132,8 +142,14 @@ function OnTick() {
       PlayerSpeed.SetIsChecked(ModManager.Settings.PlayerSpeed);
       PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
       CustomUidValue.SetText("000000001");
+      HideHUD.SetIsChecked(ModManager.Settings.HideHUD)
+      HideDmg.SetIsChecked(ModManager.Settings.HideDmgUi)
+
 
       // translate
+      HeadingPlayer.SetText("Player");
+      HeadingWorld.SetText("World");
+      HeadingUI.SetText("UI");
       GodModeText.SetText(ModText(15));
       NoCDText.SetText(ModText(21));
       AutoPickTreasureText.SetText(ModText(17));
@@ -146,6 +162,8 @@ function OnTick() {
       PerceptionRangeText.SetText(ModText(20));
       PlayerSpeedText.SetText(ModText(22));
       CustomUidText.SetText(ModLanguage.ModTr("Custom UID"));
+      HideHUDText.SetText("Hide HUD");
+      HideDmgText.SetText("Hide Damage Text");
 
       GodMode.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.GodMode = isChecked;
@@ -244,27 +262,31 @@ function OnTick() {
         updatePlayerSpeed();
       });
 
-      CustomUid.OnCheckStateChanged.Add((isChecked) => {
+      CustomUidSubmit.OnClicked.Add(() => {
+        ModManager.ChangeUid(CustomUidValue.GetText());
+      });
+
+      HideHUD.OnCheckStateChanged.Add((isChecked) => {
         if (isChecked) {
-          ModManager.ChangeUid(CustomUidValue.GetText());
-          KunLog("UID Changed to: " + ModManager.Settings.Uid);
+          UiManager_1.UiManager.CloseView("BattleView");
+          UiManager_1.UiManager.CloseView("UidView");
         } else {
-          ModManager.ChangeUid(new UidView_1.UidView().GetDefaultUid());
-          KunLog("Default UID: " + ModManager.Settings.Uid);
+          UiManager_1.UiManager.OpenView("BattleView");
+          UiManager_1.UiManager.OpenView("UidView");
         }
       });
 
-      CustomUidValue.OnTextChanged.Add((value) => {
-        if (CustomUid.IsChecked()) {
-          ModManager.ChangeUid(value);
-        }
+      HideDmg.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.HideDmgUi = isChecked
       });
+
+      // HIDE TEXT DAMAGE =>
 
       Menu.AddToViewport();
       Menu.SetVisibility(2);
       isMenuLoaded = true;
       KunLog("KUN-MOD Menu Loaded!");
-      clearInterval(loadMenuInterval)
+      clearInterval(loadMenuInterval);
     }
   }
 }
@@ -299,8 +321,8 @@ function killAuraLang(lang) {
       break;
     case "ja":
       return {
-        onlyHatred: "憎しみだけ",
-        infinity: "无穷",
+        onlyHatred: "Only Hatred",
+        infinity: "Infinity",
       };
       break;
     default:

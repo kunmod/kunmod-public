@@ -57,14 +57,12 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
         PlayerSpeed: false,
         ShowMenu: false,
         AutoLoot: false,
-
-
-        Uid: "",
+        HideHUD: false,
+        HideDmgUi: true,
+        Uid: "000000001",
     };
 
     static ModStart() {
-        this.Settings.Uid = new UidView_1.UidView().GetDefaultUid();
-
         ModDebuger_1.ModDebuger.TestMethod();
         ModLanguage_1.ModLanguage.GetCurrLang();
         this.AddKey("ShowMenu", "Home");
@@ -84,7 +82,6 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
     }
 
     static listenModsToggle() {
-
         if (this.listenKey("ShowMenu", "Home")) {
             this.ShowMenu();
         }
@@ -295,7 +292,7 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
         CharacterController_1.CharacterController.SetTimeDilation(value);
     }
 
-    static async ChangeUid(string) {
+    static ChangeUid(string) {
         this.Settings.Uid = string;
         UiManager_1.UiManager.CloseView("UidView");
         UiManager_1.UiManager.OpenView("UidView");

@@ -14,9 +14,6 @@ class UidView extends UiViewBase_1.UiViewBase {
     ModManager_1.ModManager.ModStart();
     this.SetUid(ModManager_1.ModManager.Settings.Uid)
   }
-  GetDefaultUid() {
-    return ModelManager_1.ModelManager.FunctionModel.PlayerId.toString()
-  }
   SetUid(string) {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "FriendMyUid", string);
   }
