@@ -27,7 +27,8 @@ WeatherController_1 = require("../Module/Weather/WeatherController"),
 WorldDebugModel_1 = require("../World/Model/WorldDebugModel"), //
 ModCustomTp_1 = require("./ModFuncs/ModCustomTp"),
 ModUtils_1 = require("./ModFuncs/ModUtils"),
-ModDebuger_1 = require("./ModFuncs/ModDebuger");
+ModDebuger_1 = require("./ModFuncs/ModDebuger"),
+MainMenu_1 = require("../Main");
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
@@ -43,7 +44,7 @@ class ModManager {
         NoCD: false,
         InfiniteStamina: false,
         killAura: false,
-        killAuraState: 1,    //0 Only Hatred  1Infinity
+        killAuraState: 1,    //0 Only Hatred  1 Infinity
         PerceptionRange: false,
         Weather: false,
         WeatherType: 1,
