@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 const puerts_1 = require("puerts"),
   UE = require("ue"),
-  InputSeeting_1 = require("../Game/InputSettings/InputSettings"),
+  InputSetting_1 = require("../Game/InputSettings/InputSettings"),
   ResourceSystem_1 = require("../Core/Resource/ResourceSystem"),
   GlobalData_1 = require("../Game/GlobalData"),
   GameProcedure_1 = require("./GameProcedure"),
@@ -29,9 +29,9 @@ function main() {
 
 class MainMenu {
   static IsKey(str) {
-    var IsInputKeyDown_1 = InputSeeting_1.InputSettings.IsInputKeyDown(str);
+    var IsInputKeyDown_1 = InputSetting_1.InputSettings.IsInputKeyDown(str);
     var IsInputKeyDown_LeftControl =
-      InputSeeting_1.InputSettings.IsInputKeyDown("LeftAlt");
+      InputSetting_1.InputSettings.IsInputKeyDown("LeftAlt");
     if (IsInputKeyDown_LeftControl && IsInputKeyDown_1 && !keyState) {
       IsInputKeyDown_1 = false;
       IsInputKeyDown_LeftControl = false;
@@ -45,31 +45,33 @@ class MainMenu {
     return false;
   }
 
-function listenKey() {
-  ModManager_1.ModManager.listenModsToggle();
-  InputSeeting_1.InputSettings.AddActionMapping("", "LeftAlt");
-  InputSeeting_1.InputSettings.AddActionMapping("", "X");
+  static ListenKey() {
+    ModManager.listenModsToggle();
+    InputSetting_1.InputSettings.AddActionMapping("", "LeftAlt");
+    InputSetting_1.InputSettings.AddActionMapping("", "X");
 
-  if (IsKey("X") === true) {
-    isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
-    isMenuShow = !isMenuShow;
+    if (MainMenu.IsKey("X") === true) {
+      isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
+      isMenuShow = !isMenuShow;
+    }
   }
-}
 
-
-function KunLog(string){
-  var info = string.toString();
-  puerts_1.logger.info("[KUNMOD:]"+info);
-}
+  static KunLog(string) {
+    var info = string.toString();
+    puerts_1.logger.info("[KUNMOD:]" + info);
+  }
 
   static OnTick() {
     if (!isMenuLoaded) {
       currentLang = ModLanguage.GetCurrLang();
 
-      Menu = UE.UMGManager.CreateWidget(GlobalData_1.GlobalData.World, ResourceSystem_1.ResourceSystem.Load(
-        "/Game/Aki/ModMenu.ModMenu_C",
-        UE.Class
-      ));
+      Menu = UE.UMGManager.CreateWidget(
+        GlobalData_1.GlobalData.World,
+        ResourceSystem_1.ResourceSystem.Load(
+          "/Game/Aki/ModMenu.ModMenu_C",
+          UE.Class
+        )
+      );
 
       if (Menu) {
         try {
@@ -79,16 +81,16 @@ function KunLog(string){
               UE.Texture
             )
           );
-  
+
           Menu.TitleBar.SetBrushFromTexture(
             ResourceSystem_1.ResourceSystem.Load(
               "/Game/Aki/Gradient.Gradient",
               UE.Texture
             )
           );
-  
-          MainMenu.updateMenuState()
-  
+
+          MainMenu.updateMenuState();
+
           // translate
           Menu.HeadingPlayer.SetText("Player");
           Menu.HeadingWorld.SetText("World");
@@ -108,101 +110,103 @@ function KunLog(string){
           Menu.HideHUDText.SetText("Hide HUD");
           Menu.HideDmgText.SetText("Hide Damage Text");
           Menu.MarkTPText.SetText("Mark TP");
-  
+
           Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.GodMode = isChecked;
-            puerts_1.logger.info("God Mode: " + isChecked);
+            MainMenu.KunLog("God Mode: " + isChecked);
           });
-  
+
           Menu.NoCDCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.NoCD = isChecked;
-            puerts_1.logger.info("No Cooldown: " + isChecked);
+            MainMenu.KunLog("No Cooldown: " + isChecked);
           });
-  
+
           Menu.AutoPickTreasureCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoPickTreasure = isChecked;
-            puerts_1.logger.info("Auto Pick Treasure: " + isChecked);
+            MainMenu.KunLog("Auto Pick Treasure: " + isChecked);
           });
-  
+
           Menu.AutoAbsorbEchoCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoAbsorb = isChecked;
-            puerts_1.logger.info("Auto Absorb: " + isChecked);
+            MainMenu.KunLog("Auto Absorb: " + isChecked);
           });
-  
+
           Menu.HitMultiplierCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.HitMultiplier = isChecked;
-            puerts_1.logger.info("Hit Multiplier: " + isChecked);
+            MainMenu.KunLog("Hit Multiplier: " + isChecked);
           });
-  
+
           Menu.HitMultiplierCount.OnTextChanged.Add((value) => {
             value = Number(value);
             if (typeof value === "number") {
               ModManager.Settings.Hitcount = value;
-              puerts_1.logger.info("Hit Multiplier Count: " + value);
+              MainMenu.KunLog("Hit Multiplier Count: " + value);
             } else {
               ModManager.Settings.Hitcount = 1;
             }
           });
-  
+
           Menu.KillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.killAura = isChecked;
-            puerts_1.logger.info("Kill Aura: " + isChecked);
+            MainMenu.KunLog("Kill Aura: " + isChecked);
           });
-  
+
           for (const option in MainMenu.killAura()) {
             Menu.KillAuraValue.AddOption(option);
           }
-  
+
           Menu.KillAuraValue.OnSelectionChanged.Add((selectedItem) => {
             if (selectedItem) {
               ModManager.Settings.KillAuraValue =
-              MainMenu.killAura().indexOf(selectedItem);
-              puerts_1.logger.info("Kill Aura Value: " + selectedItem);
+                MainMenu.killAura().indexOf(selectedItem);
+              MainMenu.KunLog("Kill Aura Value: " + selectedItem);
             }
           });
-  
+
           Menu.AntiDitherCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AntiDither = isChecked;
-            puerts_1.logger.info("Anti Dither: " + isChecked);
+            MainMenu.KunLog("Anti Dither: " + isChecked);
           });
-  
+
           Menu.InfiniteStaminaCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.InfiniteStamina = isChecked;
-            puerts_1.logger.info("Inifnite Stamina: " + isChecked);
+            MainMenu.KunLog("Inifnite Stamina: " + isChecked);
           });
-  
+
           Menu.AutoLootCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoLoot = isChecked;
-            puerts_1.logger.info("Auto Loot: " + isChecked);
+            MainMenu.KunLog("Auto Loot: " + isChecked);
           });
-  
+
           Menu.PerceptionRangeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.PerceptionRange = isChecked;
-            puerts_1.logger.info("Perception Range: " + isChecked);
+            MainMenu.KunLog("Perception Range: " + isChecked);
           });
-  
+
           Menu.PlayerSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.PlayerSpeed = isChecked;
-            puerts_1.logger.info("Player Speed: " + isChecked);
+            MainMenu.KunLog("Player Speed: " + isChecked);
             MainMenu.updatePlayerSpeed();
           });
-  
+
           Menu.PlayerSpeedValue.OnTextChanged.Add((value) => {
             value = Number(value);
             if (typeof value === "number") {
               ModManager.Settings.playerSpeedValue = value;
-              puerts_1.logger.info("Player Speed Value: " + value);
             } else {
-              ModManager.Settings.playerSpeedValue = 1;
-              puerts_1.logger.info("Player Speed Value: 1");
+              value = 1
+              ModManager.Settings.playerSpeedValue = value;
             }
             MainMenu.updatePlayerSpeed();
+            MainMenu.KunLog("Player Speed Value: " + value);
           });
-  
+
           Menu.CustomUidSubmit.OnClicked.Add(() => {
-            ModManager.ChangeUid(Menu.CustomUidValue.GetText());
+            const UID = Menu.CustomUidValue.GetText()
+            ModManager.ChangeUid(UID);
+            MainMenu.KunLog("UID Changed: " + UID);
           });
-  
+
           Menu.HideHUDCheck.OnCheckStateChanged.Add((isChecked) => {
             if (isChecked) {
               UiManager_1.UiManager.CloseView("BattleView");
@@ -211,23 +215,26 @@ function KunLog(string){
               UiManager_1.UiManager.OpenView("BattleView");
               UiManager_1.UiManager.OpenView("UidView");
             }
+            MainMenu.KunLog("UID Hide: " + isChecked);
           });
-  
+
           Menu.HideDmgCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.HideDmgUi = isChecked;
+            MainMenu.KunLog("Hide Damage Text: " + isChecked);
           });
-  
+
           Menu.AutoMineCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoMine = isChecked;
+            MainMenu.KunLog("Auto Mine: " + isChecked);
           });
         } catch (e) {
-          puerts_1.logger.warn(e)
+          MainMenu.KunLog(e);
         }
 
         Menu.AddToViewport();
         Menu.SetVisibility(0);
         isMenuLoaded = true;
-        puerts_1.logger.info("KUN-MOD Menu Loaded!");
+        MainMenu.KunLog("KUN-MOD Menu Loaded!");
         clearInterval(loadMenuInterval);
       }
     }
@@ -235,7 +242,9 @@ function KunLog(string){
 
   static updateMenuState() {
     Menu.GodModeCheck.SetIsChecked(ModManager.Settings.GodMode);
-    Menu.AutoPickTreasureCheck.SetIsChecked(ModManager.Settings.AutoPickTreasure);
+    Menu.AutoPickTreasureCheck.SetIsChecked(
+      ModManager.Settings.AutoPickTreasure
+    );
     Menu.AutoAbsorbEchoCheck.SetIsChecked(ModManager.Settings.AutoAbsorb);
     Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
     Menu.HitMultiplierCount.SetText(ModManager.Settings.Hitcount);
@@ -249,7 +258,7 @@ function KunLog(string){
     Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
     Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
     Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
-    Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
+    Menu.KillAuraValue.SetSelectedIndex(MainMenu.killAura()[ModManager.Settings.killAuraState]);
     Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
   }
 
@@ -261,11 +270,10 @@ function KunLog(string){
     }
   }
 
-function ModText(id) {
-  var text = ModLanguage.ModTr(ModLanguage.translate[id].en);
-  
-  return text;
-}
+  static ModText(id) {
+    var text = ModLanguage.ModTr(ModLanguage.translate[id].en);
+    return text;
+  }
 
   static killAura() {
     const lang = currentLang;
