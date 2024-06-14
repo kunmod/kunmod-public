@@ -59,9 +59,9 @@ class ModManager {
         ShowMenu: false,
         AutoLoot: false,
         HideHUD: false,
-        HideDmgUi: true,
+        HideDmgUi: false,
         AutoMine: false,
-        Uid: "000000001",
+        Uid: "100000000",
     };
 
     static ModStart() {
