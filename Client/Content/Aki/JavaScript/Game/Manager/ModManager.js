@@ -61,6 +61,10 @@ class ModManager {
         HideHUD: false,
         HideDmgUi: false,
         AutoMine: false,
+        //test
+        AutoDestroy:true,
+        killAuranew:true,
+        AutoAbsorbnew:true,
         Uid: "100000000",
     };
 
@@ -201,7 +205,7 @@ class ModManager {
         }
     }
 
-    static listenMod(func, key, funcname, ) {
+    static listenMod(func, key, funcname ) {
         if (InputController_1.InputController.IsMyKeyUp(key)) {
             if (this.Settings.hasOwnProperty(func)) {
                 this.Settings[func] = !this.Settings[func];

@@ -22,6 +22,7 @@ Object.defineProperty(exports, "__esModule", {
 }),
   (exports.MonsterBehaviorComponent = void 0);
 const Log_1 = require("../../../../../../Core/Common/Log"),
+puerts_1 = require("puerts"),
   NetDefine_1 = require("../../../../../../Core/Define/Net/NetDefine"),
   Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
@@ -70,6 +71,7 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
             this.Entity,
             Protocol_1.Aki.Protocol.MonsterDrownRequest.create()
           );
+          //puerts_1.logger.warn("测试Drown实体信息",this.Entity);
         }
         e &&
           (this.G$o(!0),

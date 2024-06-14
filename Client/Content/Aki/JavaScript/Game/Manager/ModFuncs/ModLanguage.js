@@ -335,9 +335,14 @@ class ModLanguage {
       ja: "無限"
     },
     {
-      en: "Auto Miner [Num1]",
+      en: "Auto Mining [Num1]",
       chs: "自动矿工[Num1]",
       ja: "オートマイナー[Num1]"
+    },
+    {
+      en: "Teleport",
+      chs: "传送",
+      ja: "テレポート"
     },
   ];
 

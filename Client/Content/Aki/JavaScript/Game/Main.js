@@ -10,10 +10,15 @@ const puerts_1 = require("puerts"),
   GameProcedure_1 = require("./GameProcedure"),
   ModManager_1 = require("./Manager/ModManager"),
   ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage"),
+  EntityManager_1 =require("./Manager/ModFuncs/EntityManager"),
+  AutoAbsorb_1 =require("./Manager/ModFuncs/AutoAbsorb"),
+  KillAura_1 =require("./Manager/ModFuncs/KillAura"),
+  AutoDestroy_1 =require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager");
 
 const ModManager = ModManager_1.ModManager,
-  ModLanguage = ModLanguage_1.ModLanguage;
+  ModLanguage = ModLanguage_1.ModLanguage,
+  EntityManager=EntityManager_1.ModsEntityManager;
 
 let keyState = false,
   Menu = null,
@@ -51,10 +56,15 @@ class MainMenu {
     InputSetting_1.InputSettings.AddActionMapping("", "X");
 
     if (MainMenu.IsKey("X") === true) {
-      isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
+      if (isMenuShow) {
+        Menu.SetVisibility(0);
+      } else {
+        Menu.SetVisibility(2);
+      }
       isMenuShow = !isMenuShow;
     }
     MainMenu.updateMenuState();
+    MainMenu.getTranslation();
   }
 
   static KunLog(string) {
@@ -62,7 +72,7 @@ class MainMenu {
     puerts_1.logger.info("[KUNMOD:]" + info);
   }
 
-  static OnTick() {
+  static Start() {
     if (!isMenuLoaded) {
       currentLang = ModLanguage.GetCurrLang();
 
@@ -89,40 +99,6 @@ class MainMenu {
               UE.Texture
             )
           );
-
-          MainMenu.updateMenuState();
-
-          // translate
-          Menu.HeadingPlayer.SetText(ModLanguage.ModTr("Player"));
-          Menu.HeadingWorld.SetText(ModLanguage.ModTr("World"));
-          Menu.HeadingUI.SetText(ModLanguage.ModTr("UI"));
-          Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode[F5]"));
-          Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
-          Menu.AutoPickTreasureText.SetText(
-            ModLanguage.ModTr("Auto Pick Treasure [F7]")
-          );
-          Menu.AutoAbsorbEchoText.SetText(
-            ModLanguage.ModTr("Auto Absorb [F8]")
-          );
-          Menu.HitMultiplierText.SetText(
-            ModLanguage.ModTr("Hit Multiplier [F6]")
-          );
-          Menu.KillAuraText.SetText(ModLanguage.ModTr("Kill Aura [F9]"));
-          Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
-          Menu.InfiniteStaminaText.SetText(
-            ModLanguage.ModTr("Infinite Stamina")
-          );
-          Menu.AutoLootText.SetText(ModLanguage.ModTr("Auto Loot [Num0]"));
-          Menu.PerceptionRangeText.SetText(
-            ModLanguage.ModTr("Perception Range [F10]")
-          );
-          Menu.PlayerSpeedText.SetText(ModLanguage.ModTr("Player Speed [F12]"));
-          Menu.CustomUidText.SetText(ModLanguage.ModTr("Custom UID"));
-          Menu.HideHUDText.SetText(ModLanguage.ModTr("Hide HUD"));
-          Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
-          Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
-          Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
-          Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Miner [Num1]"));
 
           Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.GodMode = isChecked;
@@ -239,7 +215,7 @@ class MainMenu {
 
           Menu.AutoMineCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoMine = isChecked;
-            MainMenu.KunLog("Auto Mine: " + isChecked);
+            MainMenu.KunLog("Auto Mining: " + isChecked);
           });
 
           Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
@@ -250,13 +226,14 @@ class MainMenu {
           Menu.MarkTPCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.MarkTp = isChecked;
             MainMenu.KunLog("Mark Teleport: " + isChecked);
-          })
+          });
 
-          Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
+          Menu.KillAuraValue.SetSelectedIndex(
+            ModManager.Settings.killAuraState
+          );
           Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
           Menu.HitMultiplierCount.SetText(ModManager.Settings.Hitcount);
           Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
-
         } catch (e) {
           MainMenu.KunLog(e);
         }
@@ -265,29 +242,64 @@ class MainMenu {
         Menu.SetVisibility(0);
         isMenuLoaded = true;
         MainMenu.KunLog("KUN-MOD Menu Loaded!");
-        puerts_1.logger.info(UE.KuroStaticLibrary);
         clearInterval(loadMenuInterval);
       }
     }
   }
 
+  static getTranslation() {
+    if (Menu) {
+      Menu.HeadingPlayer.SetText(ModLanguage.ModTr("Player"));
+      Menu.HeadingWorld.SetText(ModLanguage.ModTr("World"));
+      Menu.HeadingUI.SetText(ModLanguage.ModTr("UI"));
+      Menu.HeadingTeleport.SetText(ModLanguage.ModTr("Teleport"));
+      Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
+      Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
+      Menu.AutoPickTreasureText.SetText(
+        ModLanguage.ModTr("Auto Pick Treasure [F7]")
+      );
+      Menu.AutoAbsorbEchoText.SetText(ModLanguage.ModTr("Auto Absorb [F8]"));
+      Menu.HitMultiplierText.SetText(ModLanguage.ModTr("Hit Multiplier [F6]"));
+      Menu.KillAuraText.SetText(ModLanguage.ModTr("Kill Aura [F9]"));
+      Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
+      Menu.InfiniteStaminaText.SetText(ModLanguage.ModTr("Infinite Stamina"));
+      Menu.AutoLootText.SetText(ModLanguage.ModTr("Auto Loot [Num0]"));
+      Menu.PerceptionRangeText.SetText(
+        ModLanguage.ModTr("Perception Range [F10]")
+      );
+      Menu.PlayerSpeedText.SetText(ModLanguage.ModTr("Player Speed [F12]"));
+      Menu.CustomUidText.SetText(ModLanguage.ModTr("Custom UID"));
+      Menu.HideHUDText.SetText(ModLanguage.ModTr("Hide HUD"));
+      Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
+      Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
+      Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
+      Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
+    }
+  }
+
   static updateMenuState() {
-    Menu.GodModeCheck.SetIsChecked(ModManager.Settings.GodMode);
-    Menu.AutoPickTreasureCheck.SetIsChecked(
-      ModManager.Settings.AutoPickTreasure
-    );
-    Menu.AutoAbsorbEchoCheck.SetIsChecked(ModManager.Settings.AutoAbsorb);
-    Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
-    Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
-    Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
-    Menu.InfiniteStaminaCheck.SetIsChecked(ModManager.Settings.InfiniteStamina);
-    Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
-    Menu.PerceptionRangeCheck.SetIsChecked(ModManager.Settings.PerceptionRange);
-    Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
-    Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
-    Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
-    Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
-    Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
+    if (Menu) {
+      Menu.GodModeCheck.SetIsChecked(ModManager.Settings.GodMode);
+      Menu.AutoPickTreasureCheck.SetIsChecked(
+        ModManager.Settings.AutoPickTreasure
+      );
+      Menu.AutoAbsorbEchoCheck.SetIsChecked(ModManager.Settings.AutoAbsorb);
+      Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
+      Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
+      Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
+      Menu.InfiniteStaminaCheck.SetIsChecked(
+        ModManager.Settings.InfiniteStamina
+      );
+      Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
+      Menu.PerceptionRangeCheck.SetIsChecked(
+        ModManager.Settings.PerceptionRange
+      );
+      Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
+      Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
+      Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
+      Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
+      Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
+    }
   }
 
   static updatePlayerSpeed() {
@@ -302,10 +314,33 @@ class MainMenu {
     return [ModLanguage.ModTr("Only Hatred"), ModLanguage.ModTr("Infinity")];
   }
 }
+class ModEntityListener{
 
-loadMenuInterval = setInterval(MainMenu.OnTick, 3000);
+static Runtime(){
+  
+  // EntityManager.PushEntityList()
+  // const entitylist = EntityManager.ModsEntitys.EntityList;
+  // const count = EntityManager.ModsEntitys.EntityCount;
+  // for(let i = 0; i < count; i++){
+
+  //   AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+  //   KillAura_1.KillAura.killAura(entitylist[i]);
+  //   AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
+
+  // }
+  puerts_1.logger.warn("Runtime is working");
+
+
+}//RuntimeS
+
+
+}//ModEntityListener
+
+loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
+setInterval(ModEntityListener.Runtime, 5000);
 main();
 
 exports.MainMenu = MainMenu;
+exports.ModEntityListener = ModEntityListener;
 //# sourceMappingURL=Main.js.map
