@@ -59,12 +59,19 @@ class MainMenu {
       if (isMenuShow) {
         Menu.SetVisibility(0);
       } else {
+        MainMenu.getTranslation();
+        Menu.KillAuraValue.ClearOptions()
+        for (const option in MainMenu.killAura()) {
+          Menu.KillAuraValue.AddOption(MainMenu.killAura()[option]);
+        }
+        Menu.KillAuraValue.SetSelectedIndex(
+          ModManager.Settings.killAuraState
+        );
         Menu.SetVisibility(2);
       }
       isMenuShow = !isMenuShow;
     }
     MainMenu.updateMenuState();
-    MainMenu.getTranslation();
   }
 
   static KunLog(string) {
@@ -99,6 +106,11 @@ class MainMenu {
               UE.Texture
             )
           );
+
+          MainMenu.updateMenuState();
+
+          // translate
+          MainMenu.getTranslation();
 
           Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.GodMode = isChecked;
