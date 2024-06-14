@@ -247,6 +247,11 @@ class MainMenu {
             MainMenu.KunLog("Custom Teleport: " + isChecked);
           });
 
+          Menu.MarkTPCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.MarkTp = isChecked;
+            MainMenu.KunLog("Mark Teleport: " + isChecked);
+          })
+
           Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
           Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
           Menu.HitMultiplierCount.SetText(ModManager.Settings.Hitcount);
@@ -282,6 +287,7 @@ class MainMenu {
     Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
     Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
     Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
+    Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
   }
 
   static updatePlayerSpeed() {
