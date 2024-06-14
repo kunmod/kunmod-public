@@ -31,7 +31,7 @@ ModDebuger_1 = require("./ModFuncs/ModDebuger");
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
-class ModManager extends UiTickViewBase_1.UiTickViewBase {
+class ModManager {
     static Settings = {
         ModEnabled: true,
         GodMode: true,
@@ -54,6 +54,7 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
         AutoLoot: false,
         HideHUD: false,
         HideDmgUi: true,
+        AutoMine: false,
         Uid: "000000001",
     };
 
