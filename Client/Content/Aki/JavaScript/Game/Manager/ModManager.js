@@ -44,7 +44,7 @@ class ModManager {
         NoCD: false,
         InfiniteStamina: false,
         killAura: false,
-        killAuraState: 1,    //0 Only Hatred  1 Infinity
+        killAuraState: 0,    //0 Only Hatred  1 Infinity
         PerceptionRange: false,
         Weather: false,
         WeatherType: 1,
