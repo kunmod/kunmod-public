@@ -54,12 +54,19 @@ class MainMenu {
       if (isMenuShow) {
         Menu.SetVisibility(0);
       } else {
+        MainMenu.getTranslation();
+        Menu.KillAuraValue.ClearOptions()
+        for (const option in MainMenu.killAura()) {
+          Menu.KillAuraValue.AddOption(MainMenu.killAura()[option]);
+        }
+        Menu.KillAuraValue.SetSelectedIndex(
+          ModManager.Settings.killAuraState
+        );
         Menu.SetVisibility(2);
       }
       isMenuShow = !isMenuShow;
     }
     MainMenu.updateMenuState();
-    MainMenu.getTranslation();
   }
 
   static KunLog(string) {
@@ -94,6 +101,11 @@ class MainMenu {
               UE.Texture
             )
           );
+
+          MainMenu.updateMenuState();
+
+          // translate
+          MainMenu.getTranslation();
 
           Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.GodMode = isChecked;
@@ -210,7 +222,7 @@ class MainMenu {
 
           Menu.AutoMineCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoMine = isChecked;
-            MainMenu.KunLog("Auto Mine: " + isChecked);
+            MainMenu.KunLog("Auto Mining: " + isChecked);
           });
 
           Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
@@ -268,7 +280,7 @@ class MainMenu {
       Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
       Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
       Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
-      Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mine [Num1]"));
+      Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
     }
   }
 
