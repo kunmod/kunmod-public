@@ -54,6 +54,7 @@ class MainMenu {
       isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
       isMenuShow = !isMenuShow;
     }
+    MainMenu.updateMenuState()
   }
 
   static KunLog(string) {
