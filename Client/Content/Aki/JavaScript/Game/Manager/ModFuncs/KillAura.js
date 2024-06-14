@@ -18,6 +18,7 @@ class KillAura extends EntityManager {
   static killAura(entity) {
     if (ModManager.Settings.killAuranew && this.isMonster(entity)) {
       ModMethod.MonsterDrownRequest(entity.Entity);
+      puerts_1.logger.warn("kun:实体杀戮测试",entity.Entity);
     }
   }
 }

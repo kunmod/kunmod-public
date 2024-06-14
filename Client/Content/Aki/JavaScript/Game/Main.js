@@ -330,17 +330,17 @@ class ModEntityListener{
 
 static Runtime(){
   
-  // EntityManager.PushEntityList()
-  // const entitylist = EntityManager.ModsEntitys.EntityList;
-  // const count = EntityManager.ModsEntitys.EntityCount;
-  // for(let i = 0; i < count; i++){
+  EntityManager.PushEntityList()
+  const entitylist = EntityManager.ModsEntitys.EntityList;
+  const count = EntityManager.ModsEntitys.EntityCount;
+  for(let i = 0; i < count; i++){
 
-  //   AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
-  //   KillAura_1.KillAura.killAura(entitylist[i]);
-  //   AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
+    //AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+    KillAura_1.KillAura.killAura(entitylist[i]);
+    //AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
 
-  // }
-  puerts_1.logger.warn("Runtime is working");
+  }
+  puerts_1.logger.warn("kun:Runtime is working");
 
 
 }//RuntimeS

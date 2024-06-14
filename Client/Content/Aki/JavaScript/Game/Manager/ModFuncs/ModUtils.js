@@ -11,9 +11,16 @@ const puerts_1 = require("puerts"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
+  LoginDefine_1 = require("../../Module/Login/Data/LoginDefine"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 class ModUtils {
+  static isInGame() {
+    let state = ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
+      LoginDefine_1.ELoginStatus.EnterGameRet
+    );
+    return state;
+  }
   //Kuro SingleInputBox  库洛单输入框
   static KuroSingleInputBox(options) {
     UiManager_1.UiManager.OpenView("CommonSingleInputView", {
@@ -65,59 +72,57 @@ class ModUtils {
     var info = string.toString();
     puerts_1.logger.info("[KUNMOD:]" + info);
   }
-	// 行   577: // Function  Engine.KismetSystemLibrary.DrawDebugArrow//箭头
-	// 行   582: // Function  Engine.KismetSystemLibrary.DrawDebugBox//盒子
-	// 行   587: // Function  Engine.KismetSystemLibrary.DrawDebugCamera//相机
-	// 行   592: // Function  Engine.KismetSystemLibrary.DrawDebugCapsule//胶囊
-	// 行   597: // Function  Engine.KismetSystemLibrary.DrawDebugCircle圆圈
-	// 行   602: // Function  Engine.KismetSystemLibrary.DrawDebugCone圆锥
-	// 行   607: // Function  Engine.KismetSystemLibrary.DrawDebugConeInDegrees圆锥体（以度为单位）
-	// 行   612: // Function  Engine.KismetSystemLibrary.DrawDebugCoordinateSystem坐标系
-	// 行   617: // Function  Engine.KismetSystemLibrary.DrawDebugCylinder圆柱
-	// 行   622: // Function  Engine.KismetSystemLibrary.DrawDebugFloatHistoryLocation浮动历史位置
-	// 行   627: // Function  Engine.KismetSystemLibrary.DrawDebugFloatHistoryTransform浮点历史转换
-	// 行   632: // Function  Engine.KismetSystemLibrary.DrawDebugFrustum绘制调试结果
-	// 行   637: // Function  Engine.KismetSystemLibrary.DrawDebugLine线
-	// 行   642: // Function  Engine.KismetSystemLibrary.DrawDebugPlane面
-	// 行   647: // Function  Engine.KismetSystemLibrary.DrawDebugPoint电
-	// 行   652: // Function  Engine.KismetSystemLibrary.DrawDebugSphere球
-	// 行   657: // Function  Engine.KismetSystemLibrary.DrawDebugString文本
-  static DrawDebugBox() {
-    UE.KismetSystemLibrary.DrawDebugBox(
-      GlobalData_1.GlobalData.World,
-      new UE.Vector(200, 200, 200),
-      new UE.Vector(50, 50, 50),
-      new UE.LinearColor(42, 54, 24, 1),
-      new UE.Rotator(15, 15, 15),
-      1,
-      50
-    );
-  }
+  // 行   577: // Function  Engine.KismetSystemLibrary.DrawDebugArrow//箭头
+  // 行   582: // Function  Engine.KismetSystemLibrary.DrawDebugBox//盒子
+  // 行   587: // Function  Engine.KismetSystemLibrary.DrawDebugCamera//相机
+  // 行   592: // Function  Engine.KismetSystemLibrary.DrawDebugCapsule//胶囊
+  // 行   597: // Function  Engine.KismetSystemLibrary.DrawDebugCircle圆圈
+  // 行   602: // Function  Engine.KismetSystemLibrary.DrawDebugCone圆锥
+  // 行   607: // Function  Engine.KismetSystemLibrary.DrawDebugConeInDegrees圆锥体（以度为单位）
+  // 行   612: // Function  Engine.KismetSystemLibrary.DrawDebugCoordinateSystem坐标系
+  // 行   617: // Function  Engine.KismetSystemLibrary.DrawDebugCylinder圆柱
+  // 行   622: // Function  Engine.KismetSystemLibrary.DrawDebugFloatHistoryLocation浮动历史位置
+  // 行   627: // Function  Engine.KismetSystemLibrary.DrawDebugFloatHistoryTransform浮点历史转换
+  // 行   632: // Function  Engine.KismetSystemLibrary.DrawDebugFrustum绘制调试结果
+  // 行   637: // Function  Engine.KismetSystemLibrary.DrawDebugLine线
+  // 行   642: // Function  Engine.KismetSystemLibrary.DrawDebugPlane面
+  // 行   647: // Function  Engine.KismetSystemLibrary.DrawDebugPoint电
+  // 行   652: // Function  Engine.KismetSystemLibrary.DrawDebugSphere球
+  // 行   657: // Function  Engine.KismetSystemLibrary.DrawDebugString文本
+  // static DrawDebugBox() {
+  //   UE.KismetSystemLibrary.DrawDebugBox(
+  //     GlobalData_1.GlobalData.World,
+  //     new UE.Vector(200, 200, 200),
+  //     new UE.Vector(50, 50, 50),
+  //     new UE.LinearColor(42, 54, 24, 1),
+  //     new UE.Rotator(15, 15, 15),
+  //     1,
+  //     50
+  //   );
+  // }
 
-  static DrawDebugLine() {
-    UE.KismetSystemLibrary.DrawDebugLine(
-      GlobalData_1.GlobalData.World,
-      h,
-      s,
-      e,
-      i,
-      15
-    );
-  }
+  // static DrawDebugLine() {
+  //   UE.KismetSystemLibrary.DrawDebugLine(
+  //     GlobalData_1.GlobalData.World,
+  //     h,
+  //     s,
+  //     e,
+  //     i,
+  //     15
+  //   );
+  // }
 
-  static DrawArrow(){
-    UE.KismetSystemLibrary.DrawDebugArrow(
-      GlobalData_1.GlobalData.World,
-      this.ume.ToUeVector(),
-      i.ToUeVector(),
-      this.Hh.FinalCameraDistance,
-      ColorUtils_1.ColorUtils.LinearRed,
-      DEBUG_DRAW_DURATION,
-      THICKNESS
-    );
-  }
-
-
+  // static DrawArrow(){
+  //   UE.KismetSystemLibrary.DrawDebugArrow(
+  //     GlobalData_1.GlobalData.World,
+  //     this.ume.ToUeVector(),
+  //     i.ToUeVector(),
+  //     this.Hh.FinalCameraDistance,
+  //     ColorUtils_1.ColorUtils.LinearRed,
+  //     DEBUG_DRAW_DURATION,
+  //     THICKNESS
+  //   );
+  // }
 }
 //puerts.logger.info(debug)
 exports.ModUtils = ModUtils;
