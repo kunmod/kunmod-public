@@ -45,15 +45,22 @@ class MainMenu {
     return false;
   }
 
-  static ListenKey() {
-    InputSeeting_1.InputSettings.AddActionMapping("", "LeftAlt");
-    InputSeeting_1.InputSettings.AddActionMapping("", "X");
+function listenKey() {
+  ModManager_1.ModManager.listenModsToggle();
+  InputSeeting_1.InputSettings.AddActionMapping("", "LeftAlt");
+  InputSeeting_1.InputSettings.AddActionMapping("", "X");
 
-    if (MainMenu.IsKey("X") === true) {
-      isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
-      isMenuShow = !isMenuShow;
-    }
+  if (IsKey("X") === true) {
+    isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
+    isMenuShow = !isMenuShow;
   }
+}
+
+
+function KunLog(string){
+  var info = string.toString();
+  puerts_1.logger.info("[KUNMOD:]"+info);
+}
 
   static OnTick() {
     if (!isMenuLoaded) {
@@ -254,9 +261,11 @@ class MainMenu {
     }
   }
 
-  static ModText(id) {
-    return ModLanguage.translate[id][currentLang];
-  }
+function ModText(id) {
+  var text = ModLanguage.ModTr(ModLanguage.translate[id].en);
+  
+  return text;
+}
 
   static killAura() {
     const lang = currentLang;

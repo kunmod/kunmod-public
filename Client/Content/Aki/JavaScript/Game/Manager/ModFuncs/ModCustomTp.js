@@ -35,7 +35,7 @@ class ModCustomTp {
     var title =
       ModTr("CustomTp State [Insert]:") +
       (state ? ModTr("ON") : ModTr("OFF")) +
-      ModTr("Shows[Delete]") +
+      ModTr(" Show[Del]") +
       " (" +
       (this.Settings.CurreNum + 1).toString() +
       "/" +

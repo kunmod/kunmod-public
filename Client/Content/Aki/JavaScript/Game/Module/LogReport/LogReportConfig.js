@@ -9,13 +9,13 @@ class LogReportConfig extends ConfigBase_1.ConfigBase {
     var o = BeginnerGuideById_1.configBeginnerGuideById.GetConfig(e);
     return (
       o ||
-        (Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "LogReport",
-            9,
-            "新手打点表分表BeginnerGuide配置找不到",
-            ["Id", e]
-          )),
+        // (Log_1.Log.CheckError() &&
+        //   Log_1.Log.Error(
+        //     "LogReport",
+        //     9,
+        //     "新手打点表分表BeginnerGuide配置找不到",
+        //     ["Id", e]
+        //   )),
       o
     );
   }

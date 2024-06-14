@@ -59,6 +59,10 @@ class ModUtils {
     { role: "taoqi", fast_run: "play_vo_taoqi_fast_run" },
     { role: "danjin", fast_run: "play_vo_danjin_fast_run" },
   ];
+  static KunLog(string){
+    var info = string.toString();
+    puerts_1.logger.info("[KUNMOD:]"+info);
+  }
 }
 //puerts.logger.info(debug)
 exports.ModUtils = ModUtils;

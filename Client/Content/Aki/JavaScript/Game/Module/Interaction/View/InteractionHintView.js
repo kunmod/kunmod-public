@@ -344,7 +344,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnAfterShow() {
     this.x1i(), this.P1i(this.t1i), this.w1i(), this.Yti(), this.uzt(0);
-    //kunmodcode
+    //kunmodcode //autoloot
     if (ModManager_1.ModManager.Settings.AutoLoot) {
       (this.a1i = !0),
         (this.r1i = !0),
@@ -364,7 +364,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         this.InteractPawn(i + count) &&
           AudioSystem_1.AudioSystem.PostEvent("play_ui_ia_com_option");
       }
-    }
+    }//kunmodcode //autoloot
   }
   OnAfterHide() {
     this.m1i = void 0;

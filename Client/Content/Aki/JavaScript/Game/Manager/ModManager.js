@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", {
     value: !0
 }),
 (exports.ModManager = void 0);
-const puerts_1 = require("puerts"), 
+const puerts_1 = require("puerts"),
 UE = require("ue"),
 Info_1 = require("../../Core/Common/Info"),
 Log_1 = require("../../Core/Common/Log"),
@@ -11,8 +11,8 @@ Protocol_1 = require("../../Core/Define/Net/Protocol"),
 UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
 InputSettings_1 = require("../InputSettings/InputSettings"),
 InputController_1 = require("../Input/InputController"),
-TeleportController_1 = require("../Module/Teleport/TeleportController"), 
-CreatureController_1 = require("../World/Controller/CreatureController"), 
+TeleportController_1 = require("../Module/Teleport/TeleportController"),
+CreatureController_1 = require("../World/Controller/CreatureController"),
 ConfirmBoxController_1 = require("../Module/ConfirmBox/ConfirmBoxController"),
 ConfirmBoxDefine_1 = require("../Module/ConfirmBox/ConfirmBoxDefine"),
 ScrollingTipsController_1 = require("../Module/ScrollingTips/ScrollingTipsController"),
@@ -43,10 +43,15 @@ class ModManager {
         NoCD: false,
         InfiniteStamina: false,
         killAura: false,
+        killAuraState: 1,    //0 Only Hatred  1Infinity
         PerceptionRange: false,
         Weather: false,
         WeatherType: 1,
         MarkTp: false,
+        MarkX:0,
+        MarkY:0,
+        MarkZ:0,
+        MarkTpPosZ: 300,
         CustomTp: false,
         playerSpeedValue: 3,
         PlayerSpeed: false,
@@ -56,6 +61,7 @@ class ModManager {
         HideDmgUi: true,
         AutoMine: false,
         Uid: "000000001",
+        AutoMine:false,
     };
 
     static ModStart() {
@@ -73,6 +79,8 @@ class ModManager {
         this.AddToggle("CustomTp", "Insert");
         this.AddToggle("AutoLoot", "NumPadZero");
         this.AddToggle("AntiDither", "NumPadOne");
+        this.AddKey("MarkTp", "t");
+
     }
 
     static listenModsToggle() {
@@ -121,29 +129,28 @@ class ModManager {
             }
         }
         if (this.Settings.CustomTp) {
-              ModCustomTp_1.ModCustomTp.listenAuto();
-              ModCustomTp_1.ModCustomTp.listenSelect()
-              ModCustomTp_1.ModCustomTp.listenDelay()
- 
-                if (this.listenKey("ShowTpState", "Delete")) {
-                    ModCustomTp_1.ModCustomTp.ShowCtpState();
-                }
-                if (this.listenKey("PreviousFile", "PageUp")) {
-                    ModCustomTp_1.ModCustomTp.SubFile();
-                }
-                if (this.listenKey("NextFile", "PageDown")) {
-                    ModCustomTp_1.ModCustomTp.AddFile();
+            ModCustomTp_1.ModCustomTp.listenAuto();
+            ModCustomTp_1.ModCustomTp.listenSelect()
+            ModCustomTp_1.ModCustomTp.listenDelay()
 
-                }
-                if (this.listenKey("PreviousPos", "Up")) {
-                    ModCustomTp_1.ModCustomTp.SubPos();
-                    ModCustomTp_1.ModCustomTp.GoTp();
-                }
-                if (this.listenKey("NextPos", "Down")) {
-                    ModCustomTp_1.ModCustomTp.AddPos();
-                    ModCustomTp_1.ModCustomTp.GoTp();
-                }
-            
+            if (this.listenKey("ShowTpState", "Delete")) {
+                ModCustomTp_1.ModCustomTp.ShowCtpState();
+            }
+            if (this.listenKey("PreviousFile", "PageUp")) {
+                ModCustomTp_1.ModCustomTp.SubFile();
+            }
+            if (this.listenKey("NextFile", "PageDown")) {
+                ModCustomTp_1.ModCustomTp.AddFile();
+
+            }
+            if (this.listenKey("PreviousPos", "Up")) {
+                ModCustomTp_1.ModCustomTp.SubPos();
+                ModCustomTp_1.ModCustomTp.GoTp();
+            }
+            if (this.listenKey("NextPos", "Down")) {
+                ModCustomTp_1.ModCustomTp.AddPos();
+                ModCustomTp_1.ModCustomTp.GoTp();
+            }
 
         }
 
@@ -152,6 +159,11 @@ class ModManager {
         ModDebuger_1.ModDebuger.EnableDebug();
         if (ModDebuger_1.ModDebuger.Setting.EnableDebug) {
             ModDebuger_1.ModDebuger.ListenDebug();
+        }
+
+        if (this.listenKey("MarkTp", "t")) {
+            if(this.Settings.MarkTp)
+            this.TpNoloadingTo(this.Settings.MarkX*100,this.Settings.MarkY*100,this.Settings.MarkZ*100)
         }
 
     }
@@ -189,7 +201,7 @@ class ModManager {
         }
     }
 
-    static listenMod(func, key, funcname,) {
+    static listenMod(func, key, funcname, ) {
         if (InputController_1.InputController.IsMyKeyUp(key)) {
             if (this.Settings.hasOwnProperty(func)) {
                 this.Settings[func] = !this.Settings[func];
@@ -202,18 +214,13 @@ class ModManager {
     }
     static listenKey(desc, key) {
         var press = InputController_1.InputController.IsMyKeyUp(key)
-        if(press){
-            ModUtils_1.ModUtils.PlayAudio("play_ui_fx_com_count_number");
-        }      
-        return press;
+            if (press) {
+                ModUtils_1.ModUtils.PlayAudio("play_ui_fx_com_count_number");
+            }
+            return press;
     }
 
-    static TPtest() {
-        TeleportController_1.TeleportController.TeleportToPositionNoLoading(
-            new UE.Vector(0, 0, 0),
-            new UE.Rotator(0, 0, 0),
-            "comment/message");
-    }
+
     static TpNoloadingTo(x, y, z) {
         TeleportController_1.TeleportController.TeleportToPositionNoLoading(
             new UE.Vector(x, y, z),
@@ -234,13 +241,11 @@ class ModManager {
 
     static ChangWeather(weatherID) {
         WeatherController_1.WeatherController.TestChangeWeather(weatherID);
-        
+
     }
 
-
-
     static ShowConfirmBox(title, string, id) {
-        
+
         var newBox = new ConfirmBoxDefine_1.ConfirmBoxDataNew(id);
         newBox.SetTextArgs(string);
         newBox.SetTitle(title);
@@ -251,7 +256,6 @@ class ModManager {
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(string);
     }
 
-
     static FuncState(func, string) {
         if (func)
             return string + ModTr(" : <color=green>ON</color> |");
@@ -259,7 +263,7 @@ class ModManager {
             return string + ModTr(" : <color=red>OFF</color> |");
     }
     static ShowMenu() {
-        
+
         var newBox = new ConfirmBoxDefine_1.ConfirmBoxDataNew(50);
         var state =
             this.FuncState(this.Settings.GodMode, ModTr("GodMode[F5]")) +
@@ -270,7 +274,7 @@ class ModManager {
             this.FuncState(this.Settings.PerceptionRange, ModTr("PerceptionRange[F10]")) +
             this.FuncState(this.Settings.NoCD, ModTr("NoCD[F11]")) +
             this.FuncState(this.Settings.PlayerSpeed, ModTr("PlayerSpeed[F12]")) +
-            
+
             this.FuncState(this.Settings.CustomTp, ModTr("CustomTp[Ins]")) +
             this.FuncState(this.Settings.AutoLoot, ModTr("AutoLoot[Num0]")) +
             this.FuncState(this.Settings.AntiDither, ModTr("AntiDither[Num1]"))
@@ -279,18 +283,7 @@ class ModManager {
         newBox.SetTitle(ModTr("KunMods State[Home] DisableAntiCheat : <color=green>ON</color> "));
         ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(newBox);
     }
-    static MarkTp() {
-        var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
-        var i = ModelManager_1.ModelManager.MapModel.GetMark(r[0], r[1]);
-        var targetX = i.TrackTarget.X;
-        var targetY = i.TrackTarget.Y;
-        var v = MapController_1.MapController.GetMarkPosition(targetX, targetY);
-        if (v.Z == 0)
-            v.Z = 300;
-        if (v.X == 0 && v.Y == 0)
-            return;
-        this.TpNoloadingTo(v.X * 100, v.Y * 100, v.Z * 100);
-    }
+
     static GetEntityList() {
         return ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     }
@@ -306,6 +299,28 @@ class ModManager {
         UiManager_1.UiManager.CloseView("UidView");
         UiManager_1.UiManager.OpenView("UidView");
     }
+    static TrackTP() {//mark
+        var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
+        puerts_1.logger.Debug("[kunmod:]Marktp:", r);
+        var i = ModelManager_1.ModelManager.MapModel.GetMark(r[0], r[1]);
+        puerts_1.logger.Debug("[kunmod:]Marktp:", i.TrackTarget);
+        var targetX = i.TrackTarget.X;
+        var targetY = i.TrackTarget.Y;
+        var posZ = 0;
+        var v = MapController_1.MapController.GetMarkPosition(targetX, targetY);
+        puerts_1.logger.info("[kunmod:]Marktp:", v);
+        if (v.Z == 0) {
+            posZ = this.Settings.MarkTpPosZ;
+        } else {
+            posZ = v.Z
+        };
+
+        this.TeleportToPositionNoLoading(targetX, targetY, posZ);
+        ModUtils_1.ModUtils.KunLog("MarkTp:go to (" + targetX.toString() + "," + targetY.toString() + "," + posZ.toString());
+
+    }
+
     
+
 }
 exports.ModManager = ModManager;

@@ -1,5 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: !0 }),
+Object.defineProperty(exports, "__esModule", {
+  value: !0,
+}),
   (exports.BattleNetController = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   Time_1 = require("../../../Core/Common/Time"),
@@ -8,12 +10,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   Net_1 = require("../../../Core/Net/Net"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  ModManager_1 = require("../../Manager/ModManager"),
   REQUEST_TIME_GAP = 2e3;
 class BattleNetController {
   static async RequestCaptureEntity(e) {
     var t = Time_1.Time.Now;
-    if ((t - this.hmo < REQUEST_TIME_GAP)&&ModManager_1.ModManager.Settings.AutoAbsorb) return !1;
     this.hmo = t;
     var r,
       t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e);
