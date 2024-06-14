@@ -331,13 +331,13 @@ class ModLanguage {
     },
     {
       en: "Infinity",
-      chs: "无穷",
+      chs: "无限",
       ja: "無限"
     },
     {
-      en: "Auto Mine [Num1]",
-      chs: "自动地雷[Num1]",
-      ja: "オートマイン[Num1]"
+      en: "Auto Miner [Num1]",
+      chs: "自动矿工[Num1]",
+      ja: "オートマイナー[Num1]"
     },
   ];
 

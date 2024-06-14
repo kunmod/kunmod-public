@@ -122,7 +122,7 @@ class MainMenu {
           Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
           Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
           Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
-          Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mine [Num1]"));
+          Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Miner [Num1]"));
 
           Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.GodMode = isChecked;
