@@ -105,44 +105,44 @@ class ModLanguage {
       ja: "オフ",
     },
     {
-      en: "God Mode",
-      chs: "无敌模式",
-      ja: "神モードやで",
+      en: "God Mode[F5]",
+      chs: "无敌模式[F5]",
+      ja: "神モードやで[F5]",
     },
     {
-      en: "Hit Multiplier",
-      chs: "多倍攻击",
-      ja: "ヒット倍率",
+      en: "Hit Multiplier[F6]",
+      chs: "多倍攻击[F6]",
+      ja: "ヒット倍率[F6]",
     },
     {
-      en: "Auto Pick Treasure",
-      chs: "拾取宝箱",
-      ja: "自動で宝を拾うんや",
+      en: "Auto Pick Treasure[F7]",
+      chs: "拾取宝箱[F7]",
+      ja: "自動で宝を拾うんや[F7]",
     },
     {
-      en: "Auto Absorb",
-      chs: "自动吸收",
-      ja: "自動で吸収すんや",
+      en: "Auto Absorb[F8]",
+      chs: "自动吸收[F8]",
+      ja: "自動で吸収すんや[F8]",
     },
     {
-      en: "Kill Aura",
-      chs: "杀戮光环",
-      ja: "キルオーラやで",
+      en: "Kill Aura[F9]",
+      chs: "杀戮光环[F9]",
+      ja: "キルオーラやで[F9]",
     },
     {
-      en: "Perception Range",
-      chs: "感知范围",
-      ja: "感知範囲やで",
+      en: "Perception Range[F10]",
+      chs: "感知范围[F10]",
+      ja: "感知範囲やで[F10]",
     },
     {
-      en: "No Cooldown",
-      chs: "无冷却",
-      ja: "クールダウンなしやで",
+      en: "No Cooldown[F11]",
+      chs: "无冷却[F11]",
+      ja: "クールダウンなしやで[F11]",
     },
     {
-      en: "Player Speed",
-      chs: "玩家速度",
-      ja: "プレイヤーのスピードやで",
+      en: "Player Speed[F12]",
+      chs: "玩家速度[F12]",
+      ja: "プレイヤーのスピードやで[F12]",
     },
     {
       en: "CustomTp",
@@ -150,9 +150,9 @@ class ModLanguage {
       ja: "てきとうな瞬間移動",
     },
     {
-      en: "Auto Loot",
-      chs: "自动拾取:",
-      ja: "自動あっぷる",
+      en: "Auto Loot[Nun0]",
+      chs: "自动拾取[Nun0]",
+      ja: "自動あっぷる[Nun0]",
     },
     {
       en: "CustomTp State [Insert]:",
@@ -160,9 +160,9 @@ class ModLanguage {
       ja: "カスタムテレポートの状態[Insert]",
     },
     {
-      en: "Shows[Delete]",
-      chs: "显示[Delete]",
-      ja: "ショー[Delete]",
+      en: " Show[Del]",
+      chs: " 显示[Del]",
+      ja: " ショー[Del]",
     },
     {
       en: "CurrentFile:",
@@ -283,7 +283,20 @@ class ModLanguage {
       en: " | AutoMode[End]: ",
       chs: " | 自动模式[End]: ",
       ja: " | AutoMode[End]: ",
-    }
+    },
+    {
+      en: "Infinite Stamina",
+      chs: "无限体力",
+      ja: "無限のスタミナ",
+    },
+    {
+      en: "Custom UID",
+      chs: "自定义UID",
+      ja: "カスタムUID",
+    },
+
+
+
   
   ];
 

@@ -31,7 +31,7 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
-  ModManager_1 = require("../../../../../Manager/ModManager"),//add
+  ModManager_1 = require("../../../../../Manager/ModManager"), //add
   CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
   MonsterFrozenComponent_1 =
     require("./MonsterFrozenComponent").MonsterFrozenComponent,
@@ -59,13 +59,17 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
       (this.B$o = () => {
         this.fte.IsAutonomousProxy && this.b$o();
       }),
-      (this.q$o = (t, e) => {//add code
-        if(ModManager_1.ModManager.Settings.killAura === true){
+      (this.q$o = (t, e) => {
+        //add code
+        if (//Only Hatred
+          ModManager_1.ModManager.Settings.killAura === true &&
+          ModManager_1.ModManager.Settings.killAuraState == 0
+        ) {
           CombatMessage_1.CombatNet.Call(
             NetDefine_1.ERequestMessageId.MonsterDrownRequest,
             this.Entity,
             Protocol_1.Aki.Protocol.MonsterDrownRequest.create()
-          )       
+          );
         }
         e &&
           (this.G$o(!0),
@@ -82,12 +86,19 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
             this.Entity,
             "怪物进入战斗状态"
           ));
-
-
-  
       });
   }
   OnStart() {
+    if (//Infinity
+      ModManager_1.ModManager.Settings.killAura === true &&
+      ModManager_1.ModManager.Settings.killAuraState == 1
+    ) {
+      CombatMessage_1.CombatNet.Call(
+        NetDefine_1.ERequestMessageId.MonsterDrownRequest,
+        this.Entity,
+        Protocol_1.Aki.Protocol.MonsterDrownRequest.create()
+      );
+    }
     return (
       (this.fte = this.Entity.CheckGetComponent(3)),
       (this.aat = this.Entity.CheckGetComponent(156)),

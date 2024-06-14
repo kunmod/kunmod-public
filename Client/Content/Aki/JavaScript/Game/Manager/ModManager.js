@@ -22,6 +22,7 @@ CharacterController_1 = require("..//NewWorld/Character/CharacterController"),
 UidView_1 = require("../Module/UidShow/UidView"),
 LguiUtil_1 = require("../Module/Util/LguiUtil"),
 UiManager_1 = require("../../Ui/UiManager"),
+UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
 WeatherController_1 = require("../Module/Weather/WeatherController"),
 WorldDebugModel_1 = require("../World/Model/WorldDebugModel"), //
 ModCustomTp_1 = require("./ModFuncs/ModCustomTp"),
@@ -30,7 +31,7 @@ ModDebuger_1 = require("./ModFuncs/ModDebuger");
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
-class ModManager extends UiControllerBase_1.UiControllerBase {
+class ModManager extends UiTickViewBase_1.UiTickViewBase {
     static Settings = {
         ModEnabled: true,
         GodMode: true,
@@ -42,16 +43,21 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
         NoCD: false,
         InfiniteStamina: false,
         killAura: false,
+        killAuraState: 1,    //0 Only Hatred  1Infinity
         PerceptionRange: false,
         Weather: false,
         WeatherType: 1,
-        MarkTp: false,
+        MarkTp: true,
+        MarkX:0,
+        MarkY:0,
+        MarkZ:0,
         MarkTpPosZ: 300,
         CustomTp: false,
         playerSpeedValue: 3,
         PlayerSpeed: false,
         ShowMenu: false,
         AutoLoot: false,
+
 
         Uid: "",
     };
@@ -73,6 +79,7 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
         this.AddToggle("CustomTp", "Insert");
         this.AddToggle("AutoLoot", "NumPadZero");
         this.AddToggle("AntiDither", "NumPadOne");
+        this.AddKey("MarkTp", "t");
 
     }
 
@@ -155,6 +162,11 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
             ModDebuger_1.ModDebuger.ListenDebug();
         }
 
+        if (this.listenKey("MarkTp", "t")) {
+            if(this.Settings.MarkTp)
+            this.TpNoloadingTo(this.Settings.MarkX*100,this.Settings.MarkY*100,this.Settings.MarkZ*100)
+        }
+
     }
 
     static AddToggle(desc, key) {
@@ -209,12 +221,7 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
             return press;
     }
 
-    static TPtest() {
-        TeleportController_1.TeleportController.TeleportToPositionNoLoading(
-            new UE.Vector(0, 0, 0),
-            new UE.Rotator(0, 0, 0),
-            "comment/message");
-    }
+
     static TpNoloadingTo(x, y, z) {
         TeleportController_1.TeleportController.TeleportToPositionNoLoading(
             new UE.Vector(x, y, z),
@@ -277,18 +284,7 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
         newBox.SetTitle(ModTr("KunMods State[Home] DisableAntiCheat : <color=green>ON</color> "));
         ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(newBox);
     }
-    static MarkTp() {
-        var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
-        var i = ModelManager_1.ModelManager.MapModel.GetMark(r[0], r[1]);
-        var targetX = i.TrackTarget.X;
-        var targetY = i.TrackTarget.Y;
-        var v = MapController_1.MapController.GetMarkPosition(targetX, targetY);
-        if (v.Z == 0)
-            v.Z = 300;
-        if (v.X == 0 && v.Y == 0)
-            return;
-        this.TpNoloadingTo(v.X * 100, v.Y * 100, v.Z * 100);
-    }
+
     static GetEntityList() {
         return ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     }
@@ -304,16 +300,16 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
         UiManager_1.UiManager.CloseView("UidView");
         UiManager_1.UiManager.OpenView("UidView");
     }
-    static Marktp() {
+    static TrackTP() {//mark
         var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
-        logger.warn("[kunmod:]Marktp:", r);
+        puerts_1.logger.Debug("[kunmod:]Marktp:", r);
         var i = ModelManager_1.ModelManager.MapModel.GetMark(r[0], r[1]);
-        logger.warn("[kunmod:]Marktp:", i.TrackTarget);
+        puerts_1.logger.Debug("[kunmod:]Marktp:", i.TrackTarget);
         var targetX = i.TrackTarget.X;
         var targetY = i.TrackTarget.Y;
         var posZ = 0;
         var v = MapController_1.MapController.GetMarkPosition(targetX, targetY);
-        logger.warn("[kunmod:]Marktp:", v);
+        puerts_1.logger.info("[kunmod:]Marktp:", v);
         if (v.Z == 0) {
             posZ = this.Settings.MarkTpPosZ;
         } else {
@@ -321,8 +317,11 @@ class ModManager extends UiControllerBase_1.UiControllerBase {
         };
 
         this.TeleportToPositionNoLoading(targetX, targetY, posZ);
+        ModUtils_1.ModUtils.KunLog("MarkTp:go to (" + targetX.toString() + "," + targetY.toString() + "," + posZ.toString());
 
     }
+
+    
 
 }
 exports.ModManager = ModManager;

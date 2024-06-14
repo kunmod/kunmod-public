@@ -20,7 +20,8 @@ let keyState = false,
   Menu = null,
   isMenuLoaded = false,
   isMenuShow = false,
-  currentLang = "en";
+  currentLang = "en",
+  loadMenuInterval = null
 
 function main() {
   var e = puerts_1.argv.getByName("GameInstance");
@@ -43,9 +44,16 @@ function IsKey(str) {
   }
   return false;
 }
-function onStart() {
+
+function listenKey() {
+  ModManager_1.ModManager.listenModsToggle();
   InputSeeting_1.InputSettings.AddActionMapping("", "LeftAlt");
   InputSeeting_1.InputSettings.AddActionMapping("", "X");
+
+  if (IsKey("X") === true) {
+    isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
+    isMenuShow = !isMenuShow;
+  }
 }
 
 
@@ -55,20 +63,30 @@ function KunLog(string){
 }
 
 function OnTick() {
-  onStart();
-  if (IsKey("X") === true) {
-    if (isMenuLoaded == false) {
-      KunLog("KUN-MOD Menu Loaded");
-      isMenuLoaded = true;
+      
+  if (!isMenuLoaded) {
+    currentLang = ModLanguage.GetCurrLang();
+    const MenuUI = ResourceSystem_1.ResourceSystem.Load(
+      "/Game/Aki/ModMenu.ModMenu_C",
+      UE.Class
+    );
+    const Yinlin = ResourceSystem_1.ResourceSystem.Load(
+      "/Game/Aki/Yinlin.Yinlin",
+      UE.Texture
+    );
+    const Gradient = ResourceSystem_1.ResourceSystem.Load(
+      "/Game/Aki/Gradient.Gradient",
+      UE.Texture
+    );
 
-      currentLang = ModLanguage.GetCurrLang();
+    Menu = UE.UMGManager.CreateWidget(GlobalData_1.GlobalData.World, MenuUI);
 
-      const MenuUI = ResourceSystem_1.ResourceSystem.Load(
-        "/Game/Aki/ModMenu.ModMenu_C",
-        UE.Class
-      );
+    if (Menu) {
+      const YinlinImage = Menu.Yinlin,
+        TitleBarImage = Menu.TitleBar;
 
-      Menu = UE.UMGManager.CreateWidget(GlobalData_1.GlobalData.World, MenuUI);
+      YinlinImage.SetBrushFromTexture(Yinlin);
+      TitleBarImage.SetBrushFromTexture(Gradient);
 
       let GodMode = Menu.GodModeCheck,
         NoCD = Menu.NoCDCheck,
@@ -123,11 +141,11 @@ function OnTick() {
       HitMultiplierText.SetText(ModText(16));
       KillAuraText.SetText(ModText(19));
       AntiDitherText.SetText(ModText(33));
-      InfiniteStaminaText.SetText("Infinite Stamina");
+      InfiniteStaminaText.SetText(ModLanguage.ModTr("Infinite Stamina"));
       AutoLootText.SetText(ModText(24));
       PerceptionRangeText.SetText(ModText(20));
       PlayerSpeedText.SetText(ModText(22));
-      CustomUidText.SetText("Custom UID");
+      CustomUidText.SetText(ModLanguage.ModTr("Custom UID"));
 
       GodMode.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.GodMode = isChecked;
@@ -243,11 +261,11 @@ function OnTick() {
       });
 
       Menu.AddToViewport();
-      Menu.SetVisibility(0);
-    } else {
-      isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
+      Menu.SetVisibility(2);
+      isMenuLoaded = true;
+      KunLog("KUN-MOD Menu Loaded!");
+      clearInterval(loadMenuInterval)
     }
-    isMenuShow = !isMenuShow;
   }
 }
 
@@ -260,7 +278,9 @@ function updatePlayerSpeed() {
 }
 
 function ModText(id) {
-  return ModLanguage.translate[id][currentLang];
+  var text = ModLanguage.ModTr(ModLanguage.translate[id].en);
+  
+  return text;
 }
 
 function killAuraLang(lang) {
@@ -273,14 +293,14 @@ function killAuraLang(lang) {
       break;
     case "zh-CN":
       return {
-        onlyHatred: "Only Hatred",
-        infinity: "Infinity",
+        onlyHatred: "仅仇恨",
+        infinity: "无限",
       };
       break;
     case "ja":
       return {
-        onlyHatred: "Only Hatred",
-        infinity: "Infinity",
+        onlyHatred: "憎しみだけ",
+        infinity: "无穷",
       };
       break;
     default:
@@ -291,6 +311,8 @@ function killAuraLang(lang) {
   }
 }
 
-setInterval(OnTick, 1);
+loadMenuInterval = setInterval(OnTick, 3000);
+setInterval(listenKey, 1);
+
 main();
 //# sourceMappingURL=Main.js.map

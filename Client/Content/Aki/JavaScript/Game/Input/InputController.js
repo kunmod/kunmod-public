@@ -201,7 +201,7 @@ class InputController extends ControllerBase_1.ControllerBase {
   }
   static InputAxis(t, n) {
     //add my code
-    ModManager_1.ModManager.listenModsToggle();
+    //ModManager_1.ModManager.listenModsToggle();
 
     var e = this.Model.GetAxisValues();
     if (0 !== n || !e.has(t)) {
