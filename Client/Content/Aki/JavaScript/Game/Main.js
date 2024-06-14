@@ -54,7 +54,7 @@ class MainMenu {
       isMenuShow ? Menu.SetVisibility(2) : Menu.SetVisibility(0);
       isMenuShow = !isMenuShow;
     }
-    MainMenu.updateMenuState()
+    MainMenu.updateMenuState();
   }
 
   static KunLog(string) {
@@ -93,24 +93,35 @@ class MainMenu {
           MainMenu.updateMenuState();
 
           // translate
-          Menu.HeadingPlayer.SetText("Player");
-          Menu.HeadingWorld.SetText("World");
-          Menu.HeadingUI.SetText("UI");
-          Menu.GodModeText.SetText(MainMenu.ModText(15));
-          Menu.NoCDText.SetText(MainMenu.ModText(21));
-          Menu.AutoPickTreasureText.SetText(MainMenu.ModText(17));
-          Menu.AutoAbsorbEchoText.SetText(MainMenu.ModText(18));
-          Menu.HitMultiplierText.SetText(MainMenu.ModText(16));
-          Menu.KillAuraText.SetText(MainMenu.ModText(19));
-          Menu.AntiDitherText.SetText(MainMenu.ModText(33));
-          Menu.InfiniteStaminaText.SetText("Infinite Stamina");
-          Menu.AutoLootText.SetText(MainMenu.ModText(24));
-          Menu.PerceptionRangeText.SetText(MainMenu.ModText(20));
-          Menu.PlayerSpeedText.SetText(MainMenu.ModText(22));
-          Menu.CustomUidText.SetText("Custom UID");
-          Menu.HideHUDText.SetText("Hide HUD");
-          Menu.HideDmgText.SetText("Hide Damage Text");
-          Menu.MarkTPText.SetText("Mark TP");
+          Menu.HeadingPlayer.SetText(ModLanguage.ModTr("Player"));
+          Menu.HeadingWorld.SetText(ModLanguage.ModTr("World"));
+          Menu.HeadingUI.SetText(ModLanguage.ModTr("UI"));
+          Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode[F5]"));
+          Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
+          Menu.AutoPickTreasureText.SetText(
+            ModLanguage.ModTr("Auto Pick Treasure [F7]")
+          );
+          Menu.AutoAbsorbEchoText.SetText(
+            ModLanguage.ModTr("Auto Absorb [F8]")
+          );
+          Menu.HitMultiplierText.SetText(
+            ModLanguage.ModTr("Hit Multiplier [F6]")
+          );
+          Menu.KillAuraText.SetText(ModLanguage.ModTr("Kill Aura [F9]"));
+          Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither [Num1]"));
+          Menu.InfiniteStaminaText.SetText(
+            ModLanguage.ModTr("Infinite Stamina")
+          );
+          Menu.AutoLootText.SetText(ModLanguage.ModTr("Auto Loot [Num0]"));
+          Menu.PerceptionRangeText.SetText(
+            ModLanguage.ModTr("Perception Range [F10]")
+          );
+          Menu.PlayerSpeedText.SetText(ModLanguage.ModTr("Player Speed [F12]"));
+          Menu.CustomUidText.SetText(ModLanguage.ModTr("Custom UID"));
+          Menu.HideHUDText.SetText(ModLanguage.ModTr("Hide HUD"));
+          Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
+          Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
+          Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
 
           Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.GodMode = isChecked;
@@ -195,7 +206,7 @@ class MainMenu {
             if (typeof value === "number") {
               ModManager.Settings.playerSpeedValue = value;
             } else {
-              value = 1
+              value = 1;
               ModManager.Settings.playerSpeedValue = value;
             }
             MainMenu.updatePlayerSpeed();
@@ -203,7 +214,7 @@ class MainMenu {
           });
 
           Menu.CustomUidSubmit.OnClicked.Add(() => {
-            const UID = Menu.CustomUidValue.GetText()
+            const UID = Menu.CustomUidValue.GetText();
             ModManager.ChangeUid(UID);
             MainMenu.KunLog("UID Changed: " + UID);
           });
@@ -236,6 +247,7 @@ class MainMenu {
         Menu.SetVisibility(0);
         isMenuLoaded = true;
         MainMenu.KunLog("KUN-MOD Menu Loaded!");
+        puerts_1.logger.info(UE.KuroStaticLibrary);
         clearInterval(loadMenuInterval);
       }
     }
@@ -259,7 +271,9 @@ class MainMenu {
     Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
     Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
     Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
-    Menu.KillAuraValue.SetSelectedIndex(MainMenu.killAura()[ModManager.Settings.killAuraState]);
+    Menu.KillAuraValue.SetSelectedIndex(
+      MainMenu.killAura()[ModManager.Settings.killAuraState]
+    );
     Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
   }
 
@@ -271,27 +285,8 @@ class MainMenu {
     }
   }
 
-  static ModText(id) {
-    var text = ModLanguage.ModTr(ModLanguage.translate[id].en);
-    return text;
-  }
-
   static killAura() {
-    const lang = currentLang;
-
-    switch (lang) {
-      case "en":
-        return ["Only Hatred", "Infinity"];
-        break;
-      case "zh-CN":
-        return ["Only Hatred", "Infinity"];
-        break;
-      case "ja":
-        return ["Only Hatred", "Infinity"];
-        break;
-      default:
-        return ["Only Hatred", "Infinity"];
-    }
+    return [ModLanguage.ModTr("Only Hatred"), ModLanguage.ModTr("Infinity")];
   }
 }
 
