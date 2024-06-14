@@ -27,11 +27,12 @@ WeatherController_1 = require("../Module/Weather/WeatherController"),
 WorldDebugModel_1 = require("../World/Model/WorldDebugModel"), //
 ModCustomTp_1 = require("./ModFuncs/ModCustomTp"),
 ModUtils_1 = require("./ModFuncs/ModUtils"),
-ModDebuger_1 = require("./ModFuncs/ModDebuger");
+ModDebuger_1 = require("./ModFuncs/ModDebuger"),
+MainMenu_1 = require("../Main");
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
-class ModManager extends UiTickViewBase_1.UiTickViewBase {
+class ModManager {
     static Settings = {
         ModEnabled: true,
         GodMode: true,
@@ -43,7 +44,7 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
         NoCD: false,
         InfiniteStamina: false,
         killAura: false,
-        killAuraState: 1,    //0 Only Hatred  1Infinity
+        killAuraState: 0,    //0 Only Hatred  1 Infinity
         PerceptionRange: false,
         Weather: false,
         WeatherType: 1,
@@ -59,8 +60,8 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
         AutoLoot: false,
         HideHUD: false,
         HideDmgUi: true,
+        AutoMine: false,
         Uid: "000000001",
-        AutoMine:false,
     };
 
     static ModStart() {
@@ -77,7 +78,7 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
         this.AddToggle("PlayerSpeed", "F12");
         this.AddToggle("CustomTp", "Insert");
         this.AddToggle("AutoLoot", "NumPadZero");
-        this.AddToggle("AntiDither", "NumPadOne");
+        this.AddToggle("AutoMine", "NumPadOne");
         this.AddKey("MarkTp", "t");
 
     }
@@ -154,7 +155,7 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
         }
 
         this.listenMod('AutoLoot', "NumPadZero", "AutoLoot");
-        this.listenMod('AntiDither', "NumPadOne", "AntiDither");
+        this.listenMod('AutoMine', "NumPadOne", "AutoMine");
         ModDebuger_1.ModDebuger.EnableDebug();
         if (ModDebuger_1.ModDebuger.Setting.EnableDebug) {
             ModDebuger_1.ModDebuger.ListenDebug();
@@ -276,7 +277,7 @@ class ModManager extends UiTickViewBase_1.UiTickViewBase {
 
             this.FuncState(this.Settings.CustomTp, ModTr("CustomTp[Ins]")) +
             this.FuncState(this.Settings.AutoLoot, ModTr("AutoLoot[Num0]")) +
-            this.FuncState(this.Settings.AntiDither, ModTr("AntiDither[Num1]"))
+            this.FuncState(this.Settings.AntiDither, ModTr("AntiDither"))
 
             newBox.SetTextArgs(state);
         newBox.SetTitle(ModTr("KunMods State[Home] DisableAntiCheat : <color=green>ON</color> "));
