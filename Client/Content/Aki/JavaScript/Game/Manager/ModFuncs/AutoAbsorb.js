@@ -18,9 +18,9 @@ const EntityManager = EntityManager_1.ModsEntityManager;
 class AutoAbsorb extends EntityManager {
   static AutoAbsorb(entity) {
     if (ModManager.Settings.AutoAbsorbnew && this.isVision(entity)) {
-      puerts_1.logger.warn("kun:AutoAbsorbnew:isVision",entity.Entity.Id);
+      //puerts_1.logger.warn("kun:AutoAbsorbnew:isVision",entity.Entity.Id);
       ModMethod.RequestCaptureEntity(entity.Entity);
-      puerts_1.logger.warn("kun:AutoAbsorbnew:End",entity.Entity.Id);
+      //puerts_1.logger.warn("kun:AutoAbsorbnew:End",entity.Entity.Id);
     }
   }
 }

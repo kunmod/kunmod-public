@@ -9,10 +9,11 @@ const ModManager_1 = require("../ModManager");
 const ModUtils_1 = require("./ModUtils");
 const Global_1 = require("../../Global");
 const ModelManager_1 = require("../../Manager/ModelManager");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol");
 //const CreatureModel = ModelManager_1.ModelManager.CreatureModel;
 
 class ModsEntityManager {
-  static PlayerEntity=null;
+  static PlayerEntity = null;
   static AllEntityInfo = [];
   static EntitiesSortedList = [];
   static ModsEntitys = {
@@ -60,23 +61,27 @@ class ModsEntityManager {
   };
 
   static GetPlayerEntity() {
-    this.PlayerEntity =Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity;
+    this.PlayerEntity =
+      Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity;
     return this.PlayerEntity;
   }
   static GetPlayerPos() {
-    let pos =Global_1.Global.BaseCharacter?.CharacterActorComponent.CachedDesiredActorLocation.Tuple;
-    let playerPos = {    
+    let pos =
+      Global_1.Global.BaseCharacter?.CharacterActorComponent
+        .CachedDesiredActorLocation.Tuple;
+    let playerPos = {
       X: pos[0],
       Y: pos[1],
-      Z: pos[2]};
-      
+      Z: pos[2],
+    };
+
     return playerPos;
   }
   static PushEntityList() {
     this.GetEntitySortedList();
     this.ModsEntitys.EntityList = this.EntitiesSortedList;
     this.GetEntityCount();
-    this.GetPlayerEntity()
+    this.GetPlayerEntity();
     // puerts_1.logger.warn(
     //   "[KUNMODDEBUG]:GetEntityList",
     //   this.ModsEntitys.EntityList
@@ -89,7 +94,16 @@ class ModsEntityManager {
       ModelManager_1.ModelManager.CreatureModel.EntitiesSortedList;
     return this.EntitiesSortedList;
   }
-
+  static GetEntityType(entity) {
+    let type = entity.Entity.GetComponent(0).GetEntityType();
+    if (type == Protocol_1.Aki.Protocol.EEntityType.Player) return "Player";
+    if (type == Protocol_1.Aki.Protocol.EEntityType.Npc) return "Npc";
+    if (type == Protocol_1.Aki.Protocol.EEntityType.Monster) return "Monster";
+    if (type == Protocol_1.Aki.Protocol.EEntityType.SceneItem)
+      return "SceneItem";
+    if (type == Protocol_1.Aki.Protocol.EEntityType.Vision) return "Vision";
+    if (type == Protocol_1.Aki.Protocol.EEntityType.Animal) return "Animal";
+  }
   static GetEntityCount() {
     this.ModsEntitys.EntityCount = this.EntitiesSortedList.length;
     // puerts_1.logger.warn(
@@ -103,7 +117,7 @@ class ModsEntityManager {
   }
   static GetPosition(entity) {
     let Pbdata = this.GetEntityData(entity.PbDataId);
-   // puerts_1.logger.warn("entitymanager:getpos:pbdata:",Pbdata);
+    // puerts_1.logger.warn("entitymanager:getpos:pbdata:",Pbdata);
     let pos = Pbdata.Transform.Pos;
     //puerts_1.logger.warn("entitymanager:getpos:pos:",pos);
 
@@ -178,10 +192,9 @@ class ModsEntityManager {
     return BlueprintType.startsWith("Quest");
   }
   static isVision(entity) {
-    let BlueprintType = this.GetBlueprintType(entity);
     return (
-      BlueprintType.startsWith("Vision") ||
-      BlueprintType.startsWith("VisionBoss")
+      (entity.Entity.GetComponent(0)).GetEntityType() ===
+      Protocol_1.Aki.Protocol.EEntityType.Vision
     );
   }
   static isWeapon(entity) {

@@ -66,6 +66,7 @@ class ModManager {
         AutoDestroy:true,
         killAuranew:true,
         killAuraRadius:300,
+        KillAnimal:true,
         AutoAbsorbnew:true,
         Uid: "100000000",
     };

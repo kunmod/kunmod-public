@@ -10,16 +10,16 @@ const puerts_1 = require("puerts"),
   GameProcedure_1 = require("./GameProcedure"),
   ModManager_1 = require("./Manager/ModManager"),
   ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage"),
-  EntityManager_1 =require("./Manager/ModFuncs/EntityManager"),
-  AutoAbsorb_1 =require("./Manager/ModFuncs/AutoAbsorb"),
-  KillAura_1 =require("./Manager/ModFuncs/KillAura"),
-  AutoDestroy_1 =require("./Manager/ModFuncs/AutoDestroy"),
+  EntityManager_1 = require("./Manager/ModFuncs/EntityManager"),
+  AutoAbsorb_1 = require("./Manager/ModFuncs/AutoAbsorb"),
+  KillAura_1 = require("./Manager/ModFuncs/KillAura"),
+  AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager");
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage,
-  EntityManager=EntityManager_1.ModsEntityManager;
+  EntityManager = EntityManager_1.ModsEntityManager;
 
 let keyState = false,
   Menu = null,
@@ -61,13 +61,11 @@ class MainMenu {
         Menu.SetVisibility(0);
       } else {
         MainMenu.getTranslation();
-        Menu.KillAuraValue.ClearOptions()
+        Menu.KillAuraValue.ClearOptions();
         for (const option in MainMenu.killAura()) {
           Menu.KillAuraValue.AddOption(MainMenu.killAura()[option]);
         }
-        Menu.KillAuraValue.SetSelectedIndex(
-          ModManager.Settings.killAuraState
-        );
+        Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
         Menu.SetVisibility(2);
       }
       isMenuShow = !isMenuShow;
@@ -327,41 +325,28 @@ class MainMenu {
     return [ModLanguage.ModTr("Only Hatred"), ModLanguage.ModTr("Infinity")];
   }
 }
-class ModEntityListener{
+class ModEntityListener {
+  static Runtime() {
+    if (!ModManager.Settings.DebugEntity) return;
+    if (!ModUtils.isInGame) return;
 
-static Runtime(){
-  if(!ModUtils.isInGame)
-    return;
-  if(!ModManager.Settings.DebugEntity)//onlydebug
-    return;
-  
-  EntityManager.PushEntityList()
-  const entitylist = EntityManager.ModsEntitys.EntityList;
-  const count = EntityManager.ModsEntitys.EntityCount;
-  for(let i = 0; i < count; i++){
-    //puerts_1.logger.warn("kun:Runtime entitycheck:"+i+"/"+count);
-    //AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
-    // if(EntityManager.isVision(entitylist[i]))
-    //   puerts_1.logger.warn("kun:EntityManager isVision",entitylist[i].Id);
-    var a =EntityManager.GetBlueprintType(entitylist[i]);
-    if(!a.startsWith("Gameplay")||!a.startsWith("Monster")||!a.startsWith("Collect")||!a.startsWith("Animal")||!a.startsWith("Npc")){
-      puerts_1.logger.warn("kun:找声骸",a);
+    EntityManager.PushEntityList();
+    const entitylist = EntityManager.ModsEntitys.EntityList;
+    const count = EntityManager.ModsEntitys.EntityCount;
+    for (let i = 0; i < count; i++) {
+      //puerts_1.logger.warn("kun:Runtime entitycheck:"+i+"/"+count);
+
+      //AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+      KillAura_1.KillAura.killAura(entitylist[i]);
+      AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
     }
-    KillAura_1.KillAura.killAura(entitylist[i]);
-    AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
-
-  }
-  //puerts_1.logger.warn("kun:Runtime is working");
-
-
-}//RuntimeS
-
-
-}//ModEntityListener
+    //puerts_1.logger.warn("kun:Runtime is working");
+  } //RuntimeS
+} //ModEntityListener
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-setInterval(ModEntityListener.Runtime, 2000);
+setInterval(ModEntityListener.Runtime, 1500);
 main();
 
 exports.MainMenu = MainMenu;
