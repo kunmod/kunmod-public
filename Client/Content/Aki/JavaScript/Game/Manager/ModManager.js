@@ -46,8 +46,7 @@ class ModManager {
         InfiniteStamina: false,
         killAura: false,
         killAuraState: 0,    //0 Only Hatred  1 Infinity
-        PerceptionRange: false,
-        
+        PerceptionRange: false,     
         MarkTp: false,
         MarkX:0,
         MarkY:0,
@@ -65,7 +64,7 @@ class ModManager {
         DebugEntity:true,
         AutoDestroy:true,
         killAuranew:true,
-        killAuraRadius:500,
+        killAuraRadius:300,
         KillAnimal:true,
         AutoAbsorbnew:true,
         AutoChest:true,
@@ -126,9 +125,9 @@ class ModManager {
 
         if (this.listenMod('PlayerSpeed', "F12", "PlayerSpeed")) {
             if (this.Settings.PlayerSpeed) {
-                this.SetPlayerSpeed(3);
+                EntityManager_1.ModsEntityManager.SetPlayerSpeed(this.Settings.playerSpeedValue);
             } else {
-                this.SetPlayerSpeed(1);
+                EntityManager_1.ModsEntityManager.SetPlayerSpeed(1);
             }
         }
         if (this.listenMod('CustomTp', "Insert", "CustomTp")) {
@@ -291,12 +290,7 @@ class ModManager {
     //     ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(newBox);
     // }
 
-    static SetPlayerSpeed(value) {
-        //CharacterController_1.CharacterController.SetTimeDilation(value);
-        let player = EntityManager_1.ModsEntityManager.GetPlayerEntity();
-        player.SetTimeDilation(value);
 
-    }
 
     static ChangeUid(string) {
         this.Settings.Uid = string;

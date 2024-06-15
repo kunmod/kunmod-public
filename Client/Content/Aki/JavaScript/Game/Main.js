@@ -317,9 +317,9 @@ class MainMenu {
 
   static updatePlayerSpeed() {
     if (ModManager.Settings.PlayerSpeed) {
-      ModManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
+      EntityManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
     } else {
-      ModManager.SetPlayerSpeed(1);
+      EntityManager.SetPlayerSpeed(1);
     }
   }
 
@@ -336,29 +336,31 @@ class ModEntityListener {
     const entitylist = EntityManager.ModsEntitys.EntityList;
     const count = EntityManager.ModsEntitys.EntityCount;
     for (let i = 0; i < count; i++) {
-      //AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
-     // KillAura_1.KillAura.killAura(entitylist[i]);
-      //KillAura_1.KillAura.KillAnimal(entitylist[i]);
-      //AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
-      //AutoChest_1.AutoChest.RewardChest(entitylist[i]);
-      //ESP_1.ESP.ESPDrawMain(entitylist[i]);
+      AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+      KillAura_1.KillAura.killAura(entitylist[i]);
+      KillAura_1.KillAura.KillAnimal(entitylist[i]);
+      AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
+     // AutoChest_1.AutoChest.RewardChest(entitylist[i]);
+
     }
     
     //puerts_1.logger.warn("kun:Runtime is working");
   } 
-} 
-class ESPmain{//esp测试test
-  static RuntimeESP(){
-    if (!ModUtils.isInGame) return;
-    ESP_1.ESP.ESPDrawMain();
-  }
 
-}
+} 
+// class ESPmain{//esp测试test
+//   static RuntimeESP(){
+//     if (!ModUtils.isInGame) return;
+//     ESP_1.ESP.ESPDrawMain();
+//   }
+
+// }
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-setInterval(ModEntityListener.Runtime, 1000);
-setInterval(ESPmain.RuntimeESP, 1);
+setInterval(MainMenu.updatePlayerSpeed, 1000);
+setInterval(ModEntityListener.Runtime, 3000);
+//setInterval(ESPmain.RuntimeESP, 1);
 main();
 
 exports.ESPmain = ESPmain;
