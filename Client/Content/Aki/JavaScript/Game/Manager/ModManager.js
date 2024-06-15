@@ -126,7 +126,7 @@ class ModManager {
 
         if (this.listenMod('PlayerSpeed', "F12", "PlayerSpeed")) {
             if (this.Settings.PlayerSpeed) {
-                this.SetPlayerSpeed(3);
+                this.SetPlayerSpeed(this.Settings.playerSpeedValue);
             } else {
                 this.SetPlayerSpeed(1);
             }
