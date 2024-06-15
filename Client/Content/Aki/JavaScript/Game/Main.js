@@ -73,6 +73,7 @@ class MainMenu {
       isMenuShow = !isMenuShow;
     }
     MainMenu.updateMenuState();
+    MainMenu.updatePlayerSpeed();
   }
 
   static KunLog(string) {
@@ -138,15 +139,12 @@ class MainMenu {
             MainMenu.KunLog("Hit Multiplier: " + isChecked);
           });
 
-          Menu.HitMultiplierCount.OnTextChanged.Add((value) => {
-    
-            if (isNaN(value)) {
-              value = 1
-              Menu.HitMultiplierCount.SetText(value)
-            }
+          Menu.HitMultiplierSlider.OnValueChanged.Add((value) => {
+            value = value.toFixed(0)
+            Menu.HitMultiplierValue.SetText(value)
             ModManager.Settings.Hitcount = value;
             MainMenu.KunLog("Hit Multiplier Count: " + value);
-          });
+          })
 
           Menu.KillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.killAura = isChecked;
@@ -188,19 +186,14 @@ class MainMenu {
           Menu.PlayerSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.PlayerSpeed = isChecked;
             MainMenu.KunLog("Player Speed: " + isChecked);
-            MainMenu.updatePlayerSpeed();
           });
 
-          Menu.PlayerSpeedValue.OnTextChanged.Add((value) => {
-    
-            if (isNaN(value)) {
-              value = 1;
-              Menu.PlayerSpeedValue.SetText(value)
-            }
+          Menu.PlayerSpeedSlider.OnValueChanged.Add((value) => {
+            value = value.toFixed(0)
+            Menu.PlayerSpeedValue.SetText(value)
             ModManager.Settings.playerSpeedValue = value;
             MainMenu.KunLog("Player Speed Value: " + value);
-            MainMenu.updatePlayerSpeed();
-          });
+          })
 
           Menu.CustomUidSubmit.OnClicked.Add(() => {
             const UID = Menu.CustomUidValue.GetText();
@@ -260,23 +253,25 @@ class MainMenu {
             MainMenu.KunLog("New Kill Aura: " + isChecked);
           })
 
-          Menu.NewKillAuraRadius.OnTextChanged.Add((value) => {
-    
-            if (isNaN(value)) {
-              value = 500;
-              Menu.NewKillAuraRadius.SetText(value)
-            }
+          Menu.NewKillAuraSlider.OnValueChanged.Add((value) => {
+            value = value.toFixed(0)
+            Menu.NewKillAuraValue.SetText(value)
             ModManager.Settings.killAuraRadius = value;
-            MainMenu.KunLog("New Kill Aura Radius: " + value);
-          });
+            MainMenu.KunLog("Hit Multiplier Count: " + value);
+          })
 
           Menu.KillAuraValue.SetSelectedIndex(
             ModManager.Settings.killAuraState
           );
-          Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
-          Menu.HitMultiplierCount.SetText(ModManager.Settings.Hitcount);
           Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
-          Menu.NewKillAuraRadius.SetText(ModManager.Settings.killAuraRadius);
+          
+          Menu.PlayerSpeedSlider.SetValue(ModManager.Settings.playerSpeedValue);
+          Menu.HitMultiplierSlider.SetValue(ModManager.Settings.Hitcount);
+          Menu.NewKillAuraSlider.SetValue(ModManager.Settings.killAuraRadius);
+
+          Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
+          Menu.HitMultiplierValue.SetText(ModManager.Settings.Hitcount)
+          Menu.NewKillAuraValue.SetText(ModManager.Settings.killAuraRadius);
         } catch (e) {
           MainMenu.KunLog(e);
         }
