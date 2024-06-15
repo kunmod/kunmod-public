@@ -247,6 +247,7 @@ class MainMenu {
           Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
           Menu.HitMultiplierCount.SetText(ModManager.Settings.Hitcount);
           Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
+          Menu.NewKillAuraRadius.SetText(ModManager.Settings.killAuraRadius);
         } catch (e) {
           MainMenu.KunLog(e);
         }
@@ -266,6 +267,8 @@ class MainMenu {
       Menu.HeadingWorld.SetText(ModLanguage.ModTr("World"));
       Menu.HeadingUI.SetText(ModLanguage.ModTr("UI"));
       Menu.HeadingTeleport.SetText(ModLanguage.ModTr("Teleport"));
+      Menu.HeadingDebug.SetText(ModLanguage.ModTr("Debug"));
+
       Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
       Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
       Menu.AutoPickTreasureText.SetText(
@@ -287,6 +290,14 @@ class MainMenu {
       Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
       Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
       Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
+      Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
+      Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy"));
+      Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
+      Menu.NewAutoAbsorb.SetText(ModLanguage.ModTr("New Auto Absorb"));
+
+      Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
+      Menu.Designer.SetText(ModLanguage.ModTr("GUI by n0bu"));
+      Menu.DisclaimerText.SetText(ModLanguage.ModTr("This hack is completely free, if you paid to get this, you have been scammed."));
     }
   }
 
@@ -312,6 +323,10 @@ class MainMenu {
       Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
       Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
       Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
+      Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
+      Menu.AutoDestroyCheck.SetIsChecked(ModManager.Settings.AutoDestroy);
+      Menu.NewAutoAbsorb.SetIsChecked(ModManager.Settings.AutoAbsorbnew);
+      Menu.NewKillAuraCheck.SetIsChecked(ModManager.Settings.killAuranew);
     }
   }
 
@@ -337,22 +352,22 @@ class ModEntityListener {
     const count = EntityManager.ModsEntitys.EntityCount;
     for (let i = 0; i < count; i++) {
       //AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
-     // KillAura_1.KillAura.killAura(entitylist[i]);
+      // KillAura_1.KillAura.killAura(entitylist[i]);
       //KillAura_1.KillAura.KillAnimal(entitylist[i]);
       //AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
       //AutoChest_1.AutoChest.RewardChest(entitylist[i]);
       //ESP_1.ESP.ESPDrawMain(entitylist[i]);
     }
-    
+
     //puerts_1.logger.warn("kun:Runtime is working");
-  } 
-} 
-class ESPmain{//esp测试test
-  static RuntimeESP(){
+  }
+}
+class ESPmain {
+  //esp测试test
+  static RuntimeESP() {
     if (!ModUtils.isInGame) return;
     ESP_1.ESP.ESPDrawMain();
   }
-
 }
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
