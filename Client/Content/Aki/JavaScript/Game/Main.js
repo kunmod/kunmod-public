@@ -241,6 +241,37 @@ class MainMenu {
             MainMenu.KunLog("Mark Teleport: " + isChecked);
           });
 
+          Menu.DebugEntityCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.DebugEntity = isChecked;
+            MainMenu.KunLog("Debug Entity: " + isChecked);
+          })
+
+          Menu.AutoDestroyCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.AutoDestroy = isChecked;
+            MainMenu.KunLog("Auto Destroy: " + isChecked);
+          })
+
+          Menu.NewAutoAbsorb.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.AutoAbsorbnew = isChecked;
+            MainMenu.KunLog("New Auto Absorb: " + isChecked);
+          })
+
+          Menu.NewKillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.killAuranew = isChecked;
+            MainMenu.KunLog("New Kill Aura: " + isChecked);
+          })
+
+          Menu.NewKillAuraRadius.OnTextChanged.Add((value) => {
+            value = Number(value);
+            if (typeof value === "number") {
+              ModManager.Settings.killAuraRadius = value;
+            } else {
+              value = 500;
+              ModManager.Settings.killAuraRadius = value;
+            }
+            MainMenu.KunLog("New Kill Aura Radius: " + value);
+          });
+
           Menu.KillAuraValue.SetSelectedIndex(
             ModManager.Settings.killAuraState
           );
