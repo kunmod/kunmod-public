@@ -332,7 +332,7 @@ class ModEntityListener{
 static Runtime(){
   if(!ModUtils.isInGame)
     return;
-  if(true)
+  if(!ModManager.Settings.DebugEntity)//onlydebug
     return;
   
   EntityManager.PushEntityList()
@@ -340,7 +340,13 @@ static Runtime(){
   const count = EntityManager.ModsEntitys.EntityCount;
   for(let i = 0; i < count; i++){
     //puerts_1.logger.warn("kun:Runtime entitycheck:"+i+"/"+count);
-    AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+    //AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+    // if(EntityManager.isVision(entitylist[i]))
+    //   puerts_1.logger.warn("kun:EntityManager isVision",entitylist[i].Id);
+    var a =EntityManager.GetBlueprintType(entitylist[i]);
+    if(!a.startsWith("Gameplay")||!a.startsWith("Monster")||!a.startsWith("Collect")||!a.startsWith("Animal")||!a.startsWith("Npc")){
+      puerts_1.logger.warn("kun:找声骸",a);
+    }
     KillAura_1.KillAura.killAura(entitylist[i]);
     AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
 
@@ -355,7 +361,7 @@ static Runtime(){
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-setInterval(ModEntityListener.Runtime, 1000);
+setInterval(ModEntityListener.Runtime, 2000);
 main();
 
 exports.MainMenu = MainMenu;

@@ -62,8 +62,10 @@ class ModManager {
         HideDmgUi: false,
         AutoMine: false,
         //test
+        DebugEntity:true,
         AutoDestroy:true,
         killAuranew:true,
+        killAuraRadius:300,
         AutoAbsorbnew:true,
         Uid: "100000000",
     };

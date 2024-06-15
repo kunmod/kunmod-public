@@ -66,9 +66,9 @@ class ModsEntityManager {
   static GetPlayerPos() {
     let pos =Global_1.Global.BaseCharacter?.CharacterActorComponent.CachedDesiredActorLocation.Tuple;
     let playerPos = {    
-      X: pos[0]/100,
-      Y: pos[1]/100,
-      Z: pos[2]/100};
+      X: pos[0],
+      Y: pos[1],
+      Z: pos[2]};
       
     return playerPos;
   }
@@ -103,9 +103,9 @@ class ModsEntityManager {
   }
   static GetPosition(entity) {
     let Pbdata = this.GetEntityData(entity.PbDataId);
-    puerts_1.logger.warn("entitymanager:getpos:pbdata:",Pbdata);
+   // puerts_1.logger.warn("entitymanager:getpos:pbdata:",Pbdata);
     let pos = Pbdata.Transform.Pos;
-    puerts_1.logger.warn("entitymanager:getpos:pos:",pos);
+    //puerts_1.logger.warn("entitymanager:getpos:pos:",pos);
 
     return pos;
   }

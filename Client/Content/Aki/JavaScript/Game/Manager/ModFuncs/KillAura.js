@@ -19,10 +19,21 @@ class KillAura extends EntityManager {
   static isIndistance(entity) {
     let monsterPos = this.GetPosition(entity);
     let distance = ModUtils.Getdistance2Player(monsterPos);
-    return distance < ModManager.Settings.killAuraRadius;
+    if (distance < ModManager.Settings.killAuraRadius*100) {
+      puerts_1.logger.warn(
+        "kun:killAuratest:isIndistance",
+        entity.Entity.Id,
+        distance
+      );
+      return true;
+    } else return false;
   }
   static killAura(entity) {
-    if (ModManager.Settings.killAuranew && this.isMonster(entity)&&isIndistance(entity)) {
+    if (
+      ModManager.Settings.killAuranew &&
+      this.isMonster(entity) &&
+      this.isIndistance(entity)
+    ) {
       puerts_1.logger.warn("kun:killAuratest:isMonster", entity.Entity.Id);
       ModMethod.MonsterDrownRequest(entity.Entity);
       puerts_1.logger.warn("kun:killAuratestEND", entity.Entity.Id);
