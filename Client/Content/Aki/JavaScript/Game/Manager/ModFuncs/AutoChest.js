@@ -58,6 +58,7 @@ class AutoChest extends EntityManager {
 
 
   static RewardChest(entity){
+    if(!ModManager_1.ModManager.Settings.AutoChest)return;
 
     if(this.isNeedReward(entity)){
         ModMethod.RewardChest(entity.Entity);

@@ -23,11 +23,12 @@ UidView_1 = require("../Module/UidShow/UidView"),
 LguiUtil_1 = require("../Module/Util/LguiUtil"),
 UiManager_1 = require("../../Ui/UiManager"),
 UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
-WeatherController_1 = require("../Module/Weather/WeatherController"),
+
 WorldDebugModel_1 = require("../World/Model/WorldDebugModel"), //
 ModCustomTp_1 = require("./ModFuncs/ModCustomTp"),
 ModUtils_1 = require("./ModFuncs/ModUtils"),
 ModDebuger_1 = require("./ModFuncs/ModDebuger"),
+EntityManager_1 = require("./ModFuncs/EntityManager"),
 MainMenu_1 = require("../Main");
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
@@ -46,8 +47,7 @@ class ModManager {
         killAura: false,
         killAuraState: 0,    //0 Only Hatred  1 Infinity
         PerceptionRange: false,
-        Weather: false,
-        WeatherType: 1,
+        
         MarkTp: false,
         MarkX:0,
         MarkY:0,
@@ -65,9 +65,12 @@ class ModManager {
         DebugEntity:true,
         AutoDestroy:true,
         killAuranew:true,
-        killAuraRadius:300,
+        killAuraRadius:500,
         KillAnimal:true,
         AutoAbsorbnew:true,
+        AutoChest:true,
+        WeatherChanger:false,
+        WeatherType: 1,
         Uid: "100000000",
     };
 
@@ -246,10 +249,7 @@ class ModManager {
         CreatureController_1.CreatureController.MonsterBoomRequest(entity, Delay);
     }
 
-    static ChangWeather(weatherID) {
-        WeatherController_1.WeatherController.TestChangeWeather(weatherID);
 
-    }
 
     static ShowConfirmBox(title, string, id) {
 
@@ -269,36 +269,33 @@ class ModManager {
         else
             return string + ModTr(" : <color=red>OFF</color> |");
     }
-    static ShowMenu() {
+    // static ShowMenu() {
 
-        var newBox = new ConfirmBoxDefine_1.ConfirmBoxDataNew(50);
-        var state =
-            this.FuncState(this.Settings.GodMode, ModTr("GodMode[F5]")) +
-            this.FuncState(this.Settings.HitMultiplier, ModTr("HitMultiplier[F6]")) +
-            this.FuncState(this.Settings.AutoPickTreasure, ModTr("AutoPickTreasure[F7]")) +
-            this.FuncState(this.Settings.AutoAbsorb, ModTr("AutoAbsorb[F8]")) +
-            this.FuncState(this.Settings.killAura, ModTr("killAura[F9]")) +
-            this.FuncState(this.Settings.PerceptionRange, ModTr("PerceptionRange[F10]")) +
-            this.FuncState(this.Settings.NoCD, ModTr("NoCD[F11]")) +
-            this.FuncState(this.Settings.PlayerSpeed, ModTr("PlayerSpeed[F12]")) +
+    //     var newBox = new ConfirmBoxDefine_1.ConfirmBoxDataNew(50);
+    //     var state =
+    //         this.FuncState(this.Settings.GodMode, ModTr("GodMode[F5]")) +
+    //         this.FuncState(this.Settings.HitMultiplier, ModTr("HitMultiplier[F6]")) +
+    //         this.FuncState(this.Settings.AutoPickTreasure, ModTr("AutoPickTreasure[F7]")) +
+    //         this.FuncState(this.Settings.AutoAbsorb, ModTr("AutoAbsorb[F8]")) +
+    //         this.FuncState(this.Settings.killAura, ModTr("killAura[F9]")) +
+    //         this.FuncState(this.Settings.PerceptionRange, ModTr("PerceptionRange[F10]")) +
+    //         this.FuncState(this.Settings.NoCD, ModTr("NoCD[F11]")) +
+    //         this.FuncState(this.Settings.PlayerSpeed, ModTr("PlayerSpeed[F12]")) +
 
-            this.FuncState(this.Settings.CustomTp, ModTr("CustomTp[Ins]")) +
-            this.FuncState(this.Settings.AutoLoot, ModTr("AutoLoot[Num0]")) +
-            this.FuncState(this.Settings.AntiDither, ModTr("AntiDither"))
+    //         this.FuncState(this.Settings.CustomTp, ModTr("CustomTp[Ins]")) +
+    //         this.FuncState(this.Settings.AutoLoot, ModTr("AutoLoot[Num0]")) +
+    //         this.FuncState(this.Settings.AntiDither, ModTr("AntiDither"))
 
-            newBox.SetTextArgs(state);
-        newBox.SetTitle(ModTr("KunMods State[Home] DisableAntiCheat : <color=green>ON</color> "));
-        ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(newBox);
-    }
-
-    static GetEntityList() {
-        return ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
-    }
-
-    static SpawnEntity() {}
+    //         newBox.SetTextArgs(state);
+    //     newBox.SetTitle(ModTr("KunMods State[Home] DisableAntiCheat : <color=green>ON</color> "));
+    //     ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(newBox);
+    // }
 
     static SetPlayerSpeed(value) {
-        CharacterController_1.CharacterController.SetTimeDilation(value);
+        //CharacterController_1.CharacterController.SetTimeDilation(value);
+        let player = EntityManager_1.ModsEntityManager.GetPlayerEntity();
+        player.SetTimeDilation(value);
+
     }
 
     static ChangeUid(string) {

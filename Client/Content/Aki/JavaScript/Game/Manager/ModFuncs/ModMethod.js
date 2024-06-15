@@ -17,6 +17,7 @@ const puerts_1 = require("puerts"),
   BattleNetController_1 = require("../../World/Controller/BattleNetController"), //add
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  WeatherController_1 = require("../../Module/Weather/WeatherController"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 class ModMethod {
@@ -34,7 +35,7 @@ class ModMethod {
       LevelGamePlayController_1.LevelGamePlayController.ThrowDamageChangeRequest(
         Entity.Id,
         DamageId
-      ); //  1604001001n 为女主的第一次平A的 DamageId
+      ); //  1604001001n 为女主的第一次平A的 DamageId   MaingirlAttack1
     }
   }
   //吸收尸体
@@ -55,7 +56,7 @@ class ModMethod {
       t
     );
   }
-
+//宝箱
   static RewardChest(entity) {
     //if(entity.CheckGetComponent(116).IsInState(1))return;
     if(!(entity.CheckGetComponent(114).IsLocked))return;
@@ -70,6 +71,11 @@ class ModMethod {
 
       
   }
+  static ChangWeather(weatherID) {//1.sunny 2.Cloudy 3.Thunder 4.Snow 5.Rain
+    WeatherController_1.WeatherController.TestChangeWeather(weatherID);
+
+}
+ 
 }
 //puerts.logger.info(debug)
 exports.ModMethod = ModMethod;

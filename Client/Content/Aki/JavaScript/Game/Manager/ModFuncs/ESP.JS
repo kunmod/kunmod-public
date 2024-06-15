@@ -21,11 +21,12 @@ class ESP extends EntityManager {
 
   static ESPDrawMain(entity) {
     //if (!this.isNeedDraw(entity)) return;
-    let entitypos = this.GetPosition(entity);
+    //let entitypos = this.GetPosition(entity);
     let mypos = this.GetPlayerPos();
     if (true /*DrawLine*/) {
-      let pos1 = new UE.Vector(entitypos.X, entitypos.Y, entitypos.Z);
-      let pos2 = new UE.Vector(mypos.X, mypos.Y, mypos.Z);
+      //let pos2 = new UE.Vector(entitypos.X, entitypos.Y, entitypos.Z);
+      let pos2 = new UE.Vector(mypos.X+20000, mypos.Y, mypos.Z+20000);
+      let pos1 = new UE.Vector(mypos.X, mypos.Y, mypos.Z);
       let color = new UE.LinearColor(1, 0, 0, 1);//red
       ModUtils.DrawDebugLine(pos1, pos2,color,1,30);
     }
