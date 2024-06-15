@@ -375,9 +375,9 @@ class ModLanguage {
       ja: "GUI 作成者 n0bu"
     },
     {
-      en: "New Aura Kill",
-      chs: "新的光环击杀",
-      ja: "新しいオーラキル"
+      en: "New Kill Aura",
+      chs: "全新杀戮光环",
+      ja: "新しいキルオーラ"
     },
     {
       en: "New Auto Absorb",

@@ -139,13 +139,13 @@ class MainMenu {
           });
 
           Menu.HitMultiplierCount.OnTextChanged.Add((value) => {
-            value = Number(value);
-            if (typeof value === "number") {
-              ModManager.Settings.Hitcount = value;
-              MainMenu.KunLog("Hit Multiplier Count: " + value);
-            } else {
-              ModManager.Settings.Hitcount = 1;
+    
+            if (isNaN(value)) {
+              value = 1
+              Menu.HitMultiplierCount.SetText(value)
             }
+            ModManager.Settings.Hitcount = value;
+            MainMenu.KunLog("Hit Multiplier Count: " + value);
           });
 
           Menu.KillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
@@ -192,15 +192,14 @@ class MainMenu {
           });
 
           Menu.PlayerSpeedValue.OnTextChanged.Add((value) => {
-            value = Number(value);
-            if (typeof value === "number") {
-              ModManager.Settings.playerSpeedValue = value;
-            } else {
+    
+            if (isNaN(value)) {
               value = 1;
-              ModManager.Settings.playerSpeedValue = value;
+              Menu.PlayerSpeedValue.SetText(value)
             }
-            MainMenu.updatePlayerSpeed();
+            ModManager.Settings.playerSpeedValue = value;
             MainMenu.KunLog("Player Speed Value: " + value);
+            MainMenu.updatePlayerSpeed();
           });
 
           Menu.CustomUidSubmit.OnClicked.Add(() => {
@@ -251,7 +250,7 @@ class MainMenu {
             MainMenu.KunLog("Auto Destroy: " + isChecked);
           })
 
-          Menu.NewAutoAbsorb.OnCheckStateChanged.Add((isChecked) => {
+          Menu.NewAutoAbsorbCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoAbsorbnew = isChecked;
             MainMenu.KunLog("New Auto Absorb: " + isChecked);
           })
@@ -262,13 +261,12 @@ class MainMenu {
           })
 
           Menu.NewKillAuraRadius.OnTextChanged.Add((value) => {
-            value = Number(value);
-            if (typeof value === "number") {
-              ModManager.Settings.killAuraRadius = value;
-            } else {
+    
+            if (isNaN(value)) {
               value = 500;
-              ModManager.Settings.killAuraRadius = value;
+              Menu.NewKillAuraRadius.SetText(value)
             }
+            ModManager.Settings.killAuraRadius = value;
             MainMenu.KunLog("New Kill Aura Radius: " + value);
           });
 
@@ -321,10 +319,11 @@ class MainMenu {
       Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
       Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
       Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
+      
       Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
       Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy"));
       Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
-      Menu.NewAutoAbsorb.SetText(ModLanguage.ModTr("New Auto Absorb"));
+      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("New Auto Absorb"));
 
       Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
       Menu.Designer.SetText(ModLanguage.ModTr("GUI by n0bu"));
@@ -354,9 +353,10 @@ class MainMenu {
       Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
       Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
       Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
+      
       Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
       Menu.AutoDestroyCheck.SetIsChecked(ModManager.Settings.AutoDestroy);
-      Menu.NewAutoAbsorb.SetIsChecked(ModManager.Settings.AutoAbsorbnew);
+      Menu.NewAutoAbsorbCheck.SetIsChecked(ModManager.Settings.AutoAbsorbnew);
       Menu.NewKillAuraCheck.SetIsChecked(ModManager.Settings.killAuranew);
     }
   }
