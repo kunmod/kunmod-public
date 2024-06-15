@@ -20,6 +20,7 @@ var __decorate =
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimalDeathSyncComponent = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+puerts_1 = require("puerts"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -90,6 +91,7 @@ if(ModManager_1.ModManager.Settings.killAura){
     this.Entity.GetComponent(0).GetCreatureDataId(),
     this.Entity.GetComponent(1).ActorLocationProxy
   );
+  //puerts_1.logger.warn("kun测试animalEntity",this.Entity);
   this.ExecuteDeath();
   this.Entity.CheckGetComponent(0).SetLivingStatus(Protocol_1.Aki.Protocol.LivingStatus.Dead);
 }

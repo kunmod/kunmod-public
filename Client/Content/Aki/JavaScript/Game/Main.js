@@ -10,10 +10,18 @@ const puerts_1 = require("puerts"),
   GameProcedure_1 = require("./GameProcedure"),
   ModManager_1 = require("./Manager/ModManager"),
   ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage"),
+  EntityManager_1 = require("./Manager/ModFuncs/EntityManager"),
+  AutoAbsorb_1 = require("./Manager/ModFuncs/AutoAbsorb"),
+  KillAura_1 = require("./Manager/ModFuncs/KillAura"),
+  AutoChest_1 = require("./Manager/ModFuncs/AutoChest"),
+  ESP_1 = require("./Manager/ModFuncs/ESP"),
+  AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager");
+const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 
 const ModManager = ModManager_1.ModManager,
-  ModLanguage = ModLanguage_1.ModLanguage;
+  ModLanguage = ModLanguage_1.ModLanguage,
+  EntityManager = EntityManager_1.ModsEntityManager;
 
 let keyState = false,
   Menu = null,
@@ -55,13 +63,11 @@ class MainMenu {
         Menu.SetVisibility(0);
       } else {
         MainMenu.getTranslation();
-        Menu.KillAuraValue.ClearOptions()
+        Menu.KillAuraValue.ClearOptions();
         for (const option in MainMenu.killAura()) {
           Menu.KillAuraValue.AddOption(MainMenu.killAura()[option]);
         }
-        Menu.KillAuraValue.SetSelectedIndex(
-          ModManager.Settings.killAuraState
-        );
+        Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
         Menu.SetVisibility(2);
       }
       isMenuShow = !isMenuShow;
@@ -321,10 +327,41 @@ class MainMenu {
     return [ModLanguage.ModTr("Only Hatred"), ModLanguage.ModTr("Infinity")];
   }
 }
+class ModEntityListener {
+  static Runtime() {
+    if (!ModManager.Settings.DebugEntity) return;
+    if (!ModUtils.isInGame) return;
+
+    EntityManager.PushEntityList();
+    const entitylist = EntityManager.ModsEntitys.EntityList;
+    const count = EntityManager.ModsEntitys.EntityCount;
+    for (let i = 0; i < count; i++) {
+      //AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+     // KillAura_1.KillAura.killAura(entitylist[i]);
+      //KillAura_1.KillAura.KillAnimal(entitylist[i]);
+      //AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
+      //AutoChest_1.AutoChest.RewardChest(entitylist[i]);
+      //ESP_1.ESP.ESPDrawMain(entitylist[i]);
+    }
+    
+    //puerts_1.logger.warn("kun:Runtime is working");
+  } 
+} 
+class ESPmain{//esp测试test
+  static RuntimeESP(){
+    if (!ModUtils.isInGame) return;
+    ESP_1.ESP.ESPDrawMain();
+  }
+
+}
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
+setInterval(ModEntityListener.Runtime, 1000);
+setInterval(ESPmain.RuntimeESP, 1);
 main();
 
+exports.ESPmain = ESPmain;
 exports.MainMenu = MainMenu;
+exports.ModEntityListener = ModEntityListener;
 //# sourceMappingURL=Main.js.map

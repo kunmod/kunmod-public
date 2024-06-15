@@ -30,7 +30,7 @@ const UE = require("ue"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  ModManager_1 = require("../../Manager/ModManager"),//addcode
+  ModManager_1 = require("../../Manager/ModManager"), //addcode
   SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager");
 let SceneItemTreasureBoxComponent =
   (SceneItemTreasureBoxComponent_1 = class SceneItemTreasureBoxComponent extends (
@@ -43,7 +43,9 @@ let SceneItemTreasureBoxComponent =
         (this.Onn = void 0),
         (this.Qin = () => {
           this.knn(),
-            this.Entity.CheckGetComponent(116).IsInState(ModManager_1.ModManager.Settings.AutoPickTreasure?1:2) && this.Fnn();
+            this.Entity.CheckGetComponent(116).IsInState(
+              ModManager_1.ModManager.Settings.AutoPickTreasure ? 1 : 2
+            ) && this.Fnn();
         }),
         (this.Vnn = (e) => {
           this.knn();
