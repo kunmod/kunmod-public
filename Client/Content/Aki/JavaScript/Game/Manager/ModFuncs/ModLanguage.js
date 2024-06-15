@@ -344,6 +344,46 @@ class ModLanguage {
       chs: "传送",
       ja: "テレポート"
     },
+    {
+      en: "Debug",
+      chs: "调试",
+      ja: "デバッグ"
+    },
+    {
+      en: "Debug Entity",
+      chs: "调试实体",
+      ja: "デバッグエンティティ"
+    },
+    {
+      en: "Auto Destroy",
+      chs: "自动销毁",
+      ja: "自動破壊"
+    },
+    {
+      en: "Donate:",
+      chs: "捐:",
+      ja: "寄付する:"
+    },
+    {
+      en: "This hack is completely free, if you paid to get this, you have been scammed.",
+      chs: "此黑客程序完全免费，如果您付费获得此程序，则您被骗了。",
+      ja: "このハックは完全に無料です。これを入手するためにお金を払った場合は、詐欺に遭ったことになります。"
+    },
+    {
+      en: "GUI by n0bu",
+      chs: "n0bu 的 GUI",
+      ja: "GUI 作成者 n0bu"
+    },
+    {
+      en: "New Aura Kill",
+      chs: "新的光环击杀",
+      ja: "新しいオーラキル"
+    },
+    {
+      en: "New Auto Absorb",
+      chs: "新型自动吸收",
+      ja: "新しい自動吸収"
+    },
   ];
 
   static ModTr = (string) => {
