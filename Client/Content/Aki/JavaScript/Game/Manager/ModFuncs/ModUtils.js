@@ -13,6 +13,7 @@ const puerts_1 = require("puerts"),
   GlobalData_1 = require("../../GlobalData"),
   LoginDefine_1 = require("../../Module/Login/Data/LoginDefine"),
   EntityManager_1 = require("./EntityManager"),
+  WorldFunctionLibrary_1= require("../../World/Bridge/WorldFunctionLibrary"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 class ModUtils {
@@ -90,41 +91,21 @@ class ModUtils {
   // 行   647: // Function  Engine.KismetSystemLibrary.DrawDebugPoint电
   // 行   652: // Function  Engine.KismetSystemLibrary.DrawDebugSphere球
   // 行   657: // Function  Engine.KismetSystemLibrary.DrawDebugString文本
-  // static DrawDebugBox() {
-  //   UE.KismetSystemLibrary.DrawDebugBox(
-  //     GlobalData_1.GlobalData.World,
-  //     new UE.Vector(200, 200, 200),
-  //     new UE.Vector(50, 50, 50),
-  //     new UE.LinearColor(42, 54, 24, 1),
-  //     new UE.Rotator(15, 15, 15),
-  //     1,
-  //     50
-  //   );
-  // }
 
-  // static DrawDebugLine() {
-  //   UE.KismetSystemLibrary.DrawDebugLine(
-  //     GlobalData_1.GlobalData.World,
-  //     h,
-  //     s,
-  //     e,
-  //     i,
-  //     15
-  //   );
-  // }
 
-  // static DrawArrow(){
-  //   UE.KismetSystemLibrary.DrawDebugArrow(
-  //     GlobalData_1.GlobalData.World,
-  //     this.ume.ToUeVector(),
-  //     i.ToUeVector(),
-  //     this.Hh.FinalCameraDistance,
-  //     ColorUtils_1.ColorUtils.LinearRed,
-  //     DEBUG_DRAW_DURATION,
-  //     THICKNESS
-  //   );
-  // }
+  static DrawDebugLine(LineStart,LineEnd,LineColor,Duration,Thickness) {
+    UE.KismetSystemLibrary.DrawDebugLine(
+      GlobalData_1.GlobalData.World,
+      LineStart,
+      LineEnd,
+      LineColor,
+      Duration,
+      Thickness
+    );
+  }
 
+
+  //static DrawDebugLine(WorldContextObject: $Nullable<UE.Object>, LineStart: UE.Vector, LineEnd: UE.Vector, LineColor: UE.LinearColor, Duration?: number /* = 0.000000 */, Thickness?: number /* = 0.000000 */) : void;
   static Getdistance(pos1, pos2) {
     let dx = pos2.X - pos1.X;
     let dy = pos2.Y - pos1.Y;
@@ -138,6 +119,9 @@ class ModUtils {
     let dy = pos2.Y - pos1.Y;
     let dz = pos2.Z - pos1.Z;
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
+  }
+  static IsOpenWorld(){
+    return WorldFunctionLibrary_1.WorldFunctionLibrary.IsOpenWorld()
   }
 
 }

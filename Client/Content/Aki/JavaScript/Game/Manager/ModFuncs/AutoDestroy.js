@@ -27,9 +27,9 @@ class AutoDestroy extends EntityManager {
 
   static AutoDestroy(entity) {
     if (ModManager.Settings.AutoDestroy && this.isNeedDestroy(entity)) {
-      puerts_1.logger.warn("kun:AutoDestroy:isNeedDestroy",entity.Entity.Id);
+      //puerts_1.logger.warn("kun:AutoDestroy:isNeedDestroy",entity.Entity.Id);
       ModMethod.ThrowDamageChangeRequest(entity.Entity, 10, 1604001001n);
-      puerts_1.logger.warn("kun:AutoDestroy:End",entity.Entity.Id);
+      //puerts_1.logger.warn("kun:AutoDestroy:End",entity.Entity.Id);
     }
   }
 }
