@@ -14,6 +14,8 @@ const puerts_1 = require("puerts"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
+  BattleNetController_1 = require("../../World/Controller/BattleNetController"), //add
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 class ModMethod {

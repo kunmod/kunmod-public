@@ -7,11 +7,12 @@ const Info_1 = require("../../../Core/Common/Info");
 const Log_1 = require("../../../Core/Common/Log");
 const ModManager_1 = require("../ModManager");
 const ModUtils_1 = require("./ModUtils");
+const Global_1 = require("../../Global");
 const ModelManager_1 = require("../../Manager/ModelManager");
-const CreatureModel = ModelManager_1.ModelManager.CreatureModel;
+//const CreatureModel = ModelManager_1.ModelManager.CreatureModel;
 
 class ModsEntityManager {
-
+  static PlayerEntity=null;
   static AllEntityInfo = [];
   static EntitiesSortedList = [];
   static ModsEntitys = {
@@ -47,54 +48,85 @@ class ModsEntityManager {
   };
 
   Pos = {
-    x: 0,
-    y: 0,
-    z: 0,
+    X: 0,
+    Y: 0,
+    Z: 0,
   };
 
   Rot = {
-    x: 0,
-    y: 0,
-    z: 0,
+    X: 0,
+    Y: 0,
+    Z: 0,
   };
 
+  static GetPlayerEntity() {
+    this.PlayerEntity =Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity;
+    return this.PlayerEntity;
+  }
+  static GetPlayerPos() {
+    let pos =Global_1.Global.BaseCharacter?.CharacterActorComponent.CachedDesiredActorLocation.Tuple;
+    let playerPos = {    
+      X: pos[0]/100,
+      Y: pos[1]/100,
+      Z: pos[2]/100};
+      
+    return playerPos;
+  }
   static PushEntityList() {
     this.GetEntitySortedList();
     this.ModsEntitys.EntityList = this.EntitiesSortedList;
     this.GetEntityCount();
-    puerts_1.logger.warn(
-      "[KUNMODDEBUG]:GetEntityList",
-      this.ModsEntitys.EntityList
-    );
+    this.GetPlayerEntity()
+    // puerts_1.logger.warn(
+    //   "[KUNMODDEBUG]:GetEntityList",
+    //   this.ModsEntitys.EntityList
+    // );
     return this.ModsEntitys.EntityList;
   }
 
   static GetEntitySortedList() {
-    this.EntitiesSortedList = CreatureModel.EntitiesSortedList;
+    this.EntitiesSortedList =
+      ModelManager_1.ModelManager.CreatureModel.EntitiesSortedList;
     return this.EntitiesSortedList;
   }
 
   static GetEntityCount() {
     this.ModsEntitys.EntityCount = this.EntitiesSortedList.length;
-    puerts_1.logger.warn(
-      "[KUNMODDEBUG]:GetEntityCount",
-      this.ModsEntitys.EntityCount
-    );
+    // puerts_1.logger.warn(
+    //   "[KUNMODDEBUG]:GetEntityCount",
+    //   this.ModsEntitys.EntityCount
+    // );
     return this.ModsEntitys.EntityCount;
   }
-  static GetEntityId(entity) {   
+  static GetEntityId(entity) {
     return entity.Id;
   }
-  static GetEntity(entity) {   
+  static GetPosition(entity) {
+    let Pbdata = this.GetEntityData(entity.PbDataId);
+    puerts_1.logger.warn("entitymanager:getpos:pbdata:",Pbdata);
+    let pos = Pbdata.Transform.Pos;
+    puerts_1.logger.warn("entitymanager:getpos:pos:",pos);
+
+    return pos;
+  }
+  static GetEntity(entity) {
     return entity.Entity;
   }
   static GetBlueprintType(entity) {
-    let PbData = this.GetEntityData(entity.PbDataId);
-    return PbData.BlueprintType;
+    try {
+      let PbData = this.GetEntityData(entity.PbDataId);
+      return PbData.BlueprintType;
+    } catch (error) {
+      return "unknownBlueprintType";
+    }
   }
 
   static GetEntityData(PbDataId) {
-    return ModelManager_1.ModelManager.CreatureModel.GetEntityData(PbDataId);
+    try {
+      return ModelManager_1.ModelManager.CreatureModel.GetEntityData(PbDataId);
+    } catch (error) {
+      return null;
+    }
   }
 
   static PushEntityInfo(onlydebug) {

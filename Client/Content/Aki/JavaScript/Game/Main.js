@@ -15,6 +15,7 @@ const puerts_1 = require("puerts"),
   KillAura_1 =require("./Manager/ModFuncs/KillAura"),
   AutoDestroy_1 =require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager");
+const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage,
@@ -329,18 +330,22 @@ class MainMenu {
 class ModEntityListener{
 
 static Runtime(){
+  if(!ModUtils.isInGame)
+    return;
+  if(true)
+    return;
   
   EntityManager.PushEntityList()
   const entitylist = EntityManager.ModsEntitys.EntityList;
   const count = EntityManager.ModsEntitys.EntityCount;
   for(let i = 0; i < count; i++){
-
-    //AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+    //puerts_1.logger.warn("kun:Runtime entitycheck:"+i+"/"+count);
+    AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
     KillAura_1.KillAura.killAura(entitylist[i]);
-    //AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
+    AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
 
   }
-  puerts_1.logger.warn("kun:Runtime is working");
+  //puerts_1.logger.warn("kun:Runtime is working");
 
 
 }//RuntimeS
@@ -350,7 +355,7 @@ static Runtime(){
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-setInterval(ModEntityListener.Runtime, 5000);
+setInterval(ModEntityListener.Runtime, 1000);
 main();
 
 exports.MainMenu = MainMenu;

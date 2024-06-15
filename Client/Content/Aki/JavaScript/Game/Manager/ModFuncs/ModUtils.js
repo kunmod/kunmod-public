@@ -12,6 +12,7 @@ const puerts_1 = require("puerts"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   LoginDefine_1 = require("../../Module/Login/Data/LoginDefine"),
+  EntityManager_1 = require("./EntityManager"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 class ModUtils {
@@ -123,6 +124,22 @@ class ModUtils {
   //     THICKNESS
   //   );
   // }
+
+  static Getdistance(pos1, pos2) {
+    let dx = pos2.X - pos1.X;
+    let dy = pos2.Y - pos1.Y;
+    let dz = pos2.Z - pos1.Z;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+  }
+  static Getdistance2Player(pos1) {
+    //let player = EntityManager_1.ModsEntityManager.PlayerEntity;
+    let pos2 = EntityManager_1.ModsEntityManager.GetPlayerPos();   
+    let dx = pos2.X - pos1.X;
+    let dy = pos2.Y - pos1.Y;
+    let dz = pos2.Z - pos1.Z;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+  }
+
 }
 //puerts.logger.info(debug)
 exports.ModUtils = ModUtils;

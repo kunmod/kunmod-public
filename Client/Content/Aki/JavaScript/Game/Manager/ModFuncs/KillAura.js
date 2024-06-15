@@ -13,12 +13,19 @@ const puerts_1 = require("puerts"),
 const ModMethod = ModMethod_1.ModMethod;
 const ModManager = ModManager_1.ModManager;
 const EntityManager = EntityManager_1.ModsEntityManager;
+const ModUtils = ModUtils_1.ModUtils;
 
 class KillAura extends EntityManager {
+  static isIndistance(entity) {
+    let monsterPos = this.GetPosition(entity);
+    let distance = ModUtils.Getdistance2Player(monsterPos);
+    return distance < ModManager.Settings.killAuraRadius;
+  }
   static killAura(entity) {
-    if (ModManager.Settings.killAuranew && this.isMonster(entity)) {
+    if (ModManager.Settings.killAuranew && this.isMonster(entity)&&isIndistance(entity)) {
+      puerts_1.logger.warn("kun:killAuratest:isMonster", entity.Entity.Id);
       ModMethod.MonsterDrownRequest(entity.Entity);
-      puerts_1.logger.warn("kun:实体杀戮测试",entity.Entity);
+      puerts_1.logger.warn("kun:killAuratestEND", entity.Entity.Id);
     }
   }
 }

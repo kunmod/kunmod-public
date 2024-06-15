@@ -8,6 +8,7 @@ const puerts_1 = require("puerts"),
   ModManager_1 = require("../ModManager"),
   ModUtils_1 = require("./ModUtils"),
   ModMethod_1 = require("./ModMethod"),
+
   EntityManager_1 = require("./EntityManager");
 
 const ModMethod = ModMethod_1.ModMethod;
@@ -17,7 +18,9 @@ const EntityManager = EntityManager_1.ModsEntityManager;
 class AutoAbsorb extends EntityManager {
   static AutoAbsorb(entity) {
     if (ModManager.Settings.AutoAbsorbnew && this.isVision(entity)) {
+      puerts_1.logger.warn("kun:AutoAbsorbnew:isVision",entity.Entity.Id);
       ModMethod.RequestCaptureEntity(entity.Entity);
+      puerts_1.logger.warn("kun:AutoAbsorbnew:End",entity.Entity.Id);
     }
   }
 }

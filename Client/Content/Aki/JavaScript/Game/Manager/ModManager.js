@@ -88,9 +88,9 @@ class ModManager {
     }
 
     static listenModsToggle() {
-        if (this.listenKey("ShowMenu", "Home")) {
-            this.ShowMenu();
-        }
+        // if (this.listenKey("ShowMenu", "Home")) {
+        //     this.ShowMenu();
+        // }
 
         this.listenMod('GodMode', "F5", "GodMode");
         if (this.listenMod('HitMultiplier', "F6", "HitMultiplier")) {
