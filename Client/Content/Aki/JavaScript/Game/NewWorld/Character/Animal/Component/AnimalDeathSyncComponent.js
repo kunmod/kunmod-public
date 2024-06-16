@@ -91,7 +91,7 @@ if(ModManager_1.ModManager.Settings.killAura){
     this.Entity.GetComponent(0).GetCreatureDataId(),
     this.Entity.GetComponent(1).ActorLocationProxy
   );
-  //puerts_1.logger.warn("kun测试animalEntity",this.Entity);
+  puerts_1.logger.warn("kun测试animalEntity",this.Entity);
   this.ExecuteDeath();
   this.Entity.CheckGetComponent(0).SetLivingStatus(Protocol_1.Aki.Protocol.LivingStatus.Dead);
 }

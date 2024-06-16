@@ -121,7 +121,10 @@ class ModUtils {
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   }
   static IsOpenWorld(){
-    return WorldFunctionLibrary_1.WorldFunctionLibrary.IsOpenWorld()
+    return WorldFunctionLibrary_1.WorldFunctionLibrary.IsOpenWorld();
+  }
+  static IsInMapView(){
+    return UiManager_1.UiManager.IsViewShow("WorldMapView");
   }
 
 }

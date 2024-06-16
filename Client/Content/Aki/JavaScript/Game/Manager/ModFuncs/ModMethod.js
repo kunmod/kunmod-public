@@ -48,6 +48,7 @@ class ModMethod {
       entity.GetComponent(0).GetCreatureDataId(),
       entity.GetComponent(1).ActorLocationProxy
     );
+    entity.CheckGetComponent(0).SetLivingStatus(Protocol_1.Aki.Protocol.LivingStatus.Dead);
   }
 
   static SetWorldTimeDilation(t) {
@@ -56,26 +57,26 @@ class ModMethod {
       t
     );
   }
-//宝箱
+  //宝箱
   static RewardChest(entity) {
     //if(entity.CheckGetComponent(116).IsInState(1))return;
-    if(!(entity.CheckGetComponent(114).IsLocked))return;
+    if (!entity.CheckGetComponent(114).IsLocked) return;
     if (
       ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
       ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
-    )return;
+    )
+      return;
 
     LevelGamePlayController_1.LevelGamePlayController.GetRewardTreasureBoxRequest(
       entity.Id
     );
-
-      
   }
-  static ChangWeather(weatherID) {//1.sunny 2.Cloudy 3.Thunder 4.Snow 5.Rain
+  static ChangWeather(weatherID) {
+    //1.sunny 2.Cloudy 3.Thunder 4.Snow 5.Rain
     WeatherController_1.WeatherController.TestChangeWeather(weatherID);
+  }
 
-}
- 
+
 }
 //puerts.logger.info(debug)
 exports.ModMethod = ModMethod;

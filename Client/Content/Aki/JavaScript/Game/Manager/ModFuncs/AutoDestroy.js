@@ -21,7 +21,7 @@ const destroyList = [
 ];
 class AutoDestroy extends EntityManager {
   static isNeedDestroy(entity) {
-    let blueprintType = this.GetBlueprintType(entity);
+    let blueprintType = this.GetBlueprintType2(entity);
     return destroyList.includes(blueprintType);
   }
 

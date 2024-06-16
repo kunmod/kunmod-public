@@ -20,7 +20,6 @@ const puerts_1 = require("puerts"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   TsInteractionUtils_1 = require("./TsInteractionUtils"),
-  ModManager_1 = require("../../Manager/ModManager"),
   DEFAULT_CD = 0.5;
 class SameTipInteract {
   constructor() {
@@ -210,7 +209,8 @@ class InteractionModel extends ModelBase_1.ModelBase {
       !!t?.Valid &&
       !(
         !(e = t.GetComponent(177))?.IsPawnInteractive() ||
-        (/*!t.GetComponent(102)?.IsDropItem() &&*/!e.IsCollection() &&
+        (!t.GetComponent(102)?.IsDropItem() &&
+          /*!*/e.IsCollection() &&
           (!e.IsAnimationItem() ||
             !(e = t.GetComponent(0))?.Valid ||
             !(t = e.GetPbEntityInitData()) ||
@@ -219,7 +219,6 @@ class InteractionModel extends ModelBase_1.ModelBase {
       )
     );
   }
-
   GetOptionInstanceIdByIndex(t) {
     let e = t;
     for (const i of this.zhi)

@@ -153,11 +153,11 @@ class MainMenu {
           });
 
           Menu.HitMultiplierSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0)
-            Menu.HitMultiplierValue.SetText(value)
+            value = value.toFixed(0);
+            Menu.HitMultiplierValue.SetText(value);
             ModManager.Settings.Hitcount = value;
             MainMenu.KunLog("Hit Multiplier Count: " + value);
-          })
+          });
 
           Menu.KillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.killAura = isChecked;
@@ -202,11 +202,11 @@ class MainMenu {
           });
 
           Menu.PlayerSpeedSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0)
-            Menu.PlayerSpeedValue.SetText(value)
+            value = value.toFixed(0);
+            Menu.PlayerSpeedValue.SetText(value);
             ModManager.Settings.playerSpeedValue = value;
             MainMenu.KunLog("Player Speed Value: " + value);
-          })
+          });
 
           Menu.CustomUidSubmit.OnClicked.Add(() => {
             const UID = Menu.CustomUidValue.GetText();
@@ -249,26 +249,26 @@ class MainMenu {
           Menu.DebugEntityCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.DebugEntity = isChecked;
             MainMenu.KunLog("Debug Entity: " + isChecked);
-          })
+          });
 
           Menu.AutoDestroyCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoDestroy = isChecked;
             MainMenu.KunLog("Auto Destroy: " + isChecked);
-          })
+          });
 
           Menu.NewAutoAbsorbCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoAbsorbnew = isChecked;
             MainMenu.KunLog("New Auto Absorb: " + isChecked);
-          })
+          });
 
           Menu.NewKillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.killAuranew = isChecked;
             MainMenu.KunLog("New Kill Aura: " + isChecked);
-          })
+          });
 
           Menu.NewKillAuraSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0)
-            Menu.NewKillAuraValue.SetText(value)
+            value = value.toFixed(0);
+            Menu.NewKillAuraValue.SetText(value);
             ModManager.Settings.killAuraRadius = value;
             MainMenu.KunLog("Hit Multiplier Count: " + value);
           })
@@ -289,14 +289,14 @@ class MainMenu {
             ModManager.Settings.killAuraState
           );
           Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
-          
+
           Menu.PlayerSpeedSlider.SetValue(ModManager.Settings.playerSpeedValue);
           Menu.HitMultiplierSlider.SetValue(ModManager.Settings.Hitcount);
           Menu.NewKillAuraSlider.SetValue(ModManager.Settings.killAuraRadius);
           Menu.WorldSpeedSlider.SetValue(ModManager.Settings.WorldSpeedValue);
 
           Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
-          Menu.HitMultiplierValue.SetText(ModManager.Settings.Hitcount)
+          Menu.HitMultiplierValue.SetText(ModManager.Settings.Hitcount);
           Menu.NewKillAuraValue.SetText(ModManager.Settings.killAuraRadius);
           Menu.WorldSpeedValue.SetText(ModManager.Settings.WorldSpeedValue);
         } catch (e) {
@@ -351,7 +351,24 @@ class MainMenu {
       Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy"));
       Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
       Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("New Auto Absorb"));
-      Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
+
+      Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
+      Menu.Designer.SetText(ModLanguage.ModTr("GUI designer: n0bu"));
+      Menu.DisclaimerText.SetText(this.Getfreetip());
+    }
+  }
+
+  static Getfreetip() {
+    let lang = ModLanguage.GetCurrLang();
+    switch (lang) {
+      case "en":
+        return "This hack is completely free, if you paid to get this, you have been scammed.";
+      case "zh-Hans":
+        return "免费软件，如果你是付费获得，那你被骗了";
+      case "ja":
+        return "このハックは完全に無料です。これにお金を払ったのなら、あなたはだまされています。";
+      default:
+        return "This hack is completely free, if you paid to get this, you have been scammed.";
     }
   }
 
@@ -377,7 +394,7 @@ class MainMenu {
       Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
       Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
       Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
-      
+
       Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
       Menu.AutoDestroyCheck.SetIsChecked(ModManager.Settings.AutoDestroy);
       Menu.NewAutoAbsorbCheck.SetIsChecked(ModManager.Settings.AutoAbsorbnew);
@@ -389,9 +406,17 @@ class MainMenu {
 
   static updatePlayerSpeed() {
     if (ModManager.Settings.PlayerSpeed) {
-      ModManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
+      EntityManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
     } else {
-      ModManager.SetPlayerSpeed(1);
+      EntityManager.SetPlayerSpeed(1);
+    }
+  }
+
+  static updateWorldSpeed() {
+    if (ModManager.Settings.WorldSpeed) {
+      ModMethod_1.ModMethod.SetWorldTimeDilation(ModManager.Settings.WorldSpeedValue);
+    } else {
+      ModMethod_1.ModMethod.SetWorldTimeDilation(1);
     }
   }
 
@@ -416,29 +441,30 @@ class ModEntityListener {
     const entitylist = EntityManager.ModsEntitys.EntityList;
     const count = EntityManager.ModsEntitys.EntityCount;
     for (let i = 0; i < count; i++) {
-      //AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
-      // KillAura_1.KillAura.killAura(entitylist[i]);
-      //KillAura_1.KillAura.KillAnimal(entitylist[i]);
-      //AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
-      //AutoChest_1.AutoChest.RewardChest(entitylist[i]);
-      ESP_1.ESP.ESPDrawMain(entitylist[i]);
+      AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+      KillAura_1.KillAura.killAura(entitylist[i]);
+      KillAura_1.KillAura.KillAnimal(entitylist[i]);
+      AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
+      AutoChest_1.AutoChest.RewardChest(entitylist[i]);
+      //ESP_1.ESP.ESPDrawMain(entitylist[i]);
     }
 
     //puerts_1.logger.warn("kun:Runtime is working");
   }
 }
-class ESPmain {
-  //esp测试test
-  static RuntimeESP() {
-    if (!ModUtils.isInGame) return;
-    ESP_1.ESP.ESPDrawMain();
-  }
-}
+// class ESPmain {
+//   //esp测试test
+//   static RuntimeESP() {
+//     if (!ModUtils.isInGame) return;
+//     ESP_1.ESP.ESPDrawMain();
+//   }
+//  }
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-setInterval(ModEntityListener.Runtime, 1000);
-setInterval(ESPmain.RuntimeESP, 1);
+setInterval(MainMenu.updatePlayerSpeed, 1000);
+setInterval(ModEntityListener.Runtime, 3000);
+//setInterval(ESPmain.RuntimeESP, 1);
 main();
 
 exports.ESPmain = ESPmain;

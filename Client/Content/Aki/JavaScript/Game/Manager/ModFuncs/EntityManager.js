@@ -116,10 +116,9 @@ class ModsEntityManager {
     return entity.Id;
   }
   static GetPosition(entity) {
-    let Pbdata = this.GetEntityData(entity.PbDataId);
-    // puerts_1.logger.warn("entitymanager:getpos:pbdata:",Pbdata);
-    let pos = Pbdata.Transform.Pos;
-    //puerts_1.logger.warn("entitymanager:getpos:pos:",pos);
+    // let Pbdata = this.GetEntityData(entity.PbDataId);
+    // let pos = Pbdata.Transform.Pos;
+    let pos = entity.Entity.Components[0]._ne;
 
     return pos;
   }
@@ -130,6 +129,14 @@ class ModsEntityManager {
     try {
       let PbData = this.GetEntityData(entity.PbDataId);
       return PbData.BlueprintType;
+    } catch (error) {
+      return "unknownBlueprintType";
+    }
+  }
+  static GetBlueprintType2(entity) {
+    try {
+      let Type = entity.Entity.Components[0].C9o;
+      return Type;
     } catch (error) {
       return "unknownBlueprintType";
     }
@@ -160,27 +167,27 @@ class ModsEntityManager {
   }
 
   static isCollection(entity) {
-    let BlueprintType = this.GetBlueprintType(entity);
+    let BlueprintType = this.GetBlueprintType2(entity);
     return BlueprintType.startsWith("Collect");
   }
   static isAnimal(entity) {
-    let BlueprintType = this.GetBlueprintType(entity);
+    let BlueprintType = this.GetBlueprintType2(entity);
     return BlueprintType.startsWith("Animal");
   }
   static isTreasure(entity) {
-    let BlueprintType = this.GetBlueprintType(entity);
+    let BlueprintType = this.GetBlueprintType2(entity);
     return BlueprintType.startsWith("Treasure");
   }
   static isMonster(entity) {
-    let BlueprintType = this.GetBlueprintType(entity);
+    let BlueprintType = this.GetBlueprintType2(entity);
     return BlueprintType.startsWith("Monster");
   }
   static isCollection(entity) {
-    let BlueprintType = this.GetBlueprintType(entity);
+    let BlueprintType = this.GetBlueprintType2(entity);
     return BlueprintType.startsWith("Gameplay");
   }
   static isNpc(entity) {
-    let BlueprintType = this.GetBlueprintType(entity);
+    let BlueprintType = this.GetBlueprintType2(entity);
     return (
       BlueprintType.startsWith("Npc") ||
       BlueprintType.startsWith("SimpleNPC") ||
@@ -188,14 +195,15 @@ class ModsEntityManager {
     );
   }
   static isQuest(entity) {
-    let BlueprintType = this.GetBlueprintType(entity);
+    let BlueprintType = this.GetBlueprintType2(entity);
     return BlueprintType.startsWith("Quest");
   }
   static isVision(entity) {
-    return (
-      (entity.Entity.GetComponent(0)).GetEntityType() ===
-      Protocol_1.Aki.Protocol.EEntityType.Vision
-    );
+    // return (
+    //   (entity.Entity.GetComponent(0)).GetEntityType() ===
+    //   Protocol_1.Aki.Protocol.EEntityType.Vision
+    // );
+    return (entity.Entity.Components[0].C9o).startsWith("Vision");
   }
   static isWeapon(entity) {
     let BlueprintType = this.GetBlueprintType(entity);
@@ -209,6 +217,12 @@ class ModsEntityManager {
     let BlueprintType = this.GetBlueprintType(entity);
     return BlueprintType.startsWith("SceneObj");
   }
+
+  static SetPlayerSpeed(value) {
+    //CharacterController_1.CharacterController.SetTimeDilation(value);
+    let player = this.GetPlayerEntity();
+    player.SetTimeDilation(value);
+}
 }
 
 exports.ModsEntityManager = ModsEntityManager;
