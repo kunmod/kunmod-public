@@ -351,6 +351,7 @@ class MainMenu {
       Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy"));
       Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
       Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("New Auto Absorb"));
+      Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
     }
   }
 

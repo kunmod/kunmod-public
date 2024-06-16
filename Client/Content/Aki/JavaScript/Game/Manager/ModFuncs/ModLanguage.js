@@ -384,6 +384,11 @@ class ModLanguage {
       chs: "新型自动吸收",
       ja: "新しい自動吸収"
     },
+    {
+      en: "World Speed",
+      chs: "世界速度",
+      ja: "世界スピード"
+    },
   ];
 
   static ModTr = (string) => {
