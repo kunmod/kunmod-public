@@ -61,7 +61,7 @@ class ModManager {
         HideDmgUi: false,
         AutoMine: false,
         //test
-        DebugEntity:true,
+        DebugEntity:true,//(if use entity func need enable)
         AutoDestroy:true,
         killAuranew:true,
         killAuraRadius:300,
@@ -70,6 +70,8 @@ class ModManager {
         AutoChest:true,
         WeatherChanger:false,
         WeatherType: 1,
+        WorldSpeed:false,
+        WorldSpeedValue:1,
         Uid: "100000000",
     };
 
