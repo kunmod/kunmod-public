@@ -153,7 +153,7 @@ class MainMenu {
           });
 
           Menu.HitMultiplierSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0);
+            value = value.toFixed(3);
             Menu.HitMultiplierValue.SetText(value);
             ModManager.Settings.Hitcount = value;
             MainMenu.KunLog("Hit Multiplier Count: " + value);
@@ -207,7 +207,7 @@ class MainMenu {
           });
 
           Menu.PlayerSpeedSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0);
+            value = value.toFixed(3);
             Menu.PlayerSpeedValue.SetText(value);
             ModManager.Settings.playerSpeedValue = value;
             MainMenu.KunLog("Player Speed Value: " + value);
@@ -272,7 +272,7 @@ class MainMenu {
           });
 
           Menu.NewKillAuraSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0);
+            value = value.toFixed(3);
             Menu.NewKillAuraValue.SetText(value);
             ModManager.Settings.killAuraRadius = value;
             MainMenu.KunLog("Hit Multiplier Count: " + value);
@@ -284,7 +284,7 @@ class MainMenu {
           })
 
           Menu.WorldSpeedSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0)
+            value = value.toFixed(3)
             Menu.WorldSpeedValue.SetText(value)
             ModManager.Settings.WorldSpeedValue = value;
             MainMenu.KunLog("World Speed " + value);
