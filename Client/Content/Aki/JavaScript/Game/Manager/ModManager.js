@@ -32,6 +32,7 @@ const puerts_1 = require("puerts"),
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
+const ConfigFileName = "KunModConfig.json"
 class ModManager {
   static Settings = {
     ModEnabled: true,
