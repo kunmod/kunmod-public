@@ -10,6 +10,7 @@ const puerts_1 = require("puerts"),
   GameProcedure_1 = require("./GameProcedure"),
   ModManager_1 = require("./Manager/ModManager"),
   ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage"),
+  ModMethod_1 = require("./Manager/ModFuncs/ModMethod"),
   EntityManager_1 = require("./Manager/ModFuncs/EntityManager"),
   AutoAbsorb_1 = require("./Manager/ModFuncs/AutoAbsorb"),
   KillAura_1 = require("./Manager/ModFuncs/KillAura"),
@@ -31,12 +32,23 @@ let keyState = false,
   loadMenuInterval = null;
 
 function main() {
-  var e = puerts_1.argv.getByName("GameInstance");
-  GameProcedure_1.GameProcedure.Start(e);
+  GameProcedure_1.GameProcedure.Start(puerts_1.argv.getByName("GameInstance"));
 }
 
 class MainMenu {
   static IsKey(str) {
+    let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str)
+    if (IsInputKeyDown && !keyState) {
+      IsInputKeyDown = false;
+      keyState = true;
+      return true;
+    }
+    if (IsInputKeyDown === false) {
+      keyState = false;
+      return false;
+    }
+    return false;
+    // override default hotkey using only one
     var IsInputKeyDown_1 = InputSetting_1.InputSettings.IsInputKeyDown(str);
     var IsInputKeyDown_LeftControl =
       InputSetting_1.InputSettings.IsInputKeyDown("LeftAlt");
@@ -74,6 +86,7 @@ class MainMenu {
     }
     MainMenu.updateMenuState();
     MainMenu.updatePlayerSpeed();
+    MainMenu.updateWorldSpeed();
   }
 
   static KunLog(string) {
@@ -260,6 +273,18 @@ class MainMenu {
             MainMenu.KunLog("Hit Multiplier Count: " + value);
           })
 
+          Menu.WorldSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.WorldSpeed = isChecked;
+            MainMenu.KunLog("World Speed: " + isChecked);
+          })
+
+          Menu.WorldSpeedSlider.OnValueChanged.Add((value) => {
+            value = value.toFixed(0)
+            Menu.WorldSpeedValue.SetText(value)
+            ModManager.Settings.WorldSpeedValue = value;
+            MainMenu.KunLog("World Speed " + value);
+          })
+
           Menu.KillAuraValue.SetSelectedIndex(
             ModManager.Settings.killAuraState
           );
@@ -268,10 +293,12 @@ class MainMenu {
           Menu.PlayerSpeedSlider.SetValue(ModManager.Settings.playerSpeedValue);
           Menu.HitMultiplierSlider.SetValue(ModManager.Settings.Hitcount);
           Menu.NewKillAuraSlider.SetValue(ModManager.Settings.killAuraRadius);
+          Menu.WorldSpeedSlider.SetValue(ModManager.Settings.WorldSpeedValue);
 
           Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
           Menu.HitMultiplierValue.SetText(ModManager.Settings.Hitcount)
           Menu.NewKillAuraValue.SetText(ModManager.Settings.killAuraRadius);
+          Menu.WorldSpeedValue.SetText(ModManager.Settings.WorldSpeedValue);
         } catch (e) {
           MainMenu.KunLog(e);
         }
@@ -292,6 +319,10 @@ class MainMenu {
       Menu.HeadingUI.SetText(ModLanguage.ModTr("UI"));
       Menu.HeadingTeleport.SetText(ModLanguage.ModTr("Teleport"));
       Menu.HeadingDebug.SetText(ModLanguage.ModTr("Debug"));
+
+      Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
+      Menu.Designer.SetText(ModLanguage.ModTr("GUI by n0bu"));
+      Menu.DisclaimerText.SetText(ModLanguage.ModTr("This hack is completely free, if you paid to get this, you have been scammed."));
 
       Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
       Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
@@ -314,15 +345,12 @@ class MainMenu {
       Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
       Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
       Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
+      Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
       
       Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
       Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy"));
       Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
       Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("New Auto Absorb"));
-
-      Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
-      Menu.Designer.SetText(ModLanguage.ModTr("GUI by n0bu"));
-      Menu.DisclaimerText.SetText(ModLanguage.ModTr("This hack is completely free, if you paid to get this, you have been scammed."));
     }
   }
 
@@ -353,6 +381,8 @@ class MainMenu {
       Menu.AutoDestroyCheck.SetIsChecked(ModManager.Settings.AutoDestroy);
       Menu.NewAutoAbsorbCheck.SetIsChecked(ModManager.Settings.AutoAbsorbnew);
       Menu.NewKillAuraCheck.SetIsChecked(ModManager.Settings.killAuranew);
+
+      Menu.WorldSpeedCheck.SetIsChecked(ModManager.Settings.WorldSpeed);
     }
   }
 
@@ -361,6 +391,14 @@ class MainMenu {
       ModManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
     } else {
       ModManager.SetPlayerSpeed(1);
+    }
+  }
+
+  static updateWorldSpeed() {
+    if (ModManager.Settings.WorldSpeed) {
+      ModMethod_1.ModMethod.SetWorldTimeDilation(ModManager.Settings.WorldSpeedValue);
+    } else {
+      ModMethod_1.ModMethod.SetWorldTimeDilation(1);
     }
   }
 
@@ -382,7 +420,7 @@ class ModEntityListener {
       //KillAura_1.KillAura.KillAnimal(entitylist[i]);
       //AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
       //AutoChest_1.AutoChest.RewardChest(entitylist[i]);
-      //ESP_1.ESP.ESPDrawMain(entitylist[i]);
+      ESP_1.ESP.ESPDrawMain(entitylist[i]);
     }
 
     //puerts_1.logger.warn("kun:Runtime is working");

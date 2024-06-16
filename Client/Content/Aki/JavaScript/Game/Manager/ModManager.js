@@ -71,6 +71,8 @@ class ModManager {
         AutoChest:true,
         WeatherChanger:false,
         WeatherType: 1,
+        WorldSpeed:false,
+        WorldSpeedValue:3,
         Uid: "100000000",
     };
 
