@@ -37,7 +37,7 @@ function main() {
 
 class MainMenu {
   static IsKey(str) {
-    let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str)
+    let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str);
     if (IsInputKeyDown && !keyState) {
       IsInputKeyDown = false;
       keyState = true;
@@ -96,6 +96,13 @@ class MainMenu {
 
   static Start() {
     if (!isMenuLoaded) {
+      //check if config exists
+      if (!ModManager.CheckConfigExists()) {
+        ModManager.SaveConfig();
+      } else {
+        ModManager.LoadConfig();
+      }
+
       currentLang = ModLanguage.GetCurrLang();
 
       Menu = UE.UMGManager.CreateWidget(
@@ -219,6 +226,11 @@ class MainMenu {
             MainMenu.KunLog("UID Changed: " + UID);
           });
 
+          Menu.SaveConfigButton.OnClicked.Add(() => {
+            ModManager.SaveConfig();
+            MainMenu.KunLog("Config Saved!");
+          });
+
           Menu.HideHUDCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.HideHUD = isChecked;
             if (isChecked) {
@@ -276,19 +288,19 @@ class MainMenu {
             Menu.NewKillAuraValue.SetText(value);
             ModManager.Settings.killAuraRadius = value;
             MainMenu.KunLog("Hit Multiplier Count: " + value);
-          })
+          });
 
           Menu.WorldSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.WorldSpeed = isChecked;
             MainMenu.KunLog("World Speed: " + isChecked);
-          })
+          });
 
           Menu.WorldSpeedSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(3)
-            Menu.WorldSpeedValue.SetText(value)
+            value = value.toFixed(3);
+            Menu.WorldSpeedValue.SetText(value);
             ModManager.Settings.WorldSpeedValue = value;
             MainMenu.KunLog("World Speed " + value);
-          })
+          });
 
           Menu.KillAuraValue.SetSelectedIndex(
             ModManager.Settings.killAuraState
@@ -324,11 +336,10 @@ class MainMenu {
       Menu.HeadingUI.SetText(ModLanguage.ModTr("UI"));
       Menu.HeadingTeleport.SetText(ModLanguage.ModTr("Teleport"));
       Menu.HeadingDebug.SetText(ModLanguage.ModTr("Debug"));
+      Menu.SaveConfigText.SetText(ModLanguage.ModTr("Save Config"));
 
       Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
       Menu.Designer.SetText(ModLanguage.ModTr("GUI by n0bu"));
-      Menu.DisclaimerText.SetText(ModLanguage.ModTr("This hack is completely free, if you paid to get this, you have been scammed."));
-
       Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
       Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
       Menu.AutoPickTreasureText.SetText(
@@ -352,7 +363,7 @@ class MainMenu {
       Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
       Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
       Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
-      
+
       Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
       Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy"));
       Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
@@ -421,7 +432,9 @@ class MainMenu {
 
   static updateWorldSpeed() {
     if (ModManager.Settings.WorldSpeed) {
-      ModMethod_1.ModMethod.SetWorldTimeDilation(ModManager.Settings.WorldSpeedValue);
+      ModMethod_1.ModMethod.SetWorldTimeDilation(
+        ModManager.Settings.WorldSpeedValue
+      );
     } else {
       ModMethod_1.ModMethod.SetWorldTimeDilation(1);
     }
@@ -429,7 +442,9 @@ class MainMenu {
 
   static updateWorldSpeed() {
     if (ModManager.Settings.WorldSpeed) {
-      ModMethod_1.ModMethod.SetWorldTimeDilation(ModManager.Settings.WorldSpeedValue);
+      ModMethod_1.ModMethod.SetWorldTimeDilation(
+        ModManager.Settings.WorldSpeedValue
+      );
     } else {
       ModMethod_1.ModMethod.SetWorldTimeDilation(1);
     }
@@ -474,7 +489,7 @@ setInterval(ModEntityListener.Runtime, 3000);
 //setInterval(ESPmain.RuntimeESP, 1);
 main();
 
-exports.ESPmain = ESPmain;
+// exports.ESPmain = ESPmain;
 exports.MainMenu = MainMenu;
 exports.ModEntityListener = ModEntityListener;
 //# sourceMappingURL=Main.js.map

@@ -75,6 +75,25 @@ class ModManager {
     Uid: "100000000",
   };
 
+    static GetGameDir() {
+        return UE.BlueprintPathsLibrary.ProjectDir() + 'Binaries/Win64/';
+    }
+
+    static CheckConfigExists() {
+        const config = UE.BlueprintPathsLibrary.FileExists(this.GetGameDir() + ConfigFileName);
+        return config;
+    }
+
+    static SaveConfig() {
+        UE.KuroStaticLibrary.SaveStringToFile(JSON.stringify(this.Settings), this.GetGameDir() + ConfigFileName);
+    }
+
+    static LoadConfig() {
+        var ref = (0, puerts_1.$ref)("");
+        UE.KuroStaticLibrary.LoadFileToString(ref, this.GetGameDir() + ConfigFileName), (0, puerts_1.$unref)(ref)
+        this.Settings = JSON.parse(ref[0]);
+    }
+
   static ModStart() {
     ModDebuger_1.ModDebuger.TestMethod();
     ModLanguage_1.ModLanguage.GetCurrLang();
