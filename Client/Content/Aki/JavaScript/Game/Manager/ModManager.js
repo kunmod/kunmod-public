@@ -62,12 +62,12 @@ class ModManager {
         AutoMine: false,
         //test
         DebugEntity:true,//(if use entity func need enable)
-        AutoDestroy:true,
-        killAuranew:true,
+        AutoDestroy:false,
+        killAuranew:false,
         killAuraRadius:300,
         KillAnimal:true,
-        AutoAbsorbnew:true,
-        AutoChest:true,
+        AutoAbsorbnew:false,
+        AutoChest:false,
         WeatherChanger:false,
         WeatherType: 1,
         WorldSpeed:false,
@@ -173,7 +173,7 @@ class ModManager {
         }
 
         if (this.listenKey("MarkTp", "t")) {
-            if(this.Settings.MarkTp)
+            if(this.Settings.MarkTp&&ModUtils_1.ModUtils.IsInMapView())
             this.TpNoloadingTo(this.Settings.MarkX*100,this.Settings.MarkY*100,this.Settings.MarkZ*100)
         }
 

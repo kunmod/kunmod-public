@@ -72,5 +72,5 @@ class KillAura extends EntityManager {
     // }
   }
 }
-//puerts.logger.info(debug)
+
 exports.KillAura = KillAura;

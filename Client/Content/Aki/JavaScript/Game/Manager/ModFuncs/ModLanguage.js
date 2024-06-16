@@ -242,7 +242,7 @@ class ModLanguage {
     {
       en: "CustomTp:AutoMode:Set Delay",
       chs: "自定义传送:自动模式:设置延迟",
-      ja: "CustomTp:AutoMode:Set Delay",
+      ja: "CustomTp:オートモード:遅延を設定"
     },
     {
       en: "Please enter Delay(s)",
@@ -250,9 +250,9 @@ class ModLanguage {
       ja: "Please enter Delay(s)",
     },
     {
-      en: "Remaining time",
-      chs: "下一次传送还有",
-      ja: "Remaining time",
+      en: "Please enter Delay(s)",
+      chs: "请输入延迟(秒)",
+      ja: "遅延（秒）を入力してください"
     },
     {
       en: "seconds",
@@ -267,22 +267,22 @@ class ModLanguage {
     {
       en: "AutoMode",
       chs: "自动模式",
-      ja: "AutoMode",
+      ja: "オートモード",
     },
     {
       en: "CustomTp:CurrPos:Select",
       chs: "自定义传送:当前序号:选择",
-      ja: "CustomTp:CurrPos:Select",
+      ja: "CustomTp:現在の位置:選択",
     },
     {
       en: "Please enter CurreNum",
       chs: "请输入当前序号",
-      ja: "Please enter CurreNum",
+      ja: "現在の番号を入力してください",
     },
     {
       en: " | AutoMode[End]: ",
       chs: " | 自动模式[End]: ",
-      ja: " | AutoMode[End]: ",
+      ja: " | オートモード[End]: ",
     },
     {
       en: "Infinite Stamina",
@@ -343,6 +343,46 @@ class ModLanguage {
       en: "Teleport",
       chs: "传送",
       ja: "テレポート"
+    },
+    {
+      en: "Debug",
+      chs: "调试",
+      ja: "デバッグ"
+    },
+    {
+      en: "Debug Entity",
+      chs: "调试实体",
+      ja: "デバッグエンティティ"
+    },
+    {
+      en: "Auto Destroy",
+      chs: "自动销毁",
+      ja: "自動破壊"
+    },
+    {
+      en: "Donate:",
+      chs: "赞助:",
+      ja: "寄付する:"
+    },
+    {
+      en: "This hack is completely free, if you paid to get this, you have been scammed.",
+      chs: "此黑客程序完全免费，如果您付费获得此程序，则您被骗了。",
+      ja: "このハックは完全に無料です。これを入手するためにお金を払った場合は、詐欺に遭ったことになります。"
+    },
+    {
+      en: "GUI designer: n0bu",
+      chs: "GUI设计师： n0bu",
+      ja: "GUI 作成者 n0bu"
+    },
+    {
+      en: "New Kill Aura",
+      chs: "新杀戮光环",
+      ja: "新しいキルオーラ"
+    },
+    {
+      en: "New Auto Absorb",
+      chs: "新自动吸收",
+      ja: "新しい自動吸収"
     },
   ];
 
