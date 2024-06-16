@@ -389,6 +389,11 @@ class ModLanguage {
       chs: "世界速度",
       ja: "世界スピード"
     },
+    {
+      en: "Kill Animal",
+      chs: "杀死动物",
+      ja: "動物を殺す"
+    },
   ];
 
   static ModTr = (string) => {

@@ -191,6 +191,11 @@ class MainMenu {
             MainMenu.KunLog("Auto Loot: " + isChecked);
           });
 
+          Menu.KillAnimalCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.KillAnimal = isChecked;
+            MainMenu.KunLog("Kill Animal: " + isChecked);
+          });
+
           Menu.PerceptionRangeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.PerceptionRange = isChecked;
             MainMenu.KunLog("Perception Range: " + isChecked);
@@ -335,6 +340,7 @@ class MainMenu {
       Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
       Menu.InfiniteStaminaText.SetText(ModLanguage.ModTr("Infinite Stamina"));
       Menu.AutoLootText.SetText(ModLanguage.ModTr("Auto Loot [Num0]"));
+      Menu.KillAnimalText.SetText(ModLanguage.ModTr("Kill Animal"));
       Menu.PerceptionRangeText.SetText(
         ModLanguage.ModTr("Perception Range [F10]")
       );
@@ -386,6 +392,7 @@ class MainMenu {
         ModManager.Settings.InfiniteStamina
       );
       Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
+      Menu.KillAnimalCheck.SetIsChecked(ModManager.Settings.KillAnimal);
       Menu.PerceptionRangeCheck.SetIsChecked(
         ModManager.Settings.PerceptionRange
       );
