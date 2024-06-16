@@ -100,25 +100,25 @@ class ModManager {
         // }
 
         this.listenMod('GodMode', "F5", "GodMode");
-        if (this.listenMod('HitMultiplier', "F6", "HitMultiplier")) {
-            if (this.Settings.HitMultiplier) {
-                ModUtils_1.ModUtils.KuroSingleInputBox({
-                    title: ModTr("HitMultiplier:Please enter hit count"),
-                    customFunc: async(string) => {
-                        var count = ModUtils_1.ModUtils.StringToInt(string);
-                        if (count !== "error") {
-                            this.Settings.Hitcount = count
-                        }
-                    },
-                    inputText: this.Settings.Hitcount.toString(),
-                    defaultText: ModTr("Please enter hit count"),
-                    isCheckNone: true,
-                    needFunctionButton: false
-                });
+        // if (this.listenMod('HitMultiplier', "F6", "HitMultiplier")) {
+        //     if (this.Settings.HitMultiplier) {
+        //         ModUtils_1.ModUtils.KuroSingleInputBox({
+        //             title: ModTr("HitMultiplier:Please enter hit count"),
+        //             customFunc: async(string) => {
+        //                 var count = ModUtils_1.ModUtils.StringToInt(string);
+        //                 if (count !== "error") {
+        //                     this.Settings.Hitcount = count
+        //                 }
+        //             },
+        //             inputText: this.Settings.Hitcount.toString(),
+        //             defaultText: ModTr("Please enter hit count"),
+        //             isCheckNone: true,
+        //             needFunctionButton: false
+        //         });
 
-            }
+        //     }
 
-        }
+        // }
         this.listenMod('AutoPickTreasure', "F7", "AutoPickTreasure");
         this.listenMod('AutoAbsorb', "F8", "AutoAbsorb");
         this.listenMod('killAura', "F9", "killAura");
