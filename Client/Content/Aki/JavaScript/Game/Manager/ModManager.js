@@ -71,12 +71,12 @@ class ModManager {
         WeatherChanger:false,
         WeatherType: 1,
         WorldSpeed:false,
-        WorldSpeedValue:1,
+        WorldSpeedValue:3,
         Uid: "100000000",
     };
 
     static ModStart() {
-        ModDebuger_1.ModDebuger.TestMethod();
+        //ModDebuger_1.ModDebuger.TestMethod();
         ModLanguage_1.ModLanguage.GetCurrLang();
         this.AddKey("ShowMenu", "Home");
         this.AddToggle("GodMode", "F5");
@@ -89,7 +89,7 @@ class ModManager {
         this.AddToggle("PlayerSpeed", "F12");
         this.AddToggle("CustomTp", "Insert");
         this.AddToggle("AutoLoot", "NumPadZero");
-        this.AddToggle("AutoMine", "NumPadOne");
+        //this.AddToggle("AutoMine", "NumPadOne");
         this.AddKey("MarkTp", "t");
 
     }
@@ -166,11 +166,11 @@ class ModManager {
         }
 
         this.listenMod('AutoLoot', "NumPadZero", "AutoLoot");
-        this.listenMod('AutoMine', "NumPadOne", "AutoMine");
-        ModDebuger_1.ModDebuger.EnableDebug();
-        if (ModDebuger_1.ModDebuger.Setting.EnableDebug) {
-            ModDebuger_1.ModDebuger.ListenDebug();
-        }
+       // this.listenMod('AutoMine', "NumPadOne", "AutoMine");
+        //ModDebuger_1.ModDebuger.EnableDebug();
+        // if (ModDebuger_1.ModDebuger.Setting.EnableDebug) {
+        //     ModDebuger_1.ModDebuger.ListenDebug();
+        // }
 
         if (this.listenKey("MarkTp", "t")) {
             if(this.Settings.MarkTp&&ModUtils_1.ModUtils.IsInMapView())

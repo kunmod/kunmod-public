@@ -103,7 +103,7 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
   }
   SetInteractRange(t, e = 0) {
     if(ModManager_1.ModManager.Settings.PerceptionRange){
-      t *= 20;
+      t *= 40;
       //e *= 10;
     }
     (this._tn = t * t),
