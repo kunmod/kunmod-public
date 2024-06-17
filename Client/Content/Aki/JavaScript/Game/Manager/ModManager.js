@@ -103,15 +103,15 @@ class ModManager {
     this.AddToggle("GodMode", "F5");
     this.AddToggle("HitMultiplier", "F6");
     this.AddToggle("AutoPickTreasure", "F7");
-    this.AddToggle("AutoAbsorb", "F8");
+    this.AddToggle("AutoAbsorbnew", "F8");
     this.AddToggle("killAura", "F9");
     this.AddToggle("PerceptionRange", "F10");
     this.AddToggle("NoCD", "F11");
     this.AddToggle("PlayerSpeed", "F12");
     this.AddToggle("CustomTp", "Insert");
     this.AddToggle("AutoLoot", "NumPadZero");
-    this.AddToggle("AutoMine", "NumPadOne");
-    this.AddToggle("能量", "NumPadFour");
+    this.AddToggle("AutoDestroy", "NumPadOne");
+    this.AddToggle("skip", "NumPadFour");
     this.AddKey("MarkTp", "t");
   }
 
@@ -141,7 +141,7 @@ class ModManager {
 
     // }
     this.listenMod("AutoPickTreasure", "F7", "AutoPickTreasure");
-    this.listenMod("AutoAbsorb", "F8", "AutoAbsorb");
+    this.listenMod("AutoAbsorbnew", "F8", "AutoAbsorbnew");
     this.listenMod("killAura", "F9", "killAura");
     this.listenMod("PerceptionRange", "F10", "PerceptionRange");
     this.listenMod("NoCD", "F11", "NoCD");
@@ -187,7 +187,7 @@ class ModManager {
     }
 
     this.listenMod("AutoLoot", "NumPadZero", "AutoLoot");
-    this.listenMod("AutoMine", "NumPadOne", "AutoMine");
+    this.listenMod("AutoDestroy", "NumPadOne", "AutoDestroy");
     // ModDebuger_1.ModDebuger.EnableDebug();
     // if (ModDebuger_1.ModDebuger.Setting.EnableDebug) {
     //   ModDebuger_1.ModDebuger.ListenDebug();
@@ -202,7 +202,7 @@ class ModManager {
         );
     }
 
-    this.listenMod("能量", "NumPadFour", "能量");
+    this.listenMod("skip", "NumPadFour", "plot");
   }
 
   static AddToggle(desc, key) {

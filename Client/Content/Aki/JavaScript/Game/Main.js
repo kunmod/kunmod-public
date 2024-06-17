@@ -338,15 +338,12 @@ class MainMenu {
       Menu.HeadingDebug.SetText(ModLanguage.ModTr("Debug"));
       Menu.SaveConfigText.SetText(ModLanguage.ModTr("Save Config"));
 
-
-
-
       Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
       Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
       Menu.AutoPickTreasureText.SetText(
         ModLanguage.ModTr("Auto Pick Treasure [F7]")
       );
-      Menu.AutoAbsorbEchoText.SetText(ModLanguage.ModTr("Auto Absorb [F8]"));
+      //Menu.AutoAbsorbEchoText.SetText(ModLanguage.ModTr("Auto Absorb [F8]"));
       Menu.HitMultiplierText.SetText(ModLanguage.ModTr("Hit Multiplier [F6]"));
       Menu.KillAuraText.SetText(ModLanguage.ModTr("Kill Aura [F9]"));
       Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
@@ -362,16 +359,15 @@ class MainMenu {
       Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
       Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
       Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
-      //Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
+      // Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
       Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
 
       Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
-      Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy"));
+      Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy [Num1]"));
       Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
-      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("New Auto Absorb"));
+      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("Auto Absorb [F8]"));
 
-      Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
-      Menu.Designer.SetText(ModLanguage.ModTr("GUI designer: n0bu"));
+      Menu.Designer.SetText(ModLanguage.ModTr("GUI Designer: n0bu"));
       Menu.DisclaimerText.SetText(this.Getfreetip());
     }
   }

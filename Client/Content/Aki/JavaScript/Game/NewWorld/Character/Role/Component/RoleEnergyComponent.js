@@ -37,15 +37,15 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
   }
   OnStart() {
     return (
-      (this.U6r = this.Entity.CheckGetComponent(3)),
-      (this.yte = this.Entity.CheckGetComponent(155)),
-      this.yte.AddListeners(energyAttrIds, this.HXo, "RoleEnergyComponent"),
+      //(this.U6r = this.Entity.CheckGetComponent(3)),
+     // (this.yte = this.Entity.CheckGetComponent(155)),
+     // this.yte.AddListeners(energyAttrIds, this.HXo, "RoleEnergyComponent"),
      // this.HXo(),
       !0
     );
   }
   OnEnd() {
-    return /*this.yte.RemoveListeners(energyAttrIds, this.HXo),*/ !0;
+    //return this.yte.RemoveListeners(energyAttrIds, this.HXo), !0;
   }
 };
 (RoleEnergyComponent = __decorate(

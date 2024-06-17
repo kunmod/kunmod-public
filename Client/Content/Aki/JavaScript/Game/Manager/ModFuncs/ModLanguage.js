@@ -486,8 +486,6 @@ class ModLanguage {
       "en": "en",
       "zh-Hans": "chs",
       "ja": "ja",
-      "es": "es",
-      "id": "id"
     };
     for (let i = 0; i < ModLanguage.translate.length; i++) {
       if (ModLanguage.translate[i].en === string) {
