@@ -75,6 +75,7 @@ class ModManager {
     WorldSpeedValue: 1,
     PlotSkip:false,
     Uid: "100000000",
+    Language:"en",
   };
 
     static GetGameDir() {
@@ -116,30 +117,10 @@ class ModManager {
   }
 
   static listenModsToggle() {
-    // if (this.listenKey("ShowMenu", "Home")) {
-    //     this.ShowMenu();
-    // }
+
 
     this.listenMod("GodMode", "F5", "GodMode");
-    // if (this.listenMod('HitMultiplier', "F6", "HitMultiplier")) {
-    //     if (this.Settings.HitMultiplier) {
-    //         ModUtils_1.ModUtils.KuroSingleInputBox({
-    //             title: ModTr("HitMultiplier:Please enter hit count"),
-    //             customFunc: async(string) => {
-    //                 var count = ModUtils_1.ModUtils.StringToInt(string);
-    //                 if (count !== "error") {
-    //                     this.Settings.Hitcount = count
-    //                 }
-    //             },
-    //             inputText: this.Settings.Hitcount.toString(),
-    //             defaultText: ModTr("Please enter hit count"),
-    //             isCheckNone: true,
-    //             needFunctionButton: false
-    //         });
 
-    //     }
-
-    // }
     this.listenMod("AutoPickTreasure", "F7", "AutoPickTreasure");
     this.listenMod("AutoAbsorbnew", "F8", "AutoAbsorbnew");
     this.listenMod("killAura", "F9", "killAura");
@@ -290,59 +271,13 @@ class ModManager {
     if (func) return string + ModTr(" : <color=green>ON</color> |");
     else return string + ModTr(" : <color=red>OFF</color> |");
   }
-  // static ShowMenu() {
 
-  //     var newBox = new ConfirmBoxDefine_1.ConfirmBoxDataNew(50);
-  //     var state =
-  //         this.FuncState(this.Settings.GodMode, ModTr("GodMode[F5]")) +
-  //         this.FuncState(this.Settings.HitMultiplier, ModTr("HitMultiplier[F6]")) +
-  //         this.FuncState(this.Settings.AutoPickTreasure, ModTr("AutoPickTreasure[F7]")) +
-  //         this.FuncState(this.Settings.AutoAbsorb, ModTr("AutoAbsorb[F8]")) +
-  //         this.FuncState(this.Settings.killAura, ModTr("killAura[F9]")) +
-  //         this.FuncState(this.Settings.PerceptionRange, ModTr("PerceptionRange[F10]")) +
-  //         this.FuncState(this.Settings.NoCD, ModTr("NoCD[F11]")) +
-  //         this.FuncState(this.Settings.PlayerSpeed, ModTr("PlayerSpeed[F12]")) +
-
-  //         this.FuncState(this.Settings.CustomTp, ModTr("CustomTp[Ins]")) +
-  //         this.FuncState(this.Settings.AutoLoot, ModTr("AutoLoot[Num0]")) +
-  //         this.FuncState(this.Settings.AntiDither, ModTr("AntiDither"))
-
-  //         newBox.SetTextArgs(state);
-  //     newBox.SetTitle(ModTr("KunMods State[Home] DisableAntiCheat : <color=green>ON</color> "));
-  //     ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(newBox);
-  // }
 
   static ChangeUid(string) {
     this.Settings.Uid = string;
     UiManager_1.UiManager.CloseView("UidView");
     UiManager_1.UiManager.OpenView("UidView");
   }
-  static TrackTP() {
-    //mark
-    var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
-    puerts_1.logger.Debug("[kunmod:]Marktp:", r);
-    var i = ModelManager_1.ModelManager.MapModel.GetMark(r[0], r[1]);
-    puerts_1.logger.Debug("[kunmod:]Marktp:", i.TrackTarget);
-    var targetX = i.TrackTarget.X;
-    var targetY = i.TrackTarget.Y;
-    var posZ = 0;
-    var v = MapController_1.MapController.GetMarkPosition(targetX, targetY);
-    puerts_1.logger.info("[kunmod:]Marktp:", v);
-    if (v.Z == 0) {
-      posZ = this.Settings.MarkTpPosZ;
-    } else {
-      posZ = v.Z;
-    }
 
-    this.TeleportToPositionNoLoading(targetX, targetY, posZ);
-    ModUtils_1.ModUtils.KunLog(
-      "MarkTp:go to (" +
-        targetX.toString() +
-        "," +
-        targetY.toString() +
-        "," +
-        posZ.toString()
-    );
-  }
 }
 exports.ModManager = ModManager;
