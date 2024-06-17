@@ -26,384 +26,466 @@ class ModLanguage {
     CurrLang = LanguageSystem_1.LanguageSystem.PackageLanguage;
     return CurrLang;
   }
-  static Langs = ["en", "zh-Hans", "ja"];
+  static Langs = ["en", "zh-Hans", "ja", "es","id"];
 
   static translate = [
     {
       en: "HitMultiplier[F6]",
       chs: "多倍攻击[F6]",
       ja: "ヒット倍率[F6]",
+      es: "GolpeMultiplicador[F6]",
+      id: "PengaliHit[F6]",
     },
     {
       en: "GodMode[F5]",
       chs: "无敌模式[F5]",
-      ja:"神モードやで[F5]",
+      ja: "神モードやで[F5]",
+      es: "Modo Dios[F5]",
+      id: "ModeDewa[F5]",
     },
     {
       en: "AutoPickTreasure[F7]",
       chs: "拾取宝箱[F7]",
       ja: "自動で宝を拾うんや[F7]",
+      es: "Auto Recoger Tesoro[F7]",
+      id: "MengambilHartaOtomatis[F7]",
     },
     {
       en: "AutoAbsorb[F8]",
       chs: "自动吸收[F8]",
-      ja:"自動で吸収すんや",
+      ja: "自動で吸収すんや",
+      es: "Auto Absorber[F8]",
+      id: "MenyerapOtomatis[F8]",
     },
     {
       en: "killAura[F9]",
       chs: "杀戮光环[F9]",
-      ja:"キルオーラやで[F9]",
+      ja: "キルオーラやで[F9]",
+      es: "Aura Asesina[F9]",
+      id: "AuraPembunuh[F9]",
     },
     {
       en: "PerceptionRange[F10]",
       chs: "感知范围[F10]",
       ja: "感知範囲やで[F10]",
+      es: "Rango de Percepción[F10]",
+      id: "JarakPenglihatan[F10]",
     },
     {
       en: "NoCD[F11]",
       chs: "无冷却[F11]",
       ja: "クールダウンなしやで[F11]",
+      es: "No Enfriamiento[F11]",
+      id: "TanpaCD[F11]",
     },
     {
       en: "PlayerSpeed[F12]",
       chs: "玩家速度[F12]",
       ja: "プレイヤーのスピードやで[F12]",
+      es: "Velocidad del Jugador[F12]",
+      id: "KecepatanPemain[F12]",
     },
     {
       en: "CustomTp[Ins]",
       chs: "自定义传送[Ins]",
       ja: "てきとうな瞬間移動[Ins]",
+      es: "Teleportación Personalizada[Ins]",
     },
     {
       en: "AutoLoot[Num0]",
       chs: "自动拾取[Num0]",
       ja: "自動あっぷる[Num0]",
+      es: "Auto Botín[Num0]",
     },
     {
       en: "KunMods State[Home] DisableAntiCheat : <color=green>ON</color> ",
       chs: "坤模组状态[Home] 安全保护 : <color=green>开启</color> ",
       ja: "KunMods 状態[Home] アンチチート無効化 : <color=green>オン</color>",
+      es: "Estado de KunMods[Home] Desactivar AntiCheat : <color=green>ON</color>",
     },
     {
       en: " : <color=green>ON</color> |",
       chs: " : <color=green>开启</color> |",
       ja: "<color=green>オン</color>",
+      es: " : <color=green>ACTIVO</color> |",
     },
     {
       en: " : <color=red>OFF</color> |",
       chs: " : <color=red>关闭</color> |",
       ja: "<color=red>オフ</color>",
+      es: " : <color=red>DESACTIVADO</color> |",
     },
     {
       en: "ON",
       chs: "开启",
       ja: "オン",
+      es: "ACTIVO",
     },
     {
       en: "OFF",
       chs: "关闭",
       ja: "オフ",
+      es: "DESACTIVADO",
     },
     {
       en: "God Mode [F5]",
       chs: "无敌模式[F5]",
       ja: "神モードやで[F5]",
+      es: "Modo Dios[F5]",
     },
     {
       en: "Hit Multiplier [F6]",
       chs: "多倍攻击[F6]",
       ja: "ヒット倍率[F6]",
+      es: "Golpe Multiplicador[F6]",
     },
     {
       en: "Auto Pick Treasure [F7]",
       chs: "拾取宝箱[F7]",
       ja: "自動で宝を拾うんや[F7]",
+      es: "Auto Recoger Tesoro[F7]",
     },
     {
       en: "Auto Absorb [F8]",
       chs: "自动吸收[F8]",
       ja: "自動で吸収すんや[F8]",
+      es: "Auto Absorber[F8]",
     },
     {
       en: "Kill Aura [F9]",
       chs: "杀戮光环[F9]",
       ja: "キルオーラやで[F9]",
+      es: "Aura Asesina[F9]",
     },
     {
       en: "Perception Range [F10]",
       chs: "感知范围[F10]",
       ja: "感知範囲やで[F10]",
+      es: "Rango de Percepción[F10]",
     },
     {
       en: "No Cooldown [F11]",
       chs: "无冷却[F11]",
       ja: "クールダウンなしやで[F11]",
+      es: "Sin Enfriamiento[F11]",
     },
     {
       en: "Player Speed [F12]",
       chs: "玩家速度[F12]",
       ja: "プレイヤーのスピードやで[F12]",
+      es: "Velocidad del Jugador[F12]",
     },
     {
       en: "Custom Teleport [INS]",
       chs: "自定义传送[INS]",
       ja: "てきとうな瞬間移動[INS]",
+      es: "Teleportación Personalizada[INS]",
     },
     {
       en: "Auto Loot [Num0]",
       chs: "自动拾取[Num0]",
       ja: "自動あっぷる[Num0]",
+      es: "Auto Botín[Num0]",
     },
     {
       en: "Custom Teleport State [Insert]:",
       chs: "自定义传送状态[Insert]:",
       ja: "カスタムテレポートの状態[Insert]",
+      es: "Estado de Teleportación Personalizada [Insert]:",
     },
     {
       en: " Show [Del]",
       chs: " 显示[Del]",
       ja: " ショー[Del]",
+      es: " Mostrar [Del]",
     },
     {
       en: "Current File:",
       chs: "当前文件:",
       ja: "今のファイル",
+      es: "Archivo Actual:",
     },
     {
       en: "| PreviousFile[PageUp]:",
       chs: "| 上一个文件[PageUp]:",
       ja: "| 前のファイル[PageUp]",
+      es: "| Archivo Anterior[PageUp]:",
     },
     {
       en: " | NextFile[PageDown]:",
       chs: " | 下一个文件[PageDown]:",
       ja: " | つぎのファイル[PageDown]",
+      es: " | Archivo Siguiente[PageDown]:",
     },
     {
       en: " | PreviousPos[Up]:",
       chs: " | 上一个位置[Up]:",
       ja: " |前のポジション[Up]",
+      es: " | Posición Anterior[Up]:",
     },
     {
       en: " | NextPos[Down]:",
       chs: " | 下一个位置[Down]:",
       ja: " |つぎのポジション[Down]",
+      es: " | Posición Siguiente[Down]:",
     },
     {
       en: "Anti Dither",
       chs: "反虚化",
       ja: "アンチディザ",
+      es: "Anti Dither",
     },
     {
       en: "Anti Dither",
       chs: "反虚化",
       ja: "アンチディザ",
+      es: "Anti Dither",
     },
     {
       en: "Please enter hit count",
       chs: "请输入攻击次数",
       ja: "ヒット数入れてや",
+      es: "Por favor, introduzca el número de golpes",
     },
     {
       en: "HitMultiplier:Please enter hit count",
       chs: "倍数攻击：请输入攻击次数",
       ja: "ヒットの倍率や：ヒット数入れてや",
+      es: "GolpeMultiplicador:Por favor, introduzca el número de golpes",
     },
     {
       en: " | SetDelay[Left]: ",
       chs: " | 延迟[Left]: ",
       ja: " | SetDelay[Left]: ",
+      es: " | Establecer Retraso[Izquierda]: ",
     },
     {
       en: " | Select[Right]: ",
       chs: " | 选择pos[Right]: ",
       ja: " | Select[Right]: ",
+      es: " | Seleccionar[Derecha]: ",
     },
     {
       en: "is the last file",
       chs: "这是最后一个文件",
       ja: "is the last file",
+      es: "es el último archivo",
     },
     {
       en: "is the first file",
       chs: "这是第一个文件",
       ja: "is the first file",
+      es: "es el primer archivo",
     },
     {
       en: "is the last pos",
       chs: "这是最后一个点位",
       ja: "is the last pos",
+      es: "es la última posición",
     },
     {
       en: "is the first pos",
       chs: "这是第一个点位",
       ja: "is the first pos",
+      es: "es la primera posición",
     },
     {
       en: "CustomTp:AutoMode:Set Delay",
       chs: "自定义传送:自动模式:设置延迟",
-      ja: "CustomTp:オートモード:遅延を設定"
+      ja: "CustomTp:オートモード:遅延を設定",
+      es: "CustomTp:AutoMode:Establecer Retraso",
     },
     {
       en: "Please enter Delay(s)",
       chs: "请输入延迟(秒)",
       ja: "Please enter Delay(s)",
+      es: "Por favor, introduzca el retraso(s)",
     },
     {
       en: "Please enter Delay(s)",
       chs: "请输入延迟(秒)",
-      ja: "遅延（秒）を入力してください"
+      ja: "遅延（秒）を入力してください",
+      es: "Por favor, introduzca el retraso(s)",
     },
     {
       en: "seconds",
       chs: "秒",
       ja: "seconds",
+      es: "segundos",
     },
     {
       en: "Go",
       chs: "出发",
       ja: "Go",
+      es: "Ir",
     },
     {
       en: "AutoMode",
       chs: "自动模式",
       ja: "オートモード",
+      es: "Modo Automático",
     },
     {
       en: "CustomTp:CurrPos:Select",
       chs: "自定义传送:当前序号:选择",
       ja: "CustomTp:現在の位置:選択",
+      es: "CustomTp:Posición Actual:Seleccionar",
     },
     {
       en: "Please enter CurreNum",
       chs: "请输入当前序号",
       ja: "現在の番号を入力してください",
+      es: "Por favor, introduzca el número actual",
     },
     {
       en: " | AutoMode[End]: ",
       chs: " | 自动模式[End]: ",
       ja: " | オートモード[End]: ",
+      es: " | Modo Automático[End]: ",
     },
     {
       en: "Infinite Stamina",
       chs: "无限体力",
       ja: "無限のスタミナ",
+      es: "Estamina Infinita",
     },
     {
       en: "Custom UID",
       chs: "自定义UID",
       ja: "カスタムUID",
+      es: "UID Personalizado",
     },
     {
       en: "Player",
       chs: "玩家",
-      ja: "プレーヤー"
+      ja: "プレーヤー",
+      es: "Jugador",
     },
     {
       en: "World",
       chs: "世界",
-      ja: "世界"
+      ja: "世界",
+      es: "Mundo",
     },
     {
       en: "UI",
       chs: "用户界面",
-      ja: "インターフェース"
+      ja: "インターフェース",
+      es: "UI",
     },
     {
       en: "Hide HUD",
       chs: "隐藏HUD",
-      ja: "HUDを非表示"
+      ja: "HUDを非表示",
+      es: "Ocultar Interfaz",
     },
     {
       en: "Hide Damage Text",
       chs: "隐藏伤害文字",
-      ja: "ダメージテキストを非表示"
+      ja: "ダメージテキストを非表示",
+      es: "Ocultar Texto de Daño",
     },
     {
       en: "Mark Teleport [T]",
       chs: "标记传送[T]",
-      ja: "マークテレポート[T]"
+      ja: "マークテレポート[T]",
     },
     {
       en: "Only Hatred",
       chs: "只有仇恨",
-      ja: "憎しみだけ"
+      ja: "憎しみだけ",
+      es: "Solo Odio",
     },
     {
       en: "Infinity",
       chs: "无限",
-      ja: "無限"
+      ja: "無限",
+      es: "Infinito",
     },
     {
       en: "Auto Mining [Num1]",
       chs: "自动矿工[Num1]",
-      ja: "オートマイナー[Num1]"
+      ja: "オートマイナー[Num1]",
+      es: "Minería Automática[Num1]",
     },
     {
       en: "Teleport",
       chs: "传送",
-      ja: "テレポート"
+      ja: "テレポート",
+      es: "Teletransporte",
     },
     {
       en: "Debug",
       chs: "调试",
-      ja: "デバッグ"
+      ja: "デバッグ",
+      es: "Depurar",
     },
     {
       en: "Debug Entity",
       chs: "调试实体",
-      ja: "デバッグエンティティ"
+      ja: "デバッグエンティティ",
+      es: "Depurar Entidad",
     },
     {
       en: "Auto Destroy",
       chs: "自动销毁",
-      ja: "自動破壊"
+      ja: "自動破壊",
+      es: "Auto Destruir",
     },
     {
       en: "Donate:",
       chs: "赞助:",
-      ja: "寄付する:"
+      ja: "寄付する:",
+      es: "Donar:",
     },
     {
       en: "This hack is completely free, if you paid to get this, you have been scammed.",
       chs: "此黑客程序完全免费，如果您付费获得此程序，则您被骗了。",
-      ja: "このハックは完全に無料です。これを入手するためにお金を払った場合は、詐欺に遭ったことになります。"
+      ja: "このハックは完全に無料です。これを入手するためにお金を払った場合は、詐欺に遭ったことになります。",
+      es: "Este hack es completamente gratuito, si pagaste por obtenerlo, has sido estafado.",
     },
     {
-      en: "GUI designer: n0bu",
+      en: "GUI Designer: n0bu",
       chs: "GUI设计师： n0bu",
-      ja: "GUI 作成者 n0bu"
+      ja: "GUI 作成者 n0bu",
+      es: "Diseñador de GUI: n0bu",
     },
     {
       en: "New Kill Aura",
       chs: "新杀戮光环",
-      ja: "新しいキルオーラ"
+      ja: "新しいキルオーラ",
+      es: "Nueva Aura Asesina",
     },
     {
       en: "New Auto Absorb",
       chs: "新自动吸收",
-      ja: "新しい自動吸収"
+      ja: "新しい自動吸収",
+      es: "Nuevo Auto Absorber",
     },
     {
       en: "World Speed",
       chs: "世界速度",
-      ja: "世界スピード"
+      ja: "世界スピード",
+      es: "Velocidad del Mundo",
     },
   ];
 
   static ModTr = (string) => {
     var lang = CurrLang;
+    var langMap = {
+      "en": "en",
+      "zh-Hans": "chs",
+      "ja": "ja",
+      "es": "es",
+      "id": "id"
+    };
     for (let i = 0; i < ModLanguage.translate.length; i++) {
-      if (lang === "en" && ModLanguage.translate[i].en === string) {
-        return ModLanguage.translate[i].en;
-      } else if (lang === "zh-Hans" && ModLanguage.translate[i].en === string) {
-        return ModLanguage.translate[i].chs;
-      } else if (lang === "ja" && ModLanguage.translate[i].en === string) {
-        return ModLanguage.translate[i].ja;
+      if (ModLanguage.translate[i].en === string) {
+        return ModLanguage.translate[i][langMap[lang]] || ModLanguage.translate[i].en;
       }
     }
     return string; // return original string if no translation found
-  };
+};
 
 }
 

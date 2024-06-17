@@ -41,13 +41,13 @@ const ChestList = [
 //"Treasure024",//TsEntity_丰厚物资箱_任务用
 //"Treasure025",//TsEntity_豪华物资箱_任务用
 //"Treasure031",//TsEntity_背包_X3
-"Treasure034",//TsEntity_调查光点_城区陆地
-"Treasure035",//TsEntity_调查光点_野外陆地
-"Treasure036",//TsEntity_调查光点_水域
+//"Treasure034",//TsEntity_调查光点_城区陆地
+//"Treasure035",//TsEntity_调查光点_野外陆地
+//"Treasure036",//TsEntity_调查光点_水域
   ];
 class AutoChest extends EntityManager {
 
-    static isUnlocked(entity){}
+
 
 
   static isNeedReward(entity) {

@@ -321,7 +321,7 @@ class MainMenu {
       Menu.HeadingDebug.SetText(ModLanguage.ModTr("Debug"));
 
       Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
-      Menu.Designer.SetText(ModLanguage.ModTr("GUI by n0bu"));
+      Menu.Designer.SetText(ModLanguage.ModTr("GUI Designer: n0bu"));
       Menu.DisclaimerText.SetText(this.Getfreetip());
 
       Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
@@ -372,10 +372,11 @@ class MainMenu {
   static updateMenuState() {
     if (Menu) {
       Menu.GodModeCheck.SetIsChecked(ModManager.Settings.GodMode);
+      Menu.NoCDCheck.SetIsChecked(ModManager.Settings.NoCD);
       Menu.AutoPickTreasureCheck.SetIsChecked(
         ModManager.Settings.AutoPickTreasure
       );
-      Menu.AutoAbsorbEchoCheck.SetIsChecked(ModManager.Settings.AutoAbsorb);
+      //Menu.AutoAbsorbEchoCheck.SetIsChecked(ModManager.Settings.AutoAbsorb);
       Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
       Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
@@ -389,7 +390,7 @@ class MainMenu {
       Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
       Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
       Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
-      Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
+      //Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
       Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
 
       Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
@@ -434,8 +435,8 @@ class ModEntityListener {
       KillAura_1.KillAura.killAura(entitylist[i]);
       //KillAura_1.KillAura.KillAnimal(entitylist[i]);
       AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
-      AutoChest_1.AutoChest.RewardChest(entitylist[i]);
-      ESP_1.ESP.ESPDrawMain(entitylist[i]);
+     // AutoChest_1.AutoChest.RewardChest(entitylist[i]);              //1.0.28 cant use
+
     }
 
     //puerts_1.logger.warn("kun:Runtime is working");
@@ -445,7 +446,8 @@ class ModEntityListener {
 //   //esp测试test
 //   static RuntimeESP() {
 //     if (!ModUtils.isInGame) return;
-//     ESP_1.ESP.ESPDrawMain();
+//     ESP_1.ESP.EESPDrawBox();
+
 //   }
 //  }
 

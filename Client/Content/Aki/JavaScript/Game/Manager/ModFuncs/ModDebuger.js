@@ -24,11 +24,11 @@ class ModDebuger {
         ModManager_1.ModManager.ShowTip("ModDebuger | Enabled");
         ModManager_1.ModManager.AddKey("TPto", "g");
         ModManager_1.ModManager.AddKey("Audio", "NumPadNine");
-        ModManager_1.ModManager.AddKey("绘制", "NumPadThree");
+
       }
-      if (this.Setting.EnableDebug == true) {
-        this.showdedbugmenu();
-      }
+      // if (this.Setting.EnableDebug == true) {
+      //   this.showdedbugmenu();      
+      // }
     }
   }
 
@@ -47,9 +47,7 @@ class ModDebuger {
     if (ModManager_1.ModManager.listenKey("Audio", "NumPadNine")) {
       this.Audio();
     }
-    if(ModManager_1.ModManager.listenKey("绘制", "NumPadThree")){
-      ModUtils_1.ModUtils.DrawDebugBox();
-    }
+
 
   }
 

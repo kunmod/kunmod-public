@@ -74,38 +74,30 @@ class ModUtils {
     var info = string.toString();
     puerts_1.logger.info("[KUNMOD:]" + info);
   }
-  // 行   577: // Function  Engine.KismetSystemLibrary.DrawDebugArrow//箭头
-  // 行   582: // Function  Engine.KismetSystemLibrary.DrawDebugBox//盒子
-  // 行   587: // Function  Engine.KismetSystemLibrary.DrawDebugCamera//相机
-  // 行   592: // Function  Engine.KismetSystemLibrary.DrawDebugCapsule//胶囊
-  // 行   597: // Function  Engine.KismetSystemLibrary.DrawDebugCircle圆圈
-  // 行   602: // Function  Engine.KismetSystemLibrary.DrawDebugCone圆锥
-  // 行   607: // Function  Engine.KismetSystemLibrary.DrawDebugConeInDegrees圆锥体（以度为单位）
-  // 行   612: // Function  Engine.KismetSystemLibrary.DrawDebugCoordinateSystem坐标系
-  // 行   617: // Function  Engine.KismetSystemLibrary.DrawDebugCylinder圆柱
-  // 行   622: // Function  Engine.KismetSystemLibrary.DrawDebugFloatHistoryLocation浮动历史位置
-  // 行   627: // Function  Engine.KismetSystemLibrary.DrawDebugFloatHistoryTransform浮点历史转换
-  // 行   632: // Function  Engine.KismetSystemLibrary.DrawDebugFrustum绘制调试结果
-  // 行   637: // Function  Engine.KismetSystemLibrary.DrawDebugLine线
-  // 行   642: // Function  Engine.KismetSystemLibrary.DrawDebugPlane面
-  // 行   647: // Function  Engine.KismetSystemLibrary.DrawDebugPoint电
-  // 行   652: // Function  Engine.KismetSystemLibrary.DrawDebugSphere球
-  // 行   657: // Function  Engine.KismetSystemLibrary.DrawDebugString文本
 
-
-  static DrawDebugLine(LineStart,LineEnd,LineColor,Duration,Thickness) {
-    UE.KismetSystemLibrary.DrawDebugLine(
+   static DrawDebugBox(Center,Extent,LineColor,Rotation,Duration,Thickness) {
+    UE.KismetSystemLibrary.DrawDebugBox(
       GlobalData_1.GlobalData.World,
-      LineStart,
-      LineEnd,
+      Center,
+      Extent,
       LineColor,
+      Rotation,
       Duration,
       Thickness
+    )
+   }
+  static HUDDrawLine(StartScreenX,StartScreenY,EndScreenX,EndScreenY,LineColor,LineThickness) {
+    UE.HUD.DrawLine(
+      StartScreenX,
+      StartScreenY,
+      EndScreenX,
+      EndScreenY,
+      LineColor,
+      LineThickness
     );
   }
 
 
-  //static DrawDebugLine(WorldContextObject: $Nullable<UE.Object>, LineStart: UE.Vector, LineEnd: UE.Vector, LineColor: UE.LinearColor, Duration?: number /* = 0.000000 */, Thickness?: number /* = 0.000000 */) : void;
   static Getdistance(pos1, pos2) {
     let dx = pos2.X - pos1.X;
     let dy = pos2.Y - pos1.Y;
@@ -113,7 +105,7 @@ class ModUtils {
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   }
   static Getdistance2Player(pos1) {
-    //let player = EntityManager_1.ModsEntityManager.PlayerEntity;
+
     let pos2 = EntityManager_1.ModsEntityManager.GetPlayerPos();   
     let dx = pos2.X - pos1.X;
     let dy = pos2.Y - pos1.Y;

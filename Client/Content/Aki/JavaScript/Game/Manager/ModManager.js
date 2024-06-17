@@ -41,7 +41,6 @@ class ModManager {
         Hitcount: 15,
         AutoPickTreasure: false,
         AntiDither: true,
-        AutoAbsorb: false,
         NoCD: false,
         InfiniteStamina: false,
         killAura: false,
@@ -59,19 +58,18 @@ class ModManager {
         AutoLoot: false,
         HideHUD: false,
         HideDmgUi: false,
-        AutoMine: false,
         //test
         DebugEntity:true,//(if use entity func need enable)
         AutoDestroy:false,
         killAuranew:false,
         killAuraRadius:300,
-        KillAnimal:true,
+        KillAnimal:false,
         AutoAbsorbnew:false,
-        AutoChest:false,
+        AutoChest:true,
         WeatherChanger:false,
         WeatherType: 1,
         WorldSpeed:false,
-        WorldSpeedValue:3,
+        WorldSpeedValue:1,
         Uid: "100000000",
     };
 
@@ -82,22 +80,18 @@ class ModManager {
         this.AddToggle("GodMode", "F5");
         this.AddToggle("HitMultiplier", "F6");
         this.AddToggle("AutoPickTreasure", "F7");
-        this.AddToggle("AutoAbsorb", "F8");
         this.AddToggle("killAura", "F9");
         this.AddToggle("PerceptionRange", "F10");
         this.AddToggle("NoCD", "F11");
         this.AddToggle("PlayerSpeed", "F12");
         this.AddToggle("CustomTp", "Insert");
         this.AddToggle("AutoLoot", "NumPadZero");
-        //this.AddToggle("AutoMine", "NumPadOne");
         this.AddKey("MarkTp", "t");
 
     }
 
     static listenModsToggle() {
-        // if (this.listenKey("ShowMenu", "Home")) {
-        //     this.ShowMenu();
-        // }
+
 
         this.listenMod('GodMode', "F5", "GodMode");
         if (this.listenMod('HitMultiplier', "F6", "HitMultiplier")) {
@@ -120,7 +114,6 @@ class ModManager {
 
         }
         this.listenMod('AutoPickTreasure', "F7", "AutoPickTreasure");
-        this.listenMod('AutoAbsorb', "F8", "AutoAbsorb");
         this.listenMod('killAura', "F9", "killAura");
         this.listenMod('PerceptionRange', "F10", "PerceptionRange");
         this.listenMod('NoCD', "F11", "NoCD");
@@ -166,11 +159,7 @@ class ModManager {
         }
 
         this.listenMod('AutoLoot', "NumPadZero", "AutoLoot");
-       // this.listenMod('AutoMine', "NumPadOne", "AutoMine");
-        //ModDebuger_1.ModDebuger.EnableDebug();
-        // if (ModDebuger_1.ModDebuger.Setting.EnableDebug) {
-        //     ModDebuger_1.ModDebuger.ListenDebug();
-        // }
+  
 
         if (this.listenKey("MarkTp", "t")) {
             if(this.Settings.MarkTp&&ModUtils_1.ModUtils.IsInMapView())
@@ -270,54 +259,11 @@ class ModManager {
         else
             return string + ModTr(" : <color=red>OFF</color> |");
     }
-    // static ShowMenu() {
-
-    //     var newBox = new ConfirmBoxDefine_1.ConfirmBoxDataNew(50);
-    //     var state =
-    //         this.FuncState(this.Settings.GodMode, ModTr("GodMode[F5]")) +
-    //         this.FuncState(this.Settings.HitMultiplier, ModTr("HitMultiplier[F6]")) +
-    //         this.FuncState(this.Settings.AutoPickTreasure, ModTr("AutoPickTreasure[F7]")) +
-    //         this.FuncState(this.Settings.AutoAbsorb, ModTr("AutoAbsorb[F8]")) +
-    //         this.FuncState(this.Settings.killAura, ModTr("killAura[F9]")) +
-    //         this.FuncState(this.Settings.PerceptionRange, ModTr("PerceptionRange[F10]")) +
-    //         this.FuncState(this.Settings.NoCD, ModTr("NoCD[F11]")) +
-    //         this.FuncState(this.Settings.PlayerSpeed, ModTr("PlayerSpeed[F12]")) +
-
-    //         this.FuncState(this.Settings.CustomTp, ModTr("CustomTp[Ins]")) +
-    //         this.FuncState(this.Settings.AutoLoot, ModTr("AutoLoot[Num0]")) +
-    //         this.FuncState(this.Settings.AntiDither, ModTr("AntiDither"))
-
-    //         newBox.SetTextArgs(state);
-    //     newBox.SetTitle(ModTr("KunMods State[Home] DisableAntiCheat : <color=green>ON</color> "));
-    //     ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(newBox);
-    // }
-
-
 
     static ChangeUid(string) {
         this.Settings.Uid = string;
         UiManager_1.UiManager.CloseView("UidView");
         UiManager_1.UiManager.OpenView("UidView");
-    }
-    static TrackTP() {//mark
-        var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
-        puerts_1.logger.Debug("[kunmod:]Marktp:", r);
-        var i = ModelManager_1.ModelManager.MapModel.GetMark(r[0], r[1]);
-        puerts_1.logger.Debug("[kunmod:]Marktp:", i.TrackTarget);
-        var targetX = i.TrackTarget.X;
-        var targetY = i.TrackTarget.Y;
-        var posZ = 0;
-        var v = MapController_1.MapController.GetMarkPosition(targetX, targetY);
-        puerts_1.logger.info("[kunmod:]Marktp:", v);
-        if (v.Z == 0) {
-            posZ = this.Settings.MarkTpPosZ;
-        } else {
-            posZ = v.Z
-        };
-
-        this.TeleportToPositionNoLoading(targetX, targetY, posZ);
-        ModUtils_1.ModUtils.KunLog("MarkTp:go to (" + targetX.toString() + "," + targetY.toString() + "," + posZ.toString());
-
     }
 
     

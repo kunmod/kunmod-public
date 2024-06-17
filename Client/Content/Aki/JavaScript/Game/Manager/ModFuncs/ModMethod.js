@@ -60,12 +60,12 @@ class ModMethod {
   //宝箱
   static RewardChest(entity) {
     //if(entity.CheckGetComponent(116).IsInState(1))return;
-    if (!entity.CheckGetComponent(114).IsLocked) return;
-    if (
-      ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
-      ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
-    )
-      return;
+    //if (!entity.CheckGetComponent(114).IsLocked) return;
+    // if (
+    //   ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
+    //   ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
+    // )
+    //   return;
 
     LevelGamePlayController_1.LevelGamePlayController.GetRewardTreasureBoxRequest(
       entity.Id
