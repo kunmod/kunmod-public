@@ -80,13 +80,16 @@ class ModMethod {
     let setfps = "t.MaxFPS 300";
     ModDebuger_1.ModDebuger.ConsoleCommand(setfps);
   }
-  static FreeCamera(){
-    let FreeCamera = "ToggleDebugCamera";
-    ModDebuger_1.ModDebuger.ConsoleCommand(FreeCamera);
-  }
+  // static FreeCamera(){
+  //     ModDebuger_1.ModDebuger.ConsoleCommand("ToggleDebugCamera");
+  // }
   static ShowFPS(){
     let ShowFPS = "stat fps";
     ModDebuger_1.ModDebuger.ConsoleCommand(ShowFPS);
+  }
+  static ShowUnit(){
+    let ShowUnit = "stat Unit";
+    ModDebuger_1.ModDebuger.ConsoleCommand(ShowUnit);
   }
   static SetFOV(value){
     let fov = value.toString();

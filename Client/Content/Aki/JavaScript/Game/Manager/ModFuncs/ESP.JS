@@ -8,7 +8,10 @@ const puerts_1 = require("puerts"),
   ModManager_1 = require("../ModManager"),
   ModUtils_1 = require("./ModUtils"),
   EntityManager_1 = require("./EntityManager"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
   UiManager_1 = require("../../../Ui/UiManager");
+  
 const EntityManager = EntityManager_1.ModsEntityManager;
 const ModUtils = ModUtils_1.ModUtils;
 
@@ -19,19 +22,18 @@ class ESP extends EntityManager {
     return need;
   }
 
-  static World2Screen(){
-
-
-    
-  }
 
 
 
-  static ESPDrawLine(){
-    let color = new UE.LinearColor(1, 0, 0, 1);//red
-    ModUtils.HUDDrawLine(100,100,1920,1080,color,30);
+  static Drawtest(){
+    let playerpos = EntityManager.GetPlayerPos();
+
+
 
   }
+
+
+
 }
 //puerts.logger.info(debug)
 exports.ESP = ESP;

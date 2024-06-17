@@ -14,6 +14,7 @@ const puerts_1 = require("puerts"),
   EntityManager_1 = require("./Manager/ModFuncs/EntityManager"),
   AutoAbsorb_1 = require("./Manager/ModFuncs/AutoAbsorb"),
   KillAura_1 = require("./Manager/ModFuncs/KillAura"),
+  MobVacuum_1 = require("./Manager/ModFuncs/MobVacuum"),
   AutoChest_1 = require("./Manager/ModFuncs/AutoChest"),
   ESP_1 = require("./Manager/ModFuncs/ESP"),
   AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
@@ -459,6 +460,7 @@ class ModEntityListener {
       KillAura_1.KillAura.killAura(entitylist[i]);
       KillAura_1.KillAura.KillAnimal(entitylist[i]);
       AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
+      MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
       //AutoChest_1.AutoChest.RewardChest(entitylist[i]);              //1.0.28 cant use
 
     }
@@ -466,20 +468,20 @@ class ModEntityListener {
     //puerts_1.logger.warn("kun:Runtime is working");
   }
 }
-// class ESPmain {
+class ESPmain {
 
-//   static RuntimeESP() {
-//     if (!ModUtils.isInGame) return;
-//     ESP_1.ESP.EESPDrawBox();
+  static RuntimeESP() {
+    if (!ModUtils.isInGame) return;
 
-//   }
-//  }
+
+  }
+ }
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
 
 setInterval(ModEntityListener.Runtime, 2000);
-setInterval(MainMenu.updatePlayerSpeed, 2000);
+setInterval(MainMenu.updatePlayerSpeed, 5000);
 //setInterval(ESPmain.RuntimeESP, 1);
 main();
 
