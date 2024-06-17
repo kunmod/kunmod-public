@@ -7,13 +7,10 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   ModManager_1 = require("../ModManager"),
   LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-var CurrLang = "en";
+
 class ModLanguage {
 
-  static GetCurrLang() {
-    CurrLang = LanguageSystem_1.LanguageSystem.PackageLanguage;
-    return CurrLang;
-  }
+
   static Langs = ["en", "zh-Hans", "ja", "es","id"];
 
   static translate = [
@@ -504,7 +501,7 @@ class ModLanguage {
   ];
 
   static ModTr = (string) => {
-    var lang = CurrLang;
+    var lang = ModManager_1.ModManager.Settings.Language;
     var langMap = {
       "en": "en",
       "zh-Hans": "chs",

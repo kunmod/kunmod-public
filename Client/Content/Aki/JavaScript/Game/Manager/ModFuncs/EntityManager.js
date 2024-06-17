@@ -223,6 +223,10 @@ class ModsEntityManager {
     let player = this.GetPlayerEntity();
     player.SetTimeDilation(value);
 }
+static GetCurrRoleId(){
+  let player = this.GetPlayerEntity();
+  return player.Components[0].C9o ;
+}
 }
 
 exports.ModsEntityManager = ModsEntityManager;
