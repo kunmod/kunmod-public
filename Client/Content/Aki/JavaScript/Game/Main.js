@@ -338,8 +338,6 @@ class MainMenu {
       Menu.HeadingDebug.SetText(ModLanguage.ModTr("Debug"));
       Menu.SaveConfigText.SetText(ModLanguage.ModTr("Save Config"));
 
-      Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
-      Menu.Designer.SetText(ModLanguage.ModTr("GUI by n0bu"));
       Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
       Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
       Menu.AutoPickTreasureText.SetText(
@@ -369,7 +367,6 @@ class MainMenu {
       Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
       Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("Auto Absorb [F8]"));
 
-      Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
       Menu.Designer.SetText(ModLanguage.ModTr("GUI designer: n0bu"));
       Menu.DisclaimerText.SetText(this.Getfreetip());
     }
