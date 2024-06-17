@@ -149,10 +149,10 @@ class MainMenu {
             MainMenu.KunLog("Auto Pick Treasure: " + isChecked);
           });
 
-          Menu.AutoAbsorbEchoCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.AutoAbsorb = isChecked;
-            MainMenu.KunLog("Auto Absorb: " + isChecked);
-          });
+          // Menu.AutoAbsorbEchoCheck.OnCheckStateChanged.Add((isChecked) => {
+          //   ModManager.Settings.AutoAbsorb = isChecked;
+          //   MainMenu.KunLog("Auto Absorb: " + isChecked);
+          // });
 
           Menu.HitMultiplierCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.HitMultiplier = isChecked;
@@ -248,10 +248,10 @@ class MainMenu {
             MainMenu.KunLog("Hide Damage Text: " + isChecked);
           });
 
-          Menu.AutoMineCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.AutoMine = isChecked;
-            MainMenu.KunLog("Auto Mining: " + isChecked);
-          });
+          // Menu.AutoMineCheck.OnCheckStateChanged.Add((isChecked) => {
+          //   ModManager.Settings.AutoMine = isChecked;
+          //   MainMenu.KunLog("Auto Mining: " + isChecked);
+          // });
 
           Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.CustomTp = isChecked;
