@@ -18,6 +18,7 @@ const puerts_1 = require("puerts"),
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   WeatherController_1 = require("../../Module/Weather/WeatherController"),
+  ModDebuger_1 = require("./ModDebuger"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 class ModMethod {
@@ -74,6 +75,22 @@ class ModMethod {
   static ChangWeather(weatherID) {
     //1.sunny 2.Cloudy 3.Thunder 4.Snow 5.Rain
     WeatherController_1.WeatherController.TestChangeWeather(weatherID);
+  }
+  static FPSunlocker(){
+    let setfps = "t.MaxFPS 300";
+    ModDebuger_1.ModDebuger.ConsoleCommand(setfps);
+  }
+  static FreeCamera(){
+    let FreeCamera = "ToggleDebugCamera";
+    ModDebuger_1.ModDebuger.ConsoleCommand(FreeCamera);
+  }
+  static ShowFPS(){
+    let ShowFPS = "stat fps";
+    ModDebuger_1.ModDebuger.ConsoleCommand(ShowFPS);
+  }
+  static SetFOV(value){
+    let fov = value.toString();
+    ModDebuger_1.ModDebuger.ConsoleCommand("fov "+fov);
   }
 
 

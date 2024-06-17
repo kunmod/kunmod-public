@@ -7,6 +7,8 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   ModManager_1 = require("../ModManager"),
   ModUtils_1 = require("./ModUtils"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 class ModDebuger {
@@ -22,7 +24,6 @@ class ModDebuger {
       if (this.Setting.debugcount == 2 && !this.Setting.EnableDebug) {
         this.Setting.EnableDebug = true;
         ModManager_1.ModManager.ShowTip("ModDebuger | Enabled");
-        ModManager_1.ModManager.AddKey("TPto", "g");
         ModManager_1.ModManager.AddKey("Audio", "NumPadNine");
 
       }
@@ -41,9 +42,7 @@ class ModDebuger {
     ModManager_1.ModManager.AddKey("EnableDebug", "Tab");
   }
   static ListenDebug() {
-    if (ModManager_1.ModManager.listenKey("TPto", "g")) {
-      this.Tpto();
-    }
+
     if (ModManager_1.ModManager.listenKey("Audio", "NumPadNine")) {
       this.Audio();
     }
@@ -75,6 +74,13 @@ class ModDebuger {
     });
   }
 
+  static ConsoleCommand(string){
+    UE.KismetSystemLibrary.ExecuteConsoleCommand(
+      GlobalData_1.GlobalData.World,
+      string
+    );
+  }
+
   static 单输入框测试() {
     ModUtils_1.ModUtils.KuroSingleInputBox({
       title: "你的标题",
@@ -86,18 +92,8 @@ class ModDebuger {
     });
   }
 
-  static 多输入框测试() {
-    UiManager_1.UiManager.OpenView("CommonMultiInputView", {
-      Title: "多输入框测试",
-      CustomFunc: async (string) => {},
-      InputText: "多输入框测试",
-      DefaultText: "多输入框测试",
-      IsCheckNone: true,
-      NeedFunctionButton: false,
-    });
-  }
 
-  roleIndex = 0;
+
 
   static Audio() {
     ModUtils_1.ModUtils.KuroSingleInputBox({
