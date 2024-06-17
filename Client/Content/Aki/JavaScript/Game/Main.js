@@ -149,10 +149,10 @@ class MainMenu {
             MainMenu.KunLog("Auto Pick Treasure: " + isChecked);
           });
 
-          Menu.AutoAbsorbEchoCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.AutoAbsorb = isChecked;
-            MainMenu.KunLog("Auto Absorb: " + isChecked);
-          });
+          // Menu.AutoAbsorbEchoCheck.OnCheckStateChanged.Add((isChecked) => {
+          //   ModManager.Settings.AutoAbsorb = isChecked;
+          //   MainMenu.KunLog("Auto Absorb: " + isChecked);
+          // });
 
           Menu.HitMultiplierCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.HitMultiplier = isChecked;
@@ -248,10 +248,10 @@ class MainMenu {
             MainMenu.KunLog("Hide Damage Text: " + isChecked);
           });
 
-          Menu.AutoMineCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.AutoMine = isChecked;
-            MainMenu.KunLog("Auto Mining: " + isChecked);
-          });
+          // Menu.AutoMineCheck.OnCheckStateChanged.Add((isChecked) => {
+          //   ModManager.Settings.AutoMine = isChecked;
+          //   MainMenu.KunLog("Auto Mining: " + isChecked);
+          // });
 
           Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.CustomTp = isChecked;
@@ -392,7 +392,7 @@ class MainMenu {
       Menu.AutoPickTreasureCheck.SetIsChecked(
         ModManager.Settings.AutoPickTreasure
       );
-      Menu.AutoAbsorbEchoCheck.SetIsChecked(ModManager.Settings.AutoAbsorb);
+      //Menu.AutoAbsorbEchoCheck.SetIsChecked(ModManager.Settings.AutoAbsorb);
       Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
       Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
@@ -407,7 +407,7 @@ class MainMenu {
       Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
       Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
       Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
-      Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
+      //Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
       Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
 
       Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
