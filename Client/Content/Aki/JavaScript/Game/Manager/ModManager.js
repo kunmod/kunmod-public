@@ -102,7 +102,7 @@ class ModManager {
     ModLanguage_1.ModLanguage.GetCurrLang();
     this.AddKey("ShowMenu", "Home");
     this.AddToggle("GodMode", "F5");
-    this.AddToggle("HitMultiplier", "F6");
+    //this.AddToggle("HitMultiplier", "F6");
     this.AddToggle("AutoPickTreasure", "F7");
     this.AddToggle("AutoAbsorbnew", "F8");
     this.AddToggle("killAura", "F9");
@@ -120,6 +120,7 @@ class ModManager {
 
 
     this.listenMod("GodMode", "F5", "GodMode");
+    this.listenMod("HitMultiplier", "F6", "HitMultiplier");
 
     this.listenMod("AutoPickTreasure", "F7", "AutoPickTreasure");
     this.listenMod("AutoAbsorbnew", "F8", "AutoAbsorbnew");
@@ -183,7 +184,7 @@ class ModManager {
         );
     }
 
-    this.listenMod("skip", "NumPadFour", "plot");
+    //this.listenMod("skip", "NumPadFour", "plot");
   }
 
   static AddToggle(desc, key) {

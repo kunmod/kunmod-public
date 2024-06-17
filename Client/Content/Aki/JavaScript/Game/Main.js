@@ -149,10 +149,7 @@ class MainMenu {
             MainMenu.KunLog("Auto Pick Treasure: " + isChecked);
           });
 
-          // Menu.AutoAbsorbEchoCheck.OnCheckStateChanged.Add((isChecked) => {
-          //   ModManager.Settings.AutoAbsorb = isChecked;
-          //   MainMenu.KunLog("Auto Absorb: " + isChecked);
-          // });
+
 
           Menu.HitMultiplierCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.HitMultiplier = isChecked;
@@ -248,10 +245,7 @@ class MainMenu {
             MainMenu.KunLog("Hide Damage Text: " + isChecked);
           });
 
-          // Menu.AutoMineCheck.OnCheckStateChanged.Add((isChecked) => {
-          //   ModManager.Settings.AutoMine = isChecked;
-          //   MainMenu.KunLog("Auto Mining: " + isChecked);
-          // });
+
 
           Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.CustomTp = isChecked;
@@ -343,7 +337,7 @@ class MainMenu {
       Menu.AutoPickTreasureText.SetText(
         ModLanguage.ModTr("Auto Pick Treasure [F7]")
       );
-      //Menu.AutoAbsorbEchoText.SetText(ModLanguage.ModTr("Auto Absorb [F8]"));
+
       Menu.HitMultiplierText.SetText(ModLanguage.ModTr("Hit Multiplier [F6]"));
       Menu.KillAuraText.SetText(ModLanguage.ModTr("Kill Aura [F9]"));
       Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
@@ -359,7 +353,6 @@ class MainMenu {
       Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
       Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
       Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
-      // Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
       Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
 
       Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
@@ -393,7 +386,7 @@ class MainMenu {
       Menu.AutoPickTreasureCheck.SetIsChecked(
         ModManager.Settings.AutoPickTreasure
       );
-      //Menu.AutoAbsorbEchoCheck.SetIsChecked(ModManager.Settings.AutoAbsorb);
+
       Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
       Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
@@ -408,7 +401,7 @@ class MainMenu {
       Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
       Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
       Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
-      //Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
+
       Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
 
       Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
@@ -456,6 +449,7 @@ class ModEntityListener {
   static Runtime() {
     if (!ModManager.Settings.DebugEntity) return;
     if (!ModUtils.isInGame) return;
+    this.updatePlayerSpeed();
 
     EntityManager.PushEntityList();
     const entitylist = EntityManager.ModsEntitys.EntityList;
@@ -473,7 +467,7 @@ class ModEntityListener {
   }
 }
 // class ESPmain {
-//   //esp测试test
+
 //   static RuntimeESP() {
 //     if (!ModUtils.isInGame) return;
 //     ESP_1.ESP.EESPDrawBox();
@@ -483,7 +477,7 @@ class ModEntityListener {
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-setInterval(MainMenu.updatePlayerSpeed, 1000);
+
 setInterval(ModEntityListener.Runtime, 3000);
 //setInterval(ESPmain.RuntimeESP, 1);
 main();
