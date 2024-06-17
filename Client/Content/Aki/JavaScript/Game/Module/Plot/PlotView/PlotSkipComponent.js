@@ -7,6 +7,7 @@ const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  ModManager_1 = require("../../../Manager/ModManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
 class PlotSkipComponent {
   constructor(e, t, i, o) {
@@ -15,35 +16,40 @@ class PlotSkipComponent {
       (this.EYi = StringUtils_1.EMPTY_STRING),
       (this.SYi = !0),
       (this.yYi = void 0),
-    (this.EnableSkipButton = (e) => {
-      (e && !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanSkip) ||
-        this.Fue === e ||
-        ((this.Fue = e), this.IYi.SetUIActive(this.Fue), this.Fue) ||
-        ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
-    }),
-    (this.TYi = () => {
-      var e;
-      this.Fue &&
-        (this.VSt?.(),
-        ModelManager_1.ModelManager.PlotModel.PlotConfig.IsSkipConfirmBoxShow
-          ? ((this.SYi = !0),
-            ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(180)).HasToggle =
-              !0),
-            (e.ToggleText = this.EYi),
-            e.SetToggleFunction(this.LYi),
-            (e.AttachView = this.yYi),
-            e.FunctionMap.set(2, () => {
-              this?.Fue &&
-                ((ModelManager_1.ModelManager.PlotModel.PlotConfig.IsSkipConfirmBoxShow =
-                  this.SYi),
-                (this.Fue = !1),
-                this.DYi?.());
-            }),
-            ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-              e
-            ))
-          : this.DYi?.());
-    }),
+      (this.EnableSkipButton = (e) => {
+        if (ModManager_1.ModManager.Settings.PlotSkip) {
+          this.Fue = e;
+          this.IYi.SetUIActive(this.Fue);
+        } else {
+          (e && !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanSkip) ||
+            this.Fue === e ||
+            ((this.Fue = e), this.IYi.SetUIActive(this.Fue), this.Fue) ||
+            ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
+        }
+      }),
+      (this.TYi = () => {
+        var e;
+        this.Fue &&
+          (this.VSt?.(),
+          ModelManager_1.ModelManager.PlotModel.PlotConfig.IsSkipConfirmBoxShow
+            ? ((this.SYi = !0),
+              ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(180)).HasToggle =
+                !0),
+              (e.ToggleText = this.EYi),
+              e.SetToggleFunction(this.LYi), //lyi设置函数
+              (e.AttachView = this.yYi),
+              e.FunctionMap.set(2, () => {
+                this?.Fue &&
+                  ((ModelManager_1.ModelManager.PlotModel.PlotConfig.IsSkipConfirmBoxShow =
+                    this.SYi),
+                  (this.Fue = !1),
+                  this.DYi?.());
+              }),
+              ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                e
+              ))
+            : this.DYi?.());
+      }),
       (this.LYi = (e) => {
         this?.Fue && (this.SYi = !e);
       }),
@@ -53,7 +59,7 @@ class PlotSkipComponent {
       (this.VSt = i),
       (this.yYi = o),
       (this.Fue = !1),
-      this.MYi.OnClickCallBack.Bind(this.TYi),//
+      this.MYi.OnClickCallBack.Bind(this.TYi), //
       (this.EYi = ConfigManager_1.ConfigManager.TextConfig?.GetTextById(
         "PlotSkipConfirmToggle"
       )),

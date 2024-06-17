@@ -225,7 +225,8 @@ class ModsEntityManager {
 }
 static GetCurrRoleId(){
   let player = this.GetPlayerEntity();
-  return player.Components[0].C9o ;
+  return player.Components[0].DOe
+   ;
 }
 }
 

@@ -17,13 +17,16 @@ var __decorate =
         (n = t[c]) && (s = (i < 3 ? n(s) : 3 < i ? n(e, o, s) : n(e, o)) || s);
     return 3 < i && s && Object.defineProperty(e, o, s), s;
   };
-Object.defineProperty(exports, "__esModule", { value: !0 }),
+Object.defineProperty(exports, "__esModule", {
+  value: !0,
+}),
   (exports.RoleEnergyComponent = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
 var EAttributeId = Protocol_1.Aki.Protocol.EAttributeType;
 const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   energyAttrIds = [EAttributeId.Energy, EAttributeId.EnergyMax];
+  const ModManager_1  = require("../../../../Manager/ModManager");
 let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -32,20 +35,35 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
       (this.HXo = (t, e, o) => {
         var r = this.yte.GetCurrentValue(EAttributeId.Energy),
           n = this.yte.GetCurrentValue(EAttributeId.EnergyMax);
-        this.U6r.Actor?.CharRenderingComponent.SetStarScarEnergy(r/n);//r/n
+        this.U6r.Actor?.CharRenderingComponent.SetStarScarEnergy(r / n);
       });
   }
   OnStart() {
-    return (
-      //(this.U6r = this.Entity.CheckGetComponent(3)),
-     // (this.yte = this.Entity.CheckGetComponent(155)),
-     // this.yte.AddListeners(energyAttrIds, this.HXo, "RoleEnergyComponent"),
-     // this.HXo(),
-      !0
-    );
+    this.U6r = this.Entity.CheckGetComponent(3);
+    this.yte = this.Entity.CheckGetComponent(155);
+
+    const originalGetCurrentValue = this.yte.GetCurrentValue.bind(this.yte);
+    this.yte.GetCurrentValue = (attributeId) => {
+      if (attributeId === EAttributeId.Energy) {
+        if(ModManager_1.ModManager.Settings.InfiniteEnergy)
+           return originalGetCurrentValue(EAttributeId.EnergyMax);
+      }
+      return originalGetCurrentValue(attributeId);
+    };
+
+    this.yte.AddListeners(energyAttrIds, this.HXo, "RoleEnergyComponent");
+    this.HXo();
+    return !0;
   }
   OnEnd() {
-    //return this.yte.RemoveListeners(energyAttrIds, this.HXo), !0;
+    if(ModManager_1.ModManager.Settings.InfiniteEnergy){
+        if (this.yte.GetCurrentValue) {
+            this.yte.GetCurrentValue = originalGetCurrentValue;
+          }
+    }
+
+    this.yte.RemoveListeners(energyAttrIds, this.HXo);
+    return !0;
   }
 };
 (RoleEnergyComponent = __decorate(

@@ -73,7 +73,7 @@ class ModManager {
     WeatherType: 1,
     WorldSpeed: false,
     WorldSpeedValue: 1,
-    PlotSkip:false,
+    PlotSkip:true,
     Uid: "100000000",
     Language:"en",
   };
