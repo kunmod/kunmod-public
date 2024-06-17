@@ -102,7 +102,7 @@ class ModManager {
     ModLanguage_1.ModLanguage.GetCurrLang();
     this.AddKey("ShowMenu", "Home");
     this.AddToggle("GodMode", "F5");
-    //this.AddToggle("HitMultiplier", "F6");
+    this.AddToggle("HitMultiplier", "F6");
     this.AddToggle("AutoPickTreasure", "F7");
     this.AddToggle("AutoAbsorbnew", "F8");
     this.AddToggle("killAura", "F9");

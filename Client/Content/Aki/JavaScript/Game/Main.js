@@ -37,17 +37,17 @@ function main() {
 
 class MainMenu {
   static IsKey(str) {
-    let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str);
-    if (IsInputKeyDown && !keyState) {
-      IsInputKeyDown = false;
-      keyState = true;
-      return true;
-    }
-    if (IsInputKeyDown === false) {
-      keyState = false;
-      return false;
-    }
-    return false;
+    // let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str);
+    // if (IsInputKeyDown && !keyState) {
+    //   IsInputKeyDown = false;
+    //   keyState = true;
+    //   return true;
+    // }
+    // if (IsInputKeyDown === false) {
+    //   keyState = false;
+    //   return false;
+    // }
+    // return false;
     // override default hotkey using only one
     var IsInputKeyDown_1 = InputSetting_1.InputSettings.IsInputKeyDown(str);
     var IsInputKeyDown_LeftControl =
@@ -449,7 +449,7 @@ class ModEntityListener {
   static Runtime() {
     if (!ModManager.Settings.DebugEntity) return;
     if (!ModUtils.isInGame) return;
-    this.updatePlayerSpeed();
+    //this.updatePlayerSpeed();
 
     EntityManager.PushEntityList();
     const entitylist = EntityManager.ModsEntitys.EntityList;
@@ -478,7 +478,8 @@ class ModEntityListener {
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
 
-setInterval(ModEntityListener.Runtime, 3000);
+setInterval(ModEntityListener.Runtime, 2000);
+setInterval(MainMenu.updatePlayerSpeed, 2000);
 //setInterval(ESPmain.RuntimeESP, 1);
 main();
 
