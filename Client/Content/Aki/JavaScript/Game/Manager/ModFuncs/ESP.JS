@@ -19,7 +19,7 @@ class ESP extends EntityManager {
     return need;
   }
 
-  static ESPDrawMain(entity) {
+  static ESPDrawMain() {
     //if (!this.isNeedDraw(entity)) return;
     //let entitypos = this.GetPosition(entity);
     let mypos = this.GetPlayerPos();
@@ -28,8 +28,27 @@ class ESP extends EntityManager {
       let pos2 = new UE.Vector(mypos.X+20000, mypos.Y, mypos.Z+20000);
       let pos1 = new UE.Vector(mypos.X, mypos.Y, mypos.Z);
       let color = new UE.LinearColor(1, 0, 0, 1);//red
-      ModUtils.DrawDebugLine(pos1, pos2,color,1,30);
+      ModUtils.DrawDebugLine(pos1, pos2,color,60,30);
     }
+  }
+  static ESPDrawBox() {
+    //if (!this.isNeedDraw(entity)) return;
+    //let entitypos = this.GetPosition(entity);
+    let mypos = this.GetPlayerPos();
+    if (true /*DrawLine*/) {
+      //let pos2 = new UE.Vector(entitypos.X, entitypos.Y, entitypos.Z);
+      let pos2 = new UE.Vector(mypos.X+5000, mypos.Y+5000, mypos.Z+5000);
+      //let pos1 = new UE.Vector(mypos.X, mypos.Y, mypos.Z);
+      let extent = new UE.Vector(20, 20, 20);
+      let color = new UE.LinearColor(1, 0, 0, 1);//red
+      let r = new UE.Vector(20, 20, 20);
+      ModUtils.DrawDebugBox(pos2,extent,color,r,1,30);
+    }
+  }
+  static ESPDrawLine(){
+    let color = new UE.LinearColor(1, 0, 0, 1);//red
+    ModUtils.HUDDrawLine(100,100,1920,1080,color,30);
+
   }
 }
 //puerts.logger.info(debug)

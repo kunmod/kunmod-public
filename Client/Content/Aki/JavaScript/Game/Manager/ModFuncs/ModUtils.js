@@ -13,8 +13,21 @@ const puerts_1 = require("puerts"),
   GlobalData_1 = require("../../GlobalData"),
   LoginDefine_1 = require("../../Module/Login/Data/LoginDefine"),
   EntityManager_1 = require("./EntityManager"),
-  WorldFunctionLibrary_1= require("../../World/Bridge/WorldFunctionLibrary"),
+  WorldFunctionLibrary_1 = require("../../World/Bridge/WorldFunctionLibrary"),
   UiManager_1 = require("../../../Ui/UiManager");
+
+// class PaintContext {
+//   constructor() {
+//     this.__tid_PaintContext__ = false;
+//   }
+
+//   /**
+//    * @deprecated use StaticStruct instead.
+//    */
+//   static StaticClass() {}
+
+//   static StaticStruct() {}
+// }
 
 class ModUtils {
   static isInGame() {
@@ -57,25 +70,19 @@ class ModUtils {
     //"play_ui_fx_com_count_start"
   }
 
-  // static roleaudio = [
-  //   { role: "sanhua", fast_run: "play_vo_sanhua_fast_run" },
-  //   { role: "baizhi", fast_run: "play_vo_baizhi_fast_run" },
-  //   { role: "chixia", fast_run: "play_vo_chixia_fast_run" },
-  //   { role: "anke", fast_run: "play_vo_anke_fast_run" },
-  //   { role: "yinlin", fast_run: "play_vo_yinlin_fast_run" },
-  //   { role: "yangyang", fast_run: "play_vo_yangyang_fast_run" },
-  //   { role: "jianxin", fast_run: "play_vo_jianxin_fast_run" },
-  //   { role: "nvzhu", fast_run: "play_vo_nvzhu_fast_run" },
-  //   { role: "weilinai", fast_run: "play_vo_weilinai_fast_run" },
-  //   { role: "taoqi", fast_run: "play_vo_taoqi_fast_run" },
-  //   { role: "danjin", fast_run: "play_vo_danjin_fast_run" },
-  // ];
   static KunLog(string) {
     var info = string.toString();
     puerts_1.logger.info("[KUNMOD:]" + info);
   }
 
-   static DrawDebugBox(Center,Extent,LineColor,Rotation,Duration,Thickness) {
+  static DrawDebugBox(
+    Center,
+    Extent,
+    LineColor,
+    Rotation,
+    Duration,
+    Thickness
+  ) {
     UE.KismetSystemLibrary.DrawDebugBox(
       GlobalData_1.GlobalData.World,
       Center,
@@ -84,19 +91,8 @@ class ModUtils {
       Rotation,
       Duration,
       Thickness
-    )
-   }
-  static HUDDrawLine(StartScreenX,StartScreenY,EndScreenX,EndScreenY,LineColor,LineThickness) {
-    UE.HUD.DrawLine(
-      StartScreenX,
-      StartScreenY,
-      EndScreenX,
-      EndScreenY,
-      LineColor,
-      LineThickness
     );
   }
-
 
   static Getdistance(pos1, pos2) {
     let dx = pos2.X - pos1.X;
@@ -105,20 +101,19 @@ class ModUtils {
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   }
   static Getdistance2Player(pos1) {
-
-    let pos2 = EntityManager_1.ModsEntityManager.GetPlayerPos();   
+    let pos2 = EntityManager_1.ModsEntityManager.GetPlayerPos();
     let dx = pos2.X - pos1.X;
     let dy = pos2.Y - pos1.Y;
     let dz = pos2.Z - pos1.Z;
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   }
-  static IsOpenWorld(){
+  static IsOpenWorld() {
     return WorldFunctionLibrary_1.WorldFunctionLibrary.IsOpenWorld();
   }
-  static IsInMapView(){
+  static IsInMapView() {
     return UiManager_1.UiManager.IsViewShow("WorldMapView");
   }
-
 }
 //puerts.logger.info(debug)
 exports.ModUtils = ModUtils;
+exports.PaintContext = PaintContext;

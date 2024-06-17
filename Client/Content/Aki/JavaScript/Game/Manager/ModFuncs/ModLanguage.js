@@ -468,6 +468,16 @@ class ModLanguage {
       ja: "世界スピード",
       es: "Velocidad del Mundo",
     },
+    {
+      en: "Kill Animal",
+      chs: "杀死动物",
+      ja: "動物を殺す"
+    },
+    {
+      en: "Save Config",
+      chs: "保存配置",
+      ja: "設定を保存"
+    },
   ];
 
   static ModTr = (string) => {

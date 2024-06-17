@@ -37,7 +37,7 @@ function main() {
 
 class MainMenu {
   static IsKey(str) {
-    let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str)
+    let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str);
     if (IsInputKeyDown && !keyState) {
       IsInputKeyDown = false;
       keyState = true;
@@ -96,6 +96,13 @@ class MainMenu {
 
   static Start() {
     if (!isMenuLoaded) {
+      //check if config exists
+      if (!ModManager.CheckConfigExists()) {
+        ModManager.SaveConfig();
+      } else {
+        ModManager.LoadConfig();
+      }
+
       currentLang = ModLanguage.GetCurrLang();
 
       Menu = UE.UMGManager.CreateWidget(
@@ -153,7 +160,7 @@ class MainMenu {
           });
 
           Menu.HitMultiplierSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0);
+            value = value.toFixed(3);
             Menu.HitMultiplierValue.SetText(value);
             ModManager.Settings.Hitcount = value;
             MainMenu.KunLog("Hit Multiplier Count: " + value);
@@ -191,6 +198,11 @@ class MainMenu {
             MainMenu.KunLog("Auto Loot: " + isChecked);
           });
 
+          Menu.KillAnimalCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.KillAnimal = isChecked;
+            MainMenu.KunLog("Kill Animal: " + isChecked);
+          });
+
           Menu.PerceptionRangeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.PerceptionRange = isChecked;
             MainMenu.KunLog("Perception Range: " + isChecked);
@@ -202,7 +214,7 @@ class MainMenu {
           });
 
           Menu.PlayerSpeedSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0);
+            value = value.toFixed(3);
             Menu.PlayerSpeedValue.SetText(value);
             ModManager.Settings.playerSpeedValue = value;
             MainMenu.KunLog("Player Speed Value: " + value);
@@ -212,6 +224,11 @@ class MainMenu {
             const UID = Menu.CustomUidValue.GetText();
             ModManager.ChangeUid(UID);
             MainMenu.KunLog("UID Changed: " + UID);
+          });
+
+          Menu.SaveConfigButton.OnClicked.Add(() => {
+            ModManager.SaveConfig();
+            MainMenu.KunLog("Config Saved!");
           });
 
           Menu.HideHUDCheck.OnCheckStateChanged.Add((isChecked) => {
@@ -267,7 +284,7 @@ class MainMenu {
           });
 
           Menu.NewKillAuraSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0);
+            value = value.toFixed(3);
             Menu.NewKillAuraValue.SetText(value);
             ModManager.Settings.killAuraRadius = value;
             MainMenu.KunLog("Hit Multiplier Count: " + value);
@@ -276,14 +293,14 @@ class MainMenu {
           Menu.WorldSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.WorldSpeed = isChecked;
             MainMenu.KunLog("World Speed: " + isChecked);
-          })
+          });
 
           Menu.WorldSpeedSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0)
-            Menu.WorldSpeedValue.SetText(value)
+            value = value.toFixed(3);
+            Menu.WorldSpeedValue.SetText(value);
             ModManager.Settings.WorldSpeedValue = value;
             MainMenu.KunLog("World Speed " + value);
-          })
+          });
 
           Menu.KillAuraValue.SetSelectedIndex(
             ModManager.Settings.killAuraState
@@ -319,10 +336,10 @@ class MainMenu {
       Menu.HeadingUI.SetText(ModLanguage.ModTr("UI"));
       Menu.HeadingTeleport.SetText(ModLanguage.ModTr("Teleport"));
       Menu.HeadingDebug.SetText(ModLanguage.ModTr("Debug"));
+      Menu.SaveConfigText.SetText(ModLanguage.ModTr("Save Config"));
 
-      Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
-      Menu.Designer.SetText(ModLanguage.ModTr("GUI Designer: n0bu"));
-      Menu.DisclaimerText.SetText(this.Getfreetip());
+
+
 
       Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
       Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
@@ -335,6 +352,7 @@ class MainMenu {
       Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
       Menu.InfiniteStaminaText.SetText(ModLanguage.ModTr("Infinite Stamina"));
       Menu.AutoLootText.SetText(ModLanguage.ModTr("Auto Loot [Num0]"));
+      Menu.KillAnimalText.SetText(ModLanguage.ModTr("Kill Animal"));
       Menu.PerceptionRangeText.SetText(
         ModLanguage.ModTr("Perception Range [F10]")
       );
@@ -344,14 +362,17 @@ class MainMenu {
       Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
       Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
       Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
-      Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
+      //Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
       Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
-      
+
       Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
       Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy"));
       Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
       Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("New Auto Absorb"));
-      Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
+
+      Menu.DonateText.SetText(ModLanguage.ModTr("Donate:"));
+      Menu.Designer.SetText(ModLanguage.ModTr("GUI designer: n0bu"));
+      Menu.DisclaimerText.SetText(this.Getfreetip());
     }
   }
 
@@ -384,6 +405,7 @@ class MainMenu {
         ModManager.Settings.InfiniteStamina
       );
       Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
+      Menu.KillAnimalCheck.SetIsChecked(ModManager.Settings.KillAnimal);
       Menu.PerceptionRangeCheck.SetIsChecked(
         ModManager.Settings.PerceptionRange
       );
@@ -412,7 +434,19 @@ class MainMenu {
 
   static updateWorldSpeed() {
     if (ModManager.Settings.WorldSpeed) {
-      ModMethod_1.ModMethod.SetWorldTimeDilation(ModManager.Settings.WorldSpeedValue);
+      ModMethod_1.ModMethod.SetWorldTimeDilation(
+        ModManager.Settings.WorldSpeedValue
+      );
+    } else {
+      ModMethod_1.ModMethod.SetWorldTimeDilation(1);
+    }
+  }
+
+  static updateWorldSpeed() {
+    if (ModManager.Settings.WorldSpeed) {
+      ModMethod_1.ModMethod.SetWorldTimeDilation(
+        ModManager.Settings.WorldSpeedValue
+      );
     } else {
       ModMethod_1.ModMethod.SetWorldTimeDilation(1);
     }
@@ -433,9 +467,9 @@ class ModEntityListener {
     for (let i = 0; i < count; i++) {
       AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
       KillAura_1.KillAura.killAura(entitylist[i]);
-      //KillAura_1.KillAura.KillAnimal(entitylist[i]);
+      KillAura_1.KillAura.KillAnimal(entitylist[i]);
       AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
-     // AutoChest_1.AutoChest.RewardChest(entitylist[i]);              //1.0.28 cant use
+      //AutoChest_1.AutoChest.RewardChest(entitylist[i]);              //1.0.28 cant use
 
     }
 
@@ -458,7 +492,7 @@ setInterval(ModEntityListener.Runtime, 3000);
 //setInterval(ESPmain.RuntimeESP, 1);
 main();
 
-exports.ESPmain = ESPmain;
+// exports.ESPmain = ESPmain;
 exports.MainMenu = MainMenu;
 exports.ModEntityListener = ModEntityListener;
 //# sourceMappingURL=Main.js.map

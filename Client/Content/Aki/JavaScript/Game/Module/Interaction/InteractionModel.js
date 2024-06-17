@@ -45,11 +45,11 @@ class InteractionModel extends ModelBase_1.ModelBase {
       (this.InteractingEntity = void 0),
       (this.IsTriggerMobileGuide = !1),
       (this.IsTriggerDesktopGuide = !1),
-      (this.AutoLongPressTime = 0),
-      (this.ActiveInteractGuideCount = 0),
-      (this.ShowLongPressTime = 0),
-      (this.AutoInteractionGuideCount = 0),
-      (this.AutoInteractionGuideAppearCount = 0),
+      (this.AutoLongPressTime = 0),//长按时间
+      (this.ActiveInteractGuideCount = 0),//活动交互指南计数
+      (this.ShowLongPressTime = 0),//显示长按时间
+      (this.AutoInteractionGuideCount = 0),//自动交互指南计数
+      (this.AutoInteractionGuideAppearCount = 0),//自动交互指南显示计数
       (this.ili = 0);
   }
   OnInit() {
@@ -58,6 +58,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "AutoLongPressTime"
         )),
+        (puerts_1.logger.warn("[kundebug]:AutoLongPressTime:",this.AutoLongPressTime)),
       (this.ActiveInteractGuideCount =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "ActiveInteractGuideCount"
@@ -66,10 +67,12 @@ class InteractionModel extends ModelBase_1.ModelBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "ShowLongPressTime"
         )),
+        (puerts_1.logger.warn("[kundebug]:ShowLongPressTime:",this.ShowLongPressTime)),
       (this.AutoInteractionGuideCount =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "AutoInteractionGuideCount"
         )),
+        (puerts_1.logger.warn("[kundebug]:AutoInteractionGuideCount:",this.AutoInteractionGuideCount)),
       TsInteractionUtils_1.TsInteractionUtils.Init(),
       !0
     );
@@ -103,7 +106,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
           !1
         ) ?? !1);
   }
-  LoadAutoInteractionGuideAppearCount() {
+  LoadAutoInteractionGuideAppearCount() {//加载自动交互指南显示计数
     this.AutoInteractionGuideAppearCount =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey
@@ -118,14 +121,14 @@ class InteractionModel extends ModelBase_1.ModelBase {
         t
       );
   }
-  SaveTriggerDesktopGuide(t) {
+  SaveTriggerDesktopGuide(t) {//保存触发器pc
     (this.IsTriggerDesktopGuide = t),
       LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.IsTriggerDesktopGuide,
         t
       );
   }
-  SaveAutoInteractionGuideAppearCount(t) {
+  SaveAutoInteractionGuideAppearCount(t) {//保存自动交互指南显示计数
     (this.AutoInteractionGuideAppearCount = t),
       LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey
@@ -133,7 +136,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         t
       );
   }
-  IsInShowAutoInteractionGuideCountLimit() {
+  IsInShowAutoInteractionGuideCountLimit() {//自动交互指南计数限制
     return (
       this.AutoInteractionGuideAppearCount < this.AutoInteractionGuideCount
     );
@@ -152,7 +155,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
           )
         : (this.$hi = this.Qhi.交互选项组.Get(0));
   }
-  GetInteractEntitiesCount() {
+  GetInteractEntitiesCount() {//获取交互数量
     let t = 0;
     for (const e of this.zhi)
       e
@@ -163,7 +166,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         : t++;
     return t;
   }
-  GetInteractEntityByIndex(t) {
+  GetInteractEntityByIndex(t) {//获取交互实体
     let e = 0;
     for (const i of this.zhi)
       if (
@@ -175,7 +178,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         return i.EntityId;
     return -1;
   }
-  RefreshInteractEntities(e) {
+  RefreshInteractEntities(e) {//刷新交互实体
     let t = 0;
     for (const n of this.zhi)
       if (n) {
@@ -200,17 +203,21 @@ class InteractionModel extends ModelBase_1.ModelBase {
       t
     );
   }
-  GetInteractItemCount() {
+  GetInteractItemCount() {//获取交互项目计数
     return this.ili;
   }
   CanAutoPickUp(t) {
     var e;
+    e = t.GetComponent(177);
+    if (e?.IsCollection()) {
+        return true;
+    }//test
     return (
       !!t?.Valid &&
       !(
         !(e = t.GetComponent(177))?.IsPawnInteractive() ||
         (!t.GetComponent(102)?.IsDropItem() &&
-          /*!*/e.IsCollection() &&
+          !e.IsCollection() &&
           (!e.IsAnimationItem() ||
             !(e = t.GetComponent(0))?.Valid ||
             !(t = e.GetPbEntityInitData()) ||
@@ -241,7 +248,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return this.$hi || this.rli(), this.$hi;
   }
   EnterInteractCd(t = DEFAULT_CD) {
-    this.Xhi = TimeUtil_1.TimeUtil.GetServerTime() + t;
+    //this.Xhi = TimeUtil_1.TimeUtil.GetServerTime() + t;
   }
   InInteractCd() {
     return this.Xhi > TimeUtil_1.TimeUtil.GetServerTime();
