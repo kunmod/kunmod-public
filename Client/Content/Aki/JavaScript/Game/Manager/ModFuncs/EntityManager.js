@@ -10,6 +10,7 @@ const ModUtils_1 = require("./ModUtils");
 const Global_1 = require("../../Global");
 const ModelManager_1 = require("../../Manager/ModelManager");
 const Protocol_1 = require("../../../Core/Define/Net/Protocol");
+const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
 //const CreatureModel = ModelManager_1.ModelManager.CreatureModel;
 
 class ModsEntityManager {
@@ -59,7 +60,9 @@ class ModsEntityManager {
     Y: 0,
     Z: 0,
   };
-
+static GetEntitybyId(entityId){
+  return EntitySystem_1.EntitySystem.Get(entityId);
+}
   static GetPlayerEntity() {
     this.PlayerEntity =
       Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity;
@@ -118,9 +121,20 @@ class ModsEntityManager {
   static GetPosition(entity) {
     // let Pbdata = this.GetEntityData(entity.PbDataId);
     // let pos = Pbdata.Transform.Pos;
-    let pos = entity.Entity.Components[0]._ne;
+    let a = entity.Entity.Entity.GetComponent(3);
+    let actor =a.Actor;
+    let pos = actor.K2_GetActorLocation();
 
     return pos;
+  }
+
+  static GetName(entity) {
+
+    let a = entity.Entity.Entity.GetComponent(3);
+    let actor =a.Actor;
+    let name = actor.GetName();
+
+    return name;
   }
   static GetEntity(entity) {
     return entity.Entity;

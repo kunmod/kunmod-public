@@ -51,7 +51,19 @@ class ModMethod {
     );
     entity.CheckGetComponent(0).SetLivingStatus(Protocol_1.Aki.Protocol.LivingStatus.Dead);
   }
-
+  // static AnimalDropRequest(entity)//cant use seems
+  // {
+  //   let id =entity.Entity.Id;
+  //   ControllerHolder_1.ControllerHolder.CreatureController.AnimalDropItemRequest(id);
+  // }
+  static LandingDamageRequest(Entity)
+  {
+    let id =Entity.Id;
+    let speedz =100;
+    let TimeExceeding=1;
+    ControllerHolder_1.ControllerHolder.CreatureController.LandingDamageRequest(id,100,1);
+  }
+  
   static SetWorldTimeDilation(t) {
     UE.GameplayStatics.SetGlobalTimeDilation(
       GlobalData_1.GlobalData.GameInstance,

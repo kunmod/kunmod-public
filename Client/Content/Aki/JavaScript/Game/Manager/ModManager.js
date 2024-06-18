@@ -31,6 +31,7 @@ const puerts_1 = require("puerts"),
   MainMenu_1 = require("../Main");
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
+const { MobVacuum } = require("./ModFuncs/MobVacuum");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
 const ConfigFileName = "KunModConfig.json"
 class ModManager {
@@ -66,7 +67,7 @@ class ModManager {
     AutoDestroy: false,
     killAuranew: false,
     killAuraRadius: 300,
-    KillAnimal: true,
+    KillAnimal: false,
     AutoAbsorbnew: false,
     AutoChest: false,
     WeatherChanger: false,
@@ -74,6 +75,7 @@ class ModManager {
     WorldSpeed: false,
     WorldSpeedValue: 1,
     PlotSkip:true,
+    MobVacuum:false,
     Uid: "100000000",
     Language:"en",
   };

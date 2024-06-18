@@ -16,18 +16,7 @@ const puerts_1 = require("puerts"),
   WorldFunctionLibrary_1 = require("../../World/Bridge/WorldFunctionLibrary"),
   UiManager_1 = require("../../../Ui/UiManager");
 
-// class PaintContext {
-//   constructor() {
-//     this.__tid_PaintContext__ = false;
-//   }
 
-//   /**
-//    * @deprecated use StaticStruct instead.
-//    */
-//   static StaticClass() {}
-
-//   static StaticStruct() {}
-// }
 
 class ModUtils {
   static isInGame() {
