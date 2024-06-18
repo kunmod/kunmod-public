@@ -20,19 +20,12 @@ class NoClip extends EntityManager {
     let playerentity = this.GetPlayerEntity();
     let ActorComp = playerentity.GetComponent(3);
     let Actor = ActorComp.Actor;
-    let CapsuleComp = Actor.CapsuleComponent;
-    CapsuleComp.SetCollisionEnabled(bool); //碰撞开关
-    let Movement = playerentity.Components[28].CharacterMovement;
-    let GravityScale = Movement.GravityScale;//重力
-    if (bool) {
-      GravityScale = 0;
-    } else GravityScale = 2;
+    Actor.SetActorEnableCollision(!bool); //碰撞开关
+    let Movement = ActorComp.ActorInternal.CharacterMovement;
+    if (bool) Movement.MovementMode = 5;
+    else Movement.MovementMode = 1;
   }
   //移动模式
-
-
-
-
 }
 //puerts.logger.info(debug)
 exports.NoClip = NoClip;
