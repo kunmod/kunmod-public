@@ -23,7 +23,7 @@ const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage,
-  EntityManager = EntityManager_1.ModsEntityManager;
+  EntityManager = EntityManager_1.EntityManager;
 
 let keyState = false,
   Menu = null,

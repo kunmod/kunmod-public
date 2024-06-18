@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModsEntityManager = void 0;
+exports.EntityManager = void 0;
 const puerts_1 = require("puerts");
 const UE = require("ue");
 const Info_1 = require("../../../Core/Common/Info");
@@ -13,7 +13,7 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol");
 const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
 //const CreatureModel = ModelManager_1.ModelManager.CreatureModel;
 
-class ModsEntityManager {
+class EntityManager {
   static PlayerEntity = null;
   static AllEntityInfo = [];
   static EntitiesSortedList = [];
@@ -244,4 +244,4 @@ static GetCurrRoleId(){
 }
 }
 
-exports.ModsEntityManager = ModsEntityManager;
+exports.EntityManager = EntityManager;

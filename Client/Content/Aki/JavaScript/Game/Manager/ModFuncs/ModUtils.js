@@ -90,7 +90,7 @@ class ModUtils {
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   }
   static Getdistance2Player(pos1) {
-    let pos2 = EntityManager_1.ModsEntityManager.GetPlayerPos();
+    let pos2 = EntityManager_1.EntityManager.GetPlayerPos();
     let dx = pos2.X - pos1.X;
     let dy = pos2.Y - pos1.Y;
     let dz = pos2.Z - pos1.Z;

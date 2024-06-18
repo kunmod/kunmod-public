@@ -132,11 +132,11 @@ class ModManager {
 
     if (this.listenMod("PlayerSpeed", "F12", "PlayerSpeed")) {
       if (this.Settings.PlayerSpeed) {
-        EntityManager_1.ModsEntityManager.SetPlayerSpeed(
+        EntityManager_1.EntityManager.SetPlayerSpeed(
           this.Settings.playerSpeedValue
         );
       } else {
-        EntityManager_1.ModsEntityManager.SetPlayerSpeed(1);
+        EntityManager_1.EntityManager.SetPlayerSpeed(1);
       }
     }
     if (this.listenMod("CustomTp", "Insert", "CustomTp")) {

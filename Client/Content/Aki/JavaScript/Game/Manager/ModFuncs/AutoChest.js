@@ -11,7 +11,7 @@ const puerts_1 = require("puerts"),
   ModMethod_1 = require("./ModMethod");
 
 
-const EntityManager = EntityManager_1.ModsEntityManager;
+const EntityManager = EntityManager_1.EntityManager;
 const ModUtils = ModUtils_1.ModUtils;
 const ModMethod = ModMethod_1.ModMethod;
 const ChestList = [

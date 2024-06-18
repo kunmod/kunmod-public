@@ -15,7 +15,7 @@ const puerts_1 = require("puerts"),
   GlobalData_1 = require("../../GlobalData"),
   UiManager_1 = require("../../../Ui/UiManager");
 
-const EntityManager = EntityManager_1.ModsEntityManager;
+const EntityManager = EntityManager_1.EntityManager;
 const ModUtils = ModUtils_1.ModUtils;
 
 class MobVacuum extends EntityManager {

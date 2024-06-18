@@ -225,7 +225,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
   StartPassiveCd(t, e = -1) {
     var i = this.MWo.get(t);
     if(ModManager_1.ModManager.Settings.NoCD){
-      let role = EntityManager_1.ModsEntityManager.GetCurrRoleId();     
+      let role = EntityManager_1.EntityManager.GetCurrRoleId();     
       e = -t;
       if(role ==1302){
         e =-1;//yinlin bug

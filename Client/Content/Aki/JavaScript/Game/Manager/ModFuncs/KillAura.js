@@ -12,7 +12,7 @@ const puerts_1 = require("puerts"),
 
 const ModMethod = ModMethod_1.ModMethod;
 const ModManager = ModManager_1.ModManager;
-const EntityManager = EntityManager_1.ModsEntityManager;
+const EntityManager = EntityManager_1.EntityManager;
 const ModUtils = ModUtils_1.ModUtils;
 const AnimalList = [
   "Animal001", //紫喙鸽

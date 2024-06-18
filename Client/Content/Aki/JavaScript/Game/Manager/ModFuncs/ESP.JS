@@ -12,7 +12,7 @@ const puerts_1 = require("puerts"),
   GlobalData_1 = require("../../GlobalData"),
   UiManager_1 = require("../../../Ui/UiManager");
   
-const EntityManager = EntityManager_1.ModsEntityManager;
+const EntityManager = EntityManager_1.EntityManager;
 const ModUtils = ModUtils_1.ModUtils;
 
 class ESP extends EntityManager {
@@ -22,7 +22,15 @@ class ESP extends EntityManager {
     return need;
   }
 
+static test(){
 
+  UE.GameplayStatics.ProjectWorldToScreen(
+    this.Camera.CharacterController,
+    t.ToUeVector(),
+    this.ResultPositionRef,
+    !1
+  );
+}
 
 
   static Drawtest(){
