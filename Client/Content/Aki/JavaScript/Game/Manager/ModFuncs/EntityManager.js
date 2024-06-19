@@ -116,7 +116,7 @@ class EntityManager {
   static GetPosition(entity) {
     // let Pbdata = this.GetEntityData(entity.PbDataId);
     // let pos = Pbdata.Transform.Pos;
-    let a = entity.Entity.Entity.GetComponent(3);
+    let a = entity.Entity.GetComponent(3);
     let actor = a.Actor;
     let pos = actor.K2_GetActorLocation();
 
@@ -124,7 +124,7 @@ class EntityManager {
   }
 
   static GetName(entity) {
-    let a = entity.Entity.Entity.GetComponent(3);
+    let a = entity.Entity.GetComponent(3);
     let actor = a.Actor;
     let name = actor.GetName();
 
@@ -207,11 +207,7 @@ class EntityManager {
     return BlueprintType.startsWith("Quest");
   }
   static isVision(entity) {
-    // return (
-    //   (entity.Entity.GetComponent(0)).GetEntityType() ===
-    //   Protocol_1.Aki.Protocol.EEntityType.Vision
-    // );
-    return entity.Entity.Components[0].C9o.startsWith("Vision");
+    return (entity.Entity.Components[0].C9o).startsWith("Vision");
   }
   static isWeapon(entity) {
     let BlueprintType = this.GetBlueprintType(entity);

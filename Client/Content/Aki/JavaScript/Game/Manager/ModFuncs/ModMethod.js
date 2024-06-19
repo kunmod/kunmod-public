@@ -43,7 +43,6 @@ class ModMethod {
   static RequestCaptureEntity(entity) {
     BattleNetController_1.BattleNetController.RequestCaptureEntity(entity.Id);
   }
-
   static AnimalDieRequest(entity) {
     ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
       entity.GetComponent(0).GetCreatureDataId(),
@@ -56,13 +55,13 @@ class ModMethod {
   //   let id =entity.Entity.Id;
   //   ControllerHolder_1.ControllerHolder.CreatureController.AnimalDropItemRequest(id);
   // }
-  static LandingDamageRequest(Entity)
-  {
-    let id =Entity.Id;
-    let speedz =100;
-    let TimeExceeding=1;
-    ControllerHolder_1.ControllerHolder.CreatureController.LandingDamageRequest(id,100,1);
-  }
+  // static LandingDamageRequest(Entity)
+  // {
+  //   let id =Entity.Id;
+  //   let speedz =100;
+  //   let TimeExceeding=1;
+  //   ControllerHolder_1.ControllerHolder.CreatureController.LandingDamageRequest(id,100,1);
+  // }
   
   static SetWorldTimeDilation(t) {
     UE.GameplayStatics.SetGlobalTimeDilation(
@@ -72,13 +71,6 @@ class ModMethod {
   }
   //宝箱
   static RewardChest(entity) {
-    //if(entity.CheckGetComponent(116).IsInState(1))return;
-    //if (!entity.CheckGetComponent(114).IsLocked) return;
-    // if (
-    //   ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
-    //   ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
-    // )
-    //   return;
 
     LevelGamePlayController_1.LevelGamePlayController.GetRewardTreasureBoxRequest(
       entity.Id

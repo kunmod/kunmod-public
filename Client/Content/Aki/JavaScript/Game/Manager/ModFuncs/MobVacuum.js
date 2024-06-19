@@ -27,37 +27,27 @@ class MobVacuum extends EntityManager {
   }
 
   static MobVacuum(entity) {
-    if(!ModManager_1.ModManager.Settings.MobVacuum)return;
-    if (this.isMonster(entity) || this.isAnimal(entity)) {
+    if (!ModManager_1.ModManager.Settings.MobVacuum) return;
+    if (this.isMonster(entity) /*|| this.isAnimal(entity)*/) {
       let playerpos = EntityManager.GetPlayerPos();
-      let Targe = {
-        X: playerpos.X,
-        Y: playerpos.Y,
-        Z: playerpos.Z,
-      };
-      //let Targepos = Targe.ToUeVector();
-      let ActorComp = entity.Entity.GetComponent(3); //actorComponent
-      //ActorComp.SetActorLocation(Targe);
+      let ActorComp = entity.Entity.GetComponent(3); 
       let actor = ActorComp.Actor;
-      actor.K2_SetActorLocation(Targe, 0, void 0, 1);
-      if (this.isMonster(entity)) this.SyncMonster(entity, Targe);
+      this.SyncMonster(entity, playerpos)
+      actor.K2_SetActorLocation(playerpos, 0, void 0, 1);
     }
+    
   }
 
+
+
   static VacuumCollect(entity) {
-    if(!ModManager_1.ModManager.Settings.VacuumCollect)return;
-    if (AutoInteract_1.AutoInteract.isNeedLoot(entity)) {
-      let playerpos = EntityManager.GetPlayerPos();
-      let Targe = {
-        X: playerpos.X,
-        Y: playerpos.Y,
-        Z: playerpos.Z,
-      };
-      let ActorComp = entity.Entity.GetComponent(1);
-      
-      //actor.SetActorLocation(Targe);
-      ActorComp.SetActorLocation(Targe);
-    }
+    if (!ModManager_1.ModManager.Settings.VacuumCollect) return;
+    if (!AutoInteract_1.AutoInteract.isNeedLoot(entity)) return;
+    //if (!this.isCollection(entity)) return;
+    let playerpos = EntityManager.GetPlayerPos();
+    let ActorComp = entity.Entity.GetComponent(1);
+    ActorComp.SetActorLocation(playerpos);
+   // puerts_1.logger.info("VacuumCollectEnd");
   }
 
   static SyncMonster(entity, pos) {

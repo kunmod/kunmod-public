@@ -150,8 +150,6 @@ class MainMenu {
             MainMenu.KunLog("Auto Pick Treasure: " + isChecked);
           });
 
-
-
           Menu.HitMultiplierCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.HitMultiplier = isChecked;
             MainMenu.KunLog("Hit Multiplier: " + isChecked);
@@ -245,8 +243,6 @@ class MainMenu {
             ModManager.Settings.HideDmgUi = isChecked;
             MainMenu.KunLog("Hide Damage Text: " + isChecked);
           });
-
-
 
           Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.CustomTp = isChecked;
@@ -450,7 +446,6 @@ class ModEntityListener {
   static Runtime() {
     if (!ModManager.Settings.DebugEntity) return;
     if (!ModUtils.isInGame) return;
-    //this.updatePlayerSpeed();
 
     EntityManager.PushEntityList();
     const entitylist = EntityManager.ModsEntitys.EntityList;
@@ -462,8 +457,8 @@ class ModEntityListener {
       AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
       MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
       MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
-      //AutoChest_1.AutoChest.RewardChest(entitylist[i]);              //1.0.28 cant use
 
+      //AutoChest_1.AutoChest.RewardChest(entitylist[i]);              //1.0.28 cant use
     }
 
     //puerts_1.logger.warn("kun:Runtime is working");
@@ -474,14 +469,13 @@ class ESPmain {
   static RuntimeESP() {
     if (!ModUtils.isInGame) return;
 
-
   }
  }
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
 
-setInterval(ModEntityListener.Runtime, 2000);
+setInterval(ModEntityListener.Runtime, 3000);
 setInterval(MainMenu.updatePlayerSpeed, 5000);
 //setInterval(ESPmain.RuntimeESP, 1);
 main();
