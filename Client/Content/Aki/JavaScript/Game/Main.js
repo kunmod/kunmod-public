@@ -36,6 +36,14 @@ function main() {
 }
 
 class MainMenu {
+  static ESPCanvas = null;
+  static ESPColor = {
+    monster: new UE.LinearColor(1, 0, 0, 1), // red
+    collection: new UE.LinearColor(1, 1, 0, 1), // yellow
+    treasure: new UE.LinearColor(1, 0, 1, 1), // purple
+    animal: new UE.LinearColor(1, 0.7, 0, 1) // orange
+  }
+
   static IsKey(str) {
     let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str);
     if (IsInputKeyDown && !keyState) {
@@ -114,6 +122,14 @@ class MainMenu {
       );
 
       if (Menu) {
+        MainMenu.ESPCanvas = UE.UMGManager.CreateWidget(
+          GlobalData_1.GlobalData.World,
+          ResourceSystem_1.ResourceSystem.Load("/Game/Aki/ESP.ESP_C", UE.Class)
+        );
+
+        MainMenu.ESPCanvas.AddToViewport();
+        MainMenu.ESPCanvas.SetVisibility(0);
+
         try {
           Menu.Yinlin.SetBrushFromTexture(
             ResourceSystem_1.ResourceSystem.Load(
@@ -451,6 +467,43 @@ class MainMenu {
   static killAura() {
     return [ModLanguage.ModTr("Only Hatred"), ModLanguage.ModTr("Infinity")];
   }
+
+  static ESPDrawBoxEntities(sizeX, sizeY, posX = 1, posY = 1, name = 'Unknown', color) {
+    MainMenu.AddBorder(sizeX, sizeY, posX, posY, name, color);
+  }
+
+  static ClearBorder() {
+    return MainMenu.ESPCanvas.Canvas.ClearChildren();
+  }
+
+  static RemoveBorder(Border) {
+    return MainMenu.ESPCanvas.Canvas.RemoveChild(Border.Content);
+  }
+
+  static AddBorder(SizeX, SizeY, PosX, PosY, name, color) {
+    const NewText = new UE.TextBlock();
+    NewText.SetText(name);
+    NewText.SetColorAndOpacity(new UE.SlateColor(color))
+    const NewBorder = new UE.Border();
+    const Brush = new UE.SlateBrush();
+    Brush.TintColor = new UE.SlateColor(color);
+    Brush.DrawAs = 2;
+    Brush.ImageType = 0;
+    Brush.Margin = { Left: 1, Top: 1, Right: 1, Bottom: 1 };
+    NewBorder.SetBrush(Brush);
+    const Border = MainMenu.ESPCanvas.Canvas.AddChild(NewBorder);
+    const Text = MainMenu.ESPCanvas.Canvas.AddChild(NewText);
+    Border.SetSize(new UE.Vector2D(SizeX, SizeY));
+    Border.SetPosition(new UE.Vector2D(PosX, PosY));
+    Border.SetAlignment(new UE.Vector2D(0.5, 0.5));
+    // Border.SetAnchors({ X: 0, Y: 0 }, { X: 0, Y: 0 });
+    // Border.SetOffsets(new UE.Margin(PosX - SizeX, PosY - SizeY, 2 * SizeX, 2 * SizeY));
+    Text.SetPosition(new UE.Vector2D(PosX, PosY));
+    Text.SetAlignment(new UE.Vector2D(0.5, 0.5));
+    setTimeout(() => {
+      MainMenu.ClearBorder();
+    }, 10)
+  }
 }
 class ModEntityListener {
   static Runtime() {
@@ -472,20 +525,81 @@ class ModEntityListener {
     //puerts_1.logger.warn("kun:Runtime is working");
   }
 }
-// class ESPmain {
-//   //esp测试test
-//   static RuntimeESP() {
-//     if (!ModUtils.isInGame) return;
-//     ESP_1.ESP.EESPDrawBox();
+class ESPmain {
+  static ProjectWorldToScreen(ActorLocation) {
+    try {
+      const Location = new UE.Vector(ActorLocation.X, ActorLocation.Y, ActorLocation.Z)
+      const PlayerController = UE.GameplayStatics.GetPlayerController(GlobalData_1.GlobalData.World, 0)
+      let ScreenPosition = puerts_1.$ref(undefined)
+      if (PlayerController.ProjectWorldLocationToScreen(Location, ScreenPosition, true)) {
+        puerts_1.$unref(ScreenPosition)
+      }
+      ScreenPosition = ScreenPosition[0];
+      let ViewportPosition = puerts_1.$ref(undefined)
+      if (UE.SlateBlueprintLibrary.ScreenToViewport(GlobalData_1.GlobalData.World, ScreenPosition, ViewportPosition)) {
+        puerts_1.$unref(ViewportPosition)
+      }
+      ViewportPosition = ViewportPosition[0];
+      ScreenPosition = new UE.Vector2D(ViewportPosition.X, ViewportPosition.Y);
+      if (ScreenPosition.X == 0 && ScreenPosition.Y == 0) return null;
+      return ScreenPosition;
+    } catch (e) {
+      return null;
+    }
+  }
+  //esp测试test
+  static RuntimeESP() {
+    if (!ModUtils.isInGame) return;
 
-//   }
-//  }
+    EntityManager.PushEntityList();
+    const entitylist = EntityManager.ModsEntitys.EntityList;
+    const count = EntityManager.ModsEntitys.EntityCount;
+    for (let i = 0; i < count; i++) {
+      let Actor, Location, Bounds, SphereRadius, BoxExtent, ScreenPos, Name, Color;
+      let IsValid = true;
+      if (entitylist[i].Entity.GetComponent(3)) {
+        Actor = entitylist[i].Entity.GetComponent(3).Actor;
+        Location = Actor.K2_GetActorLocation();
+        Bounds = Actor.CapsuleComponent.Bounds;
+        SphereRadius = Bounds.SphereRadius;
+        BoxExtent = Bounds.BoxExtent;
+      } else {
+        Location = entitylist[i].Entity.GetComponent(0).GetLocation();
+        SphereRadius = 50;
+        BoxExtent = { X: 100, Y: 100 };
+      }
+      if (EntityManager.isMonster(entitylist[i])) {
+        Name = 'Monster'
+        Color = MainMenu.ESPColor.monster
+        IsValid = true
+      } else if (EntityManager.isAnimal(entitylist[i])) {
+        Name = 'Animal'
+        Color = MainMenu.ESPColor.animal
+      } else if (EntityManager.isCollection(entitylist[i])) {
+        Name = 'Collection'
+        Color = MainMenu.ESPColor.collection
+      } else if (EntityManager.isTreasure(entitylist[i])) {
+        Name = 'Treasure'
+        Color = MainMenu.ESPColor.treasure
+      } else {
+        IsValid = false
+      }
+
+      if (IsValid) {
+        ScreenPos = ESPmain.ProjectWorldToScreen(Location);
+        if (ScreenPos) {
+          MainMenu.ESPDrawBoxEntities((BoxExtent.X + SphereRadius), (BoxExtent.Y + SphereRadius), ScreenPos.X, ScreenPos.Y, Name, Color)
+        }
+      }
+    }
+  }
+ }
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
 setInterval(MainMenu.updatePlayerSpeed, 1000);
 setInterval(ModEntityListener.Runtime, 3000);
-//setInterval(ESPmain.RuntimeESP, 1);
+setInterval(ESPmain.RuntimeESP, 10);
 main();
 
 // exports.ESPmain = ESPmain;
