@@ -74,6 +74,7 @@ class ModManager {
     PlotSkip: true,
     MobVacuum: false,
     VacuumCollect: false,
+    AttributeModifier:true,
     Uid: "100000000",
     Language: "en",
   };
