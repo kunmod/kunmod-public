@@ -60,25 +60,20 @@ class EntityManager {
     Y: 0,
     Z: 0,
   };
-static GetEntitybyId(entityId){
-  return EntitySystem_1.EntitySystem.Get(entityId);
-}
+  static GetEntitybyId(entityId) {
+    return EntitySystem_1.EntitySystem.Get(entityId);
+  }
   static GetPlayerEntity() {
     this.PlayerEntity =
       Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity;
+
     return this.PlayerEntity;
   }
   static GetPlayerPos() {
-    let pos =
-      Global_1.Global.BaseCharacter?.CharacterActorComponent
-        .CachedDesiredActorLocation.Tuple;
-    let playerPos = {
-      X: pos[0],
-      Y: pos[1],
-      Z: pos[2],
-    };
+    let Actor = Global_1.Global.BaseCharacter?.CharacterActorComponent.Actor;
+    let pos = Actor?.K2_GetActorLocation();
 
-    return playerPos;
+    return pos;
   }
   static PushEntityList() {
     this.GetEntitySortedList();
@@ -122,16 +117,15 @@ static GetEntitybyId(entityId){
     // let Pbdata = this.GetEntityData(entity.PbDataId);
     // let pos = Pbdata.Transform.Pos;
     let a = entity.Entity.Entity.GetComponent(3);
-    let actor =a.Actor;
+    let actor = a.Actor;
     let pos = actor.K2_GetActorLocation();
 
     return pos;
   }
 
   static GetName(entity) {
-
     let a = entity.Entity.Entity.GetComponent(3);
-    let actor =a.Actor;
+    let actor = a.Actor;
     let name = actor.GetName();
 
     return name;
@@ -217,7 +211,7 @@ static GetEntitybyId(entityId){
     //   (entity.Entity.GetComponent(0)).GetEntityType() ===
     //   Protocol_1.Aki.Protocol.EEntityType.Vision
     // );
-    return (entity.Entity.Components[0].C9o).startsWith("Vision");
+    return entity.Entity.Components[0].C9o.startsWith("Vision");
   }
   static isWeapon(entity) {
     let BlueprintType = this.GetBlueprintType(entity);
@@ -236,12 +230,11 @@ static GetEntitybyId(entityId){
     //CharacterController_1.CharacterController.SetTimeDilation(value);
     let player = this.GetPlayerEntity();
     player.SetTimeDilation(value);
-}
-static GetCurrRoleId(){
-  let player = this.GetPlayerEntity();
-  return player.Components[0].DOe
-   ;
-}
+  }
+  static GetCurrRoleId() {
+    let player = this.GetPlayerEntity();
+    return player.Components[0].DOe;
+  }
 }
 
 exports.EntityManager = EntityManager;

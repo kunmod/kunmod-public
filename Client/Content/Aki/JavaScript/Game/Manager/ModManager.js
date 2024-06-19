@@ -76,6 +76,7 @@ class ModManager {
     WorldSpeedValue: 1,
     PlotSkip:true,
     MobVacuum:false,
+    VacuumCollect:false,
     Uid: "100000000",
     Language:"en",
   };

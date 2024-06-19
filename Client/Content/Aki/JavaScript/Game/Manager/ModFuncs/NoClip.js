@@ -17,15 +17,17 @@ const ModUtils = ModUtils_1.ModUtils;
 
 class NoClip extends EntityManager {
   static NoClip(bool) {
-    let playerentity = this.GetPlayerEntity();
-    let ActorComp = playerentity.GetComponent(3);
-    let Actor = ActorComp.Actor;
-    Actor.SetActorEnableCollision(!bool); //碰撞开关
-    let Movement = ActorComp.ActorInternal.CharacterMovement;
-    if (bool) Movement.MovementMode = 5;
+    const playerentity = this.GetPlayerEntity();
+  //  puerts_1.logger.warn("kundebug:player", playerentity);
+    const ActorComp = playerentity.GetComponent(3);
+    const Actor = ActorComp.Actor;
+  //  puerts_1.logger.warn("kundebug:Actor", Actor);
+    Actor.SetActorEnableCollision(!bool); //Collision
+    const Movement = ActorComp.ActorInternal.CharacterMovement;
+    if (bool) Movement.MovementMode = 5; //fly
     else Movement.MovementMode = 1;
+   // puerts_1.logger.warn("kundebug:MovementMode", Movement.MovementMode);
   }
-  //移动模式
 }
 //puerts.logger.info(debug)
 exports.NoClip = NoClip;

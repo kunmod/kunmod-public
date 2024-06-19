@@ -13,6 +13,7 @@ const puerts_1 = require("puerts"),
   EntityManager_1 = require("./EntityManager"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
+  AutoInteract_1 = require("./AutoInteract"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 const EntityManager = EntityManager_1.EntityManager;
@@ -26,20 +27,36 @@ class MobVacuum extends EntityManager {
   }
 
   static MobVacuum(entity) {
-    if (this.isMonster(entity)||this.isAnimal(entity)) {
+    if(!ModManager_1.ModManager.Settings.MobVacuum)return;
+    if (this.isMonster(entity) || this.isAnimal(entity)) {
       let playerpos = EntityManager.GetPlayerPos();
       let Targe = {
-        X:playerpos.X ,
-        Y:playerpos.Y,
-        Z:playerpos.Z
-      }
+        X: playerpos.X,
+        Y: playerpos.Y,
+        Z: playerpos.Z,
+      };
       //let Targepos = Targe.ToUeVector();
-      let ActorComp = entity.Entity.GetComponent(3);//actorComponent
+      let ActorComp = entity.Entity.GetComponent(3); //actorComponent
       //ActorComp.SetActorLocation(Targe);
-      let actor =ActorComp.Actor;
-      actor.K2_SetActorLocation(Targe,0,void 0,1);
-if(this.isMonster(entity))
-      this.SyncMonster(entity, Targe);
+      let actor = ActorComp.Actor;
+      actor.K2_SetActorLocation(Targe, 0, void 0, 1);
+      if (this.isMonster(entity)) this.SyncMonster(entity, Targe);
+    }
+  }
+
+  static VacuumCollect(entity) {
+    if(!ModManager_1.ModManager.Settings.VacuumCollect)return;
+    if (AutoInteract_1.AutoInteract.isNeedLoot(entity)) {
+      let playerpos = EntityManager.GetPlayerPos();
+      let Targe = {
+        X: playerpos.X,
+        Y: playerpos.Y,
+        Z: playerpos.Z,
+      };
+      let ActorComp = entity.Entity.GetComponent(1);
+      
+      //actor.SetActorLocation(Targe);
+      ActorComp.SetActorLocation(Targe);
     }
   }
 
