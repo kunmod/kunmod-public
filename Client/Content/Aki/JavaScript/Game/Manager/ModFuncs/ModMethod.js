@@ -18,6 +18,7 @@ const puerts_1 = require("puerts"),
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   WeatherController_1 = require("../../Module/Weather/WeatherController"),
+  ModDebuger_1 = require("./ModDebuger"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 class ModMethod {
@@ -42,7 +43,6 @@ class ModMethod {
   static RequestCaptureEntity(entity) {
     BattleNetController_1.BattleNetController.RequestCaptureEntity(entity.Id);
   }
-
   static AnimalDieRequest(entity) {
     ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
       entity.GetComponent(0).GetCreatureDataId(),
@@ -50,7 +50,19 @@ class ModMethod {
     );
     entity.CheckGetComponent(0).SetLivingStatus(Protocol_1.Aki.Protocol.LivingStatus.Dead);
   }
-
+  // static AnimalDropRequest(entity)//cant use seems
+  // {
+  //   let id =entity.Entity.Id;
+  //   ControllerHolder_1.ControllerHolder.CreatureController.AnimalDropItemRequest(id);
+  // }
+  // static LandingDamageRequest(Entity)
+  // {
+  //   let id =Entity.Id;
+  //   let speedz =100;
+  //   let TimeExceeding=1;
+  //   ControllerHolder_1.ControllerHolder.CreatureController.LandingDamageRequest(id,100,1);
+  // }
+  
   static SetWorldTimeDilation(t) {
     UE.GameplayStatics.SetGlobalTimeDilation(
       GlobalData_1.GlobalData.GameInstance,
@@ -59,13 +71,6 @@ class ModMethod {
   }
   //宝箱
   static RewardChest(entity) {
-    //if(entity.CheckGetComponent(116).IsInState(1))return;
-    //if (!entity.CheckGetComponent(114).IsLocked) return;
-    // if (
-    //   ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
-    //   ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
-    // )
-    //   return;
 
     LevelGamePlayController_1.LevelGamePlayController.GetRewardTreasureBoxRequest(
       entity.Id
@@ -74,6 +79,25 @@ class ModMethod {
   static ChangWeather(weatherID) {
     //1.sunny 2.Cloudy 3.Thunder 4.Snow 5.Rain
     WeatherController_1.WeatherController.TestChangeWeather(weatherID);
+  }
+  static FPSunlocker(){
+    let setfps = "t.MaxFPS 300";
+    ModDebuger_1.ModDebuger.ConsoleCommand(setfps);
+  }
+  // static FreeCamera(){
+  //     ModDebuger_1.ModDebuger.ConsoleCommand("ToggleDebugCamera");
+  // }
+  static ShowFPS(){
+    let ShowFPS = "stat fps";
+    ModDebuger_1.ModDebuger.ConsoleCommand(ShowFPS);
+  }
+  static ShowUnit(){
+    let ShowUnit = "stat Unit";
+    ModDebuger_1.ModDebuger.ConsoleCommand(ShowUnit);
+  }
+  static SetFOV(value){
+    let fov = value.toString();
+    ModDebuger_1.ModDebuger.ConsoleCommand("fov "+fov);
   }
 
 

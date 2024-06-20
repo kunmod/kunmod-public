@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapUtil = void 0);
 const ue_1 = require("ue"),
+puerts_1 = require("puerts"),
   RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
@@ -12,12 +13,21 @@ const ue_1 = require("ue"),
   MapDefine_1 = require("./MapDefine");
 class MapUtil {
   static WorldPosition2UiPosition(e, t) {
+   // puerts_1.logger.warn("kun:w2ui:e:",e);
+   // puerts_1.logger.warn("kun:w2ui:t:",e);
     t = t ?? Vector_1.Vector.Create();
+   // puerts_1.logger.warn("kun:w2ui:return：Multiply:",e.Multiply(MapDefine_1.world2UiUnit, t));
+   // puerts_1.logger.warn("kun:w2ui:return：t:",e);
     return e.Multiply(MapDefine_1.world2UiUnit, t), t;
   }
   static WorldPosition2UiPosition2D(e, t) {
+   // puerts_1.logger.warn("kun:w2uiscreen:e:",e);
+   // puerts_1.logger.warn("kun:w2uiscreen:t:",e);
     t = t ?? Vector2D_1.Vector2D.Create();
+   // puerts_1.logger.warn("kun:w2uiscreen:return:",e.Multiply(MapDefine_1.worldToScreenScale, t));
+   // puerts_1.logger.warn("kun:w2uiscreen:return:t",t);
     return e.Multiply(MapDefine_1.worldToScreenScale, t);
+
   }
   static UiPosition2WorldPosition(e, t) {
     t = t ?? Vector_1.Vector.Create();

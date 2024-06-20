@@ -7,13 +7,16 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   ModManager_1 = require("../ModManager"),
   LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-var CurrLang = "en";
+  var CurrLang = "en";
+
 class ModLanguage {
 
   static GetCurrLang() {
     CurrLang = LanguageSystem_1.LanguageSystem.PackageLanguage;
     return CurrLang;
   }
+  
+
   static Langs = ["en", "zh-Hans", "ja", "es","id"];
 
   static translate = [
@@ -501,19 +504,22 @@ class ModLanguage {
       chs: "保存配置",
       ja: "設定を保存"
     },
+    {
+      en: "Auto Destroy [Num1]",
+      chs: "自动销毁[Num1]",
+      ja: "Auto Destroy [Num1]"
+    }
   ];
 
   static ModTr = (string) => {
-    var lang = CurrLang;
+    //var lang = ModManager_1.ModManager.Settings.Language;
+    var lang =CurrLang;
     var langMap = {
       "en": "en",
       "zh-Hans": "chs",
       "ja": "ja",
       "es": "es",
-      "ko": "ko",
-      "fr": "fr",
-      "id": "id",
-      "vi": "vi",
+      "id": "id"
     };
     for (let i = 0; i < ModLanguage.translate.length; i++) {
       if (ModLanguage.translate[i].en === string) {

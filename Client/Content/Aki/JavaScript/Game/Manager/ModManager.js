@@ -31,17 +31,18 @@ const puerts_1 = require("puerts"),
   MainMenu_1 = require("../Main");
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
+const { MobVacuum } = require("./ModFuncs/MobVacuum");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
-const ConfigFileName = "KunModConfig.json"
+const ConfigFileName = "KunModConfig.json";
 class ModManager {
   static Settings = {
+
     ModEnabled: true,
     GodMode: true,
     HitMultiplier: false,
     Hitcount: 15,
     AutoPickTreasure: false,
     AntiDither: true,
-    AutoAbsorb: false,
     NoCD: false,
     InfiniteStamina: false,
     killAura: false,
@@ -55,47 +56,69 @@ class ModManager {
     CustomTp: false,
     playerSpeedValue: 3,
     PlayerSpeed: false,
-    ShowMenu: false,
     AutoLoot: false,
     HideHUD: false,
     HideDmgUi: false,
-    AutoMine: false,
-    InfiniteEnergy:false,
+    InfiniteEnergy: false,
     //test
     DebugEntity: true, //(if use entity func need enable)
     AutoDestroy: false,
     killAuranew: false,
     killAuraRadius: 300,
-    KillAnimal: true,
+    KillAnimal: false,
     AutoAbsorbnew: false,
     AutoChest: false,
     WeatherChanger: false,
     WeatherType: 1,
     WorldSpeed: false,
     WorldSpeedValue: 1,
-    PlotSkip:false,
+    PlotSkip: true,
+    MobVacuum: false,
+    VacuumCollect: false,
+    AttributeModifier:true,
     Uid: "100000000",
-    Language:"en",
+    Language: "en",
+    ESP:true,
+    ESPRadius:300,
+    ShowMonster:true,
+    ShowAnimal:true,
+    ShowNpc:false,
+    ShowTreasure:true,
+    ShowCollect:true,
+    ShowBox:true,
+    ShowType:false,
+    ShowDistence:true,
+    ShowName:true,
+
   };
 
-    static GetGameDir() {
-        return UE.BlueprintPathsLibrary.ProjectDir() + 'Binaries/Win64/';
-    }
+  static GetGameDir() {
+    return UE.BlueprintPathsLibrary.ProjectDir() + "Binaries/Win64/";
+  }
 
-    static CheckConfigExists() {
-        const config = UE.BlueprintPathsLibrary.FileExists(this.GetGameDir() + ConfigFileName);
-        return config;
-    }
+  static CheckConfigExists() {
+    const config = UE.BlueprintPathsLibrary.FileExists(
+      this.GetGameDir() + ConfigFileName
+    );
+    return config;
+  }
 
-    static SaveConfig() {
-        UE.KuroStaticLibrary.SaveStringToFile(JSON.stringify(this.Settings), this.GetGameDir() + ConfigFileName);
-    }
+  static SaveConfig() {
+    UE.KuroStaticLibrary.SaveStringToFile(
+      JSON.stringify(this.Settings),
+      this.GetGameDir() + ConfigFileName
+    );
+  }
 
-    static LoadConfig() {
-        var ref = (0, puerts_1.$ref)("");
-        UE.KuroStaticLibrary.LoadFileToString(ref, this.GetGameDir() + ConfigFileName), (0, puerts_1.$unref)(ref)
-        this.Settings = JSON.parse(ref[0]);
-    }
+  static LoadConfig() {
+    var ref = (0, puerts_1.$ref)("");
+    UE.KuroStaticLibrary.LoadFileToString(
+      ref,
+      this.GetGameDir() + ConfigFileName
+    ),
+      (0, puerts_1.$unref)(ref);
+    this.Settings = JSON.parse(ref[0]);
+  }
 
   static ModStart() {
     //ModDebuger_1.ModDebuger.TestMethod();
@@ -117,9 +140,8 @@ class ModManager {
   }
 
   static listenModsToggle() {
-
-
     this.listenMod("GodMode", "F5", "GodMode");
+    this.listenMod("HitMultiplier", "F6", "HitMultiplier");
 
     this.listenMod("AutoPickTreasure", "F7", "AutoPickTreasure");
     this.listenMod("AutoAbsorbnew", "F8", "AutoAbsorbnew");
@@ -129,11 +151,11 @@ class ModManager {
 
     if (this.listenMod("PlayerSpeed", "F12", "PlayerSpeed")) {
       if (this.Settings.PlayerSpeed) {
-        EntityManager_1.ModsEntityManager.SetPlayerSpeed(
+        EntityManager_1.EntityManager.SetPlayerSpeed(
           this.Settings.playerSpeedValue
         );
       } else {
-        EntityManager_1.ModsEntityManager.SetPlayerSpeed(1);
+        EntityManager_1.EntityManager.SetPlayerSpeed(1);
       }
     }
     if (this.listenMod("CustomTp", "Insert", "CustomTp")) {
@@ -183,7 +205,7 @@ class ModManager {
         );
     }
 
-    this.listenMod("skip", "NumPadFour", "plot");
+    //this.listenMod("skip", "NumPadFour", "plot");
   }
 
   static AddToggle(desc, key) {
@@ -272,12 +294,10 @@ class ModManager {
     else return string + ModTr(" : <color=red>OFF</color> |");
   }
 
-
   static ChangeUid(string) {
     this.Settings.Uid = string;
     UiManager_1.UiManager.CloseView("UidView");
     UiManager_1.UiManager.OpenView("UidView");
   }
-
 }
 exports.ModManager = ModManager;

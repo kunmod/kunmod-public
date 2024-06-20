@@ -11,19 +11,21 @@ const puerts_1 = require("puerts"),
   ModelManager_1 = require("./Manager/ModelManager"),
   ModManager_1 = require("./Manager/ModManager"),
   ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage"),
+  BluePrintType_1 = require("./Manager/ModFuncs/BluePrintType"),
   ModMethod_1 = require("./Manager/ModFuncs/ModMethod"),
   EntityManager_1 = require("./Manager/ModFuncs/EntityManager"),
   AutoAbsorb_1 = require("./Manager/ModFuncs/AutoAbsorb"),
+  AutoInteract_1 = require("./Manager/ModFuncs/AutoInteract"),
   KillAura_1 = require("./Manager/ModFuncs/KillAura"),
+  MobVacuum_1 = require("./Manager/ModFuncs/MobVacuum"),
   AutoChest_1 = require("./Manager/ModFuncs/AutoChest"),
-  ESP_1 = require("./Manager/ModFuncs/ESP"),
   AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager");
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage,
-  EntityManager = EntityManager_1.ModsEntityManager;
+  EntityManager = EntityManager_1.EntityManager;
 
 let keyState = false,
   Menu = null,
@@ -46,17 +48,17 @@ class MainMenu {
   }
 
   static IsKey(str) {
-    let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str);
-    if (IsInputKeyDown && !keyState) {
-      IsInputKeyDown = false;
-      keyState = true;
-      return true;
-    }
-    if (IsInputKeyDown === false) {
-      keyState = false;
-      return false;
-    }
-    return false;
+    // let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str);
+    // if (IsInputKeyDown && !keyState) {
+    //   IsInputKeyDown = false;
+    //   keyState = true;
+    //   return true;
+    // }
+    // if (IsInputKeyDown === false) {
+    //   keyState = false;
+    //   return false;
+    // }
+    // return false;
     // override default hotkey using only one
     var IsInputKeyDown_1 = InputSetting_1.InputSettings.IsInputKeyDown(str);
     var IsInputKeyDown_LeftControl =
@@ -166,11 +168,6 @@ class MainMenu {
             MainMenu.KunLog("Auto Pick Treasure: " + isChecked);
           });
 
-          // Menu.AutoAbsorbEchoCheck.OnCheckStateChanged.Add((isChecked) => {
-          //   ModManager.Settings.AutoAbsorb = isChecked;
-          //   MainMenu.KunLog("Auto Absorb: " + isChecked);
-          // });
-
           Menu.HitMultiplierCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.HitMultiplier = isChecked;
             MainMenu.KunLog("Hit Multiplier: " + isChecked);
@@ -265,11 +262,6 @@ class MainMenu {
             MainMenu.KunLog("Hide Damage Text: " + isChecked);
           });
 
-          // Menu.AutoMineCheck.OnCheckStateChanged.Add((isChecked) => {
-          //   ModManager.Settings.AutoMine = isChecked;
-          //   MainMenu.KunLog("Auto Mining: " + isChecked);
-          // });
-
           Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.CustomTp = isChecked;
             MainMenu.KunLog("Custom Teleport: " + isChecked);
@@ -360,7 +352,7 @@ class MainMenu {
       Menu.AutoPickTreasureText.SetText(
         ModLanguage.ModTr("Auto Pick Treasure [F7]")
       );
-      //Menu.AutoAbsorbEchoText.SetText(ModLanguage.ModTr("Auto Absorb [F8]"));
+
       Menu.HitMultiplierText.SetText(ModLanguage.ModTr("Hit Multiplier [F6]"));
       Menu.KillAuraText.SetText(ModLanguage.ModTr("Kill Aura [F9]"));
       Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
@@ -376,7 +368,6 @@ class MainMenu {
       Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
       Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
       Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
-      // Menu.AutoMineText.SetText(ModLanguage.ModTr("Auto Mining [Num1]"));
       Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
 
       Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
@@ -410,7 +401,7 @@ class MainMenu {
       Menu.AutoPickTreasureCheck.SetIsChecked(
         ModManager.Settings.AutoPickTreasure
       );
-      //Menu.AutoAbsorbEchoCheck.SetIsChecked(ModManager.Settings.AutoAbsorb);
+
       Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
       Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
@@ -425,7 +416,7 @@ class MainMenu {
       Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
       Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
       Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
-      //Menu.AutoMineCheck.SetIsChecked(ModManager.Settings.AutoMine);
+
       Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
 
       Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
@@ -507,7 +498,7 @@ class MainMenu {
 class ModEntityListener {
   static Runtime() {
     if (!ModManager.Settings.DebugEntity) return;
-    if (!ModUtils.isInGame) return;
+    if (!ModUtils.isInGame()) return;
 
     EntityManager.PushEntityList();
     const entitylist = EntityManager.ModsEntitys.EntityList;
@@ -517,8 +508,10 @@ class ModEntityListener {
       KillAura_1.KillAura.killAura(entitylist[i]);
       KillAura_1.KillAura.KillAnimal(entitylist[i]);
       AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
-      //AutoChest_1.AutoChest.RewardChest(entitylist[i]);              //1.0.28 cant use
+      MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
+      MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
 
+      //AutoChest_1.AutoChest.RewardChest(entitylist[i]);              //1.0.28 cant use
     }
 
     //puerts_1.logger.warn("kun:Runtime is working");
@@ -548,12 +541,14 @@ class ESPmain {
   }
   //esp测试test
   static RuntimeESP() {
-    if (!ModUtils.isInGame) return;
+    if (!ModUtils.isInGame()) return;
+    if (!ModManager.Settings.ESP)return; 
+ 
 
     const entitylist = ModelManager_1.ModelManager.CreatureModel.EntitiesSortedList;
     const count = entitylist.length;
     for (let i = 0; i < count; i++) {
-      let Actor, Location, Bounds, SphereRadius, BoxExtent, ScreenPos, Name, Color;
+      let Actor, Location, Bounds, SphereRadius, BoxExtent, ScreenPos, Text="", Color;
       let IsValid = true;
       if (entitylist[i].Entity.GetComponent(3)) {
         Actor = entitylist[i].Entity.GetComponent(3).Actor;
@@ -566,27 +561,47 @@ class ESPmain {
         SphereRadius = 50;
         BoxExtent = { X: 100, Y: 100, Z: 100 };
       }
+      let distance = ModUtils.Getdistance2Player(Location);
+      distance = Math.floor(distance / 100);
+      if(distance>ModManager.Settings.ESPRadius)
+        return;
+
       if (EntityManager.isMonster(entitylist[i])) {
-        Name = 'Monster'
-        Color = MainMenu.ESPColor.monster
-        IsValid = true
+       // Text = 'Monster';
+        Color = MainMenu.ESPColor.monster;
+        IsValid = ModManager.Settings.ShowMonster;
       } else if (EntityManager.isAnimal(entitylist[i])) {
-        Name = 'Animal'
-        Color = MainMenu.ESPColor.animal
-      } else if (EntityManager.isCollection(entitylist[i])) {
-        Name = 'Collection'
-        Color = MainMenu.ESPColor.collection
+        //Text = 'Animal';
+        Color = MainMenu.ESPColor.animal;
+        IsValid = ModManager.Settings.ShowAnimal;
+      } else if (AutoInteract_1.AutoInteract.isNeedLoot(entitylist[i])) {
+        //Text = 'Collection'
+        Color = MainMenu.ESPColor.collection;
+        IsValid = ModManager.Settings.ShowCollect;
       } else if (EntityManager.isTreasure(entitylist[i])) {
-        Name = 'Treasure'
-        Color = MainMenu.ESPColor.treasure
+        //Text = 'Treasure';
+        Color = MainMenu.ESPColor.treasure;
+        IsValid = ModManager.Settings.ShowTreasure;
       } else {
         IsValid = false
       }
+      if (ModManager.Settings.ShowType) {
+        let blueprint = EntityManager.GetBlueprintType2(entitylist[i]);       
+        Text  += Text+"|" + blueprint;
+      }
+      if (ModManager.Settings.ShowName) {
+        let blueprint = EntityManager.GetBlueprintType2(entitylist[i]);   
+        let Name =BluePrintType_1.BluePrintType.ModTr(blueprint);    
+        Text  +="|" + Name;
+      }
+       if (ModManager.Settings.ShowDistence) {           
+         Text  += "|" + distance.toString() + " m";
+       }
       let Extent = {X: ((BoxExtent.X + SphereRadius) * 1.5), Y: ((BoxExtent.Y + SphereRadius) * 1.5)};
       if (IsValid) {
         ScreenPos = ESPmain.ProjectWorldToScreen(Location);
         if (ScreenPos) {
-          MainMenu.ESPDrawBoxEntities(Extent.X, Extent.Y, ScreenPos.X, ScreenPos.Y, Name, Color)
+          MainMenu.ESPDrawBoxEntities(Extent.X, Extent.Y, ScreenPos.X, ScreenPos.Y, Text, Color)
         }
       }
     }
@@ -595,12 +610,12 @@ class ESPmain {
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-setInterval(MainMenu.updatePlayerSpeed, 1000);
+
 setInterval(ModEntityListener.Runtime, 3000);
 setInterval(ESPmain.RuntimeESP, 10);
 main();
 
-// exports.ESPmain = ESPmain;
+exports.ESPmain = ESPmain;
 exports.MainMenu = MainMenu;
 exports.ModEntityListener = ModEntityListener;
 //# sourceMappingURL=Main.js.map

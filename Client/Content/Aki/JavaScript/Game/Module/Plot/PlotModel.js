@@ -217,7 +217,8 @@ class PlotModel extends ModelBase_1.ModelBase {
       {
         (this.CanSkip = 1),//add
         (this.CanSkipDebug = 1),////add
-        (this.IsAutoPlay = !0);
+        (this.SkipTalkWhenFighting = 1),
+        (this.IsAutoPlay = 1);
       }
 
     return (

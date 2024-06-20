@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModsEntityManager = void 0;
+exports.EntityManager = void 0;
 const puerts_1 = require("puerts");
 const UE = require("ue");
 const Info_1 = require("../../../Core/Common/Info");
@@ -10,9 +10,10 @@ const ModUtils_1 = require("./ModUtils");
 const Global_1 = require("../../Global");
 const ModelManager_1 = require("../../Manager/ModelManager");
 const Protocol_1 = require("../../../Core/Define/Net/Protocol");
+const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
 //const CreatureModel = ModelManager_1.ModelManager.CreatureModel;
 
-class ModsEntityManager {
+class EntityManager {
   static PlayerEntity = null;
   static AllEntityInfo = [];
   static EntitiesSortedList = [];
@@ -59,23 +60,20 @@ class ModsEntityManager {
     Y: 0,
     Z: 0,
   };
-
+  static GetEntitybyId(entityId) {
+    return EntitySystem_1.EntitySystem.Get(entityId);
+  }
   static GetPlayerEntity() {
     this.PlayerEntity =
       Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity;
+
     return this.PlayerEntity;
   }
   static GetPlayerPos() {
-    let pos =
-      Global_1.Global.BaseCharacter?.CharacterActorComponent
-        .CachedDesiredActorLocation.Tuple;
-    let playerPos = {
-      X: pos[0],
-      Y: pos[1],
-      Z: pos[2],
-    };
+    let Actor = Global_1.Global.BaseCharacter?.CharacterActorComponent.Actor;
+    let pos = Actor?.K2_GetActorLocation();
 
-    return playerPos;
+    return pos;
   }
   static PushEntityList() {
     this.GetEntitySortedList();
@@ -118,9 +116,19 @@ class ModsEntityManager {
   static GetPosition(entity) {
     // let Pbdata = this.GetEntityData(entity.PbDataId);
     // let pos = Pbdata.Transform.Pos;
-    let pos = entity.Entity.Components[0]._ne;
+    let a = entity.Entity.GetComponent(3);
+    let actor = a.Actor;
+    let pos = actor.K2_GetActorLocation();
 
     return pos;
+  }
+
+  static GetName(entity) {
+    let a = entity.Entity.GetComponent(3);
+    let actor = a.Actor;
+    let name = actor.GetName();
+
+    return name;
   }
   static GetEntity(entity) {
     return entity.Entity;
@@ -199,10 +207,6 @@ class ModsEntityManager {
     return BlueprintType.startsWith("Quest");
   }
   static isVision(entity) {
-    // return (
-    //   (entity.Entity.GetComponent(0)).GetEntityType() ===
-    //   Protocol_1.Aki.Protocol.EEntityType.Vision
-    // );
     return (entity.Entity.Components[0].C9o).startsWith("Vision");
   }
   static isWeapon(entity) {
@@ -222,7 +226,11 @@ class ModsEntityManager {
     //CharacterController_1.CharacterController.SetTimeDilation(value);
     let player = this.GetPlayerEntity();
     player.SetTimeDilation(value);
-}
+  }
+  static GetCurrRoleId() {
+    let player = this.GetPlayerEntity();
+    return player.Components[0].DOe;
+  }
 }
 
-exports.ModsEntityManager = ModsEntityManager;
+exports.EntityManager = EntityManager;
