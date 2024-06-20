@@ -31,7 +31,7 @@ class EntityManager {
     Priority: 0,
     IsInit: false,
     Valid: false,
-    Entity: new this.Entity(),
+    Entity: this.Entity,
   };
 
   Entity = {};
@@ -41,12 +41,12 @@ class EntityManager {
     BlueprintType: "",
     Id: 0,
     InSleep: false,
-    Transform: new this.Transform(),
+    Transform: this.Transform,
   };
 
   Transform = {
-    Pos: new this.Pos(),
-    Rot: new this.Rot(),
+    Pos: this.Pos,
+    Rot: this.Rot,
   };
 
   Pos = {

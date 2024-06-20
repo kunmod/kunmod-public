@@ -36,6 +36,15 @@ const ModTr = ModLanguage_1.ModLanguage.ModTr;
 const ConfigFileName = "KunModConfig.json";
 class ModManager {
   static Settings = {
+    ESP:true,
+    ShowMonster:true,
+    ShowAnimal:true,
+    ShowNpc:true,
+    ShowTreasure:true,
+    ShowCollect:true,
+    ShowBox:true,
+    ShowType:true,
+    ShowDistence:true,
     ModEnabled: true,
     GodMode: true,
     HitMultiplier: false,
@@ -77,6 +86,7 @@ class ModManager {
     AttributeModifier:true,
     Uid: "100000000",
     Language: "en",
+
   };
 
   static GetGameDir() {
