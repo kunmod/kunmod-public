@@ -8,6 +8,7 @@ const puerts_1 = require("puerts"),
   ResourceSystem_1 = require("../Core/Resource/ResourceSystem"),
   GlobalData_1 = require("../Game/GlobalData"),
   GameProcedure_1 = require("./GameProcedure"),
+  ModelManager_1 = require("./Manager/ModelManager"),
   ModManager_1 = require("./Manager/ModManager"),
   ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage"),
   ModMethod_1 = require("./Manager/ModFuncs/ModMethod"),
@@ -41,7 +42,7 @@ class MainMenu {
     monster: new UE.LinearColor(1, 0, 0, 1), // red
     collection: new UE.LinearColor(1, 1, 0, 1), // yellow
     treasure: new UE.LinearColor(1, 0, 1, 1), // purple
-    animal: new UE.LinearColor(1, 0.7, 0, 1) // orange
+    animal: new UE.LinearColor(0, 1, 0, 1) // green
   }
 
   static IsKey(str) {
@@ -496,9 +497,7 @@ class MainMenu {
     Border.SetSize(new UE.Vector2D(SizeX, SizeY));
     Border.SetPosition(new UE.Vector2D(PosX, PosY));
     Border.SetAlignment(new UE.Vector2D(0.5, 0.5));
-    // Border.SetAnchors({ X: 0, Y: 0 }, { X: 0, Y: 0 });
-    // Border.SetOffsets(new UE.Margin(PosX - SizeX, PosY - SizeY, 2 * SizeX, 2 * SizeY));
-    Text.SetPosition(new UE.Vector2D(PosX, PosY));
+    Text.SetPosition(new UE.Vector2D(PosX, PosY-(SizeY/2)-15));
     Text.SetAlignment(new UE.Vector2D(0.5, 0.5));
     setTimeout(() => {
       MainMenu.ClearBorder();
@@ -551,22 +550,21 @@ class ESPmain {
   static RuntimeESP() {
     if (!ModUtils.isInGame) return;
 
-    EntityManager.PushEntityList();
-    const entitylist = EntityManager.ModsEntitys.EntityList;
-    const count = EntityManager.ModsEntitys.EntityCount;
+    const entitylist = ModelManager_1.ModelManager.CreatureModel.EntitiesSortedList;
+    const count = entitylist.length;
     for (let i = 0; i < count; i++) {
       let Actor, Location, Bounds, SphereRadius, BoxExtent, ScreenPos, Name, Color;
       let IsValid = true;
       if (entitylist[i].Entity.GetComponent(3)) {
         Actor = entitylist[i].Entity.GetComponent(3).Actor;
         Location = Actor.K2_GetActorLocation();
-        Bounds = Actor.CapsuleComponent.Bounds;
+        Bounds = Actor.Mesh.Bounds;
         SphereRadius = Bounds.SphereRadius;
         BoxExtent = Bounds.BoxExtent;
       } else {
-        Location = entitylist[i].Entity.GetComponent(0).GetLocation();
+        Location = entitylist[i].Entity.GetComponent(0).GetMovementInfo().Location;
         SphereRadius = 50;
-        BoxExtent = { X: 100, Y: 100 };
+        BoxExtent = { X: 100, Y: 100, Z: 100 };
       }
       if (EntityManager.isMonster(entitylist[i])) {
         Name = 'Monster'
@@ -584,11 +582,11 @@ class ESPmain {
       } else {
         IsValid = false
       }
-
+      let Extent = {X: ((BoxExtent.X + SphereRadius) * 1.5), Y: ((BoxExtent.Y + SphereRadius) * 1.5)};
       if (IsValid) {
         ScreenPos = ESPmain.ProjectWorldToScreen(Location);
         if (ScreenPos) {
-          MainMenu.ESPDrawBoxEntities((BoxExtent.X + SphereRadius), (BoxExtent.Y + SphereRadius), ScreenPos.X, ScreenPos.Y, Name, Color)
+          MainMenu.ESPDrawBoxEntities(Extent.X, Extent.Y, ScreenPos.X, ScreenPos.Y, Name, Color)
         }
       }
     }
