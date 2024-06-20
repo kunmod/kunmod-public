@@ -552,16 +552,32 @@ class ESPmain {
     for (let i = 0; i < count; i++) {
       let Actor, Location, Bounds, SphereRadius, BoxExtent, ScreenPos, Text="", Color;
       let IsValid = true;
+      let TopScreenPos,BottomScreenPos,LeftScreenPos, RightScreenPos;
+      let ScreenWidth,ScreenHeight;
+      let ShowBox;
       if (entitylist[i].Entity.GetComponent(3)) {
         Actor = entitylist[i].Entity.GetComponent(3).Actor;
         Location = Actor.K2_GetActorLocation();
         Bounds = Actor.CapsuleComponent.Bounds;
-        SphereRadius = Bounds.SphereRadius;
-        BoxExtent = Bounds.BoxExtent;
+       // SphereRadius = Bounds.SphereRadius;
+       // BoxExtent = Bounds.BoxExtent;       
+       let BoxMax={X:Bounds.Origin.X+Bounds.BoxExtent.X,Y:Bounds.Origin.Y+Bounds.BoxExtent.Y,Z:Bounds.Origin.Z+Bounds.BoxExtent.Z}
+       let BoxMin = {X:Bounds.Origin.X-Bounds.BoxExtent.X,Y:Bounds.Origin.Y-Bounds.BoxExtent.Y,Z:Bounds.Origin.Z-Bounds.BoxExtent.Z}
+        TopScreenPos=ESPmain.ProjectWorldToScreen(BoxMax);
+        BottomScreenPos=ESPmain.ProjectWorldToScreen(BoxMin);
+        let BoxLeft={X:BoxMin.X,Y:BoxMax.Y,Z:BoxMax.Z};
+        let BoxRight={X:BoxMax.X,Y:BoxMin.Y,Z:BoxMin.Z};
+        LeftScreenPos=ESPmain.ProjectWorldToScreen(BoxLeft);
+        RightScreenPos=ESPmain.ProjectWorldToScreen(BoxRight);
+        ScreenWidth =Math.abs(RightScreenPos.X-LeftScreenPos.X);
+        ScreenHeight =Math.abs(TopScreenPos.Y-BottomScreenPos.Y);
+        ShowBox={ X: ScreenWidth, Y: ScreenHeight };
+        
       } else {
         Location = entitylist[i].Entity.GetComponent(0).GetLocation();
         SphereRadius = 50;
         BoxExtent = { X: 100, Y: 100 };
+        ShowBox={ X: BoxExtent.X+SphereRadius, Y: BoxExtent.Y+SphereRadius };
       }
       let distance = ModUtils.Getdistance2Player(Location);
       distance = Math.floor(distance / 100);
@@ -602,8 +618,9 @@ class ESPmain {
 
       if (IsValid) {
         ScreenPos = ESPmain.ProjectWorldToScreen(Location);
+
         if (ScreenPos) {
-          MainMenu.ESPDrawBoxEntities((BoxExtent.X + SphereRadius), (BoxExtent.Y + SphereRadius), ScreenPos.X, ScreenPos.Y, Text, Color)
+          MainMenu.ESPDrawBoxEntities((ShowBox.X), (ShowBox.Y), ScreenPos.X, ScreenPos.Y, Text, Color)
         }
       }
     }
