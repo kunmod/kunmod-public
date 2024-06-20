@@ -87,7 +87,7 @@ class ModManager {
     ShowCollect:true,
     ShowBox:true,
     ShowType:false,
-    ShowDistence:true,
+    ShowDistance:true,
     ShowName:true,
 
   };
@@ -111,13 +111,20 @@ class ModManager {
   }
 
   static LoadConfig() {
-    var ref = (0, puerts_1.$ref)("");
+    let Config = puerts_1.$ref(undefined);
     UE.KuroStaticLibrary.LoadFileToString(
       ref,
       this.GetGameDir() + ConfigFileName
-    ),
-      (0, puerts_1.$unref)(ref);
-    this.Settings = JSON.parse(ref[0]);
+    );
+    puerts_1.$unref(result);
+    Config = Config[0];
+    // compare current settings
+    const Diff = Object.keys(ModManager.Settings).filter(x => !Object.keys(Config).includes(x));
+    // add new settings
+    for (const i in Diff) {
+      Config[Diff[i]] = ModManager.Settings[Diff[i]];
+    }
+    this.Settings = JSON.parse(Config);
   }
 
   static ModStart() {
