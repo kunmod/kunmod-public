@@ -600,7 +600,6 @@ class ESPmain {
        if (ModManager.Settings.ShowDistance) {           
          Text  += "|" + distance.toString() + " m";
        }
-      let Extent = {X: ((BoxExtent.X + SphereRadius) * 1.5), Y: ((BoxExtent.Y + SphereRadius) * 1.5)};
       if (IsValid) {
         ScreenPos = ESPmain.ProjectWorldToScreen(Location);
 
