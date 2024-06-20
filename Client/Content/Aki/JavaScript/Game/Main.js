@@ -478,7 +478,9 @@ class MainMenu {
     Border.SetSize(new UE.Vector2D(SizeX, SizeY));
     Border.SetPosition(new UE.Vector2D(PosX, PosY));
     Border.SetAlignment(new UE.Vector2D(0.5, 0.5));
-    Text.SetPosition(new UE.Vector2D(PosX, PosY-(SizeY/2)-15));
+    // set text position to left top
+    Text.SetSize(new UE.Vector2D(SizeX, SizeY));
+    Text.SetPosition(new UE.Vector2D(PosX, PosY-30));
     Text.SetAlignment(new UE.Vector2D(0.5, 0.5));
     setTimeout(() => {
       MainMenu.ClearBorder();
@@ -523,7 +525,6 @@ class ESPmain {
       }
       ViewportPosition = ViewportPosition[0];
       ScreenPosition = new UE.Vector2D(ViewportPosition.X, ViewportPosition.Y);
-      if (ScreenPosition.X == 0 && ScreenPosition.Y == 0) return null;
       return ScreenPosition;
     } catch (e) {
       return null;
@@ -532,52 +533,73 @@ class ESPmain {
   //esp测试test
   static RuntimeESP() {
     if (!ModUtils.isInGame()) return;
-    if (!ModManager.Settings.ESP)return; 
-    const entitylist = ModelManager_1.ModelManager.CreatureModel.EntitiesSortedList;
+    if (!ModManager.Settings.ESP) return;
+    const entitylist =
+      ModelManager_1.ModelManager.CreatureModel.EntitiesSortedList;
     const count = entitylist.length;
     for (let i = 0; i < count; i++) {
-      let Actor, Location, Bounds, SphereRadius, BoxExtent, ScreenPos, Text="", Color;
+      let Actor,
+        Location,
+        Bounds,
+        SphereRadius,
+        BoxExtent,
+        ScreenPos,
+        Text = "",
+        Color;
       let IsValid = true;
-      let TopScreenPos,BottomScreenPos,LeftScreenPos, RightScreenPos;
-      let ScreenWidth,ScreenHeight;
+      let TopScreenPos, BottomScreenPos, LeftScreenPos, RightScreenPos;
+      let ScreenWidth, ScreenHeight;
       let ShowBox;
       if (entitylist[i].Entity.GetComponent(3)) {
         Actor = entitylist[i].Entity.GetComponent(3).Actor;
         Location = Actor.K2_GetActorLocation();
         Bounds = Actor.CapsuleComponent.Bounds;
-       // SphereRadius = Bounds.SphereRadius;
-       // BoxExtent = Bounds.BoxExtent;       
-       let BoxMax={X:Bounds.Origin.X+Bounds.BoxExtent.X,Y:Bounds.Origin.Y+Bounds.BoxExtent.Y,Z:Bounds.Origin.Z+Bounds.BoxExtent.Z}
-       let BoxMin = {X:Bounds.Origin.X-Bounds.BoxExtent.X,Y:Bounds.Origin.Y-Bounds.BoxExtent.Y,Z:Bounds.Origin.Z-Bounds.BoxExtent.Z}
-        TopScreenPos=ESPmain.ProjectWorldToScreen(BoxMax);
-        BottomScreenPos=ESPmain.ProjectWorldToScreen(BoxMin);
-        let BoxLeft={X:BoxMin.X,Y:BoxMax.Y,Z:BoxMax.Z};
-        let BoxRight={X:BoxMax.X,Y:BoxMin.Y,Z:BoxMin.Z};
-        LeftScreenPos=ESPmain.ProjectWorldToScreen(BoxLeft);
-        RightScreenPos=ESPmain.ProjectWorldToScreen(BoxRight);
-        ScreenWidth =Math.abs(RightScreenPos.X-LeftScreenPos.X);
-        ScreenHeight =Math.abs(TopScreenPos.Y-BottomScreenPos.Y);
-        ShowBox={ X: ScreenWidth, Y: ScreenHeight };
-        
+        // SphereRadius = Bounds.SphereRadius;
+        // BoxExtent = Bounds.BoxExtent;
+        // ShowBox={ X: BoxExtent.X+SphereRadius, Y: BoxExtent.Y+SphereRadius };
       } else {
-        Location = entitylist[i].Entity.GetComponent(0).GetMovementInfo().Location;
-        SphereRadius = 50;
-        BoxExtent = { X: 100, Y: 100 };
-        ShowBox={ X: BoxExtent.X+SphereRadius, Y: BoxExtent.Y+SphereRadius };
+        Location =
+          entitylist[i].Entity.GetComponent(0).GetMovementInfo().Location;
+        Bounds = {
+          Origin: {X: 50, Y: 50, Z: 10},
+          BoxExtent: {X: 500, Y: 500, Z: 100},
+          SphereRadius: 50,
+        };
+        // ShowBox = {
+        //   X: BoxExtent.X + SphereRadius,
+        //   Y: BoxExtent.Y + SphereRadius,
+        // };
       }
-      let distance = ModUtils.Getdistance2Player(Location);
-      distance = Math.floor(distance / 100);
-      if(distance>ModManager.Settings.ESPRadius)
-        return;
+      let BoxMax = {
+        X: Bounds.Origin.X + Bounds.BoxExtent.X,
+        Y: Bounds.Origin.Y + Bounds.BoxExtent.Y,
+        Z: Bounds.Origin.Z + Bounds.BoxExtent.Z,
+      };
+      let BoxMin = {
+        X: Bounds.Origin.X - Bounds.BoxExtent.X,
+        Y: Bounds.Origin.Y - Bounds.BoxExtent.Y,
+        Z: Bounds.Origin.Z - Bounds.BoxExtent.Z,
+      };
+
+      TopScreenPos = ESPmain.ProjectWorldToScreen(BoxMax);
+      BottomScreenPos = ESPmain.ProjectWorldToScreen(BoxMin);
+      let BoxLeft = { X: BoxMin.X, Y: BoxMax.Y, Z: BoxMax.Z };
+      let BoxRight = { X: BoxMax.X, Y: BoxMin.Y, Z: BoxMin.Z };
+      LeftScreenPos = ESPmain.ProjectWorldToScreen(BoxLeft);
+      RightScreenPos = ESPmain.ProjectWorldToScreen(BoxRight);
+      ScreenWidth = Math.abs(RightScreenPos.X - LeftScreenPos.X);
+      ScreenHeight = Math.abs(TopScreenPos.Y - BottomScreenPos.Y);
+      ShowBox = { X: ScreenWidth, Y: ScreenHeight };
+
       if (EntityManager.isMonster(entitylist[i])) {
-       // Text = 'Monster';
+        // Text = 'Monster';
         Color = MainMenu.ESPColor.monster;
         IsValid = ModManager.Settings.ShowMonster;
       } else if (EntityManager.isAnimal(entitylist[i])) {
         //Text = 'Animal';
         Color = MainMenu.ESPColor.animal;
         IsValid = ModManager.Settings.ShowAnimal;
-      } else if (AutoInteract_1.AutoInteract.isNeedLoot(entitylist[i])) {
+      } else if (EntityManager.isCollection(entitylist[i])) {
         //Text = 'Collection'
         Color = MainMenu.ESPColor.collection;
         IsValid = ModManager.Settings.ShowCollect;
@@ -586,25 +608,47 @@ class ESPmain {
         Color = MainMenu.ESPColor.treasure;
         IsValid = ModManager.Settings.ShowTreasure;
       } else {
-        IsValid = false
+        IsValid = false;
       }
+      let TextShow = [];
+      let Blueprint = EntityManager.GetBlueprintType2(entitylist[i]);
+
+      let PlayerLocation = EntityManager_1.EntityManager.GetPlayerPos();
+      let Distance = UE.KismetMathLibrary.Vector_Distance(PlayerLocation, Location);
+      Distance = Math.floor(Distance / 100);
+      if (Distance > ModManager.Settings.ESPRadius) {
+        IsValid = false;
+      }
+
       if (ModManager.Settings.ShowType) {
-        let blueprint = EntityManager.GetBlueprintType2(entitylist[i]);       
-        Text  += Text+"|" + blueprint;
+        TextShow.push(Blueprint);
       }
+
       if (ModManager.Settings.ShowName) {
-        let blueprint = EntityManager.GetBlueprintType2(entitylist[i]);   
-        let Name =BluePrintType_1.BluePrintType.ModTr(blueprint);    
-        Text  +="|" + Name;
+        let Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
+        TextShow.push(Name);
       }
-       if (ModManager.Settings.ShowDistance) {           
-         Text  += "|" + distance.toString() + " m";
-       }
+
+      if (ModManager.Settings.ShowDistance) {
+        TextShow.push(Distance.toString() + "m");
+      }
+
+      if (TextShow.length > 0) {
+        Text = TextShow.join(" | ");
+      }
+
       if (IsValid) {
         ScreenPos = ESPmain.ProjectWorldToScreen(Location);
-
-        if (ScreenPos) {
-          MainMenu.ESPDrawBoxEntities((ShowBox.X), (ShowBox.Y), ScreenPos.X, ScreenPos.Y, Text, Color)
+        if (ScreenPos.X > 0 && ScreenPos.Y > 0) {
+          UE.KismetSystemLibrary.DrawDebugLine(GlobalData_1.GlobalData.World, PlayerLocation, Location, Color, 10, 1);
+          MainMenu.ESPDrawBoxEntities(
+            ShowBox.X,
+            ShowBox.Y,
+            ScreenPos.X,
+            ScreenPos.Y,
+            Text,
+            Color
+          );
         }
       }
     }
@@ -613,7 +657,7 @@ class ESPmain {
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-setInterval(ModEntityListener.Runtime, 3000);
+// setInterval(ModEntityListener.Runtime, 3000);
 setInterval(ESPmain.RuntimeESP, 10);
 main();
 

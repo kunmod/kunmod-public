@@ -123,7 +123,6 @@ class ModManager {
     if (Diff.length > 0) {
       // add new settings
       for (const i in Diff) {
-        puerts_1.logger.warn(ModManager.Settings[Diff[i]])
         Config[Diff[i]] = ModManager.Settings[Diff[i]];
       }
     }
