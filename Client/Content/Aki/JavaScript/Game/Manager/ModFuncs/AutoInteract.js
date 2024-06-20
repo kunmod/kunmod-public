@@ -22,6 +22,7 @@ class AutoInteract extends EntityManager {
     //"Collect001_2",//睡莲_组合
     "Collect002", //薜荔
     "Collect003", //鸢尾花
+    "Collect004",//秽炎菇
     "Collect005", //灯笼果
     "Collect006", //洋金凤
     "Collect007", //虞美人

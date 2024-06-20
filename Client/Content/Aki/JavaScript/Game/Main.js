@@ -10,9 +10,11 @@ const puerts_1 = require("puerts"),
   GameProcedure_1 = require("./GameProcedure"),
   ModManager_1 = require("./Manager/ModManager"),
   ModLanguage_1 = require("./Manager/ModFuncs/ModLanguage"),
+  BluePrintType_1 = require("./Manager/ModFuncs/BluePrintType"),
   ModMethod_1 = require("./Manager/ModFuncs/ModMethod"),
   EntityManager_1 = require("./Manager/ModFuncs/EntityManager"),
   AutoAbsorb_1 = require("./Manager/ModFuncs/AutoAbsorb"),
+  AutoInteract_1 = require("./Manager/ModFuncs/AutoInteract"),
   KillAura_1 = require("./Manager/ModFuncs/KillAura"),
   MobVacuum_1 = require("./Manager/ModFuncs/MobVacuum"),
   AutoChest_1 = require("./Manager/ModFuncs/AutoChest"),
@@ -541,14 +543,14 @@ class ESPmain {
   //esp测试test
   static RuntimeESP() {
     if (!ModUtils.isInGame()) return;
-    //if (!ModManager.Settings.ESP){return;} 
+    if (!ModManager.Settings.ESP)return; 
  
 
     EntityManager.PushEntityList();
     const entitylist = EntityManager.ModsEntitys.EntityList;
     const count = EntityManager.ModsEntitys.EntityCount;
     for (let i = 0; i < count; i++) {
-      let Actor, Location, Bounds, SphereRadius, BoxExtent, ScreenPos, Text, Color;
+      let Actor, Location, Bounds, SphereRadius, BoxExtent, ScreenPos, Text="", Color;
       let IsValid = true;
       if (entitylist[i].Entity.GetComponent(3)) {
         Actor = entitylist[i].Entity.GetComponent(3).Actor;
@@ -561,34 +563,42 @@ class ESPmain {
         SphereRadius = 50;
         BoxExtent = { X: 100, Y: 100 };
       }
+      let distance = ModUtils.Getdistance2Player(Location);
+      distance = Math.floor(distance / 100);
+      if(distance>ModManager.Settings.ESPRadius)
+        return;
+
       if (EntityManager.isMonster(entitylist[i])) {
-        Text = 'Monster';
+       // Text = 'Monster';
         Color = MainMenu.ESPColor.monster;
-        //IsValid = ModManager.Settings.ShowMonster;
+        IsValid = ModManager.Settings.ShowMonster;
       } else if (EntityManager.isAnimal(entitylist[i])) {
-        Text = 'Animal';
+        //Text = 'Animal';
         Color = MainMenu.ESPColor.animal;
-        //IsValid = ModManager.Settings.ShowAnimal;
-      } else if (EntityManager.isCollection(entitylist[i])) {
-        Text = 'Collection'
+        IsValid = ModManager.Settings.ShowAnimal;
+      } else if (AutoInteract_1.AutoInteract.isNeedLoot(entitylist[i])) {
+        //Text = 'Collection'
         Color = MainMenu.ESPColor.collection;
-        //IsValid = ModManager.Settings.ShowCollect;
+        IsValid = ModManager.Settings.ShowCollect;
       } else if (EntityManager.isTreasure(entitylist[i])) {
-        Text = 'Treasure';
+        //Text = 'Treasure';
         Color = MainMenu.ESPColor.treasure;
-        //IsValid = ModManager.Settings.ShowTreasure;
+        IsValid = ModManager.Settings.ShowTreasure;
       } else {
         IsValid = false
       }
-      //if (ModManager_1.ModManager.Settings.ShowType) {
-        let blueprint = EntityManager.GetBlueprintType2(entitylist[i]);
-        Text = Text+"|" + blueprint;
-     // }
-       //if (ModManager.Settings.ShowDistence) {
-         let distance = ModUtils.Getdistance2Player(Location);
-         distance = Math.floor(distance / 100);
-         Text = Text+ "|" + distance.toString() + " m";
-       //}
+      if (ModManager.Settings.ShowType) {
+        let blueprint = EntityManager.GetBlueprintType2(entitylist[i]);       
+        Text  += Text+"|" + blueprint;
+      }
+      if (ModManager.Settings.ShowName) {
+        let blueprint = EntityManager.GetBlueprintType2(entitylist[i]);   
+        let Name =BluePrintType_1.BluePrintType.ModTr(blueprint);    
+        Text  +="|" + Name;
+      }
+       if (ModManager.Settings.ShowDistence) {           
+         Text  += "|" + distance.toString() + " m";
+       }
 
       if (IsValid) {
         ScreenPos = ESPmain.ProjectWorldToScreen(Location);
