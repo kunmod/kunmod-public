@@ -446,16 +446,6 @@ class MainMenu {
     }
   }
 
-  static updateWorldSpeed() {
-    if (ModManager.Settings.WorldSpeed) {
-      ModMethod_1.ModMethod.SetWorldTimeDilation(
-        ModManager.Settings.WorldSpeedValue
-      );
-    } else {
-      ModMethod_1.ModMethod.SetWorldTimeDilation(1);
-    }
-  }
-
   static killAura() {
     return [ModLanguage.ModTr("Only Hatred"), ModLanguage.ModTr("Infinity")];
   }
@@ -543,8 +533,6 @@ class ESPmain {
   static RuntimeESP() {
     if (!ModUtils.isInGame()) return;
     if (!ModManager.Settings.ESP)return; 
- 
-
     const entitylist = ModelManager_1.ModelManager.CreatureModel.EntitiesSortedList;
     const count = entitylist.length;
     for (let i = 0; i < count; i++) {
@@ -565,7 +553,6 @@ class ESPmain {
       distance = Math.floor(distance / 100);
       if(distance>ModManager.Settings.ESPRadius)
         return;
-
       if (EntityManager.isMonster(entitylist[i])) {
        // Text = 'Monster';
         Color = MainMenu.ESPColor.monster;
@@ -594,7 +581,7 @@ class ESPmain {
         let Name =BluePrintType_1.BluePrintType.ModTr(blueprint);    
         Text  +="|" + Name;
       }
-       if (ModManager.Settings.ShowDistence) {           
+       if (ModManager.Settings.ShowDistance) {           
          Text  += "|" + distance.toString() + " m";
        }
       let Extent = {X: ((BoxExtent.X + SphereRadius) * 1.5), Y: ((BoxExtent.Y + SphereRadius) * 1.5)};
@@ -610,7 +597,6 @@ class ESPmain {
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-
 setInterval(ModEntityListener.Runtime, 3000);
 setInterval(ESPmain.RuntimeESP, 10);
 main();
