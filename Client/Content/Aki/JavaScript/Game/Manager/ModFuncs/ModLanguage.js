@@ -10,34 +10,23 @@ const puerts_1 = require("puerts"),
 
 
 class ModLanguage {
-  static CurrLang = ModManager_1.ModManager.Settings.Language;
-  static SetCurrLang(string) {
-    switch(string) {
-      case "English":
-        this.CurrLang = "en";
-        break;
-      case "简体中文":
-        this.CurrLang = "chs";
-        break;
-      case "日本語":
-        this.CurrLang = "ja";
-        break;
-      case "Español":
-        this.CurrLang = "es";
-        break;
-      case "Indonesia":
-        this.CurrLang = "id";
-        break;
-      case "Vietnamese":
-        this.CurrLang = "vi";
-        break;
-      default:
-        this.CurrLang = "en";
-    }
-    ModManager_1.ModManager.Settings.Language=this.CurrLang;
-  }
   static GetCurrLang() {
-    return this.CurrLang;
+    switch(ModManager_1.ModManager.Settings.Language) {
+      case "English":
+        return "en";
+      case "简体中文":
+        return "chs";
+      case "日本語":
+        return "ja";
+      case "Español":
+        return "es";
+      case "Indonesia":
+        return "id";
+      case "Vietnamese":
+        return "vi";
+      default:
+        return "en";
+    }
   }
 
   static Langs = ["English", "简体中文", "日本語", "Español", "Indonesia", "Vietnamese"];
@@ -713,7 +702,7 @@ class ModLanguage {
   static ModTr = (string) => {
     const Find = ModLanguage.translate.find(translate => translate.Text == string);
     if (Find) {
-      return Find[this.CurrLang] || Find.Text;
+      return Find[this.GetCurrLang()] || Find.Text;
     } else {
       return string; // return original string if no translation found
     }
