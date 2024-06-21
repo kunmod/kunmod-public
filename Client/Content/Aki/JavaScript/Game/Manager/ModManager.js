@@ -85,11 +85,12 @@ class ModManager {
     ShowNpc:false,
     ShowTreasure:true,
     ShowCollect:true,
+    ShowPuzzle:false,
+    ShowCasket:false,
     ShowBox:true,
     ShowType:false,
     ShowDistance:true,
     ShowName:true,
-
   };
 
   static GetGameDir() {
