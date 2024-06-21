@@ -134,9 +134,9 @@ class MainMenu {
         MainMenu.ESPCanvas.SetVisibility(0);
 
         try {
-          Menu.Yinlin.SetBrushFromTexture(
+          Menu.ModImage.SetBrushFromTexture(
             ResourceSystem_1.ResourceSystem.Load(
-              "/Game/Aki/Yinlin.Yinlin",
+              "/Game/Aki/Changli.Changli",
               UE.Texture
             )
           );
