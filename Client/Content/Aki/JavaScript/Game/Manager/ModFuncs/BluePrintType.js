@@ -365,14 +365,13 @@ class BluePrintType extends ModLanguage{
   ];
 
   static ModTr = (string) => {
-   
-    for (let i = 0; i < BluePrintType.translate.length; i++) {
-      if (BluePrintType.translate[i].BluePrint === string) {
-        return BluePrintType.translate[i][this.CurrLang] || BluePrintType.translate[i].en;
-      }
+    const Find = BluePrintType.translate.find(t => t.BluePrint == string);
+    if (Find) {
+      return Find[this.GetCurrLang()] || Find.BluePrint;
+    } else {
+      return string; // return original string if no translation found
     }
-    return string; // return original string if no translation found
-};
+  };
 }
 
 exports.BluePrintType = BluePrintType;
