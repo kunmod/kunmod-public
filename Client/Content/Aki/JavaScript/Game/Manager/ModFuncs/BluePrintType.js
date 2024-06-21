@@ -15,6 +15,42 @@ class BluePrintType extends ModLanguage{
  
   static translate = [
     {
+      BluePrint: "Treasure001",
+      en: "Basic Supply Chest",
+      chs: "Basic Supply Chest",
+      ja: "Basic Supply Chest",
+    },
+    {
+      BluePrint: "Treasure004",
+      en: "Standard Supply Chest",
+      chs: "Standard Supply Chest",
+      ja: "Standard Supply Chest",
+    },
+    {
+      BluePrint: "Treasure005",
+      en: "Blue Tidal Heritage",
+      chs: "Blue Tidal Heritage",
+      ja: "Blue Tidal Heritage",
+    },
+    {
+      BluePrint: "Treasure008",
+      en: "Purple Tidal Heritage",
+      chs: "Purple Tidal Heritage",
+      ja: "Purple Tidal Heritage",
+    },
+    {
+      BluePrint: "Treasure010",
+      en: "Suspicious Chest",
+      chs: "Suspicious Chest",
+      ja: "Suspicious Chest",
+    },
+    {
+      BluePrint: "Treasure014",
+      en: "Standard Supply Chest",
+      chs: "Standard Supply Chest",
+      ja: "Standard Supply Chest",
+    },
+    {
       BluePrint: "Collect001",
       en: "Collect001",
       chs: "睡莲",
