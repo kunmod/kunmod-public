@@ -25,7 +25,7 @@ class ModLanguage {
       case "Español":
         this.CurrLang = "es";
         break;
-      case "Indonesian":
+      case "Indonesia":
         this.CurrLang = "id";
         break;
       case "Vietnamese":
@@ -40,11 +40,11 @@ class ModLanguage {
     return this.CurrLang;
   }
 
-  static Langs = ["English", "简体中文", "日本語", "Español", "Indonesian", "Vietnamese"];
+  static Langs = ["English", "简体中文", "日本語", "Español", "Indonesia", "Vietnamese"];
 
   static translate = [
     {
-      Text: "CustomTp[Ins]",
+      Text: "CUSTOM_TP_INS",
       en:  "CustomTp[Ins]",
       chs: "自定义传送[Ins]",
       ja: "てきとうな瞬間移動[Ins]",
@@ -54,7 +54,7 @@ class ModLanguage {
     },
 
     {
-      Text: " : <color=green>ON</color> |",
+      Text: "COLOR_ON",
       en:  " : <color=green>ON</color> |",
       chs: " : <color=green>开启</color> |",
       ja: " : <color=green>オン</color>",
@@ -63,7 +63,7 @@ class ModLanguage {
       vi: " : <color=green>BẬT</color> |",
     },
     {
-      Text: " : <color=red>OFF</color> |",
+      Text: "COLOR_OFF",
       en:  " : <color=red>OFF</color> |",
       chs: " : <color=red>关闭</color> |",
       ja: "<color=red>オフ</color>",
@@ -72,7 +72,7 @@ class ModLanguage {
       vi: " : <color=red>TẮT</color> |",
     },
     {
-      Text: "ON",
+      Text: "TEXT_ON",
       en:  "ON",
       chs: "开启",
       ja: "オン",
@@ -81,7 +81,7 @@ class ModLanguage {
       vi: "Bật",
     },
     {
-      Text: "OFF",
+      Text: "TEXT_OFF",
       en:  "OFF",
       chs: "关闭",
       ja: "オフ",
@@ -90,7 +90,7 @@ class ModLanguage {
       vi: "TẮT",
     },
     {
-      Text: "God Mode [F5]",
+      Text: "TEXT_GOD_MODE",
       en:  "God Mode [F5]",
       chs: "无敌模式[F5]",
       ja: "神モードやで[F5]",
@@ -99,7 +99,7 @@ class ModLanguage {
       vi: "Bất Tử [F5]",
     },
     {
-      Text: "Hit Multiplier [F6]",
+      Text: "TEXT_HIT_MULTIPLIER",
       en:  "Hit Multiplier [F6]",
       chs: "多倍攻击[F6]",
       ja: "ヒット倍率[F6]",
@@ -108,7 +108,7 @@ class ModLanguage {
       vi: "Số Lượng Đòn Đánh [F6]",
     },
     {
-      Text: "Auto Pick Treasure [F7]",
+      Text: "TEXT_AUTO_PICK_TREASURE",
       en:  "Auto Pick Treasure [F7]",
       chs: "拾取宝箱[F7]",
       ja: "自動で宝を拾うんや[F7]",
@@ -117,7 +117,7 @@ class ModLanguage {
       vi: "Tự Động Nhặt Phần Thưởng[F7]",
     },
     {
-      Text: "Auto Absorb [F8]",
+      Text: "TEXT_AUTO_ABSORB",
       en:  "Auto Absorb [F8]",
       chs: "自动吸收[F8]",
       ja: "自動で吸収すんや[F8]",
@@ -126,7 +126,7 @@ class ModLanguage {
       vi: "Tự Động Hấp Thụ Echo[F8]",
     },
     {
-      Text: "Kill Aura [F9]",
+      Text: "TEXT_KILL_AURA",
       en:  "Kill Aura [F9]",
       chs: "杀戮光环[F9]",
       ja: "キルオーラやで[F9]",
@@ -135,7 +135,7 @@ class ModLanguage {
       vi: "Tàn Sát [F9]",
     },
     {
-      Text: "Perception Range [F10]",
+      Text: "TEXT_PERCEPTION_RANGE",
       en:  "Perception Range [F10]",
       chs: "感知范围[F10]",
       ja: "感知範囲やで[F10]",
@@ -144,7 +144,7 @@ class ModLanguage {
       vi: "Tương Tác Từ Xa [F10]",
     },
     {
-      Text: "No Cooldown [F11]",
+      Text: "TEXT_NO_COOLDOWN",
       en:  "No Cooldown [F11]",
       chs: "无冷却[F11]",
       ja: "クールダウンなしやで[F11]",
@@ -153,7 +153,7 @@ class ModLanguage {
       vi: "Không Thời Gian Hồi Chiêu [F11]",
     },
     {
-      Text: "Player Speed [F12]",
+      Text: "TEXT_PLAYER_SPEED",
       en:  "Player Speed [F12]",
       chs: "玩家速度[F12]",
       ja: "プレイヤーのスピードやで[F12]",
@@ -162,7 +162,7 @@ class ModLanguage {
       vi: "Tốc độ nhân vật [F12]",
     },
     {
-      Text: "Custom Teleport [INS]",
+      Text: "TEXT_CUSTOM_TP",
       en:  "Custom Teleport [INS]",
       chs: "自定义传送[INS]",
       ja: "てきとうな瞬間移動[INS]",
@@ -171,7 +171,7 @@ class ModLanguage {
       vi: "Dịch Chuyển Tùy Chỉnh [INS]",
     },
     {
-      Text: "Auto Loot [Num0]",
+      Text: "TEXT_AUTO_LOOT",
       en:  "Auto Loot [Num0]",
       chs: "自动拾取[Num0]",
       ja: "自動あっぷる[Num0]",
@@ -180,7 +180,7 @@ class ModLanguage {
       vi: "Tự Động Nhặt [Num0]",
     },
     {
-      Text: "Custom Teleport State [Insert]:",
+      Text: "TEXT_CUSTOM_TP_STATE",
       en:  "Custom Teleport State [Insert]:",
       chs: "自定义传送状态[Insert]:",
       ja: "カスタムテレポートの状態[Insert]",
@@ -189,7 +189,7 @@ class ModLanguage {
       vi: "Trạng thái dịch chuyển [Insert]:",
     },
     {
-      Text: " Show [Del]",
+      Text: "TEXT_SHOW_DEL",
       en:  " Show [Del]",
       chs: " 显示[Del]",
       ja: " ショー[Del]",
@@ -198,7 +198,7 @@ class ModLanguage {
       vi: " Hiện [Del]",
     },
     {
-      Text: "Current File:",
+      Text: "TEXT_CURR_FILE",
       en:  "Current File:",
       chs: "当前文件:",
       ja: "今のファイル",
@@ -207,7 +207,7 @@ class ModLanguage {
       vi: "File Hiện Tại:",
     },
     {
-      Text: "| PreviousFile[PageUp]:",
+      Text: "TEXT_PREV_FILE",
       en:  "| PreviousFile[PageUp]:",
       chs: "| 上一个文件[PageUp]:",
       ja: "| 前のファイル[PageUp]",
@@ -216,7 +216,7 @@ class ModLanguage {
       vi: "| FileTrước[PageUp]:",
     },
     {
-      Text: " | NextFile[PageDown]:",
+      Text: "TEXT_NEXT_FILE",
       en:  " | NextFile[PageDown]:",
       chs: " | 下一个文件[PageDown]:",
       ja: " | つぎのファイル[PageDown]",
@@ -225,7 +225,7 @@ class ModLanguage {
       vi: " | FileKế[PageDown]:",
     },
     {
-      Text: " | PreviousPos[Up]:",
+      Text: "TEXT_PREV_POS",
       en:  " | PreviousPos[Up]:",
       chs: " | 上一个位置[Up]:",
       ja: " |前のポジション[Up]",
@@ -234,7 +234,7 @@ class ModLanguage {
       vi: " | VịTríTrước[Up]:",
     },
     {
-      Text: " | NextPos[Down]:",
+      Text: "TEXT_NEXT_POS",
       en:  " | NextPos[Down]:",
       chs: " | 下一个位置[Down]:",
       ja: " |つぎのポジション[Down]",
@@ -243,7 +243,7 @@ class ModLanguage {
       vi: " | VịTríKế[Down]:",
     },
     {
-      Text: "Anti Dither",
+      Text: "TEXT_ANTI_DITHER",
       en:  "Anti Dither",
       chs: "反虚化",
       ja: "アンチディザ",
@@ -252,34 +252,7 @@ class ModLanguage {
       vi: "Chống làm mờ nhân vật",
     },
     {
-      Text: "Anti Dither",
-      en:  "Anti Dither",
-      chs: "反虚化",
-      ja: "アンチディザ",
-      es: "Anti Dither",
-      id: "Anti Dither",
-      vi: "Chống làm mờ nhân vật",
-    },
-    {
-      Text: "Please enter hit count",
-      en:  "Please enter hit count",
-      chs: "请输入攻击次数",
-      ja: "ヒット数入れてや",
-      es: "Por favor, introduzca el número de golpes",
-      id: "Masukkan hit count",
-      vi: "Vui lòng nhập số lượng",
-    },
-    {
-      Text: "HitMultiplier:Please enter hit count",
-      en:  "HitMultiplier:Please enter hit count",
-      chs: "倍数攻击：请输入攻击次数",
-      ja: "ヒットの倍率や：ヒット数入れてや",
-      es: "GolpeMultiplicador:Por favor, introduzca el número de golpes",
-      id: "PengaliHit:Masukkan hit count",
-      vi: "SốLượngĐònĐánh:Vui lòng nhập số lượng",
-    },
-    {
-      Text: " | SetDelay[Left]: ",
+      Text: "TEXT_SET_DELAY_LEFT",
       en:  " | SetDelay[Left]: ",
       chs: " | 延迟[Left]: ",
       ja: " | SetDelay[Left]: ",
@@ -288,7 +261,7 @@ class ModLanguage {
       vi: " | ĐặtĐộTrễ[Left]: ",
     },
     {
-      Text: " | Select[Right]: ",
+      Text: "TEXT_SELECT_RIGHT",
       en:  " | Select[Right]: ",
       chs: " | 选择pos[Right]: ",
       ja: " | Select[Right]: ",
@@ -297,7 +270,7 @@ class ModLanguage {
       vi: " | Chọn[Right]: ",
     },
     {
-      Text: "is the last file",
+      Text: "TEXT_IS_LAST_FILE",
       en:  "is the last file",
       chs: "这是最后一个文件",
       ja: "is the last file",
@@ -306,7 +279,7 @@ class ModLanguage {
       vi: "là file cuối cùng",
     },
     {
-      Text: "is the first file",
+      Text: "TEXT_IS_FIRST_FILE",
       en:  "is the first file",
       chs: "这是第一个文件",
       ja: "is the first file",
@@ -315,7 +288,7 @@ class ModLanguage {
       vi: "là file đầu tiên",
     },
     {
-      Text: "is the last pos",
+      Text: "TEXT_IS_LAST_POS",
       en:  "is the last pos",
       chs: "这是最后一个点位",
       ja: "is the last pos",
@@ -324,7 +297,7 @@ class ModLanguage {
       vi: "là vị trí cuối cùng",
     },
     {
-      Text: "is the first pos",
+      Text: "TEXT_IS_FIRST_POS",
       en:  "is the first pos",
       chs: "这是第一个点位",
       ja: "is the first pos",
@@ -333,7 +306,7 @@ class ModLanguage {
       vi: "là vị trí đầu tiên",
     },
     {
-      Text: "CustomTp:AutoMode:Set Delay",
+      Text: "TEXT_CUSTOM_TP_AUTO_MODE_SET_DELAY",
       en:  "CustomTp:AutoMode:Set Delay",
       chs: "自定义传送:自动模式:设置延迟",
       ja: "CustomTp:オートモード:遅延を設定",
@@ -342,7 +315,7 @@ class ModLanguage {
       vi: "DịchChuyểnTùyChỉnh:TựĐộng:Đặt độ trễ",
     },
     {
-      Text: "Please enter Delay(s)",
+      Text: "TEXT_ENTER_DELAY",
       en:  "Please enter Delay(s)",
       chs: "请输入延迟(秒)",
       ja: "Please enter Delay(s)",
@@ -351,16 +324,7 @@ class ModLanguage {
       vi: "Hãy nhập độ trễ(s)",
     },
     {
-      Text: "Please enter Delay(s)",
-      en:  "Please enter Delay(s)",
-      chs: "请输入延迟(秒)",
-      ja: "遅延（秒）を入力してください",
-      es: "Por favor, introduzca el retraso(s)",
-      id: "Silakan masukkan Jeda(detik)",
-      vi: "Hãy nhập độ trễ(s)",
-    },
-    {
-      Text: "seconds",
+      Text: "TEXT_SECONDS",
       en:  "seconds",
       chs: "秒",
       ja: "seconds",
@@ -369,7 +333,7 @@ class ModLanguage {
       vi: "giây",
     },
     {
-      Text: "Go",
+      Text: "TEXT_GO",
       en:  "Go",
       chs: "出发",
       ja: "Go",
@@ -378,7 +342,7 @@ class ModLanguage {
       vi: "Đi",
     },
     {
-      Text: "AutoMode",
+      Text: "TEXT_AUTO_MODE",
       en:  "AutoMode",
       chs: "自动模式",
       ja: "オートモード",
@@ -387,7 +351,7 @@ class ModLanguage {
       vi: "TựĐộng",
     },
     {
-      Text: "CustomTp:CurrPos:Select",
+      Text: "TEXT_CUSTOM_TP_CURR_POS_SELECT",
       en:  "CustomTp:CurrPos:Select",
       chs: "自定义传送:当前序号:选择",
       ja: "CustomTp:現在の位置:選択",
@@ -396,7 +360,7 @@ class ModLanguage {
       vi: "DịchChuyểnTùyChỉnh:VịTríHiệnTại:Chọn",
     },
     {
-      Text: "Please enter CurreNum",
+      Text: "TEXT_ENTER_CURR_NUM",
       en:  "Please enter CurreNum",
       chs: "请输入当前序号",
       ja: "現在の番号を入力してください",
@@ -405,7 +369,7 @@ class ModLanguage {
       vi: "Xin vui lòng nhập vị tri",
     },
     {
-      Text: " | AutoMode[End]: ",
+      Text: "TEXT_AUTO_MODE_END",
       en:  " | AutoMode[End]: ",
       chs: " | 自动模式[End]: ",
       ja: " | オートモード[End]: ",
@@ -414,7 +378,7 @@ class ModLanguage {
       vi: " | TựĐộng[End]: ",
     },
     {
-      Text: "Infinite Stamina",
+      Text: "TEXT_INFINITE_STAMINA",
       en:  "Infinite Stamina",
       chs: "无限体力",
       ja: "無限のスタミナ",
@@ -423,7 +387,7 @@ class ModLanguage {
       vi: "Vô hạn năng lượng",
     },
     {
-      Text: "Custom UID",
+      Text: "TEXT_CUSTOM_UID",
       en:  "Custom UID",
       chs: "自定义UID",
       ja: "カスタムUID",
@@ -432,7 +396,7 @@ class ModLanguage {
       vi: "UID Tùy Chỉnh",
     },
     {
-      Text: "Player",
+      Text: "HEADING_PLAYER",
       en:  "Player",
       chs: "玩家",
       ja: "プレーヤー",
@@ -441,7 +405,7 @@ class ModLanguage {
       vi: "Người chơi",
     },
     {
-      Text: "World",
+      Text: "HEADING_WORLD",
       en:  "World",
       chs: "世界",
       ja: "世界",
@@ -450,7 +414,7 @@ class ModLanguage {
       vi: "Thế giới",
     },
     {
-      Text: "UI",
+      Text: "HEADING_DISPLAY",
       en:  "UI",
       chs: "用户界面",
       ja: "インターフェース",
@@ -459,7 +423,7 @@ class ModLanguage {
       vi: "Giao diện",
     },
     {
-      Text: "Hide HUD",
+      Text: "TEXT_HIDE_HUD",
       en:  "Hide HUD",
       chs: "隐藏HUD",
       ja: "HUDを非表示",
@@ -468,7 +432,7 @@ class ModLanguage {
       vi: "Ẩn HUB",
     },
     {
-      Text: "Hide Damage Text",
+      Text: "TEXT_HIDE_DAMAGE_TEXT",
       en:  "Hide Damage Text",
       chs: "隐藏伤害文字",
       ja: "ダメージテキストを非表示",
@@ -477,7 +441,7 @@ class ModLanguage {
       vi: "Không hiện sát thương",
     },
     {
-      Text: "Mark Teleport [T]",
+      Text: "TEXT_MARK_TELEPORT",
       en:  "Mark Teleport [T]",
       chs: "标记传送[T]",
       ja: "マークテレポート[T]",
@@ -486,7 +450,7 @@ class ModLanguage {
       vi: "Đánh dấu để dịch chuyển [T]",
     },
     {
-      Text: "Only Hatred",
+      Text: "TEXT_ONLY_HATE",
       en:  "Only Hatred",
       chs: "只有仇恨",
       ja: "憎しみだけ",
@@ -495,7 +459,7 @@ class ModLanguage {
       vi: "Chỉ xung quanh",
     },
     {
-      Text: "Infinity",
+      Text: "TEXT_INFINITY",
       en:  "Infinity",
       chs: "无限",
       ja: "無限",
@@ -504,7 +468,7 @@ class ModLanguage {
       vi: "Vô hạn",
     },
     {
-      Text: "Teleport",
+      Text: "HEADING_TELEPORT",
       en:  "Teleport",
       chs: "传送",
       ja: "テレポート",
@@ -513,7 +477,7 @@ class ModLanguage {
       vi: "Dịch chuyển",
     },
     {
-      Text: "Debug",
+      Text: "HEADING_DEBUG",
       en:  "Debug",
       chs: "调试",
       ja: "デバッグ",
@@ -522,7 +486,7 @@ class ModLanguage {
       vi: "Gỡ lỗi",
     },
     {
-      Text: "Debug Entity",
+      Text: "TEXT_DEBUG_ENTITY",
       en:  "Debug Entity",
       chs: "调试实体",
       ja: "デバッグエンティティ",
@@ -531,7 +495,7 @@ class ModLanguage {
       vi: "Gỡ lỗi Entity",
     },
     {
-      Text: "Auto Destroy",
+      Text: "TEXT_AUTO_DESTROY",
       en:  "Auto Destroy",
       chs: "自动销毁",
       ja: "自動破壊",
@@ -541,7 +505,7 @@ class ModLanguage {
     },
 
     {
-      Text: "This hack is completely free, if you paid to get this, you have been scammed.",
+      Text: "TEXT_DISCLAIMER",
       en:  "This hack is completely free, if you paid to get this, you have been scammed.",
       chs: "此黑客程序完全免费，如果您付费获得此程序，则您被骗了。",
       ja: "このハックは完全に無料です。これを入手するためにお金を払った場合は、詐欺に遭ったことになります。",
@@ -550,7 +514,7 @@ class ModLanguage {
       vi: "Bản hack này hoàn toàn miễn phí, nếu bạn đã mua nó từ ai, bạn đã bị lừa đảo.",
     },
     {
-      Text: "GUI Designer: n0bu",
+      Text: "TEXT_DESIGNER",
       en:  "GUI Designer: n0bu",
       chs: "GUI设计师： n0bu",
       ja: "GUI 作成者 n0bu",
@@ -559,7 +523,7 @@ class ModLanguage {
       vi: "Thiết kế GUI: n0bu",
     },
     {
-      Text: "New Kill Aura",
+      Text: "TEXT_NEW_KILL_AURA",
       en:  "New Kill Aura",
       chs: "新杀戮光环",
       ja: "新しいキルオーラ",
@@ -568,7 +532,7 @@ class ModLanguage {
       vi: "Tàn Sát Phiên Bản Mới",
     },
     {
-      Text: "World Speed",
+      Text: "TEXT_WORLD_SPEED",
       en:  "World Speed",
       chs: "世界速度",
       ja: "世界スピード",
@@ -577,19 +541,19 @@ class ModLanguage {
       vi: "Tốc Độ Thế Giới",
     },
     {
-      Text: "Kill Animal",
+      Text: "TEXT_KILL_ANIMAL",
       en:  "Kill Animal",
       chs: "杀死动物",
       ja: "動物を殺す",
     },
     {
-      Text: "Save Config",
+      Text: "TEXT_SAVE_CONFIG",
       en:  "Save Config",
       chs: "保存配置",
       ja: "設定を保存",
     },
     {
-      Text: "Auto Destroy [Num1]",
+      Text: "TEXT_AUTO_DESTROY",
       en:  "Auto Destroy [Num1]",
       chs: "自动销毁[Num1]",
       ja: "Auto Destroy [Num1]",
@@ -597,14 +561,12 @@ class ModLanguage {
   ];
 
   static ModTr = (string) => {
-    for (let i = 0; i < ModLanguage.translate.length; i++) {
-      if (ModLanguage.translate[i].en === string) {
-        return (
-          ModLanguage.translate[i][this.CurrLang] || ModLanguage.translate[i].en
-        );
-      }
+    const Find = ModLanguage.translate.find(translate => translate.Text == string);
+    if (Find) {
+      return Find[this.CurrLang] || Find.Text;
+    } else {
+      return string; // return original string if no translation found
     }
-    return string; // return original string if no translation found
   };
 }
 

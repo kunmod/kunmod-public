@@ -77,7 +77,7 @@ class ModManager {
     VacuumCollect: false,
     AttributeModifier:true,
     Uid: "100000000",
-    Language: "en",
+    Language: "English",
     ESP:true,
     ESPRadius:300,
     ShowMonster:true,
