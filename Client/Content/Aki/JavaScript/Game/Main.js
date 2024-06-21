@@ -308,7 +308,64 @@ class MainMenu {
             value = value.toFixed(3);
             Menu.WorldSpeedValue.SetText(value);
             ModManager.Settings.WorldSpeedValue = value;
-            MainMenu.KunLog("World Speed " + value);
+            MainMenu.KunLog("World Speed: " + value);
+          });
+
+          Menu.ESPCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ESP = isChecked;
+            MainMenu.KunLog("ESP: " + isChecked);
+          });
+
+          Menu.ESPShowNameCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowName = isChecked;
+            MainMenu.KunLog("ESP Show Name: " + isChecked);
+          });
+
+          Menu.ESPShowDistanceCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowDistance = isChecked;
+            MainMenu.KunLog("ESP Show Distance: " + isChecked);
+          });
+
+          Menu.ESPShowBoxCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowBox = isChecked;
+            MainMenu.KunLog("ESP Show Box: " + isChecked);
+          });
+
+          Menu.ESPMonsterCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowMonster = isChecked;
+            MainMenu.KunLog("ESP Monster: " + isChecked);
+          });
+
+          Menu.ESPCollectionCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowCollect = isChecked;
+            MainMenu.KunLog("ESP Collection: " + isChecked);
+          });
+
+          Menu.ESPTreasureCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowTreasure = isChecked;
+            MainMenu.KunLog("ESP Treasure: " + isChecked);
+          });
+
+          Menu.ESPAnimalCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowAnimal = isChecked;
+            MainMenu.KunLog("ESP Animal: " + isChecked);
+          });
+
+          Menu.ESPPuzzleCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowPuzzle = isChecked;
+            MainMenu.KunLog("ESP Puzzle: " + isChecked);
+          });
+
+          Menu.ESPCasketCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowCasket = isChecked;
+            MainMenu.KunLog("ESP Sonance Casket: " + isChecked);
+          });
+
+          Menu.ESPRadiusSlider.OnValueChanged.Add((value) => {
+            value = value.toFixed(3);
+            Menu.ESPRadiusValue.SetText(value);
+            ModManager.Settings.ESPRadius = value;
+            MainMenu.KunLog("ESP Radius: " + value);
           });
 
           Menu.KillAuraValue.SetSelectedIndex(
@@ -320,11 +377,13 @@ class MainMenu {
           Menu.HitMultiplierSlider.SetValue(ModManager.Settings.Hitcount);
           Menu.NewKillAuraSlider.SetValue(ModManager.Settings.killAuraRadius);
           Menu.WorldSpeedSlider.SetValue(ModManager.Settings.WorldSpeedValue);
+          Menu.ESPRadiusSlider.SetValue(ModManager.Settings.ESPRadius);
 
           Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
           Menu.HitMultiplierValue.SetText(ModManager.Settings.Hitcount);
           Menu.NewKillAuraValue.SetText(ModManager.Settings.killAuraRadius);
           Menu.WorldSpeedValue.SetText(ModManager.Settings.WorldSpeedValue);
+          Menu.ESPRadiusValue.SetText(ModManager.Settings.ESPRadius);
         } catch (e) {
           MainMenu.KunLog(e);
         }
@@ -340,40 +399,63 @@ class MainMenu {
 
   static getTranslation() {
     if (Menu) {
+      Menu.PlayerSwitchText.SetText(ModLanguage.ModTr("Player"));
+      Menu.WorldSwitchText.SetText(ModLanguage.ModTr("World"));
+      Menu.ESPSwitchText.SetText(ModLanguage.ModTr("ESP"));
+      Menu.UISwitchText.SetText(ModLanguage.ModTr("UI"));
+      Menu.DebugSwitchText.SetText(ModLanguage.ModTr("Debug"));
+
       Menu.HeadingPlayer.SetText(ModLanguage.ModTr("Player"));
       Menu.HeadingWorld.SetText(ModLanguage.ModTr("World"));
+      Menu.HeadingESP.SetText(ModLanguage.ModTr("ESP"));
+      Menu.HeadingESPFilter.SetText(ModLanguage.ModTr("Filter"));
       Menu.HeadingUI.SetText(ModLanguage.ModTr("UI"));
       Menu.HeadingTeleport.SetText(ModLanguage.ModTr("Teleport"));
       Menu.HeadingDebug.SetText(ModLanguage.ModTr("Debug"));
+
       Menu.SaveConfigText.SetText(ModLanguage.ModTr("Save Config"));
 
+      // player
       Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
-      Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
-      Menu.AutoPickTreasureText.SetText(
-        ModLanguage.ModTr("Auto Pick Treasure [F7]")
-      );
-
-      Menu.HitMultiplierText.SetText(ModLanguage.ModTr("Hit Multiplier [F6]"));
-      Menu.KillAuraText.SetText(ModLanguage.ModTr("Kill Aura [F9]"));
-      Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
-      Menu.InfiniteStaminaText.SetText(ModLanguage.ModTr("Infinite Stamina"));
-      Menu.AutoLootText.SetText(ModLanguage.ModTr("Auto Loot [Num0]"));
-      Menu.KillAnimalText.SetText(ModLanguage.ModTr("Kill Animal"));
-      Menu.PerceptionRangeText.SetText(
-        ModLanguage.ModTr("Perception Range [F10]")
-      );
       Menu.PlayerSpeedText.SetText(ModLanguage.ModTr("Player Speed [F12]"));
+      Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
+      Menu.HitMultiplierText.SetText(ModLanguage.ModTr("Hit Multiplier [F6]"));
+      Menu.InfiniteStaminaText.SetText(ModLanguage.ModTr("Infinite Stamina"));
+      Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
+
+      // teleport
+      Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
+      Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
+
+      // world
+      Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
+      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("Auto Absorb [F8]"));
+      Menu.AutoPickTreasureText.SetText(ModLanguage.ModTr("Auto Pick Treasure [F7]"));
+      Menu.KillAuraText.SetText(ModLanguage.ModTr("Kill Aura [F9]"));
+      Menu.PerceptionRangeText.SetText(ModLanguage.ModTr("Perception Range [F10]"));
+      Menu.AutoLootText.SetText(ModLanguage.ModTr("Auto Loot [Num0]"));
+      Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy [Num1]"));
+      Menu.KillAnimalText.SetText(ModLanguage.ModTr("Kill Animal"));
+      Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
+
+      // esp
+      Menu.ESPText.SetText(ModLanguage.ModTr("ESP"));
+      Menu.ESPShowNameText.SetText(ModLanguage.ModTr("Show Name"));
+      Menu.ESPShowDistanceText.SetText(ModLanguage.ModTr("Show Distance"));
+      Menu.ESPShowBoxText.SetText(ModLanguage.ModTr("Show Box"));
+      Menu.ESPMonsterText.SetText(ModLanguage.ModTr("Monster"));
+      Menu.ESPCollectionText.SetText(ModLanguage.ModTr("Collection"));
+      Menu.ESPTreasureText.SetText(ModLanguage.ModTr("Treasure"));
+      Menu.ESPAnimalText.SetText(ModLanguage.ModTr("Animal"));
+      Menu.ESPPuzzleText.SetText(ModLanguage.ModTr("Puzzle"));
+      Menu.ESPCasketText.SetText(ModLanguage.ModTr("Sonance Casket"));
+
+      // ui
       Menu.CustomUidText.SetText(ModLanguage.ModTr("Custom UID"));
       Menu.HideHUDText.SetText(ModLanguage.ModTr("Hide HUD"));
       Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
-      Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
-      Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
-      Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
 
       Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
-      Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy [Num1]"));
-      Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
-      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("Auto Absorb [F8]"));
 
       Menu.Designer.SetText(ModLanguage.ModTr("GUI Designer: n0bu"));
       Menu.DisclaimerText.SetText(this.Getfreetip());
@@ -398,33 +480,33 @@ class MainMenu {
     if (Menu) {
       Menu.GodModeCheck.SetIsChecked(ModManager.Settings.GodMode);
       Menu.NoCDCheck.SetIsChecked(ModManager.Settings.NoCD);
-      Menu.AutoPickTreasureCheck.SetIsChecked(
-        ModManager.Settings.AutoPickTreasure
-      );
-
+      Menu.AutoPickTreasureCheck.SetIsChecked(ModManager.Settings.AutoPickTreasure);
       Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
       Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
-      Menu.InfiniteStaminaCheck.SetIsChecked(
-        ModManager.Settings.InfiniteStamina
-      );
+      Menu.InfiniteStaminaCheck.SetIsChecked(ModManager.Settings.InfiniteStamina);
       Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
       Menu.KillAnimalCheck.SetIsChecked(ModManager.Settings.KillAnimal);
-      Menu.PerceptionRangeCheck.SetIsChecked(
-        ModManager.Settings.PerceptionRange
-      );
+      Menu.PerceptionRangeCheck.SetIsChecked(ModManager.Settings.PerceptionRange);
       Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
       Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
       Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
-
       Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
-
       Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
       Menu.AutoDestroyCheck.SetIsChecked(ModManager.Settings.AutoDestroy);
       Menu.NewAutoAbsorbCheck.SetIsChecked(ModManager.Settings.AutoAbsorbnew);
       Menu.NewKillAuraCheck.SetIsChecked(ModManager.Settings.killAuranew);
-
       Menu.WorldSpeedCheck.SetIsChecked(ModManager.Settings.WorldSpeed);
+      Menu.ESPCheck.SetIsChecked(ModManager.Settings.ESP);
+      Menu.ESPShowNameCheck.SetIsChecked(ModManager.Settings.ShowName);
+      Menu.ESPShowDistanceCheck.SetIsChecked(ModManager.Settings.ShowDistance);
+      Menu.ESPShowBoxCheck.SetIsChecked(ModManager.Settings.ShowBox);
+      Menu.ESPMonsterCheck.SetIsChecked(ModManager.Settings.ShowMonster);
+      Menu.ESPCollectionCheck.SetIsChecked(ModManager.Settings.ShowCollect);
+      Menu.ESPTreasureCheck.SetIsChecked(ModManager.Settings.ShowTreasure);
+      Menu.ESPAnimalCheck.SetIsChecked(ModManager.Settings.ShowAnimal);
+      Menu.ESPPuzzleCheck.SetIsChecked(ModManager.Settings.ShowPuzzle);
+      Menu.ESPCasketCheck.SetIsChecked(ModManager.Settings.ShowCasket);
     }
   }
 
@@ -481,7 +563,7 @@ class MainMenu {
     // set text position to left top
     Text.SetSize(new UE.Vector2D(SizeX, SizeY));
     Text.SetPosition(new UE.Vector2D(PosX, PosY-30));
-    Text.SetAlignment(new UE.Vector2D(0.5, 0.5));
+    Text.SetAlignment(new UE.Vector2D(0.5, 0.6));
     setTimeout(() => {
       MainMenu.ClearBorder();
     }, 10)
@@ -510,21 +592,23 @@ class ModEntityListener {
   }
 }
 class ESPmain {
-  static ProjectWorldToScreen(ActorLocation) {
+  static ProjectWorldToScreen(Vector, FixViewport = true) {
     try {
-      const Location = new UE.Vector(ActorLocation.X, ActorLocation.Y, ActorLocation.Z)
+      const Location = new UE.Vector(Vector.X, Vector.Y, Vector.Z)
       const PlayerController = UE.GameplayStatics.GetPlayerController(GlobalData_1.GlobalData.World, 0)
       let ScreenPosition = puerts_1.$ref(undefined)
       if (PlayerController.ProjectWorldLocationToScreen(Location, ScreenPosition, true)) {
         puerts_1.$unref(ScreenPosition)
       }
       ScreenPosition = ScreenPosition[0];
-      let ViewportPosition = puerts_1.$ref(undefined)
-      if (UE.SlateBlueprintLibrary.ScreenToViewport(GlobalData_1.GlobalData.World, ScreenPosition, ViewportPosition)) {
-        puerts_1.$unref(ViewportPosition)
+      if (FixViewport) {
+        let ViewportPosition = puerts_1.$ref(undefined)
+        if (UE.SlateBlueprintLibrary.ScreenToViewport(GlobalData_1.GlobalData.World, ScreenPosition, ViewportPosition)) {
+          puerts_1.$unref(ViewportPosition)
+        }
+        ViewportPosition = ViewportPosition[0];
+        ScreenPosition = new UE.Vector2D(ViewportPosition.X, ViewportPosition.Y);
       }
-      ViewportPosition = ViewportPosition[0];
-      ScreenPosition = new UE.Vector2D(ViewportPosition.X, ViewportPosition.Y);
       return ScreenPosition;
     } catch (e) {
       return null;
@@ -535,10 +619,10 @@ class ESPmain {
     if (!ModUtils.isInGame()) return;
     if (!ModManager.Settings.ESP) return;
     const entitylist =
-      ModelManager_1.ModelManager.CreatureModel.EntitiesSortedList;
+      ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     const count = entitylist.length;
     for (let i = 0; i < count; i++) {
-      let Actor,
+      let Component,
         Location,
         Bounds,
         SphereRadius,
@@ -551,45 +635,42 @@ class ESPmain {
       let ScreenWidth, ScreenHeight;
       let ShowBox;
       if (entitylist[i].Entity.GetComponent(3)) {
-        Actor = entitylist[i].Entity.GetComponent(3).Actor;
-        Location = Actor.K2_GetActorLocation();
-        Bounds = Actor.CapsuleComponent.Bounds;
-        // SphereRadius = Bounds.SphereRadius;
-        // BoxExtent = Bounds.BoxExtent;
-        // ShowBox={ X: BoxExtent.X+SphereRadius, Y: BoxExtent.Y+SphereRadius };
+        Component = entitylist[i].Entity.GetComponent(3);
+        Location = Component.Actor.K2_GetActorLocation();
+        Bounds = Component.Actor.Mesh.Bounds;
+
+        let Corners = [
+          new UE.Vector(Bounds.Origin.X + Bounds.BoxExtent.X, Bounds.Origin.Y + Bounds.BoxExtent.Y, Bounds.Origin.Z + Bounds.BoxExtent.Z),
+          new UE.Vector(Bounds.Origin.X + Bounds.BoxExtent.X, Bounds.Origin.Y + Bounds.BoxExtent.Y, Bounds.Origin.Z - Bounds.BoxExtent.Z),
+          new UE.Vector(Bounds.Origin.X + Bounds.BoxExtent.X, Bounds.Origin.Y - Bounds.BoxExtent.Y, Bounds.Origin.Z + Bounds.BoxExtent.Z),
+          new UE.Vector(Bounds.Origin.X + Bounds.BoxExtent.X, Bounds.Origin.Y - Bounds.BoxExtent.Y, Bounds.Origin.Z - Bounds.BoxExtent.Z),
+          new UE.Vector(Bounds.Origin.X - Bounds.BoxExtent.X, Bounds.Origin.Y + Bounds.BoxExtent.Y, Bounds.Origin.Z + Bounds.BoxExtent.Z),
+          new UE.Vector(Bounds.Origin.X - Bounds.BoxExtent.X, Bounds.Origin.Y + Bounds.BoxExtent.Y, Bounds.Origin.Z - Bounds.BoxExtent.Z),
+          new UE.Vector(Bounds.Origin.X - Bounds.BoxExtent.X, Bounds.Origin.Y - Bounds.BoxExtent.Y, Bounds.Origin.Z + Bounds.BoxExtent.Z),
+          new UE.Vector(Bounds.Origin.X - Bounds.BoxExtent.X, Bounds.Origin.Y - Bounds.BoxExtent.Y, Bounds.Origin.Z - Bounds.BoxExtent.Z),
+        ];
+  
+        let ScreenCorners = Corners.map(C => ESPmain.ProjectWorldToScreen(C, false));
+  
+        let minX = Math.min(...ScreenCorners.map(p => p.X));
+        let maxX = Math.max(...ScreenCorners.map(p => p.X));
+        let minY = Math.min(...ScreenCorners.map(p => p.Y));
+        let maxY = Math.max(...ScreenCorners.map(p => p.Y));
+  
+        ShowBox = { X: maxX - minX + Bounds.SphereRadius, Y: maxY - minY + Bounds.SphereRadius };
       } else {
         Location =
-          entitylist[i].Entity.GetComponent(0).GetMovementInfo().Location;
+          entitylist[i].Entity.GetComponent(0).GetLocation()
         Bounds = {
           Origin: {X: 50, Y: 50, Z: 10},
-          BoxExtent: {X: 500, Y: 500, Z: 100},
+          BoxExtent: {X: 100, Y: 100, Z: 100},
           SphereRadius: 50,
         };
-        // ShowBox = {
-        //   X: BoxExtent.X + SphereRadius,
-        //   Y: BoxExtent.Y + SphereRadius,
-        // };
+        ShowBox = {
+          X: Bounds.BoxExtent.X + Bounds.SphereRadius,
+          Y: Bounds.BoxExtent.Y + Bounds.SphereRadius,
+        };
       }
-      let BoxMax = {
-        X: Bounds.Origin.X + Bounds.BoxExtent.X,
-        Y: Bounds.Origin.Y + Bounds.BoxExtent.Y,
-        Z: Bounds.Origin.Z + Bounds.BoxExtent.Z,
-      };
-      let BoxMin = {
-        X: Bounds.Origin.X - Bounds.BoxExtent.X,
-        Y: Bounds.Origin.Y - Bounds.BoxExtent.Y,
-        Z: Bounds.Origin.Z - Bounds.BoxExtent.Z,
-      };
-
-      TopScreenPos = ESPmain.ProjectWorldToScreen(BoxMax);
-      BottomScreenPos = ESPmain.ProjectWorldToScreen(BoxMin);
-      let BoxLeft = { X: BoxMin.X, Y: BoxMax.Y, Z: BoxMax.Z };
-      let BoxRight = { X: BoxMax.X, Y: BoxMin.Y, Z: BoxMin.Z };
-      LeftScreenPos = ESPmain.ProjectWorldToScreen(BoxLeft);
-      RightScreenPos = ESPmain.ProjectWorldToScreen(BoxRight);
-      ScreenWidth = Math.abs(RightScreenPos.X - LeftScreenPos.X);
-      ScreenHeight = Math.abs(TopScreenPos.Y - BottomScreenPos.Y);
-      ShowBox = { X: ScreenWidth, Y: ScreenHeight };
 
       if (EntityManager.isMonster(entitylist[i])) {
         // Text = 'Monster';
@@ -640,7 +721,6 @@ class ESPmain {
       if (IsValid) {
         ScreenPos = ESPmain.ProjectWorldToScreen(Location);
         if (ScreenPos.X > 0 && ScreenPos.Y > 0) {
-          UE.KismetSystemLibrary.DrawDebugLine(GlobalData_1.GlobalData.World, PlayerLocation, Location, Color, 10, 1);
           MainMenu.ESPDrawBoxEntities(
             ShowBox.X,
             ShowBox.Y,
