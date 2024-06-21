@@ -34,7 +34,7 @@ const BigAnimalList = [
 
 class KillAura extends EntityManager {
   static isIndistance(entity) {
-    let monsterPos = this.GetPosition(entity);
+    let monsterPos = this.GetPosition(entity.Entity);
     let distance = ModUtils.Getdistance2Player(monsterPos);
     if (distance < ModManager.Settings.killAuraRadius * 100) {
       return true;

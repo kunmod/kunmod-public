@@ -84,17 +84,13 @@ class ModUtils {
   }
 
   static Getdistance(pos1, pos2) {
-    let dx = pos2.X - pos1.X;
-    let dy = pos2.Y - pos1.Y;
-    let dz = pos2.Z - pos1.Z;
-    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+    let dis = UE.KismetMathLibrary.Vector_Distance(pos1, pos2)
+    return dis ;
   }
   static Getdistance2Player(pos1) {
     let pos2 = EntityManager_1.EntityManager.GetPlayerPos();
-    let dx = pos2.X - pos1.X;
-    let dy = pos2.Y - pos1.Y;
-    let dz = pos2.Z - pos1.Z;
-    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+    let dis = UE.KismetMathLibrary.Vector_Distance(pos1, pos2)
+    return dis ;
   }
   static IsOpenWorld() {
     return WorldFunctionLibrary_1.WorldFunctionLibrary.IsOpenWorld();

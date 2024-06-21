@@ -75,17 +75,7 @@ class EntityManager {
 
     return pos;
   }
-  static PushEntityList() {
-    this.GetEntitySortedList();
-    this.ModsEntitys.EntityList = this.EntitiesSortedList;
-    this.GetEntityCount();
-    this.GetPlayerEntity();
-    // puerts_1.logger.warn(
-    //   "[KUNMODDEBUG]:GetEntityList",
-    //   this.ModsEntitys.EntityList
-    // );
-    return this.ModsEntitys.EntityList;
-  }
+
 
   static GetEntitySortedList() {
     this.EntitiesSortedList =
@@ -113,15 +103,15 @@ class EntityManager {
   static GetEntityId(entity) {
     return entity.Id;
   }
-  static GetPosition(entity) {
-    // let Pbdata = this.GetEntityData(entity.PbDataId);
-    // let pos = Pbdata.Transform.Pos;
-    let a = entity.Entity.GetComponent(3);
-    let actor = a.Actor;
+  static GetPosition(Entity) {
+    let a = Entity.GetComponent(1);
+    let actor = a.ActorInternal;
     let pos = actor.K2_GetActorLocation();
 
     return pos;
   }
+
+
 
   static GetName(entity) {
     let a = entity.Entity.GetComponent(3);

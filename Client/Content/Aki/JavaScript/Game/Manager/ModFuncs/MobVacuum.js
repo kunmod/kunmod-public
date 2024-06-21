@@ -25,36 +25,43 @@ class MobVacuum extends EntityManager {
 
     return need;
   }
+  static isIndistance(entity) {
+    let monsterPos = this.GetPosition(entity.Entity);
+    let distance = ModUtils.Getdistance2Player(monsterPos);
+    if (distance < ModManager_1.ModManager.Settings.VacuumRadius * 100) {
+      return true;
+    } else return false;
+  }
 
   static MobVacuum(entity) {
     if (!ModManager_1.ModManager.Settings.MobVacuum) return;
-    if (this.isMonster(entity) /*|| this.isAnimal(entity)*/) {
+    if (this.isMonster(entity) && this.isIndistance(entity)) {
       let playerpos = EntityManager.GetPlayerPos();
-      let ActorComp = entity.Entity.GetComponent(3); 
-      let actor = ActorComp.Actor;
-      this.SyncMonster(entity, playerpos)
-      actor.K2_SetActorLocation(playerpos, 0, void 0, 1);
+      let ActorComp = entity.Entity.GetComponent(1);
+      this.SyncMonster(entity, playerpos);
+      ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
     }
-    
   }
-
-
 
   static VacuumCollect(entity) {
     if (!ModManager_1.ModManager.Settings.VacuumCollect) return;
-    if (!AutoInteract_1.AutoInteract.isNeedLoot(entity)) return;
+    if (
+      AutoInteract_1.AutoInteract.isNeedLoot(entity) &&
+      this.isIndistance(entity.Entity)
+    ) {
+      let playerpos = EntityManager.GetPlayerPos();
+      let ActorComp = entity.Entity.GetComponent(1);
+      ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
+    }
     //if (!this.isCollection(entity)) return;
-    let playerpos = EntityManager.GetPlayerPos();
-    let ActorComp = entity.Entity.GetComponent(1);
-    ActorComp.SetActorLocation(playerpos);
-   // puerts_1.logger.info("VacuumCollectEnd");
+
+    // puerts_1.logger.info("VacuumCollectEnd");
   }
 
   static SyncMonster(entity, pos) {
     var t = entity.Entity.GetComponent(56);
     var i = t.GetCurrentMoveSample();
     i.Location = pos;
-
     t.PendingMoveInfos.push(i);
     var s = Protocol_1.Aki.Protocol.MovePackagePush.create();
     s.MovingEntities.push(t.CollectPendingMoveInfos());
