@@ -10,7 +10,7 @@ const puerts_1 = require("puerts"),
 
 
 class ModLanguage {
-  static CurrLang = ModManager_1.ModManager.Settings.Language;
+  static CurrLang = "en";
   static SetCurrLang(string) {
     switch(string) {
       case "English":
@@ -34,7 +34,7 @@ class ModLanguage {
       default:
         this.CurrLang = "en";
     }
-    ModManager_1.ModManager.Settings.Language=this.CurrLang;
+    
   }
   static GetCurrLang() {
     return this.CurrLang;
