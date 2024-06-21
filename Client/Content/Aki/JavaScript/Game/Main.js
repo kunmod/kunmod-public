@@ -22,6 +22,7 @@ const puerts_1 = require("puerts"),
   AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager");
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
+const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage,
@@ -86,11 +87,21 @@ class MainMenu {
         Menu.SetVisibility(0);
       } else {
         MainMenu.getTranslation();
+        
+        // update kill aura selection
         Menu.KillAuraValue.ClearOptions();
         for (const option in MainMenu.killAura()) {
           Menu.KillAuraValue.AddOption(MainMenu.killAura()[option]);
         }
         Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
+
+        // update weather selection
+        Menu.WeatherValue.ClearOptions();
+        for (const option in MainMenu.WeatherValue()) {
+          Menu.WeatherValue.AddOption(MainMenu.WeatherValue()[option]);
+        }
+        Menu.WeatherValue.SetSelectedIndex(ModManager.Settings.WeatherType);
+
         Menu.SetVisibility(2);
       }
       isMenuShow = !isMenuShow;
@@ -194,6 +205,18 @@ class MainMenu {
               ModManager.Settings.killAuraState =
                 MainMenu.killAura().indexOf(selectedItem);
               MainMenu.KunLog("Kill Aura Value: " + selectedItem);
+            }
+          });
+
+          for (const option in MainMenu.WeatherValue()) {
+            Menu.WeatherValue.AddOption(MainMenu.WeatherValue()[option]);
+          }
+
+          Menu.WeatherValue.OnSelectionChanged.Add((selectedItem) => {
+            if (selectedItem) {
+              ModManager.Settings.WeatherType =
+                MainMenu.WeatherValue().indexOf(selectedItem);
+              MainMenu.KunLog("Weather Type: " + selectedItem);
             }
           });
 
@@ -368,9 +391,77 @@ class MainMenu {
             MainMenu.KunLog("ESP Radius: " + value);
           });
 
-          Menu.KillAuraValue.SetSelectedIndex(
-            ModManager.Settings.killAuraState
-          );
+          Menu.ConsoleCommandSet.OnClicked.Add(() => {
+            const Command = Menu.ConsoleCommandValue .GetText();
+            ModDebuger.ConsoleCommand(Command);
+            MainMenu.KunLog("Execute Command: " + Command);
+          });
+
+          Menu.MobVacuumCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.MobVacuum = isChecked;
+            MainMenu.KunLog("Mob Vacuum: " + isChecked);
+          });
+
+          Menu.VacuumCollectCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.VacuumCollect = isChecked;
+            MainMenu.KunLog("Vacuum Collect: " + isChecked);
+          });
+
+          Menu.WeatherCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.WeatherChanger = isChecked;
+            MainMenu.KunLog("Weather Changer: " + isChecked);
+          });
+
+          Menu.FPSUnlockerCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.FPSUnlocker = isChecked;
+            if (isChecked) {
+              ModMethod_1.ModMethod.FPSUnlocker(true);
+            } else {
+              ModMethod_1.ModMethod.FPSUnlocker(false);
+            }
+            MainMenu.KunLog("FPS Unlocker: " + isChecked);
+          });
+
+          if (ModManager.Settings.FPSUnlocker) {
+            ModMethod_1.ModMethod.FPSUnlocker(true);
+          }
+
+          Menu.FPSShowCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowFPS = isChecked;
+            ModMethod_1.ModMethod.ShowFPS();
+            MainMenu.KunLog("Show FPS: " + isChecked);
+          });
+
+          if (ModManager.Settings.ShowFPS) {
+            ModMethod_1.ModMethod.ShowFPS();
+          }
+
+          Menu.FOVCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.FOV = isChecked;
+            const value = ModManager.Settings.FOVValue;
+            if (isChecked) {
+              ModMethod_1.ModMethod.SetFOV(value);
+            } else {
+              ModMethod_1.ModMethod.SetFOV(60);
+            }
+            MainMenu.KunLog("FOV: " + isChecked);
+          });
+
+          if (ModManager.Settings.FOV) {
+            const value = ModManager.Settings.FOVValue;
+            ModMethod_1.ModMethod.SetFOV(value);
+          }
+
+          Menu.FOVSlider.OnValueChanged.Add((value) => {
+            value = value.toFixed(0);
+            Menu.FOVValue.SetText(value);
+            ModManager.Settings.FOVValue = value;
+            ModMethod_1.ModMethod.SetFOV(value);
+            MainMenu.KunLog("FOV Value: " + value);
+          });
+
+          Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
+          Menu.WeatherValue.SetSelectedIndex(ModManager.Settings.WeatherType);
           Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
 
           Menu.PlayerSpeedSlider.SetValue(ModManager.Settings.playerSpeedValue);
@@ -378,12 +469,14 @@ class MainMenu {
           Menu.NewKillAuraSlider.SetValue(ModManager.Settings.killAuraRadius);
           Menu.WorldSpeedSlider.SetValue(ModManager.Settings.WorldSpeedValue);
           Menu.ESPRadiusSlider.SetValue(ModManager.Settings.ESPRadius);
+          Menu.FOVSlider.SetValue(ModManager.Settings.FOVValue);
 
           Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
           Menu.HitMultiplierValue.SetText(ModManager.Settings.Hitcount);
           Menu.NewKillAuraValue.SetText(ModManager.Settings.killAuraRadius);
           Menu.WorldSpeedValue.SetText(ModManager.Settings.WorldSpeedValue);
           Menu.ESPRadiusValue.SetText(ModManager.Settings.ESPRadius);
+          Menu.FOVValue.SetText(ModManager.Settings.FOVValue);
         } catch (e) {
           MainMenu.KunLog(e);
         }
@@ -402,14 +495,14 @@ class MainMenu {
       Menu.PlayerSwitchText.SetText(ModLanguage.ModTr("Player"));
       Menu.WorldSwitchText.SetText(ModLanguage.ModTr("World"));
       Menu.ESPSwitchText.SetText(ModLanguage.ModTr("ESP"));
-      Menu.UISwitchText.SetText(ModLanguage.ModTr("UI"));
+      Menu.UISwitchText.SetText(ModLanguage.ModTr("Visual"));
       Menu.DebugSwitchText.SetText(ModLanguage.ModTr("Debug"));
 
       Menu.HeadingPlayer.SetText(ModLanguage.ModTr("Player"));
       Menu.HeadingWorld.SetText(ModLanguage.ModTr("World"));
       Menu.HeadingESP.SetText(ModLanguage.ModTr("ESP"));
       Menu.HeadingESPFilter.SetText(ModLanguage.ModTr("Filter"));
-      Menu.HeadingUI.SetText(ModLanguage.ModTr("UI"));
+      Menu.HeadingUI.SetText(ModLanguage.ModTr("Visual"));
       Menu.HeadingTeleport.SetText(ModLanguage.ModTr("Teleport"));
       Menu.HeadingDebug.SetText(ModLanguage.ModTr("Debug"));
 
@@ -437,6 +530,9 @@ class MainMenu {
       Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy [Num1]"));
       Menu.KillAnimalText.SetText(ModLanguage.ModTr("Kill Animal"));
       Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
+      Menu.MobVacuumText.SetText(ModLanguage.ModTr("Mob Vacuum"));
+      Menu.VacuumCollectText.SetText(ModLanguage.ModTr("Vacuum Collect"));
+      Menu.WeatherText.SetText(ModLanguage.ModTr("Weather"));
 
       // esp
       Menu.ESPText.SetText(ModLanguage.ModTr("ESP"));
@@ -450,12 +546,17 @@ class MainMenu {
       Menu.ESPPuzzleText.SetText(ModLanguage.ModTr("Puzzle"));
       Menu.ESPCasketText.SetText(ModLanguage.ModTr("Sonance Casket"));
 
-      // ui
+      // visual
       Menu.CustomUidText.SetText(ModLanguage.ModTr("Custom UID"));
       Menu.HideHUDText.SetText(ModLanguage.ModTr("Hide HUD"));
       Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
+      Menu.FPSUnlockerText.SetText(ModLanguage.ModTr("FPS Unlocker"));
+      Menu.FPSShowText.SetText(ModLanguage.ModTr("Show FPS"));
+      Menu.FOVText.SetText(ModLanguage.ModTr("FOV"));
 
+      // debug
       Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
+      Menu.ConsoleCommandText.SetText(ModLanguage.ModTr("Console Command"));
 
       Menu.Designer.SetText(ModLanguage.ModTr("GUI Designer: n0bu"));
       Menu.DisclaimerText.SetText(this.Getfreetip());
@@ -478,25 +579,40 @@ class MainMenu {
 
   static updateMenuState() {
     if (Menu) {
+      // player
       Menu.GodModeCheck.SetIsChecked(ModManager.Settings.GodMode);
       Menu.NoCDCheck.SetIsChecked(ModManager.Settings.NoCD);
-      Menu.AutoPickTreasureCheck.SetIsChecked(ModManager.Settings.AutoPickTreasure);
       Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
-      Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
       Menu.InfiniteStaminaCheck.SetIsChecked(ModManager.Settings.InfiniteStamina);
+      Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
+
+      // world
+      Menu.AutoPickTreasureCheck.SetIsChecked(ModManager.Settings.AutoPickTreasure);
+      Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
       Menu.KillAnimalCheck.SetIsChecked(ModManager.Settings.KillAnimal);
       Menu.PerceptionRangeCheck.SetIsChecked(ModManager.Settings.PerceptionRange);
-      Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
-      Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
-      Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
-      Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
-      Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
       Menu.AutoDestroyCheck.SetIsChecked(ModManager.Settings.AutoDestroy);
       Menu.NewAutoAbsorbCheck.SetIsChecked(ModManager.Settings.AutoAbsorbnew);
       Menu.NewKillAuraCheck.SetIsChecked(ModManager.Settings.killAuranew);
       Menu.WorldSpeedCheck.SetIsChecked(ModManager.Settings.WorldSpeed);
+      Menu.MobVacuumCheck.SetIsChecked(ModManager.Settings.MobVacuum);
+      Menu.VacuumCollectCheck.SetIsChecked(ModManager.Settings.VacuumCollect);
+      Menu.VacuumCollectCheck.SetIsChecked(ModManager.Settings.VacuumCollect);
+      Menu.WeatherCheck.SetIsChecked(ModManager.Settings.WeatherChanger);
+
+      // visual
+      Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
+      Menu.HideDmgCheck.SetIsChecked(ModManager.Settings.HideDmgUi);
+      Menu.FPSUnlockerCheck.SetIsChecked(ModManager.Settings.FPSUnlocker);
+      Menu.FPSShowCheck.SetIsChecked(ModManager.Settings.ShowFPS);
+      Menu.FOVCheck.SetIsChecked(ModManager.Settings.FOV);
+
+      // teleport
+      Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
+
+      // esp
       Menu.ESPCheck.SetIsChecked(ModManager.Settings.ESP);
       Menu.ESPShowNameCheck.SetIsChecked(ModManager.Settings.ShowName);
       Menu.ESPShowDistanceCheck.SetIsChecked(ModManager.Settings.ShowDistance);
@@ -507,6 +623,9 @@ class MainMenu {
       Menu.ESPAnimalCheck.SetIsChecked(ModManager.Settings.ShowAnimal);
       Menu.ESPPuzzleCheck.SetIsChecked(ModManager.Settings.ShowPuzzle);
       Menu.ESPCasketCheck.SetIsChecked(ModManager.Settings.ShowCasket);
+
+      // debug
+      Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
     }
   }
 
@@ -530,6 +649,16 @@ class MainMenu {
 
   static killAura() {
     return [ModLanguage.ModTr("Only Hatred"), ModLanguage.ModTr("Infinity")];
+  }
+
+  static WeatherValue() {
+    return [
+      ModLanguage.ModTr("Sunny"),
+      ModLanguage.ModTr("Cloudy"),
+      ModLanguage.ModTr("Thunder"),
+      ModLanguage.ModTr("Snow"),
+      ModLanguage.ModTr("Rain"),
+    ];
   }
 
   static ESPDrawBoxEntities(sizeX, sizeY, posX = 1, posY = 1, name = 'Unknown', color) {

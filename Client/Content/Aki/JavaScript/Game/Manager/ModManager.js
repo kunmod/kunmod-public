@@ -91,6 +91,11 @@ class ModManager {
     ShowType:false,
     ShowDistance:true,
     ShowName:true,
+    FPSUnlocker:false,
+    ShowFPS:false,
+    FOV:false,
+    FOVValue:60, // default
+
   };
 
   static GetGameDir() {
