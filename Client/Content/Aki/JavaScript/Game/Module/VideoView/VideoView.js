@@ -161,7 +161,7 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
                        (ModManager_1.ModManager.Settings.PlotSkip||o.CanSkip)),
                         (i =
                           (ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(
-                            i
+                            1//i
                           ),
                           (this.Fbr = [
                             ...ConfigManager_1.ConfigManager.VideoConfig.GetVideoCaptions(
