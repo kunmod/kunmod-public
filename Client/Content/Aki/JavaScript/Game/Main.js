@@ -86,22 +86,6 @@ class MainMenu {
       if (isMenuShow) {
         Menu.SetVisibility(0);
       } else {
-        MainMenu.getTranslation();
-        
-        // update kill aura selection
-        Menu.KillAuraValue.ClearOptions();
-        for (const option in MainMenu.killAura()) {
-          Menu.KillAuraValue.AddOption(MainMenu.killAura()[option]);
-        }
-        Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
-
-        // update weather selection
-        Menu.WeatherValue.ClearOptions();
-        for (const option in MainMenu.WeatherValue()) {
-          Menu.WeatherValue.AddOption(MainMenu.WeatherValue()[option]);
-        }
-        Menu.WeatherValue.SetSelectedIndex(ModManager.Settings.WeatherType);
-
         Menu.SetVisibility(2);
       }
       isMenuShow = !isMenuShow;
@@ -124,8 +108,6 @@ class MainMenu {
       } else {
         ModManager.LoadConfig();
       }
-
-      currentLang = ModLanguage.GetCurrLang();
 
       Menu = UE.UMGManager.CreateWidget(
         GlobalData_1.GlobalData.World,
@@ -170,12 +152,29 @@ class MainMenu {
 
           Menu.LanguageValue.OnSelectionChanged.Add((selectedItem) => {
             if (selectedItem) {
-              ModManager.Settings.killAuraState = selectedItem;
+              ModManager.Settings.Language = selectedItem;
               MainMenu.KunLog("Language: " + selectedItem);
+
+              // update tr
+              MainMenu.getTranslation();
+        
+              // update kill aura selection
+              Menu.KillAuraValue.ClearOptions();
+              for (const option in MainMenu.killAura()) {
+                Menu.KillAuraValue.AddOption(MainMenu.killAura()[option]);
+              }
+              Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
+
+              // update weather selection
+              Menu.WeatherValue.ClearOptions();
+              for (const option in MainMenu.WeatherValue()) {
+                Menu.WeatherValue.AddOption(MainMenu.WeatherValue()[option]);
+              }
+              Menu.WeatherValue.SetSelectedIndex(ModManager.Settings.WeatherType);
             }
           });
 
-          ModManager.LanguageValue.SetSelected(ModManager.Settings.Language);
+          Menu.LanguageValue.SetSelectedOption(ModManager.Settings.Language);
 
           Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.GodMode = isChecked;
@@ -535,8 +534,8 @@ class MainMenu {
 
       // world
       Menu.WorldSpeedText.SetText(ModLanguage.ModTr("TEXT_WORLD_SPEED"));
-      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE"));
-      Menu.AutoPickTreasureText.SetText(ModLanguage.ModTr("Auto Pick Treasure [F7]"));
+      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("TEXT_AUTO_ABSORB"));
+      Menu.AutoPickTreasureText.SetText(ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE"));
       Menu.KillAuraText.SetText(ModLanguage.ModTr("TEXT_KILL_AURA"));
       Menu.PerceptionRangeText.SetText(ModLanguage.ModTr("TEXT_PERCEPTION_RANGE"));
       Menu.AutoLootText.SetText(ModLanguage.ModTr("TEXT_AUTO_LOOT"));
@@ -574,20 +573,6 @@ class MainMenu {
       Menu.Designer.SetText(ModLanguage.ModTr("TEXT_DESIGNER"));
       Menu.DisclaimerText.SetText(ModLanguage.ModTr("TEXT_DISCLAIMER"));
       Menu.LanguageText.SetText(ModLanguage.ModTr("TEXT_LANGUAGE"));
-    }
-  }
-
-  static Getfreetip() {
-    let lang = ModLanguage.GetCurrLang();
-    switch (lang) {
-      case "en":
-        return "This hack is completely free, if you paid to get this, you have been scammed.";
-      case "zh-Hans":
-        return "免费软件，如果你是付费获得，那你被骗了";
-      case "ja":
-        return "このハックは完全に無料です。これにお金を払ったのなら、あなたはだまされています。";
-      default:
-        return "This hack is completely free, if you paid to get this, you have been scammed.";
     }
   }
 

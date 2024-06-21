@@ -47,7 +47,7 @@ class MobVacuum extends EntityManager {
     if (!ModManager_1.ModManager.Settings.VacuumCollect) return;
     if (
       AutoInteract_1.AutoInteract.isNeedLoot(entity) &&
-      this.isIndistance(entity.Entity)
+      this.isIndistance(entity)
     ) {
       let playerpos = EntityManager.GetPlayerPos();
       let ActorComp = entity.Entity.GetComponent(1);

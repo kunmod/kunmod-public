@@ -85,7 +85,7 @@ class WeatherController extends ControllerBase_1.ControllerBase {
     var t = new Protocol_1.Aki.Protocol.ChangeWeatherRequest();
     //e=1;
     if(ModManager_1.ModManager.Settings.WeatherChanger){
-      e = ModManager_1.ModManager.Settings.WeatherType//天气e//1.sunny 2.Cloudy 3.ThunderRain 4.Snow 5.rain
+      e = ModManager_1.ModManager.Settings.WeatherType+1 //天气e//1.sunny 2.Cloudy 3.ThunderRain 4.Snow 5.rain
     }
     (t.WeatherId = e),
       Net_1.Net.Call(
@@ -102,7 +102,7 @@ class WeatherController extends ControllerBase_1.ControllerBase {
   }
   static ChangeCurrentWeather(e, t) {
     if(ModManager_1.ModManager.Settings.WeatherChanger){
-      e = ModManager_1.ModManager.Settings.WeatherType//天气e//1.sunny 2.Cloudy 3.ThunderRain 4.Snow 5.rain
+      e = ModManager_1.ModManager.Settings.WeatherType+1 //天气e//1.sunny 2.Cloudy 3.ThunderRain 4.Snow 5.rain
     }
     ModelManager_1.ModelManager.WeatherModel.CurrentWeatherId !== e &&
       (ModelManager_1.ModelManager.WeatherModel.SetCurrentWeatherId(e),

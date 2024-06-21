@@ -134,12 +134,14 @@ class ModManager {
       }
     }
     this.Settings = Config;
+    if (!ModLanguage_1.ModLanguage.Langs.includes(this.Settings.Language)) {
+      this.Settings.Language = "English";
+    }
     ModManager.SaveConfig();
   }
 
   static ModStart() {
     //ModDebuger_1.ModDebuger.TestMethod();
-    ModLanguage_1.ModLanguage.GetCurrLang();
     this.AddKey("ShowMenu", "Home");
     this.AddToggle("GodMode", "F5");
     this.AddToggle("HitMultiplier", "F6");

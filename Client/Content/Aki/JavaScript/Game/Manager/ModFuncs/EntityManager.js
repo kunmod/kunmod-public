@@ -180,7 +180,7 @@ class EntityManager {
     let BlueprintType = this.GetBlueprintType2(entity);
     return BlueprintType.startsWith("Monster");
   }
-  static isCollection(entity) {
+  static isGameplay(entity) {
     let BlueprintType = this.GetBlueprintType2(entity);
     return BlueprintType.startsWith("Gameplay");
   }

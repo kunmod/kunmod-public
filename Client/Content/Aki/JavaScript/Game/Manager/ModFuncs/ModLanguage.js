@@ -10,34 +10,23 @@ const puerts_1 = require("puerts"),
 
 
 class ModLanguage {
-  static CurrLang = "en";
-  static SetCurrLang(string) {
-    switch(string) {
-      case "English":
-        this.CurrLang = "en";
-        break;
-      case "简体中文":
-        this.CurrLang = "chs";
-        break;
-      case "日本語":
-        this.CurrLang = "ja";
-        break;
-      case "Español":
-        this.CurrLang = "es";
-        break;
-      case "Indonesia":
-        this.CurrLang = "id";
-        break;
-      case "Vietnamese":
-        this.CurrLang = "vi";
-        break;
-      default:
-        this.CurrLang = "en";
-    }
-    
-  }
   static GetCurrLang() {
-    return this.CurrLang;
+    switch(ModManager_1.ModManager.Settings.Language) {
+      case "English":
+        return "en";
+      case "简体中文":
+        return "chs";
+      case "日本語":
+        return "ja";
+      case "Español":
+        return "es";
+      case "Indonesia":
+        return "id";
+      case "Vietnamese":
+        return "vi";
+      default:
+        return "en";
+    }
   }
 
   static Langs = ["English", "简体中文", "日本語", "Español", "Indonesia", "Vietnamese"];
@@ -416,7 +405,7 @@ class ModLanguage {
     {
       Text: "HEADING_VISUAL",
       en:  "Visual",
-      chs: "视觉的",
+      chs: "视觉",
       ja: "ビジュアル",
       es: "Visual",
       id: "Visual",
@@ -567,7 +556,7 @@ class ModLanguage {
     {
       Text: "TEXT_CONSOLE_COMMAND",
       en:  "Console Command",
-      chs: "控制台命令",
+      chs: "虚幻控制台命令",
       ja: "コンソールコマンド",
     },
     {
@@ -579,7 +568,7 @@ class ModLanguage {
     {
       Text: "TEXT_FOV",
       en:  "FOV",
-      chs: "视野",
+      chs: "FOV",
       ja: "視野角",
     },
     {
@@ -591,37 +580,37 @@ class ModLanguage {
     {
       Text: "TEXT_FPS_UNLOCKER",
       en:  "FPS Unlocker",
-      chs: "FPS解锁器",
+      chs: "FPS解锁",
       ja: "FPSアンロック",
     },
     {
       Text: "TEXT_SONANCE_CASKET",
       en:  "Sonance Casket",
-      chs: "索南斯棺材",
+      chs: "声匣",
       ja: "ソナンスカスケット",
     },
     {
       Text: "TEXT_PUZZLE",
       en:  "Puzzle",
-      chs: "谜",
-      ja: "パズル",
+      chs: "解谜",
+      ja: "Puzzle",
     },
     {
       Text: "TEXT_ANIMAL",
-      en:  "Puzzle",
+      en:  "Animal",
       chs: "动物",
       ja: "動物",
     },
     {
       Text: "TEXT_TREASURE",
       en:  "Treasure",
-      chs: "宝藏",
+      chs: "箱子",
       ja: "宝物",
     },
     {
       Text: "TEXT_COLLECTION",
       en:  "Collection",
-      chs: "收藏",
+      chs: "收集品",
       ja: "コレクション",
     },
     {
@@ -633,7 +622,7 @@ class ModLanguage {
     {
       Text: "TEXT_SHOW_BOX",
       en:  "Show Box",
-      chs: "展示盒",
+      chs: "展示方框",
       ja: "表示ボックス",
     },
     {
@@ -645,14 +634,14 @@ class ModLanguage {
     {
       Text: "TEXT_SHOW_NAME",
       en:  "Show Name",
-      chs: "演出名称",
+      chs: "显示名称",
       ja: "ショー名",
     },
     {
       Text: "HEADING_ESP",
       en:  "ESP",
-      chs: "超感知觉",
-      ja: "超感覚知覚",
+      chs: "透视",
+      ja: "ESP",
     },
     {
       Text: "TEXT_WEATHER",
@@ -663,14 +652,14 @@ class ModLanguage {
     {
       Text: "TEXT_VACUUM_COLLECT",
       en:  "Vacuum Collect",
-      chs: "真空收集",
-      ja: "真空収集",
+      chs: "吸收集品",
+      ja: "Vacuum Collect",
     },
     {
       Text: "TEXT_MOB_VACUUM",
-      en:  "MOB Vacuum",
-      chs: "MOB真空吸尘器",
-      ja: "MOBバキューム",
+      en:  "Monster Vacuum",
+      chs: "吸怪",
+      ja: "Monster Vacuum",
     },
     {
       Text: "HEADING_FILTER",
@@ -681,7 +670,7 @@ class ModLanguage {
     {
       Text: "TEXT_SUNNY",
       en:  "Sunny",
-      chs: "阳光充足",
+      chs: "晴天",
       ja: "晴れ",
     },
     {
@@ -713,7 +702,7 @@ class ModLanguage {
   static ModTr = (string) => {
     const Find = ModLanguage.translate.find(translate => translate.Text == string);
     if (Find) {
-      return Find[this.CurrLang] || Find.Text;
+      return Find[this.GetCurrLang()] || Find.Text;
     } else {
       return string; // return original string if no translation found
     }
