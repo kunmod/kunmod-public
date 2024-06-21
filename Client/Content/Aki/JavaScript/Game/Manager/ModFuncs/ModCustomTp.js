@@ -33,9 +33,9 @@ class ModCustomTp {
     this.GetTpInfo();
     var state = ModManager_1.ModManager.Settings.CustomTp;
     var title =
-      ModTr("CustomTp State [Insert]:") +
-      (state ? ModTr("ON") : ModTr("OFF")) +
-      ModTr(" Show[Del]") +
+      ModTr("TEXT_CUSTOM_TP_STATE") +
+      (state ? ModTr("TEXT_ON") : ModTr("TEXT_OFF")) +
+      ModTr("TEXT_SHOW_DEL") +
       " (" +
       (this.Settings.CurreNum + 1).toString() +
       "/" +
@@ -44,21 +44,21 @@ class ModCustomTp {
       this.Settings.CurrPos;
 
     var readme =
-      ModTr("CurrentFile:") +
+      ModTr("TEXT_CURR_FILE") +
       this.Settings.CurrFile +
-      ModTr("| PreviousFile[PageUp]: ") +
+      ModTr("TEXT_PREV_FILE") +
       this.Settings.PrevFile +
-      ModTr(" | NextFile[PageDown]: ") +
+      ModTr("TEXT_NEXT_FILE") +
       this.Settings.NextFile +
-      ModTr(" | PreviousPos[Up]: ") +
+      ModTr("TEXT_PREV_POS") +
       this.Settings.PrevPos +
-      ModTr(" | NextPos[Down]: ") +
+      ModTr("TEXT_NEXT_POS") +
       this.Settings.NextPos +
-      ModTr(" | AutoMode[End]: ") +
-      (this.Settings.AutoMode ? ModTr("ON") : ModTr("OFF")) +
-      ModTr(" | SetDelay[Left]: ") +
+      ModTr("TEXT_AUTO_MODE_END") +
+      (this.Settings.AutoMode ? ModTr("TEXT_ON") : ModTr("TEXT_OFF")) +
+      ModTr("TEXT_SET_DELAY_LEFT") +
       (this.Settings.Delay / 1000).toString() +
-      ModTr(" | Select[Right]: ");
+      ModTr("TEXT_SELECT_RIGHT");
 
     ModManager_1.ModManager.ShowConfirmBox(title, readme, 50);
   }
@@ -181,7 +181,7 @@ class ModCustomTp {
         "Switch to" +
           ModTpFile.CustomTpList[this.Settings.CurreFileNum][1].filename
       );
-    } else ModManager_1.ModManager.ShowTip(ModTr("is the last file"));
+    } else ModManager_1.ModManager.ShowTip(ModTr("TEXT_IS_LAST_FILE"));
 
     this.Settings.CurreNum = -1;
     this.GetTpInfo();
@@ -193,7 +193,7 @@ class ModCustomTp {
         "Switch to" +
           ModTpFile.CustomTpList[this.Settings.CurreFileNum][1].filename
       );
-    } else ModManager_1.ModManager.ShowTip(ModTr("is the first file"));
+    } else ModManager_1.ModManager.ShowTip(ModTr("TEXT_IS_FIRST_FILE"));
 
     this.Settings.CurreNum = -1;
     this.GetTpInfo();
@@ -201,13 +201,13 @@ class ModCustomTp {
   static AddPos() {
     if (this.Settings.CurreNum < this.Settings.TotalNum) {
       this.Settings.CurreNum++;
-    } else ModManager_1.ModManager.ShowTip(ModTr("is the last pos"));
+    } else ModManager_1.ModManager.ShowTip(ModTr("TEXT_IS_LAST_POS"));
     this.GetTpInfo();
   }
   static SubPos() {
     if (this.Settings.CurreNum > 0) {
       this.Settings.CurreNum--;
-    } else ModManager_1.ModManager.ShowTip(ModTr("is the first pos"));
+    } else ModManager_1.ModManager.ShowTip(ModTr("TEXT_IS_FIRST_POS"));
     this.GetTpInfo();
   }
 
@@ -241,13 +241,13 @@ class ModCustomTp {
 
   static setDelay() {
     ModUtils_1.ModUtils.KuroSingleInputBox({
-      title: ModTr("CustomTp:AutoMode:Set Delay"),
+      title: ModTr("TEXT_CUSTOM_TP_AUTO_MODE_SET_DELAY"),
       customFunc: async (string) => {
         var s = ModUtils_1.ModUtils.StringToInt(string);
         if (s !== "error") this.Settings.Delay = s * 1000;
       },
       inputText: (this.Settings.Delay / 1000).toString(),
-      defaultText: ModTr("Please enter Delay(s)"),
+      defaultText: ModTr("TEXT_ENTER_DELAY"),
       isCheckNone: true,
       needFunctionButton: false,
     });
@@ -266,7 +266,7 @@ class ModCustomTp {
         i--
       ) {
         ModManager_1.ModManager.ShowTip(
-          i === 1 ? ModTr("Go") : `${ModTr("Remaining time")}: ${i} ${ModTr("seconds")}`
+          i === 1 ? ModTr("TEXT_GO") : `${ModTr("Remaining time")}: ${i} ${ModTr("TEXT_SECONDS")}`
         );
         await ModUtils_1.ModUtils.Sleep(1000);
       }
@@ -287,12 +287,12 @@ class ModCustomTp {
     if (InputController_1.InputController.IsMyKeyUp("End")) {
       this.Settings.AutoMode = !this.Settings.AutoMode;
       var info = "Unknown";
-      var string = ModTr("AutoMode");
+      var string = ModTr("TEXT_AUTO_MODE");
       if (this.Settings.AutoMode) {
-        info = string + " | " + ModTr("ON");
+        info = string + " | " + ModTr("TEXT_ON");
         ModManager_1.ModManager.ShowTip(info);
       } else {
-        info = string + " | " + ModTr("OFF");
+        info = string + " | " + ModTr("TEXT_OFF");
         ModManager_1.ModManager.ShowTip(info);
       }
 
@@ -314,13 +314,13 @@ class ModCustomTp {
   }
   static Select() {
     ModUtils_1.ModUtils.KuroSingleInputBox({
-      title: ModTr("CustomTp:CurrPos:Select"),
+      title: ModTr("TEXT_CUSTOM_TP_CURR_POS_SELECT"),
       customFunc: async (string) => {
         var s = ModUtils_1.ModUtils.StringToInt(string);
         if (s !== "error") this.Settings.CurreNum = s - 1;
       },
       inputText: (this.Settings.CurreNum + 1).toString(),
-      defaultText: ("Please enter CurreNum"),
+      defaultText: ("TEXT_ENTER_CURR_NUM"),
       isCheckNone: true,
       needFunctionButton: false,
     });

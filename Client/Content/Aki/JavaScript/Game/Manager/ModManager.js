@@ -241,10 +241,10 @@ class ModManager {
     var info = "Unknown";
     if (this.Settings.hasOwnProperty(func)) var state = this.Settings[func];
     if (state) {
-      info = string + " | " + ModTr("ON");
+      info = string + " | " + ModTr("TEXT_ON");
       this.ShowTip(info);
     } else {
-      info = string + " | " + ModTr("OFF");
+      info = string + " | " + ModTr("TEXT_OFF");
       this.ShowTip(info);
     }
   }
@@ -306,8 +306,8 @@ class ModManager {
   }
 
   static FuncState(func, string) {
-    if (func) return string + ModTr(" : <color=green>ON</color> |");
-    else return string + ModTr(" : <color=red>OFF</color> |");
+    if (func) return string + ModTr("COLOR_ON");
+    else return string + ModTr("COLOR_OFF");
   }
 
   static ChangeUid(string) {

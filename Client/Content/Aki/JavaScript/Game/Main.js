@@ -164,6 +164,19 @@ class MainMenu {
           // translate
           MainMenu.getTranslation();
 
+          for (const option in ModLanguage.Langs) {
+            Menu.LanguageValue.AddOption(ModLanguage.Langs[option]);
+          }
+
+          Menu.LanguageValue.OnSelectionChanged.Add((selectedItem) => {
+            if (selectedItem) {
+              ModManager.Settings.killAuraState = selectedItem;
+              MainMenu.KunLog("Language: " + selectedItem);
+            }
+          });
+
+          ModManager.LanguageValue.SetSelected(ModManager.Settings.Language);
+
           Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.GodMode = isChecked;
             MainMenu.KunLog("God Mode: " + isChecked);
@@ -492,74 +505,75 @@ class MainMenu {
 
   static getTranslation() {
     if (Menu) {
-      Menu.PlayerSwitchText.SetText(ModLanguage.ModTr("Player"));
-      Menu.WorldSwitchText.SetText(ModLanguage.ModTr("World"));
-      Menu.ESPSwitchText.SetText(ModLanguage.ModTr("ESP"));
-      Menu.UISwitchText.SetText(ModLanguage.ModTr("Visual"));
-      Menu.DebugSwitchText.SetText(ModLanguage.ModTr("Debug"));
+      Menu.PlayerSwitchText.SetText(ModLanguage.ModTr("HEADING_PLAYER"));
+      Menu.WorldSwitchText.SetText(ModLanguage.ModTr("HEADING_WORLD"));
+      Menu.ESPSwitchText.SetText(ModLanguage.ModTr("HEADING_ESP"));
+      Menu.UISwitchText.SetText(ModLanguage.ModTr("HEADING_VISUAL"));
+      Menu.DebugSwitchText.SetText(ModLanguage.ModTr("HEADING_DEBUG"));
 
-      Menu.HeadingPlayer.SetText(ModLanguage.ModTr("Player"));
-      Menu.HeadingWorld.SetText(ModLanguage.ModTr("World"));
-      Menu.HeadingESP.SetText(ModLanguage.ModTr("ESP"));
-      Menu.HeadingESPFilter.SetText(ModLanguage.ModTr("Filter"));
-      Menu.HeadingUI.SetText(ModLanguage.ModTr("Visual"));
-      Menu.HeadingTeleport.SetText(ModLanguage.ModTr("Teleport"));
-      Menu.HeadingDebug.SetText(ModLanguage.ModTr("Debug"));
+      Menu.HeadingPlayer.SetText(ModLanguage.ModTr("HEADING_PLAYER"));
+      Menu.HeadingWorld.SetText(ModLanguage.ModTr("HEADING_WORLD"));
+      Menu.HeadingESP.SetText(ModLanguage.ModTr("HEADING_ESP"));
+      Menu.HeadingESPFilter.SetText(ModLanguage.ModTr("HEADING_FILTER"));
+      Menu.HeadingUI.SetText(ModLanguage.ModTr("HEADING_VISUAL"));
+      Menu.HeadingTeleport.SetText(ModLanguage.ModTr("HEADING_TELEPORT"));
+      Menu.HeadingDebug.SetText(ModLanguage.ModTr("HEADING_DEBUG"));
 
-      Menu.SaveConfigText.SetText(ModLanguage.ModTr("Save Config"));
+      Menu.SaveConfigText.SetText(ModLanguage.ModTr("TEXT_SAVE_CONFIG"));
 
       // player
-      Menu.GodModeText.SetText(ModLanguage.ModTr("God Mode [F5]"));
-      Menu.PlayerSpeedText.SetText(ModLanguage.ModTr("Player Speed [F12]"));
-      Menu.NoCDText.SetText(ModLanguage.ModTr("No Cooldown [F11]"));
-      Menu.HitMultiplierText.SetText(ModLanguage.ModTr("Hit Multiplier [F6]"));
-      Menu.InfiniteStaminaText.SetText(ModLanguage.ModTr("Infinite Stamina"));
-      Menu.AntiDitherText.SetText(ModLanguage.ModTr("Anti Dither"));
+      Menu.GodModeText.SetText(ModLanguage.ModTr("TEXT_GOD_MODE"));
+      Menu.PlayerSpeedText.SetText(ModLanguage.ModTr("TEXT_PLAYER_SPEED"));
+      Menu.NoCDText.SetText(ModLanguage.ModTr("TEXT_NO_COOLDOWN"));
+      Menu.HitMultiplierText.SetText(ModLanguage.ModTr("TEXT_HIT_MULTIPLIER"));
+      Menu.InfiniteStaminaText.SetText(ModLanguage.ModTr("TEXT_INFINITE_STAMINA"));
+      Menu.AntiDitherText.SetText(ModLanguage.ModTr("TEXT_ANTI_DITHER"));
 
       // teleport
-      Menu.MarkTPText.SetText(ModLanguage.ModTr("Mark Teleport [T]"));
-      Menu.CustomTPText.SetText(ModLanguage.ModTr("Custom Teleport [INS]"));
+      Menu.MarkTPText.SetText(ModLanguage.ModTr("TEXT_MARK_TELEPORT"));
+      Menu.CustomTPText.SetText(ModLanguage.ModTr("TEXT_CUSTOM_TP"));
 
       // world
-      Menu.WorldSpeedText.SetText(ModLanguage.ModTr("World Speed"));
-      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("Auto Absorb [F8]"));
+      Menu.WorldSpeedText.SetText(ModLanguage.ModTr("TEXT_WORLD_SPEED"));
+      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE"));
       Menu.AutoPickTreasureText.SetText(ModLanguage.ModTr("Auto Pick Treasure [F7]"));
-      Menu.KillAuraText.SetText(ModLanguage.ModTr("Kill Aura [F9]"));
-      Menu.PerceptionRangeText.SetText(ModLanguage.ModTr("Perception Range [F10]"));
-      Menu.AutoLootText.SetText(ModLanguage.ModTr("Auto Loot [Num0]"));
-      Menu.AutoDestroyText.SetText(ModLanguage.ModTr("Auto Destroy [Num1]"));
-      Menu.KillAnimalText.SetText(ModLanguage.ModTr("Kill Animal"));
-      Menu.NewKillAuraText.SetText(ModLanguage.ModTr("New Kill Aura"));
-      Menu.MobVacuumText.SetText(ModLanguage.ModTr("Mob Vacuum"));
-      Menu.VacuumCollectText.SetText(ModLanguage.ModTr("Vacuum Collect"));
-      Menu.WeatherText.SetText(ModLanguage.ModTr("Weather"));
+      Menu.KillAuraText.SetText(ModLanguage.ModTr("TEXT_KILL_AURA"));
+      Menu.PerceptionRangeText.SetText(ModLanguage.ModTr("TEXT_PERCEPTION_RANGE"));
+      Menu.AutoLootText.SetText(ModLanguage.ModTr("TEXT_AUTO_LOOT"));
+      Menu.AutoDestroyText.SetText(ModLanguage.ModTr("TEXT_AUTO_DESTROY"));
+      Menu.KillAnimalText.SetText(ModLanguage.ModTr("TEXT_KILL_ANIMAL"));
+      Menu.NewKillAuraText.SetText(ModLanguage.ModTr("TEXT_NEW_KILL_AURA"));
+      Menu.MobVacuumText.SetText(ModLanguage.ModTr("TEXT_MOB_VACUUM"));
+      Menu.VacuumCollectText.SetText(ModLanguage.ModTr("TEXT_VACUUM_COLLECT"));
+      Menu.WeatherText.SetText(ModLanguage.ModTr("TEXT_WEATHER"));
 
       // esp
-      Menu.ESPText.SetText(ModLanguage.ModTr("ESP"));
-      Menu.ESPShowNameText.SetText(ModLanguage.ModTr("Show Name"));
-      Menu.ESPShowDistanceText.SetText(ModLanguage.ModTr("Show Distance"));
-      Menu.ESPShowBoxText.SetText(ModLanguage.ModTr("Show Box"));
-      Menu.ESPMonsterText.SetText(ModLanguage.ModTr("Monster"));
-      Menu.ESPCollectionText.SetText(ModLanguage.ModTr("Collection"));
-      Menu.ESPTreasureText.SetText(ModLanguage.ModTr("Treasure"));
-      Menu.ESPAnimalText.SetText(ModLanguage.ModTr("Animal"));
-      Menu.ESPPuzzleText.SetText(ModLanguage.ModTr("Puzzle"));
-      Menu.ESPCasketText.SetText(ModLanguage.ModTr("Sonance Casket"));
+      Menu.ESPText.SetText(ModLanguage.ModTr("HEADING_ESP"));
+      Menu.ESPShowNameText.SetText(ModLanguage.ModTr("TEXT_SHOW_NAME"));
+      Menu.ESPShowDistanceText.SetText(ModLanguage.ModTr("TEXT_SHOW_DISTANCE"));
+      Menu.ESPShowBoxText.SetText(ModLanguage.ModTr("TEXT_SHOW_BOX"));
+      Menu.ESPMonsterText.SetText(ModLanguage.ModTr("TEXT_MONSTER"));
+      Menu.ESPCollectionText.SetText(ModLanguage.ModTr("TEXT_COLLECTION"));
+      Menu.ESPTreasureText.SetText(ModLanguage.ModTr("TEXT_TREASURE"));
+      Menu.ESPAnimalText.SetText(ModLanguage.ModTr("TEXT_ANIMAL"));
+      Menu.ESPPuzzleText.SetText(ModLanguage.ModTr("TEXT_PUZZLE"));
+      Menu.ESPCasketText.SetText(ModLanguage.ModTr("TEXT_SONANCE_CASKET"));
 
       // visual
-      Menu.CustomUidText.SetText(ModLanguage.ModTr("Custom UID"));
-      Menu.HideHUDText.SetText(ModLanguage.ModTr("Hide HUD"));
-      Menu.HideDmgText.SetText(ModLanguage.ModTr("Hide Damage Text"));
-      Menu.FPSUnlockerText.SetText(ModLanguage.ModTr("FPS Unlocker"));
-      Menu.FPSShowText.SetText(ModLanguage.ModTr("Show FPS"));
-      Menu.FOVText.SetText(ModLanguage.ModTr("FOV"));
+      Menu.CustomUidText.SetText(ModLanguage.ModTr("TEXT_CUSTOM_UID"));
+      Menu.HideHUDText.SetText(ModLanguage.ModTr("TEXT_HIDE_HUD"));
+      Menu.HideDmgText.SetText(ModLanguage.ModTr("TEXT_HIDE_DAMAGE_TEXT"));
+      Menu.FPSUnlockerText.SetText(ModLanguage.ModTr("TEXT_FPS_UNLOCKER"));
+      Menu.FPSShowText.SetText(ModLanguage.ModTr("TEXT_SHOW_FPS"));
+      Menu.FOVText.SetText(ModLanguage.ModTr("TEXT_FOV"));
 
       // debug
-      Menu.DebugEntityText.SetText(ModLanguage.ModTr("Debug Entity"));
-      Menu.ConsoleCommandText.SetText(ModLanguage.ModTr("Console Command"));
+      Menu.DebugEntityText.SetText(ModLanguage.ModTr("TEXT_DEBUG_ENTITY"));
+      Menu.ConsoleCommandText.SetText(ModLanguage.ModTr("TEXT_CONSOLE_COMMAND"));
 
-      Menu.Designer.SetText(ModLanguage.ModTr("GUI Designer: n0bu"));
-      Menu.DisclaimerText.SetText(this.Getfreetip());
+      Menu.Designer.SetText(ModLanguage.ModTr("TEXT_DESIGNER"));
+      Menu.DisclaimerText.SetText(ModLanguage.ModTr("TEXT_DISCLAIMER"));
+      Menu.LanguageText.SetText(ModLanguage.ModTr("TEXT_LANGUAGE"));
     }
   }
 
@@ -648,16 +662,16 @@ class MainMenu {
   }
 
   static killAura() {
-    return [ModLanguage.ModTr("Only Hatred"), ModLanguage.ModTr("Infinity")];
+    return [ModLanguage.ModTr("TEXT_ONLY_HATE"), ModLanguage.ModTr("TEXT_INFINITY")];
   }
 
   static WeatherValue() {
     return [
-      ModLanguage.ModTr("Sunny"),
-      ModLanguage.ModTr("Cloudy"),
-      ModLanguage.ModTr("Thunder"),
-      ModLanguage.ModTr("Snow"),
-      ModLanguage.ModTr("Rain"),
+      ModLanguage.ModTr("TEXT_SUNNY"),
+      ModLanguage.ModTr("TEXT_CLOUDY"),
+      ModLanguage.ModTr("TEXT_THUNDER_RAIN"),
+      ModLanguage.ModTr("TEXT_SNOW"),
+      ModLanguage.ModTr("TEXT_RAIN"),
     ];
   }
 
