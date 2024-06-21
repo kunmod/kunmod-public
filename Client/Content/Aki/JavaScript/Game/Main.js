@@ -421,6 +421,12 @@ class MainMenu {
 
           Menu.WeatherCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.WeatherChanger = isChecked;
+            if (isChecked) {
+              ModMethod_1.ModMethod.ChangWeather(ModManager.Settings.WeatherType+1);//Because it starts from 0
+            } else {
+              ModMethod_1.ModMethod.FPSUnlocker(ModManager.Settings.WeatherType+1);
+            }
+
             MainMenu.KunLog("Weather Changer: " + isChecked);
           });
 
