@@ -739,7 +739,7 @@ class ESPmain {
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-// setInterval(ModEntityListener.Runtime, 3000);
+setInterval(ModEntityListener.Runtime, 3000);
 setInterval(ESPmain.RuntimeESP, 10);
 main();
 
