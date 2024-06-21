@@ -597,7 +597,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_ANIMAL",
-      en:  "Puzzle",
+      en:  "Animal",
       chs: "动物",
       ja: "動物",
     },
