@@ -174,7 +174,7 @@ class MainMenu {
             }
           });
 
-          ModManager.LanguageValue.SetSelectedOption(ModManager.Settings.Language);
+          Menu.LanguageValue.SetSelectedOption(ModManager.Settings.Language);
 
           Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.GodMode = isChecked;
@@ -534,7 +534,7 @@ class MainMenu {
 
       // world
       Menu.WorldSpeedText.SetText(ModLanguage.ModTr("TEXT_WORLD_SPEED"));
-      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE"));
+      Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("TEXT_AUTO_ABSORB"));
       Menu.AutoPickTreasureText.SetText(ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE"));
       Menu.KillAuraText.SetText(ModLanguage.ModTr("TEXT_KILL_AURA"));
       Menu.PerceptionRangeText.SetText(ModLanguage.ModTr("TEXT_PERCEPTION_RANGE"));
