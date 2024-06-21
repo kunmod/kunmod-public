@@ -134,9 +134,9 @@ class MainMenu {
         MainMenu.ESPCanvas.SetVisibility(0);
 
         try {
-          Menu.Yinlin.SetBrushFromTexture(
+          Menu.ModImage.SetBrushFromTexture(
             ResourceSystem_1.ResourceSystem.Load(
-              "/Game/Aki/Yinlin.Yinlin",
+              "/Game/Aki/Changli.Changli",
               UE.Texture
             )
           );
@@ -555,15 +555,17 @@ class MainMenu {
     Brush.ImageType = 0;
     Brush.Margin = { Left: 1, Top: 1, Right: 1, Bottom: 1 };
     NewBorder.SetBrush(Brush);
-    const Border = MainMenu.ESPCanvas.Canvas.AddChild(NewBorder);
     const Text = MainMenu.ESPCanvas.Canvas.AddChild(NewText);
-    Border.SetSize(new UE.Vector2D(SizeX, SizeY));
-    Border.SetPosition(new UE.Vector2D(PosX, PosY));
-    Border.SetAlignment(new UE.Vector2D(0.5, 0.5));
     // set text position to left top
     Text.SetSize(new UE.Vector2D(SizeX, SizeY));
     Text.SetPosition(new UE.Vector2D(PosX, PosY-30));
     Text.SetAlignment(new UE.Vector2D(0.5, 0.6));
+    if (ModManager.Settings.ShowBox) {
+      const Border = MainMenu.ESPCanvas.Canvas.AddChild(NewBorder);
+      Border.SetSize(new UE.Vector2D(SizeX, SizeY));
+      Border.SetPosition(new UE.Vector2D(PosX, PosY));
+      Border.SetAlignment(new UE.Vector2D(0.5, 0.5));
+    }
     setTimeout(() => {
       MainMenu.ClearBorder();
     }, 10)
