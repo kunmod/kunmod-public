@@ -80,15 +80,20 @@ class ModMethod {
     //1.sunny 2.Cloudy 3.Thunder 4.Snow 5.Rain
     WeatherController_1.WeatherController.TestChangeWeather(weatherID);
   }
-  static FPSunlocker(){
-    let setfps = "t.MaxFPS 300";
+  static FPSUnlocker(unlock = false){
+    let setfps;
+    if (unlock) {
+      setfps = "t.MaxFPS 300"
+    } else {
+      setfps = "t.MaxFPS 60"
+    }
     ModDebuger_1.ModDebuger.ConsoleCommand(setfps);
   }
   // static FreeCamera(){
   //     ModDebuger_1.ModDebuger.ConsoleCommand("ToggleDebugCamera");
   // }
   static ShowFPS(){
-    let ShowFPS = "stat fps";
+    let ShowFPS = "stat fps"
     ModDebuger_1.ModDebuger.ConsoleCommand(ShowFPS);
   }
   static ShowUnit(){
