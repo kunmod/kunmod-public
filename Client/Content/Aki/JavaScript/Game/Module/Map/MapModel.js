@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapModel = void 0);
 const Json_1 = require("../../../Core/Common/Json"),
-puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   TeleporterById_1 = require("../../../Core/Define/ConfigQuery/TeleporterById"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
@@ -76,12 +75,9 @@ class MapModel extends ModelBase_1.ModelBase {
     );
   }
   GetUnlockedTeleportMap() {
-    puerts_1.logger.info("[KUNDEBUG]:GetDynamicMark", this.KIi); //CODE
     return this.KIi;
   }
   GetDynamicMark(e) {
-    puerts_1.logger.info("[KUNDEBUG]:GetDynamicMark", e); //CODE
-    puerts_1.logger.info("[KUNDEBUG]:GetDynamicMark", this.WIi?.get(e)); //CODE
     return this.WIi?.get(e);
   }
   GetMark(e, t) {
@@ -272,8 +268,7 @@ class MapModel extends ModelBase_1.ModelBase {
   CheckTeleportUnlocked(e) {
     return this.KIi.get(e);
   }
-  GetAllUnlockedAreas() {//获取所有未解锁区域
-    puerts_1.logger.info("[KUNDEBUG]:GetAllUnlockedAreas:", this.QIi); //CODE
+  GetAllUnlockedAreas() {
     return this.QIi;
   }
   AddUnlockedAreas(e) {
@@ -303,13 +298,14 @@ class MapModel extends ModelBase_1.ModelBase {
     );
   }
   IsInUnopenedAreaPullback() {
-    return (
-      !!ModelManager_1.ModelManager.GameModeModel.WorldDone &&
-      !ModelManager_1.ModelManager.GameModeModel.IsTeleport &&
-      ModelManager_1.ModelManager.GameModeModel?.InstanceDungeon
-        ?.MapConfigId === MapDefine_1.BIG_WORLD_MAP_ID &&
-      UnopenedAreaController_1.UnopenedAreaController.CheckInPullback()
-    );
+    // return (
+    //   !!ModelManager_1.ModelManager.GameModeModel.WorldDone &&
+    //   !ModelManager_1.ModelManager.GameModeModel.IsTeleport &&
+    //   ModelManager_1.ModelManager.GameModeModel?.InstanceDungeon
+    //     ?.MapConfigId === MapDefine_1.BIG_WORLD_MAP_ID &&
+    //   UnopenedAreaController_1.UnopenedAreaController.CheckInPullback()
+    // );
+    return false;
   }
   SetMarkExtraShowState(e, t, r, i) {
     return (

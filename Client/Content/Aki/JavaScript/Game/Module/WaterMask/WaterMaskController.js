@@ -46,10 +46,10 @@ class WaterMaskView extends UiControllerBase_1.UiControllerBase {
 }
 (exports.WaterMaskView = WaterMaskView),
   ((_a = WaterMaskView).Uqr = void 0),
-  (WaterMaskView.Aqr = 1500),//300
+  (WaterMaskView.Aqr = 300),
   (WaterMaskView.xqr = 1500),
   (WaterMaskView.Pqr = 30),
-  (WaterMaskView.wqr = 1),//0.09
+  (WaterMaskView.wqr = 0.09),
   (WaterMaskView.MOt = 60),
   (WaterMaskView.Lqr = () => {
     void 0 !== _a.Uqr && _a.Rqr();
@@ -76,7 +76,7 @@ class WaterMaskView extends UiControllerBase_1.UiControllerBase {
       s = Math.ceil(e.widget.width / _a.Aqr),
       o = Math.ceil(e.widget.height / _a.xqr),
       //v = ModelManager_1.ModelManager.FunctionModel.PlayerId.toString();
-      v = "there is no watermark";
+      v = "there is no watermask";
     for (let a = 0; a < s; a++)
       for (let e = 0; e < o; e++) {
         var E = UE.KuroActorManager.SpawnActor(

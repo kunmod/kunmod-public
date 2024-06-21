@@ -705,9 +705,9 @@ class ModEntityListener {
     if (!ModManager.Settings.DebugEntity) return;
     if (!ModUtils.isInGame()) return;
 
-    EntityManager.PushEntityList();
-    const entitylist = EntityManager.ModsEntitys.EntityList;
-    const count = EntityManager.ModsEntitys.EntityCount;
+    //EntityManager.PushEntityList();
+    const entitylist = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+    const count = entitylist.length;
     for (let i = 0; i < count; i++) {
       AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
       KillAura_1.KillAura.killAura(entitylist[i]);
@@ -868,7 +868,7 @@ class ESPmain {
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
-// setInterval(ModEntityListener.Runtime, 3000);
+setInterval(ModEntityListener.Runtime, 3000);
 setInterval(ESPmain.RuntimeESP, 10);
 main();
 

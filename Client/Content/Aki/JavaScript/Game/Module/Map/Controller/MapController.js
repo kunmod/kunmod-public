@@ -54,7 +54,6 @@ class LineTraceSaver {
         (Modmanager_1.ModManager.Settings.MarkX=e),//
         (Modmanager_1.ModManager.Settings.MarkY=t),//
         (Modmanager_1.ModManager.Settings.MarkZ=a),//
-        //(Modmanager_1.ModManager.TpNoloadingTo(e*100,t*100,a*100)),
       r
     );
   }
@@ -131,13 +130,13 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
     MapController.wQt(1).RequestUnlockTeleport(e);
   }
   static RequestMapMarkReplace(e, t) {
-    puerts_1.logger.info("[KUNDEBUG]:RequestMapMarkReplace", e)
-    puerts_1.logger.info("[KUNDEBUG]:RequestMapMarkReplace", t)
+    //puerts_1.logger.info("[KUNDEBUG]:RequestMapMarkReplace", e)
+   // puerts_1.logger.info("[KUNDEBUG]:RequestMapMarkReplace", t)
     MapController.wQt(0).RequestMapMarkReplace(e, t);
   }
   static RequestCreateCustomMark(e, t) {
-    puerts_1.logger.info("[KUNDEBUG]:RequestCreateCustomMark", e)
-    puerts_1.logger.info("[KUNDEBUG]:RequestCreateCustomMark", t)
+    //puerts_1.logger.info("[KUNDEBUG]:RequestCreateCustomMark", e)
+    //puerts_1.logger.info("[KUNDEBUG]:RequestCreateCustomMark", t)
     MapController.wQt(0).RequestCreateCustomMark(e, t);
   }
   static RequestRemoveMapMark(e, t) {
