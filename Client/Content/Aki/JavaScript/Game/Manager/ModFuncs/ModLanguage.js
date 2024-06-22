@@ -736,6 +736,18 @@ class ModLanguage {
       chs: "飞猎手手",
       ja: "",
     },
+    {
+      Text: "TEXT_NOCLIP",
+      en: "No Clip",
+      chs: "无剪辑",
+      ja: "クリップなし",
+    },
+    {
+      Text: "TEXT_PLOT_SKIP",
+      en: "Plot Skip",
+      chs: "剧情跳过",
+      ja: "プロットのスキップ",
+    },
   ];
 
   static ModTr = (string) => {

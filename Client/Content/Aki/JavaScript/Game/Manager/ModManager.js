@@ -101,7 +101,7 @@ class ModManager {
     ShowFPS:false,
     FOV:false,
     FOVValue:60, // default
-
+    NoClip:false,
   };
 
   static GetGameDir() {
