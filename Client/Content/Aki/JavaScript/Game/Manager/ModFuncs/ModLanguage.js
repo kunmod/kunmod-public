@@ -718,6 +718,24 @@ class ModLanguage {
       ja: "雨",
       es: "Lluvia",
     },
+    {
+      Text: "TEXT_ROCK",
+      en: "Rock",
+      chs: "岩石",
+      ja: "",
+    },
+    {
+      Text: "TEXT_MUTTERFLY",
+      en: "Mutterfly",
+      chs: "隙声蝶",
+      ja: "",
+    },
+    {
+      Text: "TEXT_BLOBFLY",
+      en: "Blobfly",
+      chs: "飞猎手手",
+      ja: "",
+    },
   ];
 
   static ModTr = (string) => {

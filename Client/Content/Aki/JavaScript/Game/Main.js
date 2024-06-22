@@ -23,6 +23,7 @@ const puerts_1 = require("puerts"),
   UiManager_1 = require("./Ui/UiManager");
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
+const { BluePrintType } = require("./Manager/ModFuncs/BluePrintType");
 
 const ESP_INTERVAL = 10;
 
@@ -52,7 +53,7 @@ class MainMenu {
     white: new UE.LinearColor(1, 1, 1, 1), // white
     black: new UE.LinearColor(0, 0, 0, 1), // black
     orange: new UE.LinearColor(1, 0.5, 0, 1), // orange
-    pink: new UE.LinearColor(1, 0.75, 0.75, 1), // pink
+    pink: new UE.LinearColor(1, 0, 0.5, 1), // pink
   };
 
   static IsKey(str) {
@@ -408,6 +409,21 @@ class MainMenu {
             MainMenu.KunLog("ESP Sonance Casket: " + isChecked);
           });
 
+          Menu.ESPRockCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowRock = isChecked;
+            MainMenu.KunLog("ESP Rock: " + isChecked);
+          });
+
+          Menu.ESPMutterflyCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowMutterfly = isChecked;
+            MainMenu.KunLog("ESP Mutterfly: " + isChecked);
+          });
+
+          Menu.ESPBlobflyCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.ShowBlobfly = isChecked;
+            MainMenu.KunLog("ESP Blobfly: " + isChecked);
+          });
+
           Menu.ESPRadiusSlider.OnValueChanged.Add((value) => {
             value = value.toFixed(3);
             Menu.ESPRadiusValue.SetText(value);
@@ -587,6 +603,9 @@ class MainMenu {
       Menu.ESPAnimalText.SetText(ModLanguage.ModTr("TEXT_ANIMAL"));
       Menu.ESPPuzzleText.SetText(ModLanguage.ModTr("TEXT_PUZZLE"));
       Menu.ESPCasketText.SetText(ModLanguage.ModTr("TEXT_SONANCE_CASKET"));
+      Menu.ESPRockText.SetText(ModLanguage.ModTr("TEXT_ROCK"));
+      Menu.ESPMutterflyText.SetText(ModLanguage.ModTr("TEXT_MUTTERFLY"));
+      Menu.ESPBlobflyText.SetText(ModLanguage.ModTr("TEXT_BLOBFLY"));
 
       // visual
       Menu.CustomUidText.SetText(ModLanguage.ModTr("TEXT_CUSTOM_UID"));
@@ -659,6 +678,9 @@ class MainMenu {
       Menu.ESPAnimalCheck.SetIsChecked(ModManager.Settings.ShowAnimal);
       Menu.ESPPuzzleCheck.SetIsChecked(ModManager.Settings.ShowPuzzle);
       Menu.ESPCasketCheck.SetIsChecked(ModManager.Settings.ShowCasket);
+      Menu.ESPRockCheck.SetIsChecked(ModManager.Settings.ShowRock);
+      Menu.ESPMutterflyCheck.SetIsChecked(ModManager.Settings.ShowMutterfly);
+      Menu.ESPBlobflyCheck.SetIsChecked(ModManager.Settings.ShowBlobfly);
 
       // debug
       Menu.DebugEntityCheck.SetIsChecked(ModManager.Settings.DebugEntity);
@@ -838,39 +860,67 @@ class ESPmain {
       i++;
       if (!Entity) continue;
 
-      let Blueprint = EntityManager.GetBlueprintType2(Entity);
+      const Blueprint = EntityManager.GetBlueprintType2(Entity);
+
+      const isMutterfly = ["Gameplay111"].includes(Blueprint);
+      const isCasket = ["Gameplay021"].includes(Blueprint);
+      const isRock = [
+        "Gameplay003",
+        "Gameplay537",
+        "Gameplay004",
+        "Gameplay016",
+      ].includes(Blueprint);
+      const isBlobfly = ["Animal032"].includes(Blueprint);
+
+      // Remove entity that have _ in blueprint
+      if (Blueprint.includes("_")) {
+        continue;
+      }
+
       if (EntityManager.isMonster(Entity)) {
         // Monster
         Color = MainMenu.ESPColor.red;
         if (!ModManager.Settings.ShowMonster) continue;
       } else if (EntityManager.isAnimal(Entity)) {
-        // Animal
-        Color = MainMenu.ESPColor.orange;
-        if (!ModManager.Settings.ShowAnimal) continue;
-      } else if (EntityManager.isCollection(Entity)) {
+        // Animal including Blobfly LOL
+        if (isBlobfly) {
+          // Blobfly
+          Color = MainMenu.ESPColor.blue;
+          if (!ModManager.Settings.ShowBlobfly) continue;
+        } else {
+          // Other Animal
+          Color = MainMenu.ESPColor.orange;
+          if (!ModManager.Settings.ShowAnimal) continue;
+        }
+      } else if (AutoInteract_1.AutoInteract.isNeedLoot(Entity)) {
         // Collection
         Color = MainMenu.ESPColor.green;
         if (!ModManager.Settings.ShowCollect) continue;
       } else if (EntityManager.isTreasure(Entity)) {
         // Treasure
-        Color = MainMenu.ESPColor.white;
+        Color = MainMenu.ESPColor.purple;
         if (!ModManager.Settings.ShowTreasure) continue;
       } else if (EntityManager.isGameplay(Entity)) {
         // Gameplay like Puzzle, Game, Sonance Casket ETC
-
-        if (["GamePlay021"].includes(Blueprint)) {
-          // Sonance Casket
+        if (isCasket) {
           Color = MainMenu.ESPColor.yellow;
           if (!ModManager.Settings.ShowCasket) continue;
+        } else if (isMutterfly) {
+          Color = MainMenu.ESPColor.yellow;
+          if (!ModManager.Settings.ShowMutterfly) continue;
+        } else if (isRock) {
+          Color = MainMenu.ESPColor.white;
+          if (!ModManager.Settings.ShowRock) continue;
+        } else {
+          // Other Puzzle
+          if (!BluePrintType.translate.find((t) => t.BluePrint == Blueprint))
+            continue; // remove unused Gameplay
+          Color = MainMenu.ESPColor.pink;
+          if (!ModManager.Settings.ShowPuzzle) continue;
         }
-
-        Color = MainMenu.ESPColor.pink;
-        if (!ModManager.Settings.ShowPuzzle) continue;
-
-      } 
-      else if (ModManager.Settings.ShowUnkown) {
-        Color = MainMenu.ESPColor.blue;
-      }else {
+      } else if (ModManager.Settings.ShowUnkown) {//debug
+        Color = MainMenu.ESPColor.black;
+      } else {
         continue;
       }
 
