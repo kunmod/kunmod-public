@@ -21,7 +21,8 @@ const puerts_1 = require("puerts"),
   MobVacuum_1 = require("./Manager/ModFuncs/MobVacuum"),
   AutoChest_1 = require("./Manager/ModFuncs/AutoChest"),
   AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
-  UiManager_1 = require("./Ui/UiManager");
+  UiManager_1 = require("./Ui/UiManager"),
+  InputManager_1 = require("./Ui/Input/InputManager");
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
 const { BluePrintType } = require("./Manager/ModFuncs/BluePrintType")
@@ -93,9 +94,15 @@ class MainMenu {
 
     if (MainMenu.IsKey("X") === true) {
       if (isMenuShow) {
-        Menu.SetVisibility(0);
-      } else {
+        InputManager_1.InputManager.SetShowCursor(false);
+        ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
+        ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
         Menu.SetVisibility(2);
+      } else {
+        InputManager_1.InputManager.SetShowCursor(true);
+        ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(true);
+        ModelManager_1.ModelManager.LoadingModel.SetIsLoading(true);
+        Menu.SetVisibility(0);
       }
       isMenuShow = !isMenuShow;
     }
@@ -426,7 +433,7 @@ class MainMenu {
           });
 
           Menu.ESPRadiusSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(3);
+            value = value.toFixed(0);
             Menu.ESPRadiusValue.SetText(value);
             ModManager.Settings.ESPRadius = value;
             MainMenu.KunLog("ESP Radius: " + value);
@@ -526,7 +533,7 @@ class MainMenu {
             NoClip_1.NoClip.NoClip(true);
           }
 
-          Menu.PlotSkip.OnCheckStateChanged.Add((isChecked) => {
+          Menu.PlotSkipCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.PlotSkip = isChecked;
             MainMenu.KunLog("Plot Skip: " + isChecked);
           });
@@ -555,8 +562,9 @@ class MainMenu {
         }
 
         Menu.AddToViewport();
-        Menu.SetVisibility(0);
+        Menu.SetVisibility(2);
         isMenuLoaded = true;
+        ModManager.ShowTip("KUN-MOD Menu Loaded!")
         MainMenu.KunLog("KUN-MOD Menu Loaded!");
         clearInterval(loadMenuInterval);
       }
