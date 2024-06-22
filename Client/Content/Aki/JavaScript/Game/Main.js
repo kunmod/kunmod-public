@@ -24,7 +24,7 @@ const puerts_1 = require("puerts"),
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
 
-const ESP_INTERVAL = 50;
+const ESP_INTERVAL = 10;
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage,
@@ -189,6 +189,7 @@ class MainMenu {
             MainMenu.KunLog("No Cooldown: " + isChecked);
           });
 
+          Menu.AutoPickTreasureCheck.bIsEnabled = false;
           Menu.AutoPickTreasureCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoPickTreasure = isChecked;
             MainMenu.KunLog("Auto Pick Treasure: " + isChecked);
@@ -590,7 +591,8 @@ class MainMenu {
       Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
 
       // world
-      Menu.AutoPickTreasureCheck.SetIsChecked(ModManager.Settings.AutoPickTreasure);
+      ModManager.Settings.AutoPickTreasure = false;
+      Menu.AutoPickTreasureCheck.SetIsChecked(false);
       Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
       Menu.KillAnimalCheck.SetIsChecked(ModManager.Settings.KillAnimal);
@@ -679,6 +681,7 @@ class MainMenu {
     const NewText = new UE.TextBlock();
     NewText.SetText(name);
     NewText.SetColorAndOpacity(new UE.SlateColor(color))
+    NewText.Font.Size = 16;
     const NewBorder = new UE.Border();
     const Brush = new UE.SlateBrush();
     Brush.TintColor = new UE.SlateColor(color);
@@ -751,6 +754,9 @@ class ESPmain {
       return null;
     }
   }
+  static EntityFilter = {
+    mutterfly: ["Gameplay111"]
+  }
   //esp测试test
   static RuntimeESP() {
     if (!ModUtils.isInGame()) return;
@@ -766,14 +772,17 @@ class ESPmain {
         ScreenPos,
         Text = "",
         Color,
-        IsValid = true,
         ShowBox,
         Entity = entitylist[i];
       i++
+      if (!Entity) continue;
+      if (!Entity.Entity) continue;
       if (Entity.Entity.GetComponent(3)) {
         Component = Entity.Entity.GetComponent(3);
         Location = Component.Actor.K2_GetActorLocation();
+        if (!Location) continue;
         Bounds = Component.Actor.Mesh.Bounds;
+        if (!Bounds) continue;
       } else if (Entity.Entity.GetComponent(1)) {
         Component = Entity.Entity.GetComponent(1);
         if (Component.Actor) {
@@ -791,7 +800,67 @@ class ESPmain {
         } else {
           continue;
         }
+        if (!Location) continue;
+        if (!Bounds) continue;
       } else {
+        continue;
+      }
+
+      // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
+
+      if (EntityManager.isMonster(Entity)) {
+        // Text = 'Monster';
+        Color = MainMenu.ESPColor.monster;
+        if (!ModManager.Settings.ShowMonster) continue;
+      } else if (EntityManager.isAnimal(Entity)) {
+        //Text = 'Animal';
+        Color = MainMenu.ESPColor.animal;
+        if (!ModManager.Settings.ShowAnimal) continue;
+      } else if (EntityManager.isCollection(Entity)) {
+        //Text = 'Collection'
+        Color = MainMenu.ESPColor.collection;
+        if (!ModManager.Settings.ShowCollect) continue;
+      } else if (EntityManager.isTreasure(Entity)) {
+        //Text = 'Treasure';
+        Color = MainMenu.ESPColor.treasure;
+        if (!ModManager.Settings.ShowTreasure) continue;
+      } else if (EntityManager.isGameplay(Entity)) {
+        //Text = 'Gameplay';
+        Color = MainMenu.ESPColor.gameplay;
+        if (!ModManager.Settings.ShowPuzzle) continue;
+      } else {
+        continue;
+      }
+      let TextShow = [];
+      let Blueprint = EntityManager.GetBlueprintType2(Entity);
+
+      let PlayerLocation = EntityManager_1.EntityManager.GetPlayerPos();
+      let Distance = UE.KismetMathLibrary.Vector_Distance(PlayerLocation, Location);
+      Distance = Math.floor(Distance / 100);
+      if (Distance > ModManager.Settings.ESPRadius) {
+        continue;
+      }
+
+      if (ModManager.Settings.ShowType) {
+        TextShow.push(Blueprint);
+      }
+
+      if (ModManager.Settings.ShowName) {
+        let Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
+        TextShow.push(Name);
+      }
+
+      if (ModManager.Settings.ShowDistance) {
+        TextShow.push(Distance.toString() + "m");
+      }
+
+      if (TextShow.length > 0) {
+        Text = TextShow.join(" | ");
+      }
+
+      ScreenPos = ESPmain.ProjectWorldToScreen(Location);
+
+      if (ScreenPos.X < 0 && ScreenPos.Y < 0) {
         continue;
       }
 
@@ -815,69 +884,14 @@ class ESPmain {
 
       ShowBox = { X: maxX - minX + Bounds.SphereRadius, Y: maxY - minY + Bounds.SphereRadius };
 
-      if (EntityManager.isMonster(Entity)) {
-        // Text = 'Monster';
-        Color = MainMenu.ESPColor.monster;
-        IsValid = ModManager.Settings.ShowMonster;
-      } else if (EntityManager.isAnimal(Entity)) {
-        //Text = 'Animal';
-        Color = MainMenu.ESPColor.animal;
-        IsValid = ModManager.Settings.ShowAnimal;
-      } else if (EntityManager.isCollection(Entity)) {
-        //Text = 'Collection'
-        Color = MainMenu.ESPColor.collection;
-        IsValid = ModManager.Settings.ShowCollect;
-      } else if (EntityManager.isTreasure(Entity)) {
-        //Text = 'Treasure';
-        Color = MainMenu.ESPColor.treasure;
-        IsValid = ModManager.Settings.ShowTreasure;
-      } else if (EntityManager.isGameplay(Entity)) {
-        //Text = 'Gameplay';
-        Color = MainMenu.ESPColor.gameplay;
-        IsValid = ModManager.Settings.ShowPuzzle;
-      } else {
-        continue;
-      }
-      let TextShow = [];
-      let Blueprint = EntityManager.GetBlueprintType2(Entity);
-
-      let PlayerLocation = EntityManager_1.EntityManager.GetPlayerPos();
-      let Distance = UE.KismetMathLibrary.Vector_Distance(PlayerLocation, Location);
-      Distance = Math.floor(Distance / 100);
-      if (Distance > ModManager.Settings.ESPRadius) {
-        IsValid = false;
-      }
-
-      if (ModManager.Settings.ShowType) {
-        TextShow.push(Blueprint);
-      }
-
-      if (ModManager.Settings.ShowName) {
-        let Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
-        TextShow.push(Name);
-      }
-
-      if (ModManager.Settings.ShowDistance) {
-        TextShow.push(Distance.toString() + "m");
-      }
-
-      if (TextShow.length > 0) {
-        Text = TextShow.join(" | ");
-      }
-
-      if (IsValid) {
-        ScreenPos = ESPmain.ProjectWorldToScreen(Location);
-        if (ScreenPos.X > 0 && ScreenPos.Y > 0) {
-          MainMenu.ESPDrawBoxEntities(
-            ShowBox.X,
-            ShowBox.Y,
-            ScreenPos.X,
-            ScreenPos.Y,
-            Text,
-            Color
-          );
-        }
-      }
+      MainMenu.ESPDrawBoxEntities(
+        ShowBox.X,
+        ShowBox.Y,
+        ScreenPos.X,
+        ScreenPos.Y,
+        Text,
+        Color
+      );
     }
   }
  }
