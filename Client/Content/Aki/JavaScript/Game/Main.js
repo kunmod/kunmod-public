@@ -814,14 +814,26 @@ class ESPmain {
 
       let Blueprint = EntityManager.GetBlueprintType2(Entity);
 
+      // Remove entity that have _ in blueprint
+      if (Blueprint.includes("_")) {
+        continue;
+      }
+
       if (EntityManager.isMonster(Entity)) {
         // Monster
         Color = MainMenu.ESPColor.red;
         if (!ModManager.Settings.ShowMonster) continue;
       } else if (EntityManager.isAnimal(Entity)) {
-        // Animal
-        Color = MainMenu.ESPColor.orange;
+        // Animal including Blobfly LOL
+        if (["Animal032"].includes(Blueprint)) {
+          // Blobfly, lets move this shit to Collection
+          Color = MainMenu.ESPColor.green;
+          if (!ModManager.Settings.ShowCollect) continue;
+        } else {
+          // Other Animal
+          Color = MainMenu.ESPColor.orange;
         if (!ModManager.Settings.ShowAnimal) continue;
+        }
       } else if (EntityManager.isCollection(Entity)) {
         // Collection
         Color = MainMenu.ESPColor.green;
@@ -832,15 +844,15 @@ class ESPmain {
         if (!ModManager.Settings.ShowTreasure) continue;
       } else if (EntityManager.isGameplay(Entity)) {
         // Gameplay like Puzzle, Game, Sonance Casket ETC
-
         if (["Gameplay021"].includes(Blueprint)) {
           // Sonance Casket
           Color = MainMenu.ESPColor.yellow;
           if (!ModManager.Settings.ShowCasket) continue;
+        } else {
+          // Other Puzzle
+          Color = MainMenu.ESPColor.pink;
+          if (!ModManager.Settings.ShowPuzzle) continue;
         }
-
-        Color = MainMenu.ESPColor.pink;
-        if (!ModManager.Settings.ShowPuzzle) continue;
       } else {
         continue;
       }
