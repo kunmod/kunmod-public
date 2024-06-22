@@ -93,6 +93,7 @@ class ModManager {
     ShowEntityId:true,
     ShowDistance:true,
     ShowName:true,
+    ShowUnkown:true,
     FPSUnlocker:false,
     ShowFPS:false,
     FOV:false,

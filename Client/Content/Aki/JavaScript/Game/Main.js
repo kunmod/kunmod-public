@@ -868,7 +868,7 @@ class ESPmain {
         if (!ModManager.Settings.ShowPuzzle) continue;
 
       } 
-      else if (true /*ModManager.Settings.ShowUnkown*/) {
+      else if (ModManager.Settings.ShowUnkown) {
         Color = MainMenu.ESPColor.blue;
       }else {
         continue;
