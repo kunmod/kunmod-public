@@ -447,10 +447,10 @@ class BluePrintType extends ModLanguage {
       ja: "Animal032",
     },
     {
-      BluePrint: "Gamplay021",
+      BluePrint: "Gameplay021",
       en: "Sonance Casket",
-      chs: "Gamplay021",
-      ja: "Gamplay021",
+      chs: "Gameplay021",
+      ja: "Gameplay021",
     },
     {
       BluePrint: "Gameplay050",

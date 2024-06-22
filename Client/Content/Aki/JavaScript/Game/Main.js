@@ -833,7 +833,7 @@ class ESPmain {
       } else if (EntityManager.isGameplay(Entity)) {
         // Gameplay like Puzzle, Game, Sonance Casket ETC
 
-        if (["Gamplay021"].includes(Blueprint)) {
+        if (["Gameplay021"].includes(Blueprint)) {
           // Sonance Casket
           Color = MainMenu.ESPColor.yellow;
           if (!ModManager.Settings.ShowCasket) continue;
