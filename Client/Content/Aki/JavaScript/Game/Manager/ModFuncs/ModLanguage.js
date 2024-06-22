@@ -536,6 +536,7 @@ class ModLanguage {
       ja: "動物を殺す",
       es: "Matar Animal",
       id: "Bunuh Hewan",
+      vi: "",
     },
     {
       Text: "TEXT_SAVE_CONFIG",
@@ -544,6 +545,7 @@ class ModLanguage {
       ja: "設定を保存",
       es: "Guardar Configuración",
       id: "Simpan Konfigurasi",
+      vi: "",
     },
     {
       Text: "TEXT_AUTO_DESTROY",
@@ -552,6 +554,7 @@ class ModLanguage {
       ja: "自動破壊 [Num1]",
       es: "Auto Destruir [Num1]",
       id: "Pengancuran Otomatis [Num1]",
+      vi: "",
     },
     {
       Text: "TEXT_LANGUAGE",
@@ -560,6 +563,7 @@ class ModLanguage {
       ja: "言語",
       es: "Idioma",
       id: "Bahasa",
+      vi: "",
     },
     {
       Text: "TEXT_CONSOLE_COMMAND",
@@ -568,6 +572,7 @@ class ModLanguage {
       ja: "UE4コンソール コマンド",
       es: "UE4 Consola de comandos",
       id: "Perintah Konsol UE4",
+      vi: "",
     },
     {
       Text: "TEXT_FOV",
@@ -576,6 +581,7 @@ class ModLanguage {
       ja: "視野角",
       es: "FOV",
       id: "FOV",
+      vi: "",
     },
     {
       Text: "TEXT_SHOW_FPS",
@@ -584,6 +590,7 @@ class ModLanguage {
       ja: "FPSを表示",
       es: "Mostrar FPS",
       id: "Tampilkan FPS",
+      vi: "",
     },
     {
       Text: "TEXT_FPS_UNLOCKER",
@@ -592,6 +599,7 @@ class ModLanguage {
       ja: "FPSアンロック",
       es: "Desbloqueador de FPS",
       id: "Buka Kunci FPS",
+      vi: "",
     },
     {
       Text: "TEXT_SONANCE_CASKET",
@@ -600,6 +608,7 @@ class ModLanguage {
       ja: "ソナンスカスケット",
       es: "Caja de Sonancia",
       id: "Sonance Casket",
+      vi: "",
     },
     {
       Text: "TEXT_PUZZLE",
@@ -608,6 +617,7 @@ class ModLanguage {
       ja: "Puzzle",
       es: "Rompecabezas",
       id: "Teka-teki",
+      vi: "",
     },
     {
       Text: "TEXT_ANIMAL",
@@ -616,6 +626,7 @@ class ModLanguage {
       ja: "動物",
       es: "Animal",
       id: "Hewan",
+      vi: "",
     },
     {
       Text: "TEXT_TREASURE",
@@ -624,6 +635,7 @@ class ModLanguage {
       ja: "宝物",
       es: "Tesoro",
       id: "Harta",
+      vi: "",
     },
     {
       Text: "TEXT_COLLECTION",
@@ -632,6 +644,7 @@ class ModLanguage {
       ja: "コレクション",
       es: "Colección",
       id: "Koleksi",
+      vi: "",
     },
     {
       Text: "TEXT_MONSTER",
@@ -640,6 +653,7 @@ class ModLanguage {
       ja: "モンスター",
       es: "Monstruo",
       id: "Musuh",
+      vi: "",
     },
     {
       Text: "TEXT_SHOW_BOX",
@@ -648,6 +662,7 @@ class ModLanguage {
       ja: "表示ボックス",
       es: "Mostrar Caja",
       id: "Tampilkan Box",
+      vi: "",
     },
     {
       Text: "TEXT_SHOW_DISTANCE",
@@ -656,6 +671,7 @@ class ModLanguage {
       ja: "距離を表示します",
       es: "Mostrar Distancia",
       id: "Tampilkan Jarak",
+      vi: "",
     },
     {
       Text: "TEXT_SHOW_NAME",
@@ -664,6 +680,7 @@ class ModLanguage {
       ja: "ショー名",
       es: "Mostrar Nombre",
       id: "Tampilkan Nama",
+      vi: "",
     },
     {
       Text: "HEADING_ESP",
@@ -672,6 +689,7 @@ class ModLanguage {
       ja: "ESP",
       es: "ESP",
       id: "ESP",
+      vi: "",
     },
     {
       Text: "TEXT_WEATHER",
@@ -680,21 +698,25 @@ class ModLanguage {
       ja: "天気",
       es: "Clima",
       id: "Cuaca",
+      vi: "",
     },
     {
       Text: "TEXT_VACUUM_COLLECT",
       en: "Vacuum Collect",
       chs: "吸收集品",
-      ja: "Vacuum Collect",
-      es: "Vacuum Collect",
+      ja: "",
+      es: "",
       id: "Vakum Koleksi",
+      vi: "",
     },
     {
       Text: "TEXT_MOB_VACUUM",
       en: "Monster Vacuum",
       chs: "吸怪",
-      ja: "Monster Vacuum",
-      es: "Vakum Musuh",
+      ja: "",
+      es: "",
+      id: "Vakum Musuh",
+      vi: "",
     },
     {
       Text: "HEADING_FILTER",
@@ -703,6 +725,7 @@ class ModLanguage {
       ja: "フィルター",
       es: "Filtro",
       id: "Saring",
+      vi: "",
     },
     {
       Text: "TEXT_SUNNY",
@@ -711,6 +734,7 @@ class ModLanguage {
       ja: "晴れ",
       es: "Soleado",
       id: "Cerah",
+      vi: "",
     },
     {
       Text: "TEXT_CLOUDY",
@@ -719,6 +743,7 @@ class ModLanguage {
       ja: "曇り",
       es: "Nublado",
       id: "Berawan",
+      vi: "",
     },
     {
       Text: "TEXT_THUNDER_RAIN",
@@ -726,7 +751,8 @@ class ModLanguage {
       chs: "雷雨",
       ja: "雷雨",
       es: "Tormenta",
-      id: "Hujan Badai"
+      id: "Hujan Badai",
+      vi: "",
     },
     {
       Text: "TEXT_SNOW",
@@ -734,7 +760,8 @@ class ModLanguage {
       chs: "雪",
       ja: "雪",
       es: "Nieve",
-      id: "Salju"
+      id: "Salju",
+      vi: "",
     },
     {
       Text: "TEXT_RAIN",
@@ -742,31 +769,35 @@ class ModLanguage {
       chs: "雨",
       ja: "雨",
       es: "Lluvia",
-      id: "Hujan"
+      id: "Hujan",
+      vi: "",
     },
     {
       Text: "TEXT_ROCK",
       en: "Rock",
       chs: "岩石",
-      ja: "",
-      es: "",
-      id: "Batu"
+      ja: "ロック",
+      es: "Roca",
+      id: "Batu",
+      vi: "",
     },
     {
       Text: "TEXT_MUTTERFLY",
       en: "Mutterfly",
       chs: "隙聲蝶",
       ja: "",
-      es: "Mutterfly",
-      id: "Kupu-kupu"
+      es: "",
+      id: "Kupu-kupu",
+      vi: "",
     },
     {
       Text: "TEXT_BLOBFLY",
       en: "Blobfly",
       chs: "飛獵手",
       ja: "",
-      es: "Blobfly",
-      id: "Blobfly"
+      es: "",
+      id: "Blobfly",
+      vi: "",
     },
     {
       Text: "TEXT_NOCLIP",
@@ -774,15 +805,17 @@ class ModLanguage {
       chs: "No Clip",
       ja: "No Clip",
       es: "No Clip",
-      id: "No Clip"
+      id: "No Clip",
+      vi: "",
     },
     {
       Text: "TEXT_PLOT_SKIP",
       en: "Plot Skip",
       chs: "剧情跳过",
       ja: "プロットのスキップ",
-      es: "",
-      id: "Lewati Cerita"
+      es: "Saltate la Historia",
+      id: "Lewati Cerita",
+      vi: "",
     },
   ];
 
