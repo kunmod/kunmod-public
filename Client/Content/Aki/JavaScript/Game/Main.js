@@ -23,6 +23,7 @@ const puerts_1 = require("puerts"),
   UiManager_1 = require("./Ui/UiManager");
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
+const { BluePrintType } = require("./Manager/ModFuncs/BluePrintType")
 
 const ESP_INTERVAL = 10;
 
@@ -52,7 +53,7 @@ class MainMenu {
     white: new UE.LinearColor(1, 1, 1, 1), // white
     black: new UE.LinearColor(0, 0, 0, 1), // black
     orange: new UE.LinearColor(1, 0.5, 0, 1), // orange
-    pink: new UE.LinearColor(1, 0.75, 0.75, 1), // pink
+    pink: new UE.LinearColor(1, 0, 0.5, 1), // pink
   };
 
   static IsKey(str) {
@@ -863,7 +864,7 @@ class ESPmain {
 
       const isMutterfly = ["Gameplay111"].includes(Blueprint);
       const isCasket = ["Gameplay021"].includes(Blueprint);
-      const isFragileRock = ["Gameplay003", "Gameplay537"].includes(Blueprint);
+      const isRock = ["Gameplay003", "Gameplay537", "Gameplay004", "Gameplay016"].includes(Blueprint);
       const isBlobfly = ["Animal032"].includes(Blueprint);
 
       // Remove entity that have _ in blueprint
@@ -902,11 +903,12 @@ class ESPmain {
         } else if (isMutterfly) {
           Color = MainMenu.ESPColor.yellow;
           if (!ModManager.Settings.ShowMutterfly) continue;
-        } else if (isFragileRock) {
+        } else if (isRock) {
           Color = MainMenu.ESPColor.white;
           if (!ModManager.Settings.ShowRock) continue;
         } else {
           // Other Puzzle
+          if (!BluePrintType.translate.find((t) => t.BluePrint == Blueprint)) continue; // remove unused Gameplay
           Color = MainMenu.ESPColor.pink;
           if (!ModManager.Settings.ShowPuzzle) continue;
         }

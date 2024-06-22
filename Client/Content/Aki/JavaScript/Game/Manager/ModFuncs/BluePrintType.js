@@ -528,18 +528,6 @@ class BluePrintType extends ModLanguage {
       ja: "Gameplay004",
     },
     {
-      BluePrint: "Gameplay006",
-      en: "Grapple Point",
-      chs: "Gameplay006",
-      ja: "Gameplay006",
-    },
-    {
-      BluePrint: "Gameplay007",
-      en: "Grapple Point",
-      chs: "Gameplay006",
-      ja: "Gameplay006",
-    },
-    {
       BluePrint: "Gameplay014",
       en: "Induction Cell",
       chs: "Gameplay014",
