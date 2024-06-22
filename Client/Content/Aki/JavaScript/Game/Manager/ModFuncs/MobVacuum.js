@@ -20,11 +20,7 @@ const EntityManager = EntityManager_1.EntityManager;
 const ModUtils = ModUtils_1.ModUtils;
 
 class MobVacuum extends EntityManager {
-  static isNeed(entity) {
-    let need = this.isMonster(entity);
 
-    return need;
-  }
   static isIndistance(entity) {
     let monsterPos = this.GetPosition(entity.Entity);
     let distance = ModUtils.Getdistance2Player(monsterPos);

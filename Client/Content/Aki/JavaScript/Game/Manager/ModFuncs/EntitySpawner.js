@@ -57,7 +57,7 @@ class EntitySpawner {
     MyEntity.updatePosition();
     puerts_1.logger.warn("kunSpawn :", MyEntity);  
     CreatureController_1.CreatureController.CreateEntity(MyEntity);
-    let a =EntityManager_1.EntityManager.GetPlayerPos();
+   // let a =EntityManager_1.EntityManager.GetPlayerPos();
     //ModManager_1.ModManager.TpNoloadingTo(a.X,a.Y,a.Z);
     
   }

@@ -49,15 +49,15 @@ class AutoChest extends EntityManager {
   ];
 
   static isNeedReward(entity) {
-    let blueprintType = this.GetBlueprintType(entity);
-    if (ChestList.includes(blueprintType)) {
-      if (
-        !entity.CheckGetComponent(114).IsLocked &&
-        ModelManager_1.ModelManager.PlayerInfoModel.GetId() ===
-          ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
-      ) {
+    let blueprintType = this.GetBlueprintType2(entity);
+    if (this.ChestList.includes(blueprintType)) {
+      // if (
+      //   !entity.Entity.CheckGetComponent(114).IsLocked &&
+      //   ModelManager_1.ModelManager.PlayerInfoModel.GetId() ===
+      //     ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
+      // ) {
         return true;
-      }
+     // }
     }
     return false;
   }
@@ -66,9 +66,11 @@ class AutoChest extends EntityManager {
     if (!ModManager_1.ModManager.Settings.AutoChest) return;
 
     if (this.isNeedReward(entity)) {
+      puerts_1.logger.info("kun宝箱start")
       ModMethod.RewardChest(entity.Entity);
+      puerts_1.logger.info("kun宝箱end")
     }
   }
 }
-//puerts.logger.info(debug)
+
 exports.AutoChest = AutoChest;

@@ -49,7 +49,7 @@ class MainMenu {
     treasure: new UE.LinearColor(1, 0, 1, 1), // purple
     animal: new UE.LinearColor(0, 1, 0, 1), // green
     gameplay: new UE.LinearColor(0, 0, 1, 1), // blue
-  }
+  };
 
   static IsKey(str) {
     // let IsInputKeyDown = InputSetting_1.InputSettings.IsInputKeyDown(str);
@@ -160,20 +160,24 @@ class MainMenu {
 
               // update tr
               MainMenu.getTranslation();
-        
+
               // update kill aura selection
               Menu.KillAuraValue.ClearOptions();
               for (const option in MainMenu.killAura()) {
                 Menu.KillAuraValue.AddOption(MainMenu.killAura()[option]);
               }
-              Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
+              Menu.KillAuraValue.SetSelectedIndex(
+                ModManager.Settings.killAuraState
+              );
 
               // update weather selection
               Menu.WeatherValue.ClearOptions();
               for (const option in MainMenu.WeatherValue()) {
                 Menu.WeatherValue.AddOption(MainMenu.WeatherValue()[option]);
               }
-              Menu.WeatherValue.SetSelectedIndex(ModManager.Settings.WeatherType);
+              Menu.WeatherValue.SetSelectedIndex(
+                ModManager.Settings.WeatherType
+              );
             }
           });
 
@@ -407,7 +411,7 @@ class MainMenu {
           });
 
           Menu.ConsoleCommandSet.OnClicked.Add(() => {
-            const Command = Menu.ConsoleCommandValue .GetText();
+            const Command = Menu.ConsoleCommandValue.GetText();
             ModDebuger.ConsoleCommand(Command);
             MainMenu.KunLog("Execute Command: " + Command);
           });
@@ -425,9 +429,13 @@ class MainMenu {
           Menu.WeatherCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.WeatherChanger = isChecked;
             if (isChecked) {
-              ModMethod_1.ModMethod.ChangWeather(ModManager.Settings.WeatherType+1);//Because it starts from 0
+              ModMethod_1.ModMethod.ChangWeather(
+                ModManager.Settings.WeatherType + 1
+              ); //Because it starts from 0
             } else {
-              ModMethod_1.ModMethod.FPSUnlocker(ModManager.Settings.WeatherType+1);
+              ModMethod_1.ModMethod.FPSUnlocker(
+                ModManager.Settings.WeatherType + 1
+              );
             }
 
             MainMenu.KunLog("Weather Changer: " + isChecked);
@@ -481,7 +489,9 @@ class MainMenu {
             MainMenu.KunLog("FOV Value: " + value);
           });
 
-          Menu.KillAuraValue.SetSelectedIndex(ModManager.Settings.killAuraState);
+          Menu.KillAuraValue.SetSelectedIndex(
+            ModManager.Settings.killAuraState
+          );
           Menu.WeatherValue.SetSelectedIndex(ModManager.Settings.WeatherType);
           Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
 
@@ -534,7 +544,9 @@ class MainMenu {
       Menu.PlayerSpeedText.SetText(ModLanguage.ModTr("TEXT_PLAYER_SPEED"));
       Menu.NoCDText.SetText(ModLanguage.ModTr("TEXT_NO_COOLDOWN"));
       Menu.HitMultiplierText.SetText(ModLanguage.ModTr("TEXT_HIT_MULTIPLIER"));
-      Menu.InfiniteStaminaText.SetText(ModLanguage.ModTr("TEXT_INFINITE_STAMINA"));
+      Menu.InfiniteStaminaText.SetText(
+        ModLanguage.ModTr("TEXT_INFINITE_STAMINA")
+      );
       Menu.AntiDitherText.SetText(ModLanguage.ModTr("TEXT_ANTI_DITHER"));
 
       // teleport
@@ -544,9 +556,13 @@ class MainMenu {
       // world
       Menu.WorldSpeedText.SetText(ModLanguage.ModTr("TEXT_WORLD_SPEED"));
       Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("TEXT_AUTO_ABSORB"));
-      Menu.AutoPickTreasureText.SetText(ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE"));
+      Menu.AutoPickTreasureText.SetText(
+        ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE")
+      );
       Menu.KillAuraText.SetText(ModLanguage.ModTr("TEXT_KILL_AURA"));
-      Menu.PerceptionRangeText.SetText(ModLanguage.ModTr("TEXT_PERCEPTION_RANGE"));
+      Menu.PerceptionRangeText.SetText(
+        ModLanguage.ModTr("TEXT_PERCEPTION_RANGE")
+      );
       Menu.AutoLootText.SetText(ModLanguage.ModTr("TEXT_AUTO_LOOT"));
       Menu.AutoDestroyText.SetText(ModLanguage.ModTr("TEXT_AUTO_DESTROY"));
       Menu.KillAnimalText.SetText(ModLanguage.ModTr("TEXT_KILL_ANIMAL"));
@@ -577,7 +593,9 @@ class MainMenu {
 
       // debug
       Menu.DebugEntityText.SetText(ModLanguage.ModTr("TEXT_DEBUG_ENTITY"));
-      Menu.ConsoleCommandText.SetText(ModLanguage.ModTr("TEXT_CONSOLE_COMMAND"));
+      Menu.ConsoleCommandText.SetText(
+        ModLanguage.ModTr("TEXT_CONSOLE_COMMAND")
+      );
 
       Menu.Designer.SetText(ModLanguage.ModTr("TEXT_DESIGNER"));
       Menu.DisclaimerText.SetText(ModLanguage.ModTr("TEXT_DISCLAIMER"));
@@ -592,15 +610,21 @@ class MainMenu {
       Menu.NoCDCheck.SetIsChecked(ModManager.Settings.NoCD);
       Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
       Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
-      Menu.InfiniteStaminaCheck.SetIsChecked(ModManager.Settings.InfiniteStamina);
+      Menu.InfiniteStaminaCheck.SetIsChecked(
+        ModManager.Settings.InfiniteStamina
+      );
       Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
 
       // world
-      Menu.AutoPickTreasureCheck.SetIsChecked(ModManager.Settings.AutoPickTreasure);
+      Menu.AutoPickTreasureCheck.SetIsChecked(
+        ModManager.Settings.AutoPickTreasure
+      );
       Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
       Menu.KillAnimalCheck.SetIsChecked(ModManager.Settings.KillAnimal);
-      Menu.PerceptionRangeCheck.SetIsChecked(ModManager.Settings.PerceptionRange);
+      Menu.PerceptionRangeCheck.SetIsChecked(
+        ModManager.Settings.PerceptionRange
+      );
       Menu.AutoDestroyCheck.SetIsChecked(ModManager.Settings.AutoDestroy);
       Menu.NewAutoAbsorbCheck.SetIsChecked(ModManager.Settings.AutoAbsorbnew);
       Menu.NewKillAuraCheck.SetIsChecked(ModManager.Settings.killAuranew);
@@ -656,7 +680,10 @@ class MainMenu {
   }
 
   static killAura() {
-    return [ModLanguage.ModTr("TEXT_ONLY_HATE"), ModLanguage.ModTr("TEXT_INFINITY")];
+    return [
+      ModLanguage.ModTr("TEXT_ONLY_HATE"),
+      ModLanguage.ModTr("TEXT_INFINITY"),
+    ];
   }
 
   static WeatherValue() {
@@ -669,7 +696,14 @@ class MainMenu {
     ];
   }
 
-  static ESPDrawBoxEntities(sizeX, sizeY, posX = 1, posY = 1, name = 'Unknown', color) {
+  static ESPDrawBoxEntities(
+    sizeX,
+    sizeY,
+    posX = 1,
+    posY = 1,
+    name = "Unknown",
+    color
+  ) {
     MainMenu.AddChild(sizeX, sizeY, posX, posY, name, color);
   }
 
@@ -684,7 +718,7 @@ class MainMenu {
   static AddChild(SizeX, SizeY, PosX, PosY, name, color) {
     const NewText = new UE.TextBlock();
     NewText.SetText(name);
-    NewText.SetColorAndOpacity(new UE.SlateColor(color))
+    NewText.SetColorAndOpacity(new UE.SlateColor(color));
     const NewBorder = new UE.Border();
     const Brush = new UE.SlateBrush();
     Brush.TintColor = new UE.SlateColor(color);
@@ -695,7 +729,7 @@ class MainMenu {
     const Text = MainMenu.ESPCanvas.Canvas.AddChild(NewText);
     // set text position to left top
     Text.SetSize(new UE.Vector2D(SizeX, SizeY));
-    Text.SetPosition(new UE.Vector2D(PosX, PosY-30));
+    Text.SetPosition(new UE.Vector2D(PosX, PosY - 30));
     Text.SetAlignment(new UE.Vector2D(0.5, 0.6));
     let Border;
     if (ModManager.Settings.ShowBox) {
@@ -709,7 +743,7 @@ class MainMenu {
         MainMenu.RemoveChild(Border);
       }
       MainMenu.RemoveChild(Text);
-    }, ESP_INTERVAL)
+    }, ESP_INTERVAL);
   }
 }
 class ModEntityListener {
@@ -718,17 +752,18 @@ class ModEntityListener {
     if (!ModUtils.isInGame()) return;
 
     //EntityManager.PushEntityList();
-    const entitylist = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+    const entitylist =
+      ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     const count = entitylist.length;
     for (let i = 0; i < count; i++) {
-      AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
-      KillAura_1.KillAura.killAura(entitylist[i]);
-      KillAura_1.KillAura.KillAnimal(entitylist[i]);
-      AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
-      MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
-      MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
+      // AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+      // KillAura_1.KillAura.killAura(entitylist[i]);
+      // KillAura_1.KillAura.KillAnimal(entitylist[i]);
+      // AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
+      // MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
+      // MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
 
-      //AutoChest_1.AutoChest.RewardChest(entitylist[i]);              //1.0.28 cant use
+      AutoChest_1.AutoChest.RewardChest(entitylist[i]); //1.0.28 cant use
     }
 
     //puerts_1.logger.warn("kun:Runtime is working");
@@ -737,20 +772,38 @@ class ModEntityListener {
 class ESPmain {
   static ProjectWorldToScreen(Vector, FixViewport = true) {
     try {
-      const Location = new UE.Vector(Vector.X, Vector.Y, Vector.Z)
-      const PlayerController = UE.GameplayStatics.GetPlayerController(GlobalData_1.GlobalData.World, 0)
-      let ScreenPosition = puerts_1.$ref(undefined)
-      if (PlayerController.ProjectWorldLocationToScreen(Location, ScreenPosition, true)) {
-        puerts_1.$unref(ScreenPosition)
+      const Location = new UE.Vector(Vector.X, Vector.Y, Vector.Z);
+      const PlayerController = UE.GameplayStatics.GetPlayerController(
+        GlobalData_1.GlobalData.World,
+        0
+      );
+      let ScreenPosition = puerts_1.$ref(undefined);
+      if (
+        PlayerController.ProjectWorldLocationToScreen(
+          Location,
+          ScreenPosition,
+          true
+        )
+      ) {
+        puerts_1.$unref(ScreenPosition);
       }
       ScreenPosition = ScreenPosition[0];
       if (FixViewport) {
-        let ViewportPosition = puerts_1.$ref(undefined)
-        if (UE.SlateBlueprintLibrary.ScreenToViewport(GlobalData_1.GlobalData.World, ScreenPosition, ViewportPosition)) {
-          puerts_1.$unref(ViewportPosition)
+        let ViewportPosition = puerts_1.$ref(undefined);
+        if (
+          UE.SlateBlueprintLibrary.ScreenToViewport(
+            GlobalData_1.GlobalData.World,
+            ScreenPosition,
+            ViewportPosition
+          )
+        ) {
+          puerts_1.$unref(ViewportPosition);
         }
         ViewportPosition = ViewportPosition[0];
-        ScreenPosition = new UE.Vector2D(ViewportPosition.X, ViewportPosition.Y);
+        ScreenPosition = new UE.Vector2D(
+          ViewportPosition.X,
+          ViewportPosition.Y
+        );
       }
       return ScreenPosition;
     } catch (e) {
@@ -772,14 +825,17 @@ class ESPmain {
         ScreenPos,
         Text = "",
         Color,
-        IsValid = true,
         ShowBox,
         Entity = entitylist[i];
       i++
+      if (!Entity) continue;
+      if (!Entity.Entity) continue;
       if (Entity.Entity.GetComponent(3)) {
         Component = Entity.Entity.GetComponent(3);
         Location = Component.Actor.K2_GetActorLocation();
+        if (!Location) continue;
         Bounds = Component.Actor.Mesh.Bounds;
+        if (!Bounds) continue;
       } else if (Entity.Entity.GetComponent(1)) {
         Component = Entity.Entity.GetComponent(1);
         if (Component.Actor) {
@@ -797,7 +853,67 @@ class ESPmain {
         } else {
           continue;
         }
+        if (!Location) continue;
+        if (!Bounds) continue;
       } else {
+        continue;
+      }
+
+      // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
+
+      if (EntityManager.isMonster(Entity)) {
+        // Text = 'Monster';
+        Color = MainMenu.ESPColor.monster;
+        if (!ModManager.Settings.ShowMonster) continue;
+      } else if (EntityManager.isAnimal(Entity)) {
+        //Text = 'Animal';
+        Color = MainMenu.ESPColor.animal;
+        if (!ModManager.Settings.ShowAnimal) continue;
+      } else if (EntityManager.isCollection(Entity)) {
+        //Text = 'Collection'
+        Color = MainMenu.ESPColor.collection;
+        if (!ModManager.Settings.ShowCollect) continue;
+      } else if (EntityManager.isTreasure(Entity)) {
+        //Text = 'Treasure';
+        Color = MainMenu.ESPColor.treasure;
+        if (!ModManager.Settings.ShowTreasure) continue;
+      } else if (EntityManager.isGameplay(Entity)) {
+        //Text = 'Gameplay';
+        Color = MainMenu.ESPColor.gameplay;
+        if (!ModManager.Settings.ShowPuzzle) continue;
+      } else {
+        continue;
+      }
+      let TextShow = [];
+      let Blueprint = EntityManager.GetBlueprintType2(Entity);
+
+      let PlayerLocation = EntityManager_1.EntityManager.GetPlayerPos();
+      let Distance = UE.KismetMathLibrary.Vector_Distance(PlayerLocation, Location);
+      Distance = Math.floor(Distance / 100);
+      if (Distance > ModManager.Settings.ESPRadius) {
+        continue;
+      }
+
+      if (ModManager.Settings.ShowType) {
+        TextShow.push(Blueprint);
+      }
+
+      if (ModManager.Settings.ShowName) {
+        let Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
+        TextShow.push(Name);
+      }
+
+      if (ModManager.Settings.ShowDistance) {
+        TextShow.push(Distance.toString() + "m");
+      }
+
+      if (TextShow.length > 0) {
+        Text = TextShow.join(" | ");
+      }
+
+      ScreenPos = ESPmain.ProjectWorldToScreen(Location);
+
+      if (ScreenPos.X < 0 && ScreenPos.Y < 0) {
         continue;
       }
 
@@ -821,72 +937,18 @@ class ESPmain {
 
       ShowBox = { X: maxX - minX + Bounds.SphereRadius, Y: maxY - minY + Bounds.SphereRadius };
 
-      if (EntityManager.isMonster(Entity)) {
-        // Text = 'Monster';
-        Color = MainMenu.ESPColor.monster;
-        IsValid = ModManager.Settings.ShowMonster;
-      } else if (EntityManager.isAnimal(Entity)) {
-        //Text = 'Animal';
-        Color = MainMenu.ESPColor.animal;
-        IsValid = ModManager.Settings.ShowAnimal;
-      } else if (EntityManager.isCollection(Entity)) {
-        //Text = 'Collection'
-        Color = MainMenu.ESPColor.collection;
-        IsValid = ModManager.Settings.ShowCollect;
-      } else if (EntityManager.isTreasure(Entity)) {
-        //Text = 'Treasure';
-        Color = MainMenu.ESPColor.treasure;
-        IsValid = ModManager.Settings.ShowTreasure;
-      } else if (EntityManager.isGameplay(Entity)) {
-        //Text = 'Gameplay';
-        Color = MainMenu.ESPColor.gameplay;
-        IsValid = ModManager.Settings.ShowPuzzle;
-      } else {
-        continue;
-      }
-      let TextShow = [];
-      let Blueprint = EntityManager.GetBlueprintType2(Entity);
-
-      let PlayerLocation = EntityManager_1.EntityManager.GetPlayerPos();
-      let Distance = UE.KismetMathLibrary.Vector_Distance(PlayerLocation, Location);
-      Distance = Math.floor(Distance / 100);
-      if (Distance > ModManager.Settings.ESPRadius) {
-        IsValid = false;
-      }
-
-      if (ModManager.Settings.ShowType) {
-        TextShow.push(Blueprint);
-      }
-
-      if (ModManager.Settings.ShowName) {
-        let Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
-        TextShow.push(Name);
-      }
-
-      if (ModManager.Settings.ShowDistance) {
-        TextShow.push(Distance.toString() + "m");
-      }
-
-      if (TextShow.length > 0) {
-        Text = TextShow.join(" | ");
-      }
-
-      if (IsValid) {
-        ScreenPos = ESPmain.ProjectWorldToScreen(Location);
-        if (ScreenPos.X > 0 && ScreenPos.Y > 0) {
-          MainMenu.ESPDrawBoxEntities(
-            ShowBox.X,
-            ShowBox.Y,
-            ScreenPos.X,
-            ScreenPos.Y,
-            Text,
-            Color
-          );
-        }
-      }
+      MainMenu.ESPDrawBoxEntities(
+        ShowBox.X,
+        ShowBox.Y,
+        ScreenPos.X,
+        ScreenPos.Y,
+        Text,
+        Color
+      );
     }
   }
  }
+
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
