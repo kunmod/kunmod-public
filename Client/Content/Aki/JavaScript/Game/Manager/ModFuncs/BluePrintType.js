@@ -9,70 +9,139 @@ const puerts_1 = require("puerts"),
   LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
 const { ModLanguage } = require("./ModLanguage");
 
-
 class BluePrintType extends ModLanguage {
-
-
   static translate = [
     {
       BluePrint: "Treasure001",
       en: "Basic Supply Chest",
-      chs: "Treasure001",
-      ja: "Treasure001",
+      chs: "简易物资箱",
+      ja: "Basic Supply Chest",
+    },
+    {
+      BluePrint: "Treasure002",
+      en: "Basic Supply Chest",
+      chs: "简易物资箱",
+      ja: "Basic Supply Chest",
+    },
+    {
+      BluePrint: "Treasure003",
+      en: "Basic Supply Chest",
+      chs: "简易物资箱",
+      ja: "Treasure00",
     },
     {
       BluePrint: "Treasure004",
       en: "Standard Supply Chest",
-      chs: "Treasure004",
-      ja: "Treasure004",
+      chs: "标准物资箱",
+      ja: "Standard Supply Chest",
     },
     {
       BluePrint: "Treasure005",
       en: "Blue Tidal Heritage",
-      chs: "Treasure005",
+      chs: "标准物资箱_黑石增生",
       ja: "Treasure005",
+    },
+    {
+      BluePrint: "Treasure006",
+      en: "Standard Supply Chest",
+      chs: "标准物资箱",
+      ja: "Standard Supply Chest",
+    },
+    {
+      BluePrint: "Treasure007",
+      en: "Treasure007",
+      chs: "标准物资箱_黑石增生",
+      ja: "Treasure007",
     },
     {
       BluePrint: "Treasure008",
       en: "Purple Tidal Heritage",
-      chs: "Treasure008",
-      ja: "Treasure008",
+      chs: "豪华物资箱_黑石增生",
+      ja: "Purple Tidal Heritage",
+    },
+    {
+      BluePrint: "Treasure009",
+      en: "Purple Tidal Heritage",
+      chs: "豪华物资箱_黑石增生",
+      ja: "Treasure009",
+    },
+    {
+      BluePrint: "Treasure009",
+      en: "Treasure009",
+      chs: "豪华物资箱_黑石增生",
+      ja: "Treasure009",
     },
     {
       BluePrint: "Treasure010",
       en: "Suspicious Chest",
-      chs: "Treasure010",
+      chs: "丰厚物资箱",
       ja: "Treasure010",
     },
     {
       BluePrint: "Treasure011",
       en: "Golden Tidal Heritage",
-      chs: "Treasure011",
+      chs: "幻象宝箱_金",
       ja: "Treasure011",
+    },
+    {
+      BluePrint: "Treasure012",
+      en: "Treasure012",
+      chs: "丰厚物资箱",
+      ja: "Treasure012",
     },
     {
       BluePrint: "Treasure013",
       en: "Basic Supply Chest",
-      chs: "Treasure013",
+      chs: "丰厚物资箱",
       ja: "Treasure013",
     },
     {
       BluePrint: "Treasure014",
       en: "Standard Supply Chest",
-      chs: "Treasure014",
+      chs: "标准物资箱",
       ja: "Treasure014",
     },
     {
       BluePrint: "Treasure015",
       en: "Advanced Supply Chest",
-      chs: "Treasure015",
+      chs: "丰厚物资箱",
       ja: "Treasure015",
     },
     {
       BluePrint: "Treasure016",
       en: "Premium Supply Chest",
-      chs: "Treasure016",
+      chs: "豪华物资箱",
       ja: "Treasure016",
+    },
+    {
+      BluePrint: "Treasure017",
+      en: "Treasure017",
+      chs: "散落的物资箱",
+      ja: "Treasure017",
+    },
+    {
+      BluePrint: "Treasure018",
+      en: "Treasure018",
+      chs: "标准物资箱",
+      ja: "Treasure018",
+    },
+    {
+      BluePrint: "Treasure019",
+      en: "Treasure019",
+      chs: "简易物资箱",
+      ja: "Treasure019",
+    },
+    {
+      BluePrint: "Treasure020",
+      en: "Treasure020",
+      chs: "丰厚物资箱",
+      ja: "Treasure020",
+    },
+    {
+      BluePrint: "Treasure021",
+      en: "Treasure021",
+      chs: "豪华物资箱",
+      ja: "Treasure021",
     },
     {
       BluePrint: "Collect001",
@@ -257,13 +326,13 @@ class BluePrintType extends ModLanguage {
     {
       BluePrint: "Collect503",
       en: "Indigoite",
-      chs: "Collect503",
+      chs: "萤耀晶簇",
       ja: "Collect503",
     },
     {
       BluePrint: "Collect504",
       en: "Floramber",
-      chs: "Collect504",
+      chs: "植珀",
       ja: "Collect504",
     },
     {
@@ -275,14 +344,14 @@ class BluePrintType extends ModLanguage {
     {
       BluePrint: "Collect601_1",
       en: "Bird Egg Nest",
-      chs: "Collect601_1",
+      chs: "鸟蛋_底座",
       ja: "Collect601_1",
     },
     {
       BluePrint: "Collect602",
       en: "Raw Meat",
-      chs: "Collect602",
-      ja: "Collect602",
+      chs: "兽肉",
+      ja: "Raw Meat",
     },
     {
       BluePrint: "Animal001",
@@ -497,8 +566,8 @@ class BluePrintType extends ModLanguage {
     {
       BluePrint: "Gameplay021",
       en: "Sonance Casket",
-      chs: "Gameplay021",
-      ja: "Gameplay021",
+      chs: "声匣",
+      ja: "音匣",
     },
     {
       BluePrint: "Gameplay022",
@@ -509,7 +578,7 @@ class BluePrintType extends ModLanguage {
     {
       BluePrint: "Gameplay050",
       en: "Training Dummy",
-      chs: "Gameplay050",
+      chs: "打击机关",
       ja: "Gameplay050",
     },
     {
@@ -653,7 +722,7 @@ class BluePrintType extends ModLanguage {
   ];
 
   static ModTr = (string) => {
-    const Find = BluePrintType.translate.find(t => t.BluePrint == string);
+    const Find = BluePrintType.translate.find((t) => t.BluePrint == string);
     if (Find) {
       return Find[this.GetCurrLang()] || Find.BluePrint;
     } else {

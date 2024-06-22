@@ -9,8 +9,9 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   AttributeDefine_1 = require("./AttributeDefine");
 class AttributeModel extends ModelBase_1.ModelBase {
   GetFormatAttributeValueString(e, t, r = !1) {
+    let ratio = 1;
     if (ModManager_1.ModManager.Settings.AttributeModifier) {
-      var ratio = 1000000;
+       ratio = 1000000;
       t = t * ratio;
     }
 

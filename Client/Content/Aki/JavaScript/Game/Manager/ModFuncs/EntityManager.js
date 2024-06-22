@@ -1,16 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EntityManager = void 0;
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const ModManager_1 = require("../ModManager");
-const ModUtils_1 = require("./ModUtils");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
+const puerts_1 = require("puerts"),
+ UE = require("ue"),
+ Info_1 = require("../../../Core/Common/Info"),
+ Log_1 = require("../../../Core/Common/Log"),
+ ModManager_1 = require("../ModManager"),
+ ModUtils_1 = require("./ModUtils"),
+ Global_1 = require("../../Global"),
+ ModelManager_1 = require("../../Manager/ModelManager"),
+ Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+ CreatureController_1 = require("../../World/Controller/CreatureController"),
+ EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
 //const CreatureModel = ModelManager_1.ModelManager.CreatureModel;
 
 class EntityManager {
@@ -75,17 +76,7 @@ class EntityManager {
 
     return pos;
   }
-  static PushEntityList() {
-    this.GetEntitySortedList();
-    this.ModsEntitys.EntityList = this.EntitiesSortedList;
-    this.GetEntityCount();
-    this.GetPlayerEntity();
-    // puerts_1.logger.warn(
-    //   "[KUNMODDEBUG]:GetEntityList",
-    //   this.ModsEntitys.EntityList
-    // );
-    return this.ModsEntitys.EntityList;
-  }
+
 
   static GetEntitySortedList() {
     this.EntitiesSortedList =
@@ -101,6 +92,7 @@ class EntityManager {
       return "SceneItem";
     if (type == Protocol_1.Aki.Protocol.EEntityType.Vision) return "Vision";
     if (type == Protocol_1.Aki.Protocol.EEntityType.Animal) return "Animal";
+    if (type == Protocol_1.Aki.Protocol.EEntityType.Custom) return "Custom";
   }
   static GetEntityCount() {
     this.ModsEntitys.EntityCount = this.EntitiesSortedList.length;
@@ -113,15 +105,15 @@ class EntityManager {
   static GetEntityId(entity) {
     return entity.Id;
   }
-  static GetPosition(entity) {
-    // let Pbdata = this.GetEntityData(entity.PbDataId);
-    // let pos = Pbdata.Transform.Pos;
-    let a = entity.Entity.GetComponent(3);
-    let actor = a.Actor;
+  static GetPosition(Entity) {
+    let a = Entity.GetComponent(1);
+    let actor = a.ActorInternal;
     let pos = actor.K2_GetActorLocation();
 
     return pos;
   }
+
+
 
   static GetName(entity) {
     let a = entity.Entity.GetComponent(3);
@@ -130,9 +122,10 @@ class EntityManager {
 
     return name;
   }
-  static GetEntity(entity) {
-    return entity.Entity;
-  }
+  // static GetEntity(id) {
+
+  //   return ;
+  // }
   static GetBlueprintType(entity) {
     try {
       let PbData = this.GetEntityData(entity.PbDataId);

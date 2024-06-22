@@ -23,15 +23,15 @@ class AutoChest extends EntityManager {
     "Treasure004", //TsEntity_标准物资箱_初始可开
     "Treasure005", //TsEntity_标准物资箱_黑石增生
     "Treasure006", //TsEntity_标准物资箱_玩法刷新
+    "Treasure007", //TsEntity_豪华物资箱_初始可开
     "Treasure008", //TsEntity_豪华物资箱_黑石增生
+    "Treasure009", //TsEntity_豪华物资箱_玩法刷新
     "Treasure010", //TsEntity_丰厚物资箱_初始可开
     "Treasure011", //TsEntity_幻象宝箱_金
     "Treasure012", //TsEntity_丰厚物资箱_玩法刷新
     "Treasure013", //TsEntity_简易物资箱_程序封锁
     "Treasure014", //TsEntity_标准物资箱_程序封锁
     "Treasure015", //TsEntity_丰厚物资箱_程序封锁
-    "Treasure007", //TsEntity_豪华物资箱_初始可开
-    "Treasure009", //TsEntity_豪华物资箱_玩法刷新
     "Treasure016", //TsEntity_豪华物资箱_程序封锁
     "Treasure017", //TsEntity_散落的物资箱_初始可开s
     "Treasure018", //TsEntity_标准物资箱_初始隐匿
@@ -49,15 +49,15 @@ class AutoChest extends EntityManager {
   ];
 
   static isNeedReward(entity) {
-    let blueprintType = this.GetBlueprintType(entity);
-    if (ChestList.includes(blueprintType)) {
-      if (
-        !entity.CheckGetComponent(114).IsLocked &&
-        ModelManager_1.ModelManager.PlayerInfoModel.GetId() ===
-          ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
-      ) {
+    let blueprintType = this.GetBlueprintType2(entity);
+    if (this.ChestList.includes(blueprintType)) {
+      // if (
+      //   !entity.Entity.CheckGetComponent(114).IsLocked &&
+      //   ModelManager_1.ModelManager.PlayerInfoModel.GetId() ===
+      //     ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
+      // ) {
         return true;
-      }
+     // }
     }
     return false;
   }
@@ -66,9 +66,11 @@ class AutoChest extends EntityManager {
     if (!ModManager_1.ModManager.Settings.AutoChest) return;
 
     if (this.isNeedReward(entity)) {
+      puerts_1.logger.info("kun宝箱start")
       ModMethod.RewardChest(entity.Entity);
+      puerts_1.logger.info("kun宝箱end")
     }
   }
 }
-//puerts.logger.info(debug)
+
 exports.AutoChest = AutoChest;

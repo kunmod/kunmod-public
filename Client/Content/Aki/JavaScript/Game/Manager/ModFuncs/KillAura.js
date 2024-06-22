@@ -22,9 +22,9 @@ const AnimalList = [
   "Animal005", //赤脚雁
   "Animal006", //雪云鹤
   "Animal012", //青杂兔
-  //"Animal013", //岩角羊
-  //"Animal014", //灰脊牛
-  //"Animal015", //森栖牛
+  "Animal013", //岩角羊
+  "Animal014", //灰脊牛
+  "Animal015", //森栖牛
 ];
 const BigAnimalList = [
   "Animal013", //岩角羊
@@ -34,7 +34,7 @@ const BigAnimalList = [
 
 class KillAura extends EntityManager {
   static isIndistance(entity) {
-    let monsterPos = this.GetPosition(entity);
+    let monsterPos = this.GetPosition(entity.Entity);
     let distance = ModUtils.Getdistance2Player(monsterPos);
     if (distance < ModManager.Settings.killAuraRadius * 100) {
       return true;
@@ -54,6 +54,7 @@ class KillAura extends EntityManager {
 
     if (this.isMonster(entity) && this.isIndistance(entity)) {
       ModMethod.MonsterDrownRequest(entity.Entity);
+       
       //ModMethod.LandingDamageRequest(entity.Entity);
       //puerts_1.logger.warn("kun:killAuratest:Monster:END", entity.Entity.Id);
     }
@@ -63,15 +64,11 @@ class KillAura extends EntityManager {
       return;
 
     if (this.isneedkillAnimal(entity)) {
-      //ModMethod.AnimalDropRequest(entity);
       ModMethod.AnimalDieRequest(entity.Entity);
+      //ModMethod.AnimalDropRequest(entity.Entity);  
       return;
     }
-    // need a func to kill
-    // if (this.isneedkillAnimalBig(entity)) {  
-    //   ModMethod.ThrowDamageChangeRequest(entity.Entity, 10, 1604001001n);
-    //   return;
-    // }
+
   }
 }
 

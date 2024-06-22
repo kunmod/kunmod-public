@@ -11,7 +11,7 @@ const puerts_1 = require("puerts"),
 
 class ModLanguage {
   static GetCurrLang() {
-    switch(ModManager_1.ModManager.Settings.Language) {
+    switch (ModManager_1.ModManager.Settings.Language) {
       case "English":
         return "en";
       case "简体中文":
@@ -34,7 +34,7 @@ class ModLanguage {
   static translate = [
     {
       Text: "CUSTOM_TP_INS",
-      en:  "CustomTp[Ins]",
+      en: "CustomTp[Ins]",
       chs: "自定义传送[Ins]",
       ja: "てきとうな瞬間移動[Ins]",
       es: "Teleportación Personalizada[Ins]",
@@ -44,7 +44,7 @@ class ModLanguage {
 
     {
       Text: "COLOR_ON",
-      en:  " : <color=green>ON</color> |",
+      en: " : <color=green>ON</color> |",
       chs: " : <color=green>开启</color> |",
       ja: " : <color=green>オン</color>",
       es: " : <color=green>ACTIVO</color> |",
@@ -53,7 +53,7 @@ class ModLanguage {
     },
     {
       Text: "COLOR_OFF",
-      en:  " : <color=red>OFF</color> |",
+      en: " : <color=red>OFF</color> |",
       chs: " : <color=red>关闭</color> |",
       ja: "<color=red>オフ</color>",
       es: " : <color=red>DESACTIVADO</color> |",
@@ -62,7 +62,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_ON",
-      en:  "ON",
+      en: "ON",
       chs: "开启",
       ja: "オン",
       es: "ACTIVO",
@@ -71,7 +71,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_OFF",
-      en:  "OFF",
+      en: "OFF",
       chs: "关闭",
       ja: "オフ",
       es: "DESACTIVADO",
@@ -80,7 +80,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_GOD_MODE",
-      en:  "God Mode [F5]",
+      en: "God Mode [F5]",
       chs: "无敌模式[F5]",
       ja: "神モードやで[F5]",
       es: "Modo Dios[F5]",
@@ -89,7 +89,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_HIT_MULTIPLIER",
-      en:  "Hit Multiplier [F6]",
+      en: "Hit Multiplier [F6]",
       chs: "多倍攻击[F6]",
       ja: "ヒット倍率[F6]",
       es: "Golpe Multiplicador[F6]",
@@ -98,7 +98,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_AUTO_PICK_TREASURE",
-      en:  "Auto Pick Treasure [F7]",
+      en: "Auto Pick Treasure [F7]",
       chs: "拾取宝箱[F7]",
       ja: "自動で宝を拾うんや[F7]",
       es: "Auto Recoger Tesoro[F7]",
@@ -107,7 +107,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_AUTO_ABSORB",
-      en:  "Auto Absorb [F8]",
+      en: "Auto Absorb [F8]",
       chs: "自动吸收[F8]",
       ja: "自動で吸収すんや[F8]",
       es: "Auto Absorber[F8]",
@@ -116,7 +116,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_KILL_AURA",
-      en:  "Kill Aura [F9]",
+      en: "Kill Aura [F9]",
       chs: "杀戮光环[F9]",
       ja: "キルオーラやで[F9]",
       es: "Aura Asesina[F9]",
@@ -125,7 +125,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_PERCEPTION_RANGE",
-      en:  "Perception Range [F10]",
+      en: "Perception Range [F10]",
       chs: "感知范围[F10]",
       ja: "感知範囲やで[F10]",
       es: "Rango de Percepción[F10]",
@@ -134,7 +134,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_NO_COOLDOWN",
-      en:  "No Cooldown [F11]",
+      en: "No Cooldown [F11]",
       chs: "无冷却[F11]",
       ja: "クールダウンなしやで[F11]",
       es: "Sin Enfriamiento[F11]",
@@ -143,7 +143,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_PLAYER_SPEED",
-      en:  "Player Speed [F12]",
+      en: "Player Speed [F12]",
       chs: "玩家速度[F12]",
       ja: "プレイヤーのスピードやで[F12]",
       es: "Velocidad del Jugador[F12]",
@@ -152,7 +152,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_CUSTOM_TP",
-      en:  "Custom Teleport [INS]",
+      en: "Custom Teleport [INS]",
       chs: "自定义传送[INS]",
       ja: "てきとうな瞬間移動[INS]",
       es: "Teleportación Personalizada[INS]",
@@ -161,7 +161,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_AUTO_LOOT",
-      en:  "Auto Loot [Num0]",
+      en: "Auto Loot [Num0]",
       chs: "自动拾取[Num0]",
       ja: "自動あっぷる[Num0]",
       es: "Auto Botín[Num0]",
@@ -170,7 +170,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_CUSTOM_TP_STATE",
-      en:  "Custom Teleport State [Insert]:",
+      en: "Custom Teleport State [Insert]:",
       chs: "自定义传送状态[Insert]:",
       ja: "カスタムテレポートの状態[Insert]",
       es: "Estado de Teleportación Personalizada [Insert]:",
@@ -179,7 +179,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_SHOW_DEL",
-      en:  " Show [Del]",
+      en: " Show [Del]",
       chs: " 显示[Del]",
       ja: " ショー[Del]",
       es: " Mostrar [Del]",
@@ -188,7 +188,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_CURR_FILE",
-      en:  "Current File:",
+      en: "Current File:",
       chs: "当前文件:",
       ja: "今のファイル",
       es: "Archivo Actual:",
@@ -197,7 +197,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_PREV_FILE",
-      en:  "| PreviousFile[PageUp]:",
+      en: "| PreviousFile[PageUp]:",
       chs: "| 上一个文件[PageUp]:",
       ja: "| 前のファイル[PageUp]",
       es: "| Archivo Anterior[PageUp]:",
@@ -206,7 +206,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_NEXT_FILE",
-      en:  " | NextFile[PageDown]:",
+      en: " | NextFile[PageDown]:",
       chs: " | 下一个文件[PageDown]:",
       ja: " | つぎのファイル[PageDown]",
       es: " | Archivo Siguiente[PageDown]:",
@@ -215,7 +215,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_PREV_POS",
-      en:  " | PreviousPos[Up]:",
+      en: " | PreviousPos[Up]:",
       chs: " | 上一个位置[Up]:",
       ja: " |前のポジション[Up]",
       es: " | Posición Anterior[Up]:",
@@ -224,7 +224,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_NEXT_POS",
-      en:  " | NextPos[Down]:",
+      en: " | NextPos[Down]:",
       chs: " | 下一个位置[Down]:",
       ja: " |つぎのポジション[Down]",
       es: " | Posición Siguiente[Down]:",
@@ -233,7 +233,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_ANTI_DITHER",
-      en:  "Anti Dither",
+      en: "Anti Dither",
       chs: "反虚化",
       ja: "アンチディザ",
       es: "Anti Dither",
@@ -242,7 +242,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_SET_DELAY_LEFT",
-      en:  " | SetDelay[Left]: ",
+      en: " | SetDelay[Left]: ",
       chs: " | 延迟[Left]: ",
       ja: " | SetDelay[Left]: ",
       es: " | Establecer Retraso[Izquierda]: ",
@@ -251,7 +251,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_SELECT_RIGHT",
-      en:  " | Select[Right]: ",
+      en: " | Select[Right]: ",
       chs: " | 选择pos[Right]: ",
       ja: " | Select[Right]: ",
       es: " | Seleccionar[Derecha]: ",
@@ -260,7 +260,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_IS_LAST_FILE",
-      en:  "is the last file",
+      en: "is the last file",
       chs: "这是最后一个文件",
       ja: "is the last file",
       es: "es el último archivo",
@@ -269,7 +269,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_IS_FIRST_FILE",
-      en:  "is the first file",
+      en: "is the first file",
       chs: "这是第一个文件",
       ja: "is the first file",
       es: "es el primer archivo",
@@ -278,7 +278,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_IS_LAST_POS",
-      en:  "is the last pos",
+      en: "is the last pos",
       chs: "这是最后一个点位",
       ja: "is the last pos",
       es: "es la última posición",
@@ -287,7 +287,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_IS_FIRST_POS",
-      en:  "is the first pos",
+      en: "is the first pos",
       chs: "这是第一个点位",
       ja: "is the first pos",
       es: "es la primera posición",
@@ -296,7 +296,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_CUSTOM_TP_AUTO_MODE_SET_DELAY",
-      en:  "CustomTp:AutoMode:Set Delay",
+      en: "CustomTp:AutoMode:Set Delay",
       chs: "自定义传送:自动模式:设置延迟",
       ja: "CustomTp:オートモード:遅延を設定",
       es: "CustomTp:AutoMode:Establecer Retraso",
@@ -305,7 +305,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_ENTER_DELAY",
-      en:  "Please enter Delay(s)",
+      en: "Please enter Delay(s)",
       chs: "请输入延迟(秒)",
       ja: "Please enter Delay(s)",
       es: "Por favor, introduzca el retraso(s)",
@@ -314,7 +314,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_SECONDS",
-      en:  "seconds",
+      en: "seconds",
       chs: "秒",
       ja: "seconds",
       es: "segundos",
@@ -323,7 +323,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_GO",
-      en:  "Go",
+      en: "Go",
       chs: "出发",
       ja: "Go",
       es: "Ir",
@@ -332,7 +332,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_AUTO_MODE",
-      en:  "AutoMode",
+      en: "AutoMode",
       chs: "自动模式",
       ja: "オートモード",
       es: "Modo Automático",
@@ -341,7 +341,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_CUSTOM_TP_CURR_POS_SELECT",
-      en:  "CustomTp:CurrPos:Select",
+      en: "CustomTp:CurrPos:Select",
       chs: "自定义传送:当前序号:选择",
       ja: "CustomTp:現在の位置:選択",
       es: "CustomTp:Posición Actual:Seleccionar",
@@ -350,7 +350,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_ENTER_CURR_NUM",
-      en:  "Please enter CurreNum",
+      en: "Please enter CurreNum",
       chs: "请输入当前序号",
       ja: "現在の番号を入力してください",
       es: "Por favor, introduzca el número actual",
@@ -359,7 +359,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_AUTO_MODE_END",
-      en:  " | AutoMode[End]: ",
+      en: " | AutoMode[End]: ",
       chs: " | 自动模式[End]: ",
       ja: " | オートモード[End]: ",
       es: " | Modo Automático[End]: ",
@@ -368,7 +368,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_INFINITE_STAMINA",
-      en:  "Infinite Stamina",
+      en: "Infinite Stamina",
       chs: "无限体力",
       ja: "無限のスタミナ",
       es: "Estamina Infinita",
@@ -377,7 +377,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_CUSTOM_UID",
-      en:  "Custom UID",
+      en: "Custom UID",
       chs: "自定义UID",
       ja: "カスタムUID",
       es: "UID Personalizado",
@@ -386,7 +386,7 @@ class ModLanguage {
     },
     {
       Text: "HEADING_PLAYER",
-      en:  "Player",
+      en: "Player",
       chs: "玩家",
       ja: "プレーヤー",
       es: "Jugador",
@@ -395,7 +395,7 @@ class ModLanguage {
     },
     {
       Text: "HEADING_WORLD",
-      en:  "World",
+      en: "World",
       chs: "世界",
       ja: "世界",
       es: "Mundo",
@@ -404,8 +404,8 @@ class ModLanguage {
     },
     {
       Text: "HEADING_VISUAL",
-      en:  "Visual",
-      chs: "视觉的",
+      en: "Visual",
+      chs: "视觉",
       ja: "ビジュアル",
       es: "Visual",
       id: "Visual",
@@ -413,7 +413,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_HIDE_HUD",
-      en:  "Hide HUD",
+      en: "Hide HUD",
       chs: "隐藏HUD",
       ja: "HUDを非表示",
       es: "Ocultar Interfaz",
@@ -422,7 +422,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_HIDE_DAMAGE_TEXT",
-      en:  "Hide Damage Text",
+      en: "Hide Damage Text",
       chs: "隐藏伤害文字",
       ja: "ダメージテキストを非表示",
       es: "Ocultar Texto de Daño",
@@ -431,7 +431,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_MARK_TELEPORT",
-      en:  "Mark Teleport [T]",
+      en: "Mark Teleport [T]",
       chs: "标记传送[T]",
       ja: "マークテレポート[T]",
       es: "Marcar teletransporte",
@@ -440,7 +440,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_ONLY_HATE",
-      en:  "Only Hatred",
+      en: "Only Hatred",
       chs: "只有仇恨",
       ja: "憎しみだけ",
       es: "Solo Odio",
@@ -449,7 +449,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_INFINITY",
-      en:  "Infinity",
+      en: "Infinity",
       chs: "无限",
       ja: "無限",
       es: "Infinito",
@@ -458,7 +458,7 @@ class ModLanguage {
     },
     {
       Text: "HEADING_TELEPORT",
-      en:  "Teleport",
+      en: "Teleport",
       chs: "传送",
       ja: "テレポート",
       es: "Teletransporte",
@@ -467,7 +467,7 @@ class ModLanguage {
     },
     {
       Text: "HEADING_DEBUG",
-      en:  "Debug",
+      en: "Debug",
       chs: "调试",
       ja: "デバッグ",
       es: "Depurar",
@@ -476,7 +476,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_DEBUG_ENTITY",
-      en:  "Debug Entity",
+      en: "Debug Entity",
       chs: "调试实体",
       ja: "デバッグエンティティ",
       es: "Depurar Entidad",
@@ -485,7 +485,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_AUTO_DESTROY",
-      en:  "Auto Destroy",
+      en: "Auto Destroy",
       chs: "自动销毁",
       ja: "自動破壊",
       es: "Auto Destruir",
@@ -495,7 +495,7 @@ class ModLanguage {
 
     {
       Text: "TEXT_DISCLAIMER",
-      en:  "This hack is completely free, if you paid to get this, you have been scammed.",
+      en: "This hack is completely free, if you paid to get this, you have been scammed.",
       chs: "此黑客程序完全免费，如果您付费获得此程序，则您被骗了。",
       ja: "このハックは完全に無料です。これを入手するためにお金を払った場合は、詐欺に遭ったことになります。",
       es: "Este hack es completamente gratuito, si pagaste por obtenerlo, has sido estafado.",
@@ -504,7 +504,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_DESIGNER",
-      en:  "GUI Designer: n0bu",
+      en: "GUI Designer: n0bu",
       chs: "GUI设计师： n0bu",
       ja: "GUI 作成者 n0bu",
       es: "Diseñador de GUI: n0bu",
@@ -513,7 +513,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_NEW_KILL_AURA",
-      en:  "New Kill Aura",
+      en: "New Kill Aura",
       chs: "新杀戮光环",
       ja: "新しいキルオーラ",
       es: "Nueva Aura Asesina",
@@ -522,7 +522,7 @@ class ModLanguage {
     },
     {
       Text: "TEXT_WORLD_SPEED",
-      en:  "World Speed",
+      en: "World Speed",
       chs: "世界速度",
       ja: "世界スピード",
       es: "Velocidad del Mundo",
@@ -531,171 +531,192 @@ class ModLanguage {
     },
     {
       Text: "TEXT_KILL_ANIMAL",
-      en:  "Kill Animal",
+      en: "Kill Animal",
       chs: "杀死动物",
       ja: "動物を殺す",
+      es: "Matar Animal",
     },
     {
       Text: "TEXT_SAVE_CONFIG",
-      en:  "Save Config",
+      en: "Save Config",
       chs: "保存配置",
       ja: "設定を保存",
+      es: "Guardar Configuración",
     },
     {
       Text: "TEXT_AUTO_DESTROY",
-      en:  "Auto Destroy [Num1]",
+      en: "Auto Destroy [Num1]",
       chs: "自动销毁[Num1]",
       ja: "Auto Destroy [Num1]",
+      es: "Auto Destruir [Num1]",
     },
     {
       Text: "TEXT_LANGUAGE",
-      en:  "Language",
+      en: "Language",
       chs: "语言",
       ja: "言語",
+      es: "Idioma",
     },
     {
       Text: "TEXT_CONSOLE_COMMAND",
-      en:  "Console Command",
-      chs: "控制台命令",
+      en: "Console Command",
+      chs: "虚幻控制台命令",
       ja: "コンソールコマンド",
-    },
-    {
-      Text: "TEXT_CONSOLE_COMMAND",
-      en:  "Console Command",
-      chs: "控制台命令",
-      ja: "コンソールコマンド",
+      es: "Consola de comandos",
     },
     {
       Text: "TEXT_FOV",
-      en:  "FOV",
-      chs: "视野",
+      en: "FOV",
+      chs: "FOV",
       ja: "視野角",
+      es: "FOV",
     },
     {
       Text: "TEXT_SHOW_FPS",
-      en:  "Show FPS",
+      en: "Show FPS",
       chs: "显示FPS",
       ja: "FPSを表示",
+      es: "Mostrar FPS",
     },
     {
       Text: "TEXT_FPS_UNLOCKER",
-      en:  "FPS Unlocker",
-      chs: "FPS解锁器",
+      en: "FPS Unlocker",
+      chs: "FPS解锁",
       ja: "FPSアンロック",
+      es: "Desbloqueador de FPS",
     },
     {
       Text: "TEXT_SONANCE_CASKET",
-      en:  "Sonance Casket",
-      chs: "索南斯棺材",
+      en: "Sonance Casket",
+      chs: "声匣",
       ja: "ソナンスカスケット",
+      es: "Caja de Sonancia",
     },
     {
       Text: "TEXT_PUZZLE",
-      en:  "Puzzle",
-      chs: "谜",
-      ja: "パズル",
+      en: "Puzzle",
+      chs: "解谜",
+      ja: "Puzzle",
+      es: "Rompecabezas",
     },
     {
       Text: "TEXT_ANIMAL",
-      en:  "Animal",
+      en: "Animal",
       chs: "动物",
       ja: "動物",
+      es: "Animal",
     },
     {
       Text: "TEXT_TREASURE",
-      en:  "Treasure",
-      chs: "宝藏",
+      en: "Treasure",
+      chs: "箱子",
       ja: "宝物",
+      es: "Tesoro",
     },
     {
       Text: "TEXT_COLLECTION",
-      en:  "Collection",
-      chs: "收藏",
+      en: "Collection",
+      chs: "收集品",
       ja: "コレクション",
+      es: "Colección",
     },
     {
       Text: "TEXT_MONSTER",
-      en:  "Monster",
+      en: "Monster",
       chs: "怪物",
       ja: "モンスター",
+      es: "Monstruo",
     },
     {
       Text: "TEXT_SHOW_BOX",
-      en:  "Show Box",
-      chs: "展示盒",
+      en: "Show Box",
+      chs: "展示方框",
       ja: "表示ボックス",
+      es: "Mostrar Caja",
     },
     {
       Text: "TEXT_SHOW_DISTANCE",
-      en:  "Show Distance",
+      en: "Show Distance",
       chs: "显示距离",
       ja: "距離を表示します",
+      es: "Mostrar Distancia",
     },
     {
       Text: "TEXT_SHOW_NAME",
-      en:  "Show Name",
-      chs: "演出名称",
+      en: "Show Name",
+      chs: "显示名称",
       ja: "ショー名",
+      es: "Mostrar Nombre",
     },
     {
       Text: "HEADING_ESP",
-      en:  "ESP",
-      chs: "超感知觉",
-      ja: "超感覚知覚",
+      en: "ESP",
+      chs: "透视",
+      ja: "ESP",
+      es: "ESP",
     },
     {
       Text: "TEXT_WEATHER",
-      en:  "Weather",
+      en: "Weather",
       chs: "天气",
       ja: "天気",
+      es: "Clima",
     },
     {
       Text: "TEXT_VACUUM_COLLECT",
-      en:  "Vacuum Collect",
-      chs: "真空收集",
-      ja: "真空収集",
+      en: "Vacuum Collect",
+      chs: "吸收集品",
+      ja: "Vacuum Collect",
+      es: "Vacuum Collect",
     },
     {
       Text: "TEXT_MOB_VACUUM",
-      en:  "MOB Vacuum",
-      chs: "MOB真空吸尘器",
-      ja: "MOBバキューム",
+      en: "Monster Vacuum",
+      chs: "吸怪",
+      ja: "Monster Vacuum",
+      es: "Monster Vacuum",
     },
     {
       Text: "HEADING_FILTER",
-      en:  "Filter",
+      en: "Filter",
       chs: "筛选",
       ja: "フィルター",
+      es: "Filtro",
     },
     {
       Text: "TEXT_SUNNY",
-      en:  "Sunny",
-      chs: "阳光充足",
+      en: "Sunny",
+      chs: "晴天",
       ja: "晴れ",
+      es: "Soleado",
     },
     {
       Text: "TEXT_CLOUDY",
-      en:  "Cloudy",
+      en: "Cloudy",
       chs: "多云的",
       ja: "曇り",
+      es: "Nublado",
     },
     {
       Text: "TEXT_THUNDER_RAIN",
-      en:  "Thunder Rain",
+      en: "Thunderstorm",
       chs: "雷雨",
       ja: "雷雨",
+      es: "Tormenta",
     },
     {
       Text: "TEXT_SNOW",
-      en:  "Snow",
+      en: "Snow",
       chs: "雪",
       ja: "雪",
+      es: "Nieve",
     },
     {
       Text: "TEXT_RAIN",
-      en:  "Rain",
+      en: "Rain",
       chs: "雨",
       ja: "雨",
+      es: "Lluvia",
     },
     {
       Text: "TEXT_ROCK",
