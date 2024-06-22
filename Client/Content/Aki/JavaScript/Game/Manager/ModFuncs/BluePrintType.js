@@ -567,10 +567,22 @@ class BluePrintType extends ModLanguage {
       ja: "Gameplay145",
     },
     {
+      BluePrint: "Gameplay200",
+      en: "Tactical Hologram: Overdash",
+      chs: "Gameplay200",
+      ja: "Gameplay200",
+    },
+    {
       BluePrint: "Gameplay204",
       en: "Tactical Hologram: Detonate",
       chs: "Gameplay204",
       ja: "Gameplay204",
+    },
+    {
+      BluePrint: "Gameplay205",
+      en: "Tactical Hologram: Challenge",
+      chs: "Gameplay202",
+      ja: "Gameplay202",
     },
     {
       BluePrint: "Gameplay206",
@@ -585,10 +597,22 @@ class BluePrintType extends ModLanguage {
       ja: "Gameplay352",
     },
     {
+      BluePrint: "Gameplay372",
+      en: "Key Repeater",
+      chs: "Gameplay372",
+      ja: "Gameplay372",
+    },
+    {
       BluePrint: "Gameplay374",
       en: "Key Repeater",
       chs: "Gameplay374",
       ja: "Gameplay374",
+    },
+    {
+      BluePrint: "Gameplay376",
+      en: "Key Repeater",
+      chs: "Gameplay376",
+      ja: "Gameplay376",
     },
     {
       BluePrint: "Gameplay381",
