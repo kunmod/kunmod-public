@@ -16,6 +16,7 @@ const puerts_1 = require("puerts"),
   EntityManager_1 = require("./Manager/ModFuncs/EntityManager"),
   AutoAbsorb_1 = require("./Manager/ModFuncs/AutoAbsorb"),
   AutoInteract_1 = require("./Manager/ModFuncs/AutoInteract"),
+  NoClip_1 = require("./Manager/ModFuncs/NoClip"),
   KillAura_1 = require("./Manager/ModFuncs/KillAura"),
   MobVacuum_1 = require("./Manager/ModFuncs/MobVacuum"),
   AutoChest_1 = require("./Manager/ModFuncs/AutoChest"),
@@ -499,6 +500,7 @@ class MainMenu {
 
           if (ModManager.Settings.FOV) {
             const value = ModManager.Settings.FOVValue;
+            Menu.FOVValue.SetText(value);
             ModMethod_1.ModMethod.SetFOV(value);
           }
 
@@ -508,6 +510,25 @@ class MainMenu {
             ModManager.Settings.FOVValue = value;
             ModMethod_1.ModMethod.SetFOV(value);
             MainMenu.KunLog("FOV Value: " + value);
+          });
+
+          Menu.NoClipCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.NoClip = isChecked;
+            if (isChecked) {
+              NoClip_1.NoClip.NoClip(true);
+            } else {
+              NoClip_1.NoClip.NoClip(false);
+            }
+            MainMenu.KunLog("No Clip: " + isChecked);
+          });
+
+          if (ModManager.Settings.NoClip) {
+            NoClip_1.NoClip.NoClip(true);
+          }
+
+          Menu.PlotSkip.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.PlotSkip = isChecked;
+            MainMenu.KunLog("Plot Skip: " + isChecked);
           });
 
           Menu.KillAuraValue.SetSelectedIndex(
@@ -569,6 +590,7 @@ class MainMenu {
         ModLanguage.ModTr("TEXT_INFINITE_STAMINA")
       );
       Menu.AntiDitherText.SetText(ModLanguage.ModTr("TEXT_ANTI_DITHER"));
+      Menu.NoClipText.SetText(ModLanguage.ModTr("TEXT_NOCLIP"));
 
       // teleport
       Menu.MarkTPText.SetText(ModLanguage.ModTr("TEXT_MARK_TELEPORT"));
@@ -591,6 +613,7 @@ class MainMenu {
       Menu.MobVacuumText.SetText(ModLanguage.ModTr("TEXT_MOB_VACUUM"));
       Menu.VacuumCollectText.SetText(ModLanguage.ModTr("TEXT_VACUUM_COLLECT"));
       Menu.WeatherText.SetText(ModLanguage.ModTr("TEXT_WEATHER"));
+      Menu.PlotSkipText.SetText(ModLanguage.ModTr("TEXT_PLOT_SKIP"));
 
       // esp
       Menu.ESPText.SetText(ModLanguage.ModTr("HEADING_ESP"));
@@ -638,6 +661,7 @@ class MainMenu {
         ModManager.Settings.InfiniteStamina
       );
       Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
+      Menu.NoClipCheck.SetIsChecked(ModManager.Settings.NoClip);
 
       // world
       ModManager.Settings.AutoPickTreasure = false;
@@ -656,6 +680,7 @@ class MainMenu {
       Menu.VacuumCollectCheck.SetIsChecked(ModManager.Settings.VacuumCollect);
       Menu.VacuumCollectCheck.SetIsChecked(ModManager.Settings.VacuumCollect);
       Menu.WeatherCheck.SetIsChecked(ModManager.Settings.WeatherChanger);
+      Menu.PlotSkipCheck.SetIsChecked(ModManager.Settings.PlotSkip);
 
       // visual
       Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
