@@ -847,7 +847,7 @@ class ESPmain {
         // Animal
         Color = MainMenu.ESPColor.orange;
         if (!ModManager.Settings.ShowAnimal) continue;
-      } else if (AutoInteract_1.AutoInteract.isNeedLoot(Entity)) {
+      } else if (EntityManager.isCollection(Entity)) {
         // Collection
         Color = MainMenu.ESPColor.green;
         if (!ModManager.Settings.ShowCollect) continue;
@@ -858,7 +858,7 @@ class ESPmain {
       } else if (EntityManager.isGameplay(Entity)) {
         // Gameplay like Puzzle, Game, Sonance Casket ETC
 
-        if (["Gameplay021"].includes(Blueprint)) {
+        if (["GamePlay021"].includes(Blueprint)) {
           // Sonance Casket
           Color = MainMenu.ESPColor.yellow;
           if (!ModManager.Settings.ShowCasket) continue;
@@ -866,7 +866,11 @@ class ESPmain {
 
         Color = MainMenu.ESPColor.pink;
         if (!ModManager.Settings.ShowPuzzle) continue;
-      } else {
+
+      } 
+      else if (true /*ModManager.Settings.ShowUnkown*/) {
+        Color = MainMenu.ESPColor.blue;
+      }else {
         continue;
       }
 

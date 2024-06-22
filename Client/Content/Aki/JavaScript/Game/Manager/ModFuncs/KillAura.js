@@ -22,9 +22,9 @@ const AnimalList = [
   "Animal005", //赤脚雁
   "Animal006", //雪云鹤
   "Animal012", //青杂兔
-  "Animal013", //岩角羊
-  "Animal014", //灰脊牛
-  "Animal015", //森栖牛
+  // "Animal013", //岩角羊
+  // "Animal014", //灰脊牛
+  // "Animal015", //森栖牛
 ];
 const BigAnimalList = [
   "Animal013", //岩角羊

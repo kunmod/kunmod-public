@@ -66,12 +66,30 @@ class AutoInteract extends EntityManager {
     //"Collect603",//禽肉
     //"Collect604",//玩法_永夜长明
   ];
+  static CollectAnimal=[
+  "Animal016",//霄凤蝶
+  "Animal017",//赤羽蝶
+  "Animal018",//蓝羽蝶
+  "Animal019",//叶翅蛉
+  "Animal020",//金环蜓
+  "Animal021",//群彩1
+  "Animal022",//群彩2
+  "Animal023",//银月
+  "Animal024",//焰鲤
+  "Animal025",//黑棘鲼
+  "Animal026",//银环蜥
+  "Animal027",//蓝棘蜥
+  "Animal028",//青竹蜥
+  "Animal029",//黑纹蛙
+  "Animal030",//金背蛙
+
+  ];
   static isNeedLoot(entity) {
     let blueprintType = this.GetBlueprintType2(entity);
-    return this.CollectList.includes(blueprintType);
+    return this.CollectList.includes(blueprintType)||this.CollectAnimal.includes(blueprintType);
   }
 
   static AutoLoot(entity) {}
 }
-//puerts.logger.info(debug)
+
 exports.AutoInteract = AutoInteract;
