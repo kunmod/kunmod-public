@@ -44,11 +44,15 @@ function main() {
 class MainMenu {
   static ESPCanvas = null;
   static ESPColor = {
-    monster: new UE.LinearColor(1, 0, 0, 1), // red
-    collection: new UE.LinearColor(1, 1, 0, 1), // yellow
-    treasure: new UE.LinearColor(1, 0, 1, 1), // purple
-    animal: new UE.LinearColor(0, 1, 0, 1), // green
-    gameplay: new UE.LinearColor(0, 0, 1, 1), // blue
+    red: new UE.LinearColor(1, 0, 0, 1), // red
+    yellow: new UE.LinearColor(1, 1, 0, 1), // yellow
+    purple: new UE.LinearColor(1, 0, 1, 1), // purple
+    green: new UE.LinearColor(0, 1, 0, 1), // green
+    blue: new UE.LinearColor(0, 0, 1, 1), // blue
+    white: new UE.LinearColor(1, 1, 1, 1), // white
+    black: new UE.LinearColor(0, 0, 0, 1), // black
+    orange: new UE.LinearColor(1, 0.5, 0, 1), // orange
+    pink: new UE.LinearColor(1, 0.75, 0.75, 1), // pink
   }
 
   static IsKey(str) {
@@ -737,7 +741,7 @@ class ESPmain {
       const Location = new UE.Vector(Vector.X, Vector.Y, Vector.Z)
       const PlayerController = UE.GameplayStatics.GetPlayerController(GlobalData_1.GlobalData.World, 0)
       let ScreenPosition = puerts_1.$ref(undefined)
-      if (PlayerController.ProjectWorldLocationToScreen(Location, ScreenPosition, true)) {
+      if (PlayerController.ProjectWorldLocationToScreen(Location, ScreenPosition, false)) {
         puerts_1.$unref(ScreenPosition)
       }
       ScreenPosition = ScreenPosition[0];
@@ -808,31 +812,40 @@ class ESPmain {
 
       // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
 
+      let Blueprint = EntityManager.GetBlueprintType2(Entity);
+
       if (EntityManager.isMonster(Entity)) {
-        // Text = 'Monster';
-        Color = MainMenu.ESPColor.monster;
+        // Monster
+        Color = MainMenu.ESPColor.red;
         if (!ModManager.Settings.ShowMonster) continue;
       } else if (EntityManager.isAnimal(Entity)) {
-        //Text = 'Animal';
-        Color = MainMenu.ESPColor.animal;
+        // Animal
+        Color = MainMenu.ESPColor.orange;
         if (!ModManager.Settings.ShowAnimal) continue;
       } else if (EntityManager.isCollection(Entity)) {
-        //Text = 'Collection'
-        Color = MainMenu.ESPColor.collection;
+        // Collection
+        Color = MainMenu.ESPColor.green;
         if (!ModManager.Settings.ShowCollect) continue;
       } else if (EntityManager.isTreasure(Entity)) {
-        //Text = 'Treasure';
-        Color = MainMenu.ESPColor.treasure;
+        // Treasure
+        Color = MainMenu.ESPColor.white;
         if (!ModManager.Settings.ShowTreasure) continue;
       } else if (EntityManager.isGameplay(Entity)) {
-        //Text = 'Gameplay';
-        Color = MainMenu.ESPColor.gameplay;
+        // Gameplay like Puzzle, Game, Sonance Casket ETC
+
+        if (["Gamplay021"].includes(Blueprint)) {
+          // Sonance Casket
+          Color = MainMenu.ESPColor.yellow;
+          if (!ModManager.Settings.ShowCasket) continue;
+        }
+
+        Color = MainMenu.ESPColor.pink;
         if (!ModManager.Settings.ShowPuzzle) continue;
       } else {
         continue;
       }
+
       let TextShow = [];
-      let Blueprint = EntityManager.GetBlueprintType2(Entity);
 
       let PlayerLocation = EntityManager_1.EntityManager.GetPlayerPos();
       let Distance = UE.KismetMathLibrary.Vector_Distance(PlayerLocation, Location);
@@ -860,7 +873,7 @@ class ESPmain {
 
       ScreenPos = ESPmain.ProjectWorldToScreen(Location);
 
-      if (ScreenPos.X < 0 && ScreenPos.Y < 0) {
+      if (ScreenPos.X < 0 || ScreenPos.Y < 0) {
         continue;
       }
 
