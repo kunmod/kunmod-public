@@ -20,17 +20,17 @@ const AnimalList = [
   "Animal003", //蓝冠鸽
   "Animal004", //灰冠鸥
   "Animal005", //赤脚雁
-  "Animal006", //雪云鹤
   "Animal012", //青杂兔
-  // "Animal013", //岩角羊
-  // "Animal014", //灰脊牛
-  // "Animal015", //森栖牛
+
 ];
 const BigAnimalList = [
   "Animal013", //岩角羊
   "Animal014", //灰脊牛
   "Animal015", //森栖牛
 ];
+const dropanimal =[
+  "Animal006"//雪云鹤
+]
 
 class KillAura extends EntityManager {
   static isIndistance(entity) {
@@ -49,6 +49,10 @@ class KillAura extends EntityManager {
     let blueprintType = this.GetBlueprintType2(entity);
     return BigAnimalList.includes(blueprintType);
   }
+  static isneeddropanimal(entity) {
+    let blueprintType = this.GetBlueprintType2(entity);
+    return dropanimal.includes(blueprintType);
+  }
   static killAura(entity) {
     if (!ModManager.Settings.killAuranew) return;
 
@@ -65,7 +69,10 @@ class KillAura extends EntityManager {
 
     if (this.isneedkillAnimal(entity)) {
       ModMethod.AnimalDieRequest(entity.Entity);
-      //ModMethod.AnimalDropRequest(entity.Entity);  
+      return;
+    }
+    if (this.isneeddropanimal(entity)) {
+      ModMethod.AnimalDropRequest(entity.Entity);  
       return;
     }
 

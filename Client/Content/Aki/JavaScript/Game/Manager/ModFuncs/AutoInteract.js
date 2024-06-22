@@ -38,7 +38,7 @@ class AutoInteract extends EntityManager {
     "Collect104", //凌冬花
     //"Collect104_1",//凌冬花_底座
     //"Collect104_2",//凌冬花_组合
-    //"Collect105",//广泛植物
+    "Collect105", //香苏
     "Collect106", //清芬草
     "Collect107", //香柠草
     "Collect108", //腐骨幽兰

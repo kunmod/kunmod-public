@@ -236,7 +236,7 @@ class BluePrintType extends ModLanguage {
     {
       BluePrint: "Collect105",
       en: "Perilla",
-      chs: "Collect105",
+      chs: "香苏",
       ja: "Collect105",
     },
     {
