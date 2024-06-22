@@ -65,7 +65,7 @@ class KillAura extends EntityManager {
 
     if (this.isneedkillAnimal(entity)) {
       ModMethod.AnimalDieRequest(entity.Entity);
-      ModMethod.AnimalDropRequest(entity.Entity);  
+      //ModMethod.AnimalDropRequest(entity.Entity);  
       return;
     }
 

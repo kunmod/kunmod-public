@@ -757,14 +757,14 @@ class ModEntityListener {
       ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     const count = entitylist.length;
     for (let i = 0; i < count; i++) {
-      // AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
-      // KillAura_1.KillAura.killAura(entitylist[i]);
-      // KillAura_1.KillAura.KillAnimal(entitylist[i]);
-      // AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
-      // MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
-      // MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
+      AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+      KillAura_1.KillAura.killAura(entitylist[i]);
+      KillAura_1.KillAura.KillAnimal(entitylist[i]);
+      AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
+      MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
+      MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
 
-      AutoChest_1.AutoChest.RewardChest(entitylist[i]); //1.0.28 cant use
+      //AutoChest_1.AutoChest.RewardChest(entitylist[i]); //1.0.28 cant use
     }
 
     //puerts_1.logger.warn("kun:Runtime is working");
@@ -841,7 +841,7 @@ class ESPmain {
         //Text = 'Animal';
         Color = MainMenu.ESPColor.animal;
         if (!ModManager.Settings.ShowAnimal) continue;
-      } else if (EntityManager.isCollection(Entity)) {
+      } else if (AutoInteract_1.AutoInteract.isNeedLoot(Entity)) {
         //Text = 'Collection'
         Color = MainMenu.ESPColor.collection;
         if (!ModManager.Settings.ShowCollect) continue;
@@ -878,7 +878,7 @@ class ESPmain {
       if (Distance > ModManager.Settings.ESPRadius) {
         continue;
       }
-      
+
       ScreenPos = ESPmain.ProjectWorldToScreen(Location);
 
       if (ScreenPos.X < 0 && ScreenPos.Y < 0) {

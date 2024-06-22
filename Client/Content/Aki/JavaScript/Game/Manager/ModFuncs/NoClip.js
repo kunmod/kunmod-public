@@ -18,16 +18,13 @@ const ModUtils = ModUtils_1.ModUtils;
 class NoClip extends EntityManager {
   static NoClip(bool) {
     const playerentity = this.GetPlayerEntity();
-  //  puerts_1.logger.warn("kundebug:player", playerentity);
     const ActorComp = playerentity.GetComponent(3);
     const Actor = ActorComp.Actor;
-  //  puerts_1.logger.warn("kundebug:Actor", Actor);
-    Actor.SetActorEnableCollision(!bool); //Collision
+    Actor.SetActorEnableCollision(!bool); 
     const Movement = ActorComp.ActorInternal.CharacterMovement;
-    if (bool) Movement.MovementMode = 5; //fly
+    if (bool) Movement.MovementMode = 5; 
     else Movement.MovementMode = 1;
-   // puerts_1.logger.warn("kundebug:MovementMode", Movement.MovementMode);
+
   }
 }
-//puerts.logger.info(debug)
 exports.NoClip = NoClip;
