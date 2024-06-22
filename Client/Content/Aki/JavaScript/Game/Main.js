@@ -24,7 +24,7 @@ const puerts_1 = require("puerts"),
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
 
-const ESP_INTERVAL = 50;
+const ESP_INTERVAL = 10;
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage,
@@ -193,6 +193,7 @@ class MainMenu {
             MainMenu.KunLog("No Cooldown: " + isChecked);
           });
 
+          Menu.AutoPickTreasureCheck.bIsEnabled = false;
           Menu.AutoPickTreasureCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoPickTreasure = isChecked;
             MainMenu.KunLog("Auto Pick Treasure: " + isChecked);
@@ -616,9 +617,8 @@ class MainMenu {
       Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
 
       // world
-      Menu.AutoPickTreasureCheck.SetIsChecked(
-        ModManager.Settings.AutoPickTreasure
-      );
+      ModManager.Settings.AutoPickTreasure = false;
+      Menu.AutoPickTreasureCheck.SetIsChecked(false);
       Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
       Menu.KillAnimalCheck.SetIsChecked(ModManager.Settings.KillAnimal);
@@ -719,6 +719,7 @@ class MainMenu {
     const NewText = new UE.TextBlock();
     NewText.SetText(name);
     NewText.SetColorAndOpacity(new UE.SlateColor(color));
+    NewText.Font.Size = 16;
     const NewBorder = new UE.Border();
     const Brush = new UE.SlateBrush();
     Brush.TintColor = new UE.SlateColor(color);
@@ -810,6 +811,9 @@ class ESPmain {
       return null;
     }
   }
+  static EntityFilter = {
+    mutterfly: ["Gameplay111"],
+  };
   //esp测试test
   static RuntimeESP() {
     if (!ModUtils.isInGame()) return;
@@ -827,40 +831,8 @@ class ESPmain {
         Color,
         ShowBox,
         Entity = entitylist[i];
-      i++
+      i++;
       if (!Entity) continue;
-      if (!Entity.Entity) continue;
-      if (Entity.Entity.GetComponent(3)) {
-        Component = Entity.Entity.GetComponent(3);
-        Location = Component.Actor.K2_GetActorLocation();
-        if (!Location) continue;
-        Bounds = Component.Actor.Mesh.Bounds;
-        if (!Bounds) continue;
-      } else if (Entity.Entity.GetComponent(1)) {
-        Component = Entity.Entity.GetComponent(1);
-        if (Component.Actor) {
-          Location = Component.Actor.K2_GetActorLocation();
-          Bounds = Component.Actor.Mesh.Bounds;
-        } else if (Component.ActorInternal) {
-          Location = Component.ActorInternal.K2_GetActorLocation();
-          if (Component.ActorInternal.DetectSphere.Bounds) {
-            Bounds = Component.ActorInternal.DetectSphere.Bounds;
-          } else if (Component.ActorInternal.StaticMesh.Bounds) {
-            Bounds = Component.ActorInternal.StaticMesh.Bounds;
-          } else {
-            continue;
-          }
-        } else {
-          continue;
-        }
-        if (!Location) continue;
-        if (!Bounds) continue;
-      } else {
-        continue;
-      }
-
-      // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
-
       if (EntityManager.isMonster(Entity)) {
         // Text = 'Monster';
         Color = MainMenu.ESPColor.monster;
@@ -884,20 +856,48 @@ class ESPmain {
       } else {
         continue;
       }
-      let TextShow = [];
-      let Blueprint = EntityManager.GetBlueprintType2(Entity);
+
+      if ((Component = Entity.Entity.GetComponent(1))) {
+        try {
+          Location = Component.Actor.K2_GetActorLocation();
+        } catch (error) {
+          try {
+            Location = Component.ActorInternal.K2_GetActorLocation();
+          } catch (error) {
+            continue;
+          }
+        }
+      } else continue;
 
       let PlayerLocation = EntityManager_1.EntityManager.GetPlayerPos();
-      let Distance = UE.KismetMathLibrary.Vector_Distance(PlayerLocation, Location);
+      let Distance = UE.KismetMathLibrary.Vector_Distance(
+        PlayerLocation,
+        Location
+      );
       Distance = Math.floor(Distance / 100);
       if (Distance > ModManager.Settings.ESPRadius) {
         continue;
       }
+      
+      ScreenPos = ESPmain.ProjectWorldToScreen(Location);
+
+      if (ScreenPos.X < 0 && ScreenPos.Y < 0) {
+        continue;
+      }
+
+      // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
+
+      let TextShow = [];
+      let Blueprint = EntityManager.GetBlueprintType2(Entity);
 
       if (ModManager.Settings.ShowType) {
         TextShow.push(Blueprint);
       }
-
+      if (ModManager.Settings.ShowEntityId) {
+        //debug
+        let id = Entity.Entity.Id;
+        TextShow.push(id);
+      }
       if (ModManager.Settings.ShowName) {
         let Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
         TextShow.push(Name);
@@ -911,31 +911,86 @@ class ESPmain {
         Text = TextShow.join(" | ");
       }
 
-      ScreenPos = ESPmain.ProjectWorldToScreen(Location);
 
-      if (ScreenPos.X < 0 && ScreenPos.Y < 0) {
-        continue;
+
+      if (ModManager.Settings.ShowBox) {
+        try {
+          Bounds = Component.Actor.Mesh.Bounds;
+        } catch (error) {
+          try {
+            Bounds = Component.ActorInternal.DetectSphere.Bounds;
+          } catch (error) {
+            try {
+              Bounds = Component.ActorInternal.StaticMesh.Bounds;
+            } catch (error) {
+              continue;
+            }
+          }
+        }
       }
+      if (Bounds) {
+        let Corners = [
+          new UE.Vector(
+            Bounds.Origin.X + Bounds.BoxExtent.X,
+            Bounds.Origin.Y + Bounds.BoxExtent.Y,
+            Bounds.Origin.Z + Bounds.BoxExtent.Z
+          ),
+          new UE.Vector(
+            Bounds.Origin.X + Bounds.BoxExtent.X,
+            Bounds.Origin.Y + Bounds.BoxExtent.Y,
+            Bounds.Origin.Z - Bounds.BoxExtent.Z
+          ),
+          new UE.Vector(
+            Bounds.Origin.X + Bounds.BoxExtent.X,
+            Bounds.Origin.Y - Bounds.BoxExtent.Y,
+            Bounds.Origin.Z + Bounds.BoxExtent.Z
+          ),
+          new UE.Vector(
+            Bounds.Origin.X + Bounds.BoxExtent.X,
+            Bounds.Origin.Y - Bounds.BoxExtent.Y,
+            Bounds.Origin.Z - Bounds.BoxExtent.Z
+          ),
+          new UE.Vector(
+            Bounds.Origin.X - Bounds.BoxExtent.X,
+            Bounds.Origin.Y + Bounds.BoxExtent.Y,
+            Bounds.Origin.Z + Bounds.BoxExtent.Z
+          ),
+          new UE.Vector(
+            Bounds.Origin.X - Bounds.BoxExtent.X,
+            Bounds.Origin.Y + Bounds.BoxExtent.Y,
+            Bounds.Origin.Z - Bounds.BoxExtent.Z
+          ),
+          new UE.Vector(
+            Bounds.Origin.X - Bounds.BoxExtent.X,
+            Bounds.Origin.Y - Bounds.BoxExtent.Y,
+            Bounds.Origin.Z + Bounds.BoxExtent.Z
+          ),
+          new UE.Vector(
+            Bounds.Origin.X - Bounds.BoxExtent.X,
+            Bounds.Origin.Y - Bounds.BoxExtent.Y,
+            Bounds.Origin.Z - Bounds.BoxExtent.Z
+          ),
+        ];
 
-      let Corners = [
-        new UE.Vector(Bounds.Origin.X + Bounds.BoxExtent.X, Bounds.Origin.Y + Bounds.BoxExtent.Y, Bounds.Origin.Z + Bounds.BoxExtent.Z),
-        new UE.Vector(Bounds.Origin.X + Bounds.BoxExtent.X, Bounds.Origin.Y + Bounds.BoxExtent.Y, Bounds.Origin.Z - Bounds.BoxExtent.Z),
-        new UE.Vector(Bounds.Origin.X + Bounds.BoxExtent.X, Bounds.Origin.Y - Bounds.BoxExtent.Y, Bounds.Origin.Z + Bounds.BoxExtent.Z),
-        new UE.Vector(Bounds.Origin.X + Bounds.BoxExtent.X, Bounds.Origin.Y - Bounds.BoxExtent.Y, Bounds.Origin.Z - Bounds.BoxExtent.Z),
-        new UE.Vector(Bounds.Origin.X - Bounds.BoxExtent.X, Bounds.Origin.Y + Bounds.BoxExtent.Y, Bounds.Origin.Z + Bounds.BoxExtent.Z),
-        new UE.Vector(Bounds.Origin.X - Bounds.BoxExtent.X, Bounds.Origin.Y + Bounds.BoxExtent.Y, Bounds.Origin.Z - Bounds.BoxExtent.Z),
-        new UE.Vector(Bounds.Origin.X - Bounds.BoxExtent.X, Bounds.Origin.Y - Bounds.BoxExtent.Y, Bounds.Origin.Z + Bounds.BoxExtent.Z),
-        new UE.Vector(Bounds.Origin.X - Bounds.BoxExtent.X, Bounds.Origin.Y - Bounds.BoxExtent.Y, Bounds.Origin.Z - Bounds.BoxExtent.Z),
-      ];
+        let ScreenCorners = Corners.map((C) =>
+          ESPmain.ProjectWorldToScreen(C, false)
+        );
 
-      let ScreenCorners = Corners.map(C => ESPmain.ProjectWorldToScreen(C, false));
+        let minX = Math.min(...ScreenCorners.map((p) => p.X));
+        let maxX = Math.max(...ScreenCorners.map((p) => p.X));
+        let minY = Math.min(...ScreenCorners.map((p) => p.Y));
+        let maxY = Math.max(...ScreenCorners.map((p) => p.Y));
 
-      let minX = Math.min(...ScreenCorners.map(p => p.X));
-      let maxX = Math.max(...ScreenCorners.map(p => p.X));
-      let minY = Math.min(...ScreenCorners.map(p => p.Y));
-      let maxY = Math.max(...ScreenCorners.map(p => p.Y));
-
-      ShowBox = { X: maxX - minX + Bounds.SphereRadius, Y: maxY - minY + Bounds.SphereRadius };
+        ShowBox = {
+          X: maxX - minX + Bounds.SphereRadius,
+          Y: maxY - minY + Bounds.SphereRadius,
+        };
+      } else {
+        ShowBox = {
+          X: 0,
+          Y: 0,
+        };
+      }
 
       MainMenu.ESPDrawBoxEntities(
         ShowBox.X,
@@ -947,8 +1002,7 @@ class ESPmain {
       );
     }
   }
- }
-
+}
 
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
