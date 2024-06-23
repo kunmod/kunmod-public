@@ -30,7 +30,7 @@ class PerceptionRange extends EntityManager {
   }
   static SetInteractRange(entity) {
     if (!ModManager.Settings.PerceptionRange) return;
-    if (AutoInteract_1.AutoInteract.isNeedLoot(entity)) {
+    if (AutoInteract_1.AutoInteract.isNeedLoot(entity)||this.isNeedInteract(entity)) {
       let PawnPerceptionComponen = entity.Entity.GetComponent(104);
       PawnPerceptionComponen.SetInteractRange(30000, 0);
     }
