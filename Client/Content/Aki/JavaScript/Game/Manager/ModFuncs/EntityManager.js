@@ -200,7 +200,7 @@ class EntityManager {
     return BlueprintType.startsWith("Quest");
   }
   static isVision(entity) {
-    return (entity.Entity.Components[0].C9o).startsWith("Vision");
+    return (entity.Entity.Components[0].C9o).startsWith("VisionItem");
   }
   static isWeapon(entity) {
     let BlueprintType = this.GetBlueprintType(entity);

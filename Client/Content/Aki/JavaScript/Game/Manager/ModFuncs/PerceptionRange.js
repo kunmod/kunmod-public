@@ -17,7 +17,6 @@ const ModManager = ModManager_1.ModManager;
 const EntityManager = EntityManager_1.EntityManager;
 
 class PerceptionRange extends EntityManager {
-
   static isNeedInteract(entity) {
     let blueprintType = this.GetBlueprintType2(entity);
 
@@ -25,15 +24,20 @@ class PerceptionRange extends EntityManager {
       [].includes(blueprintType) ||
       blueprintType.startsWith("Teleport") ||
       blueprintType.startsWith("Treasure") ||
-      blueprintType.startsWith("Vision")
+      blueprintType.startsWith("VisionItem")
     );
   }
-  static SetInteractRange(entity) {
+
+  static PerceptionRange(entity) {
     if (!ModManager.Settings.PerceptionRange) return;
-    if (AutoInteract_1.AutoInteract.isNeedLoot(entity)||this.isNeedInteract(entity)) {
+    if (
+      AutoInteract_1.AutoInteract.isNeedLoot(entity) ||
+      this.isNeedInteract(entity)
+    ) {
       let PawnPerceptionComponen = entity.Entity.GetComponent(104);
       PawnPerceptionComponen.SetInteractRange(30000, 0);
     }
+
   }
 }
 

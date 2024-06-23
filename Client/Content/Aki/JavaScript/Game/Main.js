@@ -824,8 +824,7 @@ class ModEntityListener {
       MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
       MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
       AutoPuzzle_1.AutoPuzzle.AutoPuzzle(entitylist[i]);
-      PerceptionRange_1.PerceptionRange.SetInteractRange(entitylist[i]);
-
+      PerceptionRange_1.PerceptionRange.PerceptionRange(entitylist[i]);
       //AutoChest_1.AutoChest.RewardChest(entitylist[i]); //1.0.28 cant use
     }
 
