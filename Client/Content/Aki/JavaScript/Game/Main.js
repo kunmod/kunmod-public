@@ -22,6 +22,7 @@ const puerts_1 = require("puerts"),
   AutoChest_1 = require("./Manager/ModFuncs/AutoChest"),
   AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager"),
+  AutoPuzzle_1 = require("./Manager/ModFuncs/AutoPuzzle"),
   InputManager_1 = require("./Ui/Input/InputManager");
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
@@ -816,12 +817,13 @@ class ModEntityListener {
       ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     const count = entitylist.length;
     for (let i = 0; i < count; i++) {
-      AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
-      KillAura_1.KillAura.killAura(entitylist[i]);
-      KillAura_1.KillAura.KillAnimal(entitylist[i]);
-      AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
-      MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
-      MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
+     // AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
+     // KillAura_1.KillAura.killAura(entitylist[i]);
+     // KillAura_1.KillAura.KillAnimal(entitylist[i]);
+      //AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
+     // MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
+     // MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
+      AutoPuzzle_1.AutoPuzzle.AutoPuzzle(entitylist[i]);
 
       //AutoChest_1.AutoChest.RewardChest(entitylist[i]); //1.0.28 cant use
     }
@@ -906,9 +908,9 @@ class ESPmain {
       const isBlobfly = ["Animal032"].includes(Blueprint);
 
       // Remove entity that have _ in blueprint
-      if (Blueprint.includes("_")) {
-        continue;
-      }
+      // if (Blueprint.includes("_")) {
+      //   continue;
+      // }
 
       if (EntityManager.isMonster(Entity)) {
         // Monster

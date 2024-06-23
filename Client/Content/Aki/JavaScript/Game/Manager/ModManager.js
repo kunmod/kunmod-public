@@ -92,7 +92,7 @@ class ModManager {
     ShowRock:false,
     ShowBlobfly:false,
     ShowBox:true,
-    ShowType:false,
+    ShowType:true,
     ShowEntityId:true,
     ShowDistance:true,
     ShowName:true,
@@ -102,6 +102,7 @@ class ModManager {
     FOV:false,
     FOVValue:60, // default
     NoClip:false,
+    AutoPuzzle:true,
   };
 
   static GetGameDir() {

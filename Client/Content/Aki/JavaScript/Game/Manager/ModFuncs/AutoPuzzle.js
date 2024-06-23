@@ -8,32 +8,44 @@ const puerts_1 = require("puerts"),
   ModManager_1 = require("../ModManager"),
   ModUtils_1 = require("./ModUtils"),
   ModMethod_1 = require("./ModMethod"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   EntityManager_1 = require("./EntityManager");
 
 const ModMethod = ModMethod_1.ModMethod;
 const ModManager = ModManager_1.ModManager;
 const EntityManager = EntityManager_1.EntityManager;
-const destroyList = [];
+const HitGearList = [
+  "Gameplay050", //玩法_打击机关
+];
 class AutoPuzzle extends EntityManager {
-  static isNeedDestroy(entity) {
+  static isHitGear(entity) {
     let blueprintType = this.GetBlueprintType2(entity);
-    return destroyList.includes(blueprintType);
+    return HitGearList.includes(blueprintType);
   }
 
   static AutoPuzzle(entity) {
     if (ModManager.Settings.AutoPuzzle) {
-        this.Gameplay050(entity);
+      this.HitGear(entity);
     }
   }
 
-  static Gameplay050(entity) {
-    //玩法_打击机关
-    if(this.GetBlueprintType2(entity)=="Gameplay050")
-    ModMethod.ThrowDamageChangeRequest(entity.Entity, 1, 1604001001n);
+  static HitGear(entity) {
+    if (this.isHitGear(entity)) {
+      if (!entity.Entity.GetComponent(116).IsInState(3)) return;//判断状态 不确定判定有效
+      LevelGamePlayController_1.LevelGamePlayController.ShootTargetHitGearStateChangeRequest(
+        entity.Entity.Id,
+        (e) => {
+          if (e && entity.Entity?.Valid)
+            EventSystem_1.EventSystem.EmitWithTarget(
+              entity.Entity,
+              EventDefine_1.EEventName.UpdateSceneItemState
+            );
+        }
+      );
+    }
   }
-
-
-  
 }
-//puerts.logger.info(debug)
+
 exports.AutoPuzzle = AutoPuzzle;
