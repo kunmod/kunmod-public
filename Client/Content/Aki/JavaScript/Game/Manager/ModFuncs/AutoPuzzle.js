@@ -54,7 +54,7 @@ class AutoPuzzle extends EntityManager {
 
   static Bomb(entity){
     if (this.isneed(entity,bombList)) {
-      ModMethod.ThrowDamageChangeRequest(entity.Entity, 3, 210002001n);//爆炸果demageid Gameplay352
+      ModMethod.ThrowDamageChangeRequest(entity.Entity, 3, 210002001n);//爆裂鸣晶demageid Gameplay018
     }
   }
 

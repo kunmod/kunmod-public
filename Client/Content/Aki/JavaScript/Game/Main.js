@@ -23,6 +23,7 @@ const puerts_1 = require("puerts"),
   AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager"),
   AutoPuzzle_1 = require("./Manager/ModFuncs/AutoPuzzle"),
+  PerceptionRange_1 = require("./Manager/ModFuncs/PerceptionRange"),
   InputManager_1 = require("./Ui/Input/InputManager");
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
@@ -823,6 +824,7 @@ class ModEntityListener {
       MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
       MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
       AutoPuzzle_1.AutoPuzzle.AutoPuzzle(entitylist[i]);
+      PerceptionRange_1.PerceptionRange.SetInteractRange(entitylist[i]);
 
       //AutoChest_1.AutoChest.RewardChest(entitylist[i]); //1.0.28 cant use
     }
