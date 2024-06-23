@@ -30,6 +30,10 @@ const destroyList = [
   "SceneObj015",//陶罐
   "SceneObj016",//陶罐
   "SceneObj018",//沙袋
+  "Gameplay535",//可破坏石块
+  "Gameplay536",//可破坏石块
+  "Gameplay537",//可破坏石块
+  "Gameplay538",//可破坏石块
 
 ];
 class AutoDestroy extends EntityManager {

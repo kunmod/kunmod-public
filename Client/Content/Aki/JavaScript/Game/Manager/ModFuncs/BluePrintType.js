@@ -959,7 +959,7 @@ class BluePrintType extends ModLanguage {
     {
       BluePrint: "Gameplay352",
       en: "Explosive Charge",
-      chs: "爆炸石",
+      chs: "爆炸果",
       ja: "Gameplay352",
       es: "",
       id: "",

@@ -22,6 +22,8 @@ const puerts_1 = require("puerts"),
   AutoChest_1 = require("./Manager/ModFuncs/AutoChest"),
   AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager"),
+  AutoPuzzle_1 = require("./Manager/ModFuncs/AutoPuzzle"),
+  PerceptionRange_1 = require("./Manager/ModFuncs/PerceptionRange"),
   InputManager_1 = require("./Ui/Input/InputManager");
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
@@ -566,7 +568,7 @@ class MainMenu {
         Menu.AddToViewport();
         Menu.SetVisibility(2);
         isMenuLoaded = true;
-        ModManager.ShowTip("KUN-MOD Menu Loaded!")
+        ModManager.ShowTip("KUN-MOD Menu Loaded!");
         MainMenu.KunLog("KUN-MOD Menu Loaded!");
         clearInterval(loadMenuInterval);
       }
@@ -813,7 +815,6 @@ class ModEntityListener {
     if (!ModManager.Settings.DebugEntity) return;
     if (!ModUtils.isInGame()) return;
 
-    //EntityManager.PushEntityList();
     const entitylist =
       ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     const count = entitylist.length;
@@ -824,6 +825,8 @@ class ModEntityListener {
       AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
       MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
       MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
+      AutoPuzzle_1.AutoPuzzle.AutoPuzzle(entitylist[i]);
+      PerceptionRange_1.PerceptionRange.SetInteractRange(entitylist[i]);
 
       //AutoChest_1.AutoChest.RewardChest(entitylist[i]); //1.0.28 cant use
     }
@@ -896,7 +899,7 @@ class ESPmain {
       if (!Entity) continue;
 
       const Blueprint = EntityManager.GetBlueprintType2(Entity);
-//Puzzle
+      //Puzzle
       const isMutterfly = ["Gameplay111"].includes(Blueprint);
       const isCasket = ["Gameplay021"].includes(Blueprint);
       const isRock = [
@@ -908,9 +911,9 @@ class ESPmain {
       const isBlobfly = ["Animal032"].includes(Blueprint);
 
       // Remove entity that have _ in blueprint
-      if (Blueprint.includes("_")) {
-        continue;
-      }
+      // if (Blueprint.includes("_")) {
+      //   continue;
+      // }
 
       if (EntityManager.isMonster(Entity)) {
         // Monster
@@ -990,9 +993,6 @@ class ESPmain {
 
       // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
 
-      if (ModManager.Settings.ShowType) {
-        TextShow.push(Blueprint);
-      }
       if (ModManager.Settings.ShowEntityId) {
         //debug
         let id = Entity.Entity.Id;
@@ -1006,7 +1006,9 @@ class ESPmain {
       if (ModManager.Settings.ShowDistance) {
         TextShow.push(Distance.toString() + "m");
       }
-
+      if (true /*ModManager.Settings.ShowType*/) {
+        TextShow.push(EntityManager.GetBlueprintType2(Entity));
+      }
       if (TextShow.length > 0) {
         Text = TextShow.join(" | ");
       }
