@@ -19,21 +19,26 @@ const EntityManager = EntityManager_1.EntityManager;
 const HitGearList = [
   "Gameplay050", //玩法_打击机关
 ];
+const bombList = [
+  "Gameplay004",//裂纹岩壁爆炸果 
+];
+
 class AutoPuzzle extends EntityManager {
-  static isHitGear(entity) {
+  static isneed(entity,list) {
     let blueprintType = this.GetBlueprintType2(entity);
-    return HitGearList.includes(blueprintType);
+    return list.includes(blueprintType);
   }
 
   static AutoPuzzle(entity) {
     if (ModManager.Settings.AutoPuzzle) {
       this.HitGear(entity);
+      this.Bomb(entity);
     }
   }
 
   static HitGear(entity) {
-    if (this.isHitGear(entity)) {
-      if (!entity.Entity.GetComponent(116).IsInState(3)) return;//判断状态 不确定判定有效
+    if (this.isneed(entity,HitGearList)) {
+      //if (entity.Entity.GetComponent(116).IsInState(3)) return;//不确定3
       LevelGamePlayController_1.LevelGamePlayController.ShootTargetHitGearStateChangeRequest(
         entity.Entity.Id,
         (e) => {
@@ -46,6 +51,16 @@ class AutoPuzzle extends EntityManager {
       );
     }
   }
+
+  static Bomb(entity){
+    if (this.isneed(entity,bombList)) {
+      ModMethod.ThrowDamageChangeRequest(entity.Entity, 3, 210002001n);//爆炸果demageid Gameplay352
+    }
+  }
+
+
+
+
 }
 
 exports.AutoPuzzle = AutoPuzzle;

@@ -91,9 +91,8 @@ class ModManager {
     ShowMutterfly:false,
     ShowRock:false,
     ShowBlobfly:false,
-    ShowBox:true,
-    ShowType:true,
-    ShowEntityId:true,
+    ShowBox:true,  
+    ShowEntityId:false,
     ShowDistance:true,
     ShowName:true,
     ShowUnkown:true,
@@ -103,6 +102,7 @@ class ModManager {
     FOVValue:60, // default
     NoClip:false,
     AutoPuzzle:true,
+    ShowType:true,
   };
 
   static GetGameDir() {

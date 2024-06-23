@@ -143,6 +143,7 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
     );
   }
   static ThrowDamageChangeRequest(e, t) {
+    puerts_1.logger.warn("kundebug:ThrowDamageChangeRequest",e,t);
     var r = Protocol_1.Aki.Protocol.ThrowDamageRequest.create();
     (r.EntityId = MathUtils_1.MathUtils.NumberToLong(
       ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e)
@@ -355,7 +356,7 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e)
     )),
       Net_1.Net.Call(NetDefine_1.ERequestMessageId.TargetGearHitRequest, r, t);
-      puerts_1.logger.warn("kundebug:HitGearStateChangeRequest:执行结束",e)
+      //puerts_1.logger.warn("kundebug:HitGearStateChangeRequest:执行结束",e)
   }
   static OnEnableNearbyTrackingNotify(e) {
     var t = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
