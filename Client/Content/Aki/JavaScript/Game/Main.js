@@ -1006,7 +1006,7 @@ class ESPmain {
       if (ModManager.Settings.ShowDistance) {
         TextShow.push(Distance.toString() + "m");
       }
-      if (true /*ModManager.Settings.ShowType*/) {
+      if (ModManager.Settings.ShowBlueprint) {
         TextShow.push(EntityManager.GetBlueprintType2(Entity));
       }
       if (TextShow.length > 0) {

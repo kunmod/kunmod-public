@@ -84,14 +84,14 @@ class ModManager {
     ShowMonster:true,
     ShowAnimal:true,
     ShowNpc:false,
-    ShowTreasure:true,
-    ShowCollect:true,
+    ShowTreasure:false,
+    ShowCollect:false,
     ShowPuzzle:false,
     ShowCasket:false,
     ShowMutterfly:false,
     ShowRock:false,
     ShowBlobfly:false,
-    ShowBox:true,  
+    ShowBox:false,  
     ShowEntityId:false,
     ShowDistance:true,
     ShowName:true,
@@ -101,8 +101,8 @@ class ModManager {
     FOV:false,
     FOVValue:60, // default
     NoClip:false,
-    AutoPuzzle:true,
-    ShowType:true,
+    AutoPuzzle:false,
+    ShowBlueprint:false,
   };
 
   static GetGameDir() {

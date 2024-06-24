@@ -62,8 +62,8 @@ class AutoInteract extends EntityManager {
     "Collect601", //鸟蛋
     //"Collect601_1",//鸟蛋_组合
     //"Collect601_2",//鸟蛋_组合
-    //"Collect602",//兽肉
-    //"Collect603",//禽肉
+    "Collect602",//兽肉
+    "Collect603",//禽肉
     //"Collect604",//玩法_永夜长明
   ];
   static CollectAnimal=[
