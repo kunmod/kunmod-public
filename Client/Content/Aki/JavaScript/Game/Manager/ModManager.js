@@ -61,7 +61,7 @@ class ModManager {
     HideDmgUi: false,
     InfiniteEnergy: false,
     //test
-    DebugEntity: true, //(if use entity func need enable)
+
     AutoDestroy: false,
     killAuranew: false,
     killAuraRadius: 300,
@@ -80,6 +80,7 @@ class ModManager {
     Uid: "100000000",
     Language: "English",
     ESP:true,
+    DebugEntity: true, //(show unknown)
     ESPRadius:300,
     ShowMonster:true,
     ShowAnimal:true,
@@ -92,7 +93,6 @@ class ModManager {
     ShowRock:false,
     ShowBlobfly:false,
     ShowBox:false,  
-    ShowEntityId:false,
     ShowDistance:true,
     ShowName:true,
     ShowUnkown:true,
@@ -102,7 +102,6 @@ class ModManager {
     FOVValue:60, // default
     NoClip:false,
     AutoPuzzle:false,
-    ShowBlueprint:false,
   };
 
   static GetGameDir() {

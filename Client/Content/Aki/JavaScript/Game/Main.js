@@ -827,7 +827,6 @@ class MainMenu {
 }
 class ModEntityListener {
   static Runtime() {
-    if (!ModManager.Settings.DebugEntity) return;
     if (!ModUtils.isInGame()) return;
 
     const entitylist =
@@ -972,7 +971,7 @@ class ESPmain {
         }
       } else {
         Color = MainMenu.ESPColor.black;
-        if (!ModManager.Settings.DebugEntity && !ModManager.Settings.ShowUnkown) continue; //debug
+        if (ModManager.Settings.DebugEntity) continue; //debug
       }
 
       let TextShow = [];
@@ -1006,12 +1005,12 @@ class ESPmain {
       }
 
       // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
-
-      if (ModManager.Settings.ShowEntityId) {
-        //debug
+      if (ModManager.Settings.DebugEntity) {
+        TextShow.push(EntityManager.GetBlueprintType2(Entity));
         let id = Entity.Entity.Id;
         TextShow.push(id);
       }
+
       if (ModManager.Settings.ShowName) {
         let Name = EntityManager.GetName(Entity);
         if (Name === "") Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
@@ -1021,9 +1020,9 @@ class ESPmain {
       if (ModManager.Settings.ShowDistance) {
         TextShow.push(Distance.toString() + "m");
       }
-      if (ModManager.Settings.ShowBlueprint) {
-        TextShow.push(EntityManager.GetBlueprintType2(Entity));
-      }
+
+
+
       if (TextShow.length > 0) {
         Text = TextShow.join(" | ");
       }
