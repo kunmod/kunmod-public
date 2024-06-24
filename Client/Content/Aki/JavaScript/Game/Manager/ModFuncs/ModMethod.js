@@ -39,10 +39,7 @@ class ModMethod {
       ); //  1604001001n 为女主的第一次平A的 DamageId   MaingirlAttack1
     }
   }
-  //吸收尸体
-  static RequestCaptureEntity(entity) {
-    BattleNetController_1.BattleNetController.RequestCaptureEntity(entity.Id);
-  }
+
   static AnimalDieRequest(entity) {
     ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
       entity.GetComponent(0).GetCreatureDataId(),

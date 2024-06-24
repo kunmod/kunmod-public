@@ -7,6 +7,7 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   ModManager_1 = require("../ModManager"),
   ModUtils_1 = require("./ModUtils"),
+  BattleNetController_1 = require("../../World/Controller/BattleNetController"), //add
   ModMethod_1 = require("./ModMethod"),
 
   EntityManager_1 = require("./EntityManager");
@@ -19,7 +20,7 @@ class AutoAbsorb extends EntityManager {
   static AutoAbsorb(entity) {
     if (ModManager.Settings.AutoAbsorbnew && this.isVision(entity)) {
       //puerts_1.logger.warn("kun:AutoAbsorbnew:isVision",entity.Entity.Id);
-      ModMethod.RequestCaptureEntity(entity.Entity);
+      BattleNetController_1.BattleNetController.RequestCaptureEntity(entity.Entity);
       //puerts_1.logger.warn("kun:AutoAbsorbnew:End",entity.Entity.Id);
     }
   }

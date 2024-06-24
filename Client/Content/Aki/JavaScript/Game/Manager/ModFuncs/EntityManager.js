@@ -2,16 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EntityManager = void 0;
 const puerts_1 = require("puerts"),
- UE = require("ue"),
- Info_1 = require("../../../Core/Common/Info"),
- Log_1 = require("../../../Core/Common/Log"),
- ModManager_1 = require("../ModManager"),
- ModUtils_1 = require("./ModUtils"),
- Global_1 = require("../../Global"),
- ModelManager_1 = require("../../Manager/ModelManager"),
- Protocol_1 = require("../../../Core/Define/Net/Protocol"),
- CreatureController_1 = require("../../World/Controller/CreatureController"),
- EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
+  UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ModManager_1 = require("../ModManager"),
+  ModUtils_1 = require("./ModUtils"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  CreatureController_1 = require("../../World/Controller/CreatureController"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
 //const CreatureModel = ModelManager_1.ModelManager.CreatureModel;
 
 class EntityManager {
@@ -77,7 +78,6 @@ class EntityManager {
     return pos;
   }
 
-
   static GetEntitySortedList() {
     this.EntitiesSortedList =
       ModelManager_1.ModelManager.CreatureModel.EntitiesSortedList;
@@ -113,12 +113,11 @@ class EntityManager {
     return pos;
   }
 
-
-
   static GetName(entity) {
-    let a = entity.Entity.GetComponent(3);
-    let actor = a.Actor;
-    let name = actor.GetName();
+    let a = entity.Entity.GetComponent(0);
+    let name = PublicUtil_1.PublicUtil.GetConfigTextByKey(
+      a.GetBaseInfo()?.TidName ?? ""
+    );
 
     return name;
   }
@@ -200,7 +199,7 @@ class EntityManager {
     return BlueprintType.startsWith("Quest");
   }
   static isVision(entity) {
-    return (entity.Entity.Components[0].C9o).startsWith("VisionItem");
+    return entity.Entity.Components[0].C9o.startsWith("VisionItem");
   }
   static isWeapon(entity) {
     let BlueprintType = this.GetBlueprintType(entity);

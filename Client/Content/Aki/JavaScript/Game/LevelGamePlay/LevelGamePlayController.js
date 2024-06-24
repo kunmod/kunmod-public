@@ -192,53 +192,35 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
         }
       );
   }
-  //fix OpenTreasureBox
-  static async GetRewardTreasureBoxRequest(e) {
-    if (this.RRe?.get(e)) return !1;
-    this.RRe.set(e, !0);
-    var t = Protocol_1.Aki.Protocol.GetRewardTreasureBoxRequest.create(),
-      t =
-        ((t.EntityId = MathUtils_1.MathUtils.NumberToLong(
-          ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e)
-        )),
-        await Net_1.Net.CallAsync(
-          NetDefine_1.ERequestMessageId.GetRewardTreasureBoxRequest,
-          t
-        ));
-    this.RRe.delete(e);
-    if (t) {
-        EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OpenTreasureBox);
-        return !0;
-    }
-    return !1;
+
+
+static async GetRewardTreasureBoxRequest(e) {
+  if (this.RRe?.get(e)) return !1;
+  this.RRe.set(e, !0);
+  var t = Protocol_1.Aki.Protocol.GetRewardTreasureBoxRequest.create(),
+    t =
+      ((t.EntityId = MathUtils_1.MathUtils.NumberToLong(
+        ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e)
+      )),
+      await Net_1.Net.CallAsync(
+        NetDefine_1.ERequestMessageId.GetRewardTreasureBoxRequest,
+        t
+      ));
+  return (
+    this.RRe.delete(e),
+    !!t &&
+      (t.ErrorCode !== Protocol_1.Aki.Protocol.ErrorCode.Success
+        ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+            t.ErrorCode,
+            NetDefine_1.EResponseMessageId.GetRewardTreasureBoxResponse
+          ),
+          !1)
+        : (EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.OpenTreasureBox
+          ),
+          !0))
+  );
 }
-// static async GetRewardTreasureBoxRequest(e) {
-//   if (this.RRe?.get(e)) return !1;
-//   this.RRe.set(e, !0);
-//   var t = Protocol_1.Aki.Protocol.GetRewardTreasureBoxRequest.create(),
-//     t =
-//       ((t.EntityId = MathUtils_1.MathUtils.NumberToLong(
-//         ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e)
-//       )),
-//       await Net_1.Net.CallAsync(
-//         NetDefine_1.ERequestMessageId.GetRewardTreasureBoxRequest,
-//         t
-//       ));
-//   return (
-//     this.RRe.delete(e),
-//     !!t &&
-//       (t.ErrorCode !== Protocol_1.Aki.Protocol.ErrorCode.Success
-//         ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-//             t.ErrorCode,
-//             NetDefine_1.EResponseMessageId.GetRewardTreasureBoxResponse
-//           ),
-//           !1)
-//         : (EventSystem_1.EventSystem.Emit(
-//             EventDefine_1.EEventName.OpenTreasureBox
-//           ),
-//           !0))
-//   );
-// }
 
   static ElevatorStateChangeRequest(e, t, r, a) {
     var o = Protocol_1.Aki.Protocol.ElevatorStateChangeRequest.create();

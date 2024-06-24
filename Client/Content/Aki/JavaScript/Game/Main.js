@@ -998,7 +998,8 @@ class ESPmain {
         TextShow.push(id);
       }
       if (ModManager.Settings.ShowName) {
-        let Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
+        let Name = EntityManager.GetName(Entity);
+        if (Name === "") Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
         TextShow.push(Name);
       }
 
