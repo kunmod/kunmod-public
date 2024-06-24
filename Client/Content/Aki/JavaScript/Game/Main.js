@@ -971,7 +971,7 @@ class ESPmain {
         }
       } else {
         Color = MainMenu.ESPColor.black;
-        if (ModManager.Settings.DebugEntity) continue; //debug
+        if (!ModManager.Settings.DebugEntity) continue; //debug
       }
 
       let TextShow = [];
