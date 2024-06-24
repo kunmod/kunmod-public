@@ -517,7 +517,9 @@ class MainMenu {
             value = value.toFixed(0);
             Menu.FOVValue.SetText(value);
             ModManager.Settings.FOVValue = value;
-            ModMethod_1.ModMethod.SetFOV(value);
+            if (ModManager.Settings.FOV) {
+              ModMethod_1.ModMethod.SetFOV(value);
+            }
             MainMenu.KunLog("FOV Value: " + value);
           });
 
@@ -968,11 +970,9 @@ class ESPmain {
           Color = MainMenu.ESPColor.pink;
           if (!ModManager.Settings.ShowPuzzle) continue;
         }
-      } else if (ModManager.Settings.ShowUnkown) {
-        //debug
-        Color = MainMenu.ESPColor.black;
       } else {
-        continue;
+        Color = MainMenu.ESPColor.black;
+        if (!ModManager.Settings.DebugEntity && !ModManager.Settings.ShowUnkown) continue; //debug
       }
 
       let TextShow = [];
