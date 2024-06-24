@@ -655,8 +655,23 @@ class MainMenu {
       );
 
       Menu.Designer.SetText(ModLanguage.ModTr("TEXT_DESIGNER"));
-      Menu.DisclaimerText.SetText(ModLanguage.ModTr("TEXT_DISCLAIMER"));
+      Menu.DisclaimerText.SetText(this.Getfreetip());
       Menu.LanguageText.SetText(ModLanguage.ModTr("TEXT_LANGUAGE"));
+    }
+  }
+
+
+  static Getfreetip() {
+    let lang = ModLanguage.GetCurrLang();
+    switch (lang) {
+      case "en":
+        return "This hack is completely free, if you paid to get this, you have been scammed.";
+      case "zh-Hans":
+        return "免费软件，如果你是付费获得，那你被骗了";
+      case "ja":
+        return "このハックは完全に無料です。これにお金を払ったのなら、あなたはだまされています。";
+      default:
+        return "This hack is completely free, if you paid to get this, you have been scammed.";
     }
   }
 
