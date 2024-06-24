@@ -96,10 +96,6 @@ class EntityManager {
   }
   static GetEntityCount() {
     this.ModsEntitys.EntityCount = this.EntitiesSortedList.length;
-    // puerts_1.logger.warn(
-    //   "[KUNMODDEBUG]:GetEntityCount",
-    //   this.ModsEntitys.EntityCount
-    // );
     return this.ModsEntitys.EntityCount;
   }
   static GetEntityId(entity) {

@@ -668,7 +668,7 @@ class MainMenu {
     switch (lang) {
       case "en":
         return "This hack is completely free, if you paid to get this, you have been scammed.";
-      case "zh-Hans":
+      case "chs":
         return "免费软件，如果你是付费获得，那你被骗了";
       case "ja":
         return "このハックは完全に無料です。これにお金を払ったのなら、あなたはだまされています。";

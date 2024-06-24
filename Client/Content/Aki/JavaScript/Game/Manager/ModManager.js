@@ -80,7 +80,7 @@ class ModManager {
     Uid: "100000000",
     Language: "English",
     ESP:true,
-    DebugEntity: true, //(show unknown)
+    DebugEntity: false, //(show unknown)
     ESPRadius:300,
     ShowMonster:true,
     ShowAnimal:true,
@@ -146,7 +146,7 @@ class ModManager {
   }
 
   static ModStart() {
-    //ModDebuger_1.ModDebuger.TestMethod();
+
     this.AddKey("ShowMenu", "Home");
     this.AddToggle("GodMode", "F5");
     this.AddToggle("HitMultiplier", "F6");
@@ -215,18 +215,19 @@ class ModManager {
 
     this.listenMod("AutoLoot", "NumPadZero", "AutoLoot");
     this.listenMod("AutoDestroy", "NumPadOne", "AutoDestroy");
-    // ModDebuger_1.ModDebuger.EnableDebug();
-    // if (ModDebuger_1.ModDebuger.Setting.EnableDebug) {
-    //   ModDebuger_1.ModDebuger.ListenDebug();
-    // }
+
 
     if (this.listenKey("MarkTp", "t")) {
-      if (this.Settings.MarkTp && ModUtils_1.ModUtils.IsInMapView())
+      if (this.Settings.MarkTp && ModUtils_1.ModUtils.IsInMapView()){
+        let z =this.Settings.MarkZ*100;
+        if(this.Settings.MarkZ==0)
+          z=this.Settings.MarkTpPosZ*100;
         this.TpNoloadingTo(
           this.Settings.MarkX * 100,
           this.Settings.MarkY * 100,
-          this.Settings.MarkZ * 100
+          z
         );
+      }
     }
 
     //this.listenMod("skip", "NumPadFour", "plot");
