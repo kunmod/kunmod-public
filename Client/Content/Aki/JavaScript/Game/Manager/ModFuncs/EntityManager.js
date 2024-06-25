@@ -224,8 +224,7 @@ class EntityManager {
     return BlueprintType.startsWith("SceneObj");
   }
   static isTeleport(entity) {
-    let BlueprintType = this.GetBlueprintType(entity);
-    return BlueprintType.startsWith("Teleport");
+    return (entity.Entity.Components[0].C9o).startsWith("Teleport");
   }
   static isSonanceCasket(entity) {
     return entity.Entity.Components[0].C9o == "Gameplay021";
