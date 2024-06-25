@@ -27,7 +27,7 @@ const puerts_1 = require("puerts"),
   TsInteractionUtils_1 = require("./TsInteractionUtils"),
   DEFAULT_CD = 0.5;
 
-const { AutoInteraction } = require("../../Manager/ModFuncs/AutoInteraction");
+const { EntityFilter } = require("../../Manager/ModFuncs/EntityFilter");
 
 class SameTipInteract {
   constructor() {
@@ -269,16 +269,16 @@ class InteractionModel extends ModelBase_1.ModelBase {
     if (n) { // auto interact
       const Entity = n.GetEntity();
       const BlueprintType = EntityManager_1.EntityManager.GetBlueprintType3(Entity);
-      if (BlueprintType.startsWith("Collect") && ModManager_1.ModManager.Settings.AutoLoot) {
+      if (EntityFilter.isneedLoot(BlueprintType) && ModManager_1.ModManager.Settings.AutoLoot) {
           return this.InteractPawn(Entity);
       }
-      if (BlueprintType.startsWith("Treasure") && ModManager_1.ModManager.Settings.AutoPickTreasure) {
+      if (EntityFilter.isneedTreasure(BlueprintType) && ModManager_1.ModManager.Settings.AutoPickTreasure) {
           return this.InteractPawn(Entity);
       }
       if (BlueprintType.startsWith("Teleport") && ModManager_1.ModManager.Settings.AutoTeleport) {
           return this.InteractPawn(Entity);
       }
-      if (BlueprintType.startsWith("Vision") && ModManager_1.ModManager.Settings.AutoAbsorbnew) {
+      if (BlueprintType.startsWith("VisionItem") && ModManager_1.ModManager.Settings.AutoAbsorbnew) {
           return this.InteractPawn(Entity);
       }
     }
