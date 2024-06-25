@@ -227,7 +227,9 @@ class EntityManager {
     let BlueprintType = this.GetBlueprintType(entity);
     return BlueprintType.startsWith("Teleport");
   }
-
+  static isSonanceCasket(entity) {
+    return entity.Entity.Components[0].C9o == "Gameplay021";
+  }
   static SetPlayerSpeed(value) {
     //CharacterController_1.CharacterController.SetTimeDilation(value);
     let player = this.GetPlayerEntity();

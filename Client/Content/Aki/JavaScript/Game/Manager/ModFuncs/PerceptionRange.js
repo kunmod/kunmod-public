@@ -36,6 +36,12 @@ class PerceptionRange extends EntityManager {
     }
   }
 
+  static SetSonanceCasket(entity) {
+    if (this.isSonanceCasket(entity)) {
+      PerceptionRange.SetInteractRange(entity);
+    }
+  }
+
   static SetInteractRange(entity) {
     let PawnPerceptionComponent = entity.Entity.GetComponent(104);
     try {

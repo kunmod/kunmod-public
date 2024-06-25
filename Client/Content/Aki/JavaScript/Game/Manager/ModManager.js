@@ -103,6 +103,7 @@ class ModManager {
     AutoPuzzle:true,
     ShowType:true,
     AutoTeleport:true,
+    AutoSonanceCasket:true,
   };
 
   static GetGameDir() {

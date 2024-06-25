@@ -846,6 +846,9 @@ class ModEntityListener {
       if (ModManager.Settings.AutoAbsorbnew) {
         PerceptionRange_1.PerceptionRange.SetVision(entitylist[i]);
       }
+      if (ModManager.Settings.AutoSonanceCasket) {
+        PerceptionRange_1.PerceptionRange.SetSonanceCasket(entitylist[i]);
+      }
     }
 
     AutoInteraction.CurrentInteraction();
