@@ -711,15 +711,14 @@ let PawnInteractNewComponent = class PawnInteractNewComponent extends PawnIntera
         const s = this.WGo.Entity;
         e = s.GetComponent(184);
         if (this.kXi.IsPlayerTurnAround && e?.ContainsTagById(-1898186757)) {
-          (i.IsInteractionTurning = !0),
+          (i.IsInteractionTurning = !1), // default !0
             InputDistributeController_1.InputDistributeController.RefreshInputTag(),
             (this.Den = !0);
           const s = this.WGo.Entity;
           (e = s.GetComponent(159)),
             (i =
               (e &&
-                (e.StopMontage(),
-                e.MainAnimInstance.ConsumeExtractedRootMotion(1)),
+                (e.StopMontage()/*, e.MainAnimInstance.ConsumeExtractedRootMotion(1) */),
               s.GetComponent(36)));
           i &&
             ((i.ForceExitStateStop = !0),

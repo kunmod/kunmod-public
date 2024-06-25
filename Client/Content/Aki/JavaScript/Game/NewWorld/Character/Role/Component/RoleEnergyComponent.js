@@ -45,7 +45,7 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
     const originalGetCurrentValue = this.yte.GetCurrentValue.bind(this.yte);
     this.yte.GetCurrentValue = (attributeId) => {
       if (attributeId === EAttributeId.Energy) {
-        if(ModManager_1.ModManager.Settings.InfiniteEnergy)
+        if(ModManager_1.ModManager.Settings.NoCD)
            return originalGetCurrentValue(EAttributeId.EnergyMax);
       }
       return originalGetCurrentValue(attributeId);
@@ -56,10 +56,10 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
     return !0;
   }
   OnEnd() {
-    if(ModManager_1.ModManager.Settings.InfiniteEnergy){
-        if (this.yte.GetCurrentValue) {
-            this.yte.GetCurrentValue = originalGetCurrentValue;
-          }
+    if(ModManager_1.ModManager.Settings.NoCD){
+      if (this.yte.GetCurrentValue) {
+        this.yte.GetCurrentValue = originalGetCurrentValue;
+      }
     }
 
     this.yte.RemoveListeners(energyAttrIds, this.HXo);

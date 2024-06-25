@@ -59,7 +59,6 @@ class ModManager {
     AutoLoot: false,
     HideHUD: false,
     HideDmgUi: false,
-    InfiniteEnergy: false,
     //test
     DebugEntity: true, //(if use entity func need enable)
     AutoDestroy: false,
