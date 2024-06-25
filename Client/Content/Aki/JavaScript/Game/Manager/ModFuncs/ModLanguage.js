@@ -810,7 +810,7 @@ class ModLanguage {
       es: "Soleado",
       id: "Cerah",
       ja: "밝은",
-      ko: "Sunny",
+      ko: "밝은",
       vi: "Sáng",
     },
     {
@@ -867,11 +867,11 @@ class ModLanguage {
       Text: "TEXT_MUTTERFLY",
       chs: "隙声蝶",
       en: "Mutterfly",
-      es: "",
+      es: "Mutterfly",
       id: "Kupu-kupu",
       ja: "隙声蝶",
       ko: "Mutterfly",
-      vi: "",
+      vi: "Mutterfly",
     },
     {
       Text: "TEXT_BLOBFLY",
@@ -900,8 +900,8 @@ class ModLanguage {
       es: "Saltate la Historia",
       id: "Lewati Cerita",
       ja: "プロットのスキップ",
-      ko: "Plot Skip",
-      vi: "",
+      ko: "스토리 건너뛰기",
+      vi: "Bỏ qua câu chuyện",
     },
     {
       Text: "TEXT_AUTO_PUZZLE",
