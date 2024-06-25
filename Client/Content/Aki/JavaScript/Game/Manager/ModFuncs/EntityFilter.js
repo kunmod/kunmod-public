@@ -1,14 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.AutoInteraction = void 0);
+  (exports.EntityFilter = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   ModManager_1 = require("../ModManager"),
-  EntityManager_1 = require("./EntityManager"),
-  ModelManager_1 = require("../ModelManager");
+  ModUtils_1 = require("./ModUtils"),
+  EntityManager_1 = require("./EntityManager");
 
-  // doesnt need this file anymore
-class AutoInteraction {
+const ModManager = ModManager_1.ModManager;
+const EntityManager = EntityManager_1.EntityManager;
+const ModUtils = ModUtils_1.ModUtils;
+
+class EntityFilter  {
   static CollectList = [
     "Collect001", //睡莲
     //"Collect001_1",//睡莲_底座
@@ -107,55 +112,13 @@ class AutoInteraction {
     //"Treasure035",//TsEntity_调查光点_野外陆地
     //"Treasure036",//TsEntity_调查光点_水域
   ];
-  static isNeedLoot(entity) {
-    let blueprintType = EntityManager_1.EntityManager.GetBlueprintType2(entity);
-    return (
-      this.CollectList.includes(blueprintType) ||
-      this.CollectAnimal.includes(blueprintType)
-    );
-  }
-  static InteractionList = [];
-  static CurrentInteraction() {
-    for (let i = 0; i < AutoInteraction.InteractionList.length; i++) {
-      const Entity = AutoInteraction.InteractionList[i];
-      const BlueprintType =
-        EntityManager_1.EntityManager.GetBlueprintType3(Entity);
-      if (
-        (this.CollectList.includes(BlueprintType) ||
-          this.CollectAnimal.includes(BlueprintType)) &&
-        ModManager_1.ModManager.Settings.AutoLoot
-      ) {
-        AutoInteraction.InteractPawn(i);
-      }
-      if (
-        this.TreasureList.includes(BlueprintType) &&
-        ModManager_1.ModManager.Settings.AutoPickTreasure
-      ) {
-        AutoInteraction.InteractPawn(i);
-      }
-      if (
-        BlueprintType.startsWith("Teleport") &&
-        ModManager_1.ModManager.Settings.AutoTeleport
-      ) {
-        AutoInteraction.InteractPawn(i);
-      }
-      if (
-        BlueprintType.startsWith("VisionItem") &&
-        ModManager_1.ModManager.Settings.AutoAbsorbnew
-      ) {
-        AutoInteraction.InteractPawn(i);
-      }
-    }
-  }
 
-  static InteractPawn(index) {
-    const Component = AutoInteraction.InteractionList[index].GetComponent(103);
-    const Opt =
-      ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
-        index
-      );
-    Component.ntn(Opt);
-    AutoInteraction.InteractionList.splice(index, 1);
+  static isneedLoot(blueprint) {
+    return this.CollectList.includes(blueprint)||this.CollectAnimal.includes(blueprint);
+  }
+  static isneedTreasure(blueprint) {
+    return this.TreasureList.includes(blueprint);
   }
 }
-exports.AutoInteraction = AutoInteraction;
+
+exports.EntityFilter = EntityFilter;

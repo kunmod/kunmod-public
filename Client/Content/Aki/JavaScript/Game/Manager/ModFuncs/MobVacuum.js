@@ -13,14 +13,13 @@ const puerts_1 = require("puerts"),
   EntityManager_1 = require("./EntityManager"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
-  AutoInteraction_1 = require("./AutoInteraction"),
+  EntityFilter_1 = require("./EntityFilter"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 const EntityManager = EntityManager_1.EntityManager;
 const ModUtils = ModUtils_1.ModUtils;
 
 class MobVacuum extends EntityManager {
-
   static isIndistance(entity) {
     let monsterPos = this.GetPosition(entity.Entity);
     let distance = ModUtils.Getdistance2Player(monsterPos);
@@ -42,14 +41,15 @@ class MobVacuum extends EntityManager {
   static VacuumCollect(entity) {
     if (!ModManager_1.ModManager.Settings.VacuumCollect) return;
     if (
-      AutoInteraction_1.AutoInteraction.isNeedLoot(entity) &&
+      EntityFilter_1.EntityFilter.isneedLoot(
+        EntityManager.GetBlueprintType2(entity)
+      ) &&
       this.isIndistance(entity)
     ) {
       let playerpos = EntityManager.GetPlayerPos();
       let ActorComp = entity.Entity.GetComponent(1);
       ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
     }
-
   }
 
   static SyncMonster(entity, pos) {
