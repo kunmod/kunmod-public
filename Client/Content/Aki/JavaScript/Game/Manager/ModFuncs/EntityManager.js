@@ -143,6 +143,15 @@ class EntityManager {
     }
   }
 
+  static GetBlueprintType3(Entity) {
+    try {
+      let Type = Entity.Components[0].C9o;
+      return Type;
+    } catch (error) {
+      return "unknownBlueprintType";
+    }
+  }
+
   static GetEntityData(PbDataId) {
     try {
       return ModelManager_1.ModelManager.CreatureModel.GetEntityData(PbDataId);
@@ -213,6 +222,10 @@ class EntityManager {
   static isSceneObj(entity) {
     let BlueprintType = this.GetBlueprintType(entity);
     return BlueprintType.startsWith("SceneObj");
+  }
+  static isTeleport(entity) {
+    let BlueprintType = this.GetBlueprintType(entity);
+    return BlueprintType.startsWith("Teleport");
   }
 
   static SetPlayerSpeed(value) {
