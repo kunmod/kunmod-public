@@ -14,12 +14,9 @@ const puerts_1 = require("puerts"),
   BluePrintType_1 = require("./Manager/ModFuncs/BluePrintType"),
   ModMethod_1 = require("./Manager/ModFuncs/ModMethod"),
   EntityManager_1 = require("./Manager/ModFuncs/EntityManager"),
-  AutoAbsorb_1 = require("./Manager/ModFuncs/AutoAbsorb"),
-  AutoInteract_1 = require("./Manager/ModFuncs/AutoInteract"),
   NoClip_1 = require("./Manager/ModFuncs/NoClip"),
   KillAura_1 = require("./Manager/ModFuncs/KillAura"),
   MobVacuum_1 = require("./Manager/ModFuncs/MobVacuum"),
-  AutoChest_1 = require("./Manager/ModFuncs/AutoChest"),
   AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager"),
   AutoPuzzle_1 = require("./Manager/ModFuncs/AutoPuzzle"),
@@ -662,8 +659,22 @@ class MainMenu {
       );
 
       Menu.Designer.SetText(ModLanguage.ModTr("TEXT_DESIGNER"));
-      Menu.DisclaimerText.SetText(ModLanguage.ModTr("TEXT_DISCLAIMER"));
+      Menu.DisclaimerText.SetText(this.Getfreetip());
       Menu.LanguageText.SetText(ModLanguage.ModTr("TEXT_LANGUAGE"));
+    }
+  }
+
+  static Getfreetip() {
+    let lang = ModLanguage.GetCurrLang();
+    switch (lang) {
+      case "en":
+        return "This hack is completely free, if you paid to get this, you have been scammed.";
+      case "chs":
+        return "免费软件，如果你是付费获得，那你被骗了";
+      case "ja":
+        return "このハックは完全に無料です。これにお金を払ったのなら、あなたはだまされています。";
+      default:
+        return "This hack is completely free, if you paid to get this, you have been scammed.";
     }
   }
 
@@ -681,7 +692,9 @@ class MainMenu {
       Menu.NoClipCheck.SetIsChecked(ModManager.Settings.NoClip);
 
       // world
-      Menu.AutoPickTreasureCheck.SetIsChecked(ModManager.Settings.AutoPickTreasure);
+      Menu.AutoPickTreasureCheck.SetIsChecked(
+        ModManager.Settings.AutoPickTreasure
+      );
       Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
       Menu.KillAnimalCheck.SetIsChecked(ModManager.Settings.KillAnimal);
@@ -817,7 +830,6 @@ class MainMenu {
 }
 class ModEntityListener {
   static Runtime() {
-    if (!ModManager.Settings.DebugEntity) return;
     if (!ModUtils.isInGame()) return;
 
     const entitylist =
@@ -831,7 +843,6 @@ class ModEntityListener {
       MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
       AutoPuzzle_1.AutoPuzzle.AutoPuzzle(entitylist[i]);
     }
-    //puerts_1.logger.warn("kun:Runtime is working");
   }
 
   static FasterRuntime() {
@@ -960,7 +971,7 @@ class ESPmain {
           Color = MainMenu.ESPColor.orange;
           if (!ModManager.Settings.ShowAnimal) continue;
         }
-      } else if (AutoInteract_1.AutoInteract.isNeedLoot(Entity)) {
+      } else if (AutoInteraction.isNeedLoot(Entity)) {
         // Collection
         Color = MainMenu.ESPColor.green;
         if (!ModManager.Settings.ShowCollect) continue;
@@ -988,7 +999,7 @@ class ESPmain {
         }
       } else {
         Color = MainMenu.ESPColor.black;
-        if (!ModManager.Settings.DebugEntity && !ModManager.Settings.ShowUnkown) continue; //debug
+        if (!ModManager.Settings.DebugEntity) continue; //debug
       }
 
       let TextShow = [];
@@ -1022,23 +1033,22 @@ class ESPmain {
       }
 
       // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
-
-      if (ModManager.Settings.ShowEntityId) {
-        //debug
+      if (ModManager.Settings.DebugEntity) {
+        TextShow.push(EntityManager.GetBlueprintType2(Entity));
         let id = Entity.Entity.Id;
         TextShow.push(id);
       }
+
       if (ModManager.Settings.ShowName) {
-        let Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
+        let Name = EntityManager.GetName(Entity);
+        if (Name === "") Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
         TextShow.push(Name);
       }
 
       if (ModManager.Settings.ShowDistance) {
         TextShow.push(Distance.toString() + "m");
       }
-      if (true /*ModManager.Settings.ShowType*/) {
-        TextShow.push(EntityManager.GetBlueprintType2(Entity));
-      }
+
       if (TextShow.length > 0) {
         Text = TextShow.join(" | ");
       }

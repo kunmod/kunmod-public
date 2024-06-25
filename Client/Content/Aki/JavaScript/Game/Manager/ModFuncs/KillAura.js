@@ -22,6 +22,7 @@ const AnimalList = [
   "Animal005", //赤脚雁
   "Animal012", //青杂兔
 
+
 ];
 const BigAnimalList = [
   "Animal013", //岩角羊
@@ -41,18 +42,7 @@ class KillAura extends EntityManager {
     } else return false;
   }
 
-  static isneedkillAnimal(entity) {
-    let blueprintType = this.GetBlueprintType2(entity);
-    return AnimalList.includes(blueprintType);
-  }
-  static isneedkillAnimalBig(entity) {
-    let blueprintType = this.GetBlueprintType2(entity);
-    return BigAnimalList.includes(blueprintType);
-  }
-  static isneeddropanimal(entity) {
-    let blueprintType = this.GetBlueprintType2(entity);
-    return dropanimal.includes(blueprintType);
-  }
+
   static killAura(entity) {
     if (!ModManager.Settings.killAuranew) return;
 
@@ -67,15 +57,16 @@ class KillAura extends EntityManager {
     if ( !ModManager.Settings.KillAnimal)
       return;
 
-    if (this.isneedkillAnimal(entity)) {
+    let blueprintType = this.GetBlueprintType2(entity);
+    if(AnimalList.includes(blueprintType)){
       ModMethod.AnimalDieRequest(entity.Entity);
-      return;
     }
-    if (this.isneeddropanimal(entity)) {
-      ModMethod.AnimalDropRequest(entity.Entity);  
-      return;
+    else if(BigAnimalList.includes(blueprintType)){
+      ModMethod.MonsterDrownRequest(entity.Entity)
     }
-
+    else if(dropanimal.includes(blueprintType)){
+      ModMethod.AnimalDropRequest(entity.Entity); 
+    }
   }
 }
 
