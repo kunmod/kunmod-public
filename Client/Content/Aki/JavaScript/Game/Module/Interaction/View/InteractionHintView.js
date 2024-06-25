@@ -19,7 +19,6 @@ const UE = require("ue"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   InteractionDefine_1 = require("../InteractionDefine"),
   InteractionGuide_1 = require("./InteractionGuide"),
-  ModManager_1 = require("../../../Manager/ModManager"), //addkunmod
   InteractionHint_1 = require("../InteractionHint");
 class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
@@ -344,27 +343,6 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnAfterShow() {
     this.x1i(), this.P1i(this.t1i), this.w1i(), this.Yti(), this.uzt(0);
-    //kunmodcode //autoloot
-    if (ModManager_1.ModManager.Settings.AutoLoot) {
-      (this.a1i = !0),
-        (this.r1i = !0),
-        (this._1i = this.t1i.length),
-        (this.h1i = 0),
-        (this.l1i = 0);
-      var count = 0;
-      for (let i = 0; i < this.t1i.length; i++) {
-        if (
-          ModelManager_1.ModelManager.InteractionModel.CanAutoPickUp(
-            this.t1i[i]
-          ) === false
-        ) {
-          count += 1;
-          continue;
-        }
-        this.InteractPawn(i + count) &&
-          AudioSystem_1.AudioSystem.PostEvent("play_ui_ia_com_option");
-      }
-    }//kunmodcode //autoloot
   }
   OnAfterHide() {
     this.m1i = void 0;

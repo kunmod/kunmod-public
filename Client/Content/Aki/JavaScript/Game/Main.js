@@ -28,6 +28,7 @@ const puerts_1 = require("puerts"),
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
 const { BluePrintType } = require("./Manager/ModFuncs/BluePrintType");
+const { AutoInteraction } = require("./Manager/ModFuncs/AutoInteraction");
 
 const ESP_INTERVAL = 10;
 
@@ -96,12 +97,10 @@ class MainMenu {
 
     if (MainMenu.IsKey("X") === true) {
       if (isMenuShow) {
-        InputManager_1.InputManager.SetShowCursor(false);
         ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
         ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
         Menu.SetVisibility(2);
       } else {
-        InputManager_1.InputManager.SetShowCursor(true);
         ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(true);
         ModelManager_1.ModelManager.LoadingModel.SetIsLoading(true);
         Menu.SetVisibility(0);
@@ -169,7 +168,7 @@ class MainMenu {
           }
 
           Menu.LanguageValue.OnSelectionChanged.Add((selectedItem) => {
-            if (selectedItem) {
+            if (selectedItem && isMenuLoaded) {
               ModManager.Settings.Language = selectedItem;
               MainMenu.KunLog("Language: " + selectedItem);
 
@@ -208,7 +207,7 @@ class MainMenu {
             MainMenu.KunLog("No Cooldown: " + isChecked);
           });
 
-          Menu.AutoPickTreasureCheck.bIsEnabled = false;
+          // Menu.AutoPickTreasureCheck.bIsEnabled = false;
           Menu.AutoPickTreasureCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.AutoPickTreasure = isChecked;
             MainMenu.KunLog("Auto Pick Treasure: " + isChecked);
@@ -676,8 +675,7 @@ class MainMenu {
       Menu.NoClipCheck.SetIsChecked(ModManager.Settings.NoClip);
 
       // world
-      ModManager.Settings.AutoPickTreasure = false;
-      Menu.AutoPickTreasureCheck.SetIsChecked(false);
+      Menu.AutoPickTreasureCheck.SetIsChecked(ModManager.Settings.AutoPickTreasure);
       Menu.KillAuraCheck.SetIsChecked(ModManager.Settings.killAura);
       Menu.AutoLootCheck.SetIsChecked(ModManager.Settings.AutoLoot);
       Menu.KillAnimalCheck.SetIsChecked(ModManager.Settings.KillAnimal);
@@ -826,12 +824,32 @@ class ModEntityListener {
       MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
       MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
       AutoPuzzle_1.AutoPuzzle.AutoPuzzle(entitylist[i]);
-      PerceptionRange_1.PerceptionRange.SetInteractRange(entitylist[i]);
 
       //AutoChest_1.AutoChest.RewardChest(entitylist[i]); //1.0.28 cant use
     }
 
     //puerts_1.logger.warn("kun:Runtime is working");
+  }
+
+  static FasterRuntime() {
+    if (!ModUtils.isInGame()) return;
+
+    const entitylist =
+      ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+    const count = entitylist.length;
+    for (let i = 0; i < count; i++) {
+      if (ModManager.Settings.AutoPickTreasure) {
+        PerceptionRange_1.PerceptionRange.SetTreasure(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoTeleport) {
+        PerceptionRange_1.PerceptionRange.SetTeleport(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoLoot) {
+        PerceptionRange_1.PerceptionRange.SetCollection(entitylist[i]);
+      }
+    }
+
+    AutoInteraction.CurrentInteraction();
   }
 }
 class ESPmain {
@@ -1112,6 +1130,7 @@ class ESPmain {
 loadMenuInterval = setInterval(MainMenu.Start, 3000);
 setInterval(MainMenu.ListenKey, 1);
 setInterval(ModEntityListener.Runtime, 3000);
+setInterval(ModEntityListener.FasterRuntime, 100);
 setInterval(ESPmain.RuntimeESP, ESP_INTERVAL);
 main();
 
