@@ -14,11 +14,9 @@ const puerts_1 = require("puerts"),
   BluePrintType_1 = require("./Manager/ModFuncs/BluePrintType"),
   ModMethod_1 = require("./Manager/ModFuncs/ModMethod"),
   EntityManager_1 = require("./Manager/ModFuncs/EntityManager"),
-  AutoAbsorb_1 = require("./Manager/ModFuncs/AutoAbsorb"),
   NoClip_1 = require("./Manager/ModFuncs/NoClip"),
   KillAura_1 = require("./Manager/ModFuncs/KillAura"),
   MobVacuum_1 = require("./Manager/ModFuncs/MobVacuum"),
-  AutoChest_1 = require("./Manager/ModFuncs/AutoChest"),
   AutoDestroy_1 = require("./Manager/ModFuncs/AutoDestroy"),
   UiManager_1 = require("./Ui/UiManager"),
   AutoPuzzle_1 = require("./Manager/ModFuncs/AutoPuzzle"),
@@ -831,7 +829,6 @@ class ModEntityListener {
       ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     const count = entitylist.length;
     for (let i = 0; i < count; i++) {
-      //AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
       KillAura_1.KillAura.killAura(entitylist[i]);
       KillAura_1.KillAura.KillAnimal(entitylist[i]);
       AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);

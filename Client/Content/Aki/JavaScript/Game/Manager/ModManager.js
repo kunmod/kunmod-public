@@ -41,7 +41,6 @@ class ModManager {
     GodMode: true,
     HitMultiplier: false,
     Hitcount: 15,
-    AutoPickTreasure: false,
     AntiDither: true,
     NoCD: false,
     InfiniteStamina: false,
@@ -56,7 +55,7 @@ class ModManager {
     CustomTp: false,
     playerSpeedValue: 3,
     PlayerSpeed: false,
-    AutoLoot: false,
+    
     HideHUD: false,
     HideDmgUi: false,
     InfiniteEnergy: false,
@@ -66,8 +65,6 @@ class ModManager {
     killAuranew: false,
     killAuraRadius: 300,
     KillAnimal: false,
-    AutoAbsorbnew: false,
-    AutoChest: true,
     WeatherChanger: false,
     WeatherType: 1,
     WorldSpeed: false,
@@ -102,7 +99,12 @@ class ModManager {
     FOVValue:60, // default
     NoClip:false,
     AutoPuzzle:false,
+    //Autointeraction
+    InteractionRange:300,
+    AutoLoot: false,
     AutoTeleport:true,
+    AutoAbsorbnew: false,
+    AutoPickTreasure: false,
   };
 
   static GetGameDir() {
