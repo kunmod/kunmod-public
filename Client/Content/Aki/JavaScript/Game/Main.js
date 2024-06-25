@@ -538,6 +538,11 @@ class MainMenu {
             MainMenu.KunLog("Plot Skip: " + isChecked);
           });
 
+          Menu.AutoPuzzleCheck.OnCheckStateChanged.Add((isChecked) => {
+            ModManager.Settings.AutoPuzzle = isChecked;
+            MainMenu.KunLog("Auto Puzzle: " + isChecked);
+          });
+
           Menu.KillAuraValue.SetSelectedIndex(
             ModManager.Settings.killAuraState
           );
@@ -622,6 +627,7 @@ class MainMenu {
       Menu.VacuumCollectText.SetText(ModLanguage.ModTr("TEXT_VACUUM_COLLECT"));
       Menu.WeatherText.SetText(ModLanguage.ModTr("TEXT_WEATHER"));
       Menu.PlotSkipText.SetText(ModLanguage.ModTr("TEXT_PLOT_SKIP"));
+      Menu.AutoPuzzleText.SetText(ModLanguage.ModTr("TEXT_AUTO_PUZZLE"));
 
       // esp
       Menu.ESPText.SetText(ModLanguage.ModTr("HEADING_ESP"));
@@ -704,6 +710,7 @@ class MainMenu {
       Menu.VacuumCollectCheck.SetIsChecked(ModManager.Settings.VacuumCollect);
       Menu.WeatherCheck.SetIsChecked(ModManager.Settings.WeatherChanger);
       Menu.PlotSkipCheck.SetIsChecked(ModManager.Settings.PlotSkip);
+      Menu.AutoPuzzleCheck.SetIsChecked(ModManager.Settings.AutoPuzzle);
 
       // visual
       Menu.HideHUDCheck.SetIsChecked(ModManager.Settings.HideHUD);
@@ -859,6 +866,9 @@ class ModEntityListener {
       }
       if (ModManager.Settings.AutoSonanceCasket) {
         PerceptionRange_1.PerceptionRange.SetSonanceCasket(entitylist[i]);
+      }
+      if (ModManager.Settings.PerceptionRange) {
+        PerceptionRange_1.PerceptionRange.SetAll(entitylist[i]);
       }
     }
 
