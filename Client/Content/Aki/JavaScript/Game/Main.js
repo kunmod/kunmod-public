@@ -916,9 +916,6 @@ class ESPmain {
       return null;
     }
   }
-  static EntityFilter = {
-    mutterfly: ["Gameplay111"],
-  };
   //esp测试test
   static RuntimeESP() {
     if (!ModUtils.isInGame()) return;
