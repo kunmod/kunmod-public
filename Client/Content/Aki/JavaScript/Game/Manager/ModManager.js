@@ -102,6 +102,7 @@ class ModManager {
     FOVValue:60, // default
     NoClip:false,
     AutoPuzzle:false,
+    AutoTeleport:true,
   };
 
   static GetGameDir() {

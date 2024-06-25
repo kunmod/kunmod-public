@@ -1,4 +1,7 @@
 "use strict";
+
+const { EntityManager } = require("../../Manager/ModFuncs/EntityManager");
+
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractionModel = void 0);
 const puerts_1 = require("puerts"),
@@ -18,9 +21,14 @@ const puerts_1 = require("puerts"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  EntityManager_1 = require("../../Manager/ModFuncs/EntityManager"),
+  ModManager_1 = require("../../Manager/ModManager"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   TsInteractionUtils_1 = require("./TsInteractionUtils"),
   DEFAULT_CD = 0.5;
+
+const { AutoInteraction } = require("../../Manager/ModFuncs/AutoInteraction");
+
 class SameTipInteract {
   constructor() {
     (this.EntityId = 0), (this.CurrentDistance = 0);
@@ -209,9 +217,6 @@ class InteractionModel extends ModelBase_1.ModelBase {
   CanAutoPickUp(t) {
     var e;
     e = t.GetComponent(177);
-    if (e?.IsCollection()) {
-        return true;
-    }//test
     return (
       !!t?.Valid &&
       !(
@@ -251,25 +256,48 @@ class InteractionModel extends ModelBase_1.ModelBase {
     //this.Xhi = TimeUtil_1.TimeUtil.GetServerTime() + t;
   }
   InInteractCd() {
+    return false;
     return this.Xhi > TimeUtil_1.TimeUtil.GetServerTime();
   }
   HandleInteractionHint(t, e, i = void 0, r = -1, n = void 0) {
+    if (n) {
+      const Entity = n.GetEntity();
+      if (!AutoInteraction.InteractionList.includes(Entity)) {
+        AutoInteraction.InteractionList.push(Entity)
+      }
+  
+      const BlueprintType = EntityManager_1.EntityManager.GetBlueprintType3(Entity);
+      if (BlueprintType.startsWith("Collect") && ModManager_1.ModManager.Settings.AutoLoot) {
+          return;
+      }
+      if (BlueprintType.startsWith("Treasure") && ModManager_1.ModManager.Settings.AutoPickTreasure) {
+          return;
+      }
+      if (BlueprintType.startsWith("Teleport") && ModManager_1.ModManager.Settings.AutoTeleport) {
+          return;
+      }
+    }
+
     if (t) {
       let t = !1;
       if ((t = !i || this.oli(e, i, r))) {
-        if (t)
+        if (t) {
           if (this.Jhi.includes(e)) {
             if (
               TsInteractionUtils_1.TsInteractionUtils.IsInteractHintViewOpened()
             )
               return;
-          } else this.Jhi.push(e), this.zhi.push(n);
-        TsInteractionUtils_1.TsInteractionUtils.IsInteractHintViewOpened()
-          ? 0 < this.Jhi.length &&
-            TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
-          : TsInteractionUtils_1.TsInteractionUtils.OpenInteractHintView().finally(
-              void 0
-            );
+          } else {
+            this.Jhi.push(e);
+            this.zhi.push(n);
+            TsInteractionUtils_1.TsInteractionUtils.IsInteractHintViewOpened()
+              ? 0 < this.Jhi.length &&
+                TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
+              : TsInteractionUtils_1.TsInteractionUtils.OpenInteractHintView().finally(
+                  void 0
+                );
+          }
+        }
       } else
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -281,10 +309,10 @@ class InteractionModel extends ModelBase_1.ModelBase {
       t = this.Jhi.indexOf(e);
       -1 < t &&
         (this.Jhi.splice(t, 1),
-        this.zhi.splice(t, 1),
+        this.zhi.splice(t, 1));
         0 < this.Jhi.length
           ? TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
-          : TsInteractionUtils_1.TsInteractionUtils.CloseInteractHintView());
+          : TsInteractionUtils_1.TsInteractionUtils.CloseInteractHintView()
     }
   }
   oli(t, e = void 0, i = -1) {

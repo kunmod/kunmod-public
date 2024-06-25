@@ -13,7 +13,6 @@ const puerts_1 = require("puerts"),
   CreatureController_1 = require("../../World/Controller/CreatureController"),
   PublicUtil_1 = require("../../Common/PublicUtil"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-//const CreatureModel = ModelManager_1.ModelManager.CreatureModel;
 
 class EntityManager {
   static PlayerEntity = null;
@@ -117,10 +116,7 @@ class EntityManager {
 
     return name;
   }
-  // static GetEntity(id) {
 
-  //   return ;
-  // }
   static GetBlueprintType(entity) {
     try {
       let PbData = this.GetEntityData(entity.PbDataId);
@@ -132,6 +128,15 @@ class EntityManager {
   static GetBlueprintType2(entity) {
     try {
       let Type = entity.Entity.Components[0].C9o;
+      return Type;
+    } catch (error) {
+      return "unknownBlueprintType";
+    }
+  }
+
+  static GetBlueprintType3(Entity) {
+    try {
+      let Type = Entity.Components[0].C9o;
       return Type;
     } catch (error) {
       return "unknownBlueprintType";
@@ -208,6 +213,10 @@ class EntityManager {
   static isSceneObj(entity) {
     let BlueprintType = this.GetBlueprintType(entity);
     return BlueprintType.startsWith("SceneObj");
+  }
+  static isTeleport(entity) {
+    let BlueprintType = this.GetBlueprintType(entity);
+    return BlueprintType.startsWith("Teleport");
   }
 
   static SetPlayerSpeed(value) {

@@ -13,7 +13,7 @@ const puerts_1 = require("puerts"),
   EntityManager_1 = require("./EntityManager"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
-  AutoInteract_1 = require("./AutoInteract"),
+  AutoInteraction_1 = require("./AutoInteraction"),
   UiManager_1 = require("../../../Ui/UiManager");
 
 const EntityManager = EntityManager_1.EntityManager;
@@ -42,16 +42,14 @@ class MobVacuum extends EntityManager {
   static VacuumCollect(entity) {
     if (!ModManager_1.ModManager.Settings.VacuumCollect) return;
     if (
-      AutoInteract_1.AutoInteract.isNeedLoot(entity) &&
+      AutoInteraction_1.AutoInteraction.isNeedLoot(entity) &&
       this.isIndistance(entity)
     ) {
       let playerpos = EntityManager.GetPlayerPos();
       let ActorComp = entity.Entity.GetComponent(1);
       ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
     }
-    //if (!this.isCollection(entity)) return;
 
-    // puerts_1.logger.info("VacuumCollectEnd");
   }
 
   static SyncMonster(entity, pos) {

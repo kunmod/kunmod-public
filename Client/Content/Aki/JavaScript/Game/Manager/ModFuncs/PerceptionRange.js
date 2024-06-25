@@ -10,32 +10,57 @@ const puerts_1 = require("puerts"),
   ModUtils_1 = require("./ModUtils"),
   ModMethod_1 = require("./ModMethod"),
   AutoInteract_1 = require("./AutoInteract"),
-  EntityManager_1 = require("./EntityManager");
+  EntityManager_1 = require("./EntityManager"),
+  AutoInteraction_1 = require("./AutoInteraction");
 
 const ModMethod = ModMethod_1.ModMethod;
 const ModManager = ModManager_1.ModManager;
 const EntityManager = EntityManager_1.EntityManager;
+const AutoIntraction = AutoInteraction_1.AutoInteraction;
 
 class PerceptionRange extends EntityManager {
-  static isNeedInteract(entity) {
-    let blueprintType = this.GetBlueprintType2(entity);
+  static SetCollection(entity) {
+    if (this.isCollection(entity)) {
+      let PawnPerceptionComponent = entity.Entity.GetComponent(104);
+      try {
+        PawnPerceptionComponent.SetInteractRange(100000000 * 100);
+      } catch (error) {
 
-    return (
-      [].includes(blueprintType) ||
-      blueprintType.startsWith("Teleport") ||
-      blueprintType.startsWith("Treasure") ||
-      blueprintType.startsWith("VisionItem")
-    );
+      }
+    }
   }
 
-  static PerceptionRange(entity) {
-    if (!ModManager.Settings.PerceptionRange) return;
-    if (
-      AutoInteract_1.AutoInteract.isNeedLoot(entity) ||
-      this.isNeedInteract(entity)
-    ) {
-      let PawnPerceptionComponen = entity.Entity.GetComponent(104);
-      PawnPerceptionComponen.SetInteractRange(30000, 0);
+  static SetTeleport(entity) {
+    if (this.isTeleport(entity)) {
+      let PawnPerceptionComponent = entity.Entity.GetComponent(104);
+      try {
+        PawnPerceptionComponent.SetInteractRange(100000000 * 100);
+      } catch (error) {
+
+      }
+    }
+  }
+
+  static SetTreasure(entity) {
+    if (this.isTreasure(entity)) {
+      let PawnPerceptionComponent = entity.Entity.GetComponent(104);
+      try {
+        PawnPerceptionComponent.SetInteractRange(100000000 * 100);
+      } catch (error) {
+
+      }
+    }
+
+  }
+
+  static SetVision(entity) {
+    if (this.isVision(entity)) {
+      let PawnPerceptionComponent = entity.Entity.GetComponent(104);
+      try {
+        PawnPerceptionComponent.SetInteractRange(100000000 * 100);
+      } catch (error) {
+
+      }
     }
 
   }
