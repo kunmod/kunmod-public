@@ -851,7 +851,7 @@ class ModEntityListener {
       }
     }
 
-    AutoInteraction.CurrentInteraction();
+    // AutoInteraction.CurrentInteraction();
   }
 }
 class ESPmain {

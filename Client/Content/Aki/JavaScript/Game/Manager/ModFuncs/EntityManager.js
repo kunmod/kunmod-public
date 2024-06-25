@@ -230,6 +230,9 @@ class EntityManager {
   static isSonanceCasket(entity) {
     return entity.Entity.Components[0].C9o == "Gameplay021";
   }
+  static isMutterfly(entity) {
+    return entity.Entity.Components[0].C9o == "Gameplay111";
+  }
   static SetPlayerSpeed(value) {
     //CharacterController_1.CharacterController.SetTimeDilation(value);
     let player = this.GetPlayerEntity();

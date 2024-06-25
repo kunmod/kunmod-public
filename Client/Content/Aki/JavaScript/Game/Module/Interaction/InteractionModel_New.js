@@ -259,18 +259,28 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return false;
     return this.Xhi > TimeUtil_1.TimeUtil.GetServerTime();
   }
+  InteractPawn(Entity) { // new func
+    const Component = Entity.GetComponent(103);
+    const Opt = ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(0);
+    Component.ntn(Opt)
+    return;
+  }
   HandleInteractionHint(t, e, i = void 0, r = -1, n = void 0) {
-    if (n) {
+    if (n) { // auto interact
       const Entity = n.GetEntity();
-      if (!AutoInteraction.InteractionList.includes(Entity)) {
-        AutoInteraction.InteractionList.push(Entity)
-      }
-  
       const BlueprintType = EntityManager_1.EntityManager.GetBlueprintType3(Entity);
-      if (BlueprintType.startsWith("Collect") && ModManager_1.ModManager.Settings.AutoLoot) return;
-      if (BlueprintType.startsWith("Treasure") && ModManager_1.ModManager.Settings.AutoPickTreasure) return;
-      if (BlueprintType.startsWith("Teleport") && ModManager_1.ModManager.Settings.AutoTeleport) return;
-      if (BlueprintType.startsWith("Vision") && ModManager_1.ModManager.Settings.AutoAbsorbnew) return;
+      if (BlueprintType.startsWith("Collect") && ModManager_1.ModManager.Settings.AutoLoot) {
+          return this.InteractPawn(Entity);
+      }
+      if (BlueprintType.startsWith("Treasure") && ModManager_1.ModManager.Settings.AutoPickTreasure) {
+          return this.InteractPawn(Entity);
+      }
+      if (BlueprintType.startsWith("Teleport") && ModManager_1.ModManager.Settings.AutoTeleport) {
+          return this.InteractPawn(Entity);
+      }
+      if (BlueprintType.startsWith("Vision") && ModManager_1.ModManager.Settings.AutoAbsorbnew) {
+          return this.InteractPawn(Entity);
+      }
     }
 
     if (t) {

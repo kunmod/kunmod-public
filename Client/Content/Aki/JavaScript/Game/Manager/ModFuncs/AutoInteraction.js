@@ -7,6 +7,7 @@ const puerts_1 = require("puerts"),
   EntityManager_1 = require("./EntityManager"),
   ModelManager_1 = require("../ModelManager");
 
+  // doesnt need this file anymore
 class AutoInteraction {
     static InteractionList = [];
     static CurrentInteraction() {
