@@ -41,6 +41,7 @@ class ModManager {
     GodMode: true,
     HitMultiplier: false,
     Hitcount: 15,
+    AutoPickTreasure: false,
     AntiDither: true,
     NoCD: false,
     InfiniteStamina: false,
@@ -55,16 +56,17 @@ class ModManager {
     CustomTp: false,
     playerSpeedValue: 3,
     PlayerSpeed: false,
-    
+    AutoLoot: false,
     HideHUD: false,
     HideDmgUi: false,
-    InfiniteEnergy: false,
     //test
-
+    DebugEntity: true, //(if use entity func need enable)
     AutoDestroy: false,
     killAuranew: false,
     killAuraRadius: 300,
     KillAnimal: false,
+    AutoAbsorbnew: false,
+    AutoChest: true,
     WeatherChanger: false,
     WeatherType: 1,
     WorldSpeed: false,
@@ -77,19 +79,19 @@ class ModManager {
     Uid: "100000000",
     Language: "English",
     ESP:true,
-    DebugEntity: false, //(show unknown)
     ESPRadius:300,
     ShowMonster:true,
     ShowAnimal:true,
     ShowNpc:false,
-    ShowTreasure:false,
-    ShowCollect:false,
+    ShowTreasure:true,
+    ShowCollect:true,
     ShowPuzzle:false,
     ShowCasket:false,
     ShowMutterfly:false,
     ShowRock:false,
     ShowBlobfly:false,
-    ShowBox:false,  
+    ShowBox:true,  
+    ShowEntityId:false,
     ShowDistance:true,
     ShowName:true,
     ShowUnkown:true,
@@ -98,13 +100,10 @@ class ModManager {
     FOV:false,
     FOVValue:60, // default
     NoClip:false,
-    AutoPuzzle:false,
-    //Autointeraction
-    InteractionRange:300,
-    AutoLoot: false,
+    AutoPuzzle:true,
+    ShowType:true,
     AutoTeleport:true,
-    AutoAbsorbnew: false,
-    AutoPickTreasure: false,
+    AutoSonanceCasket:true,
   };
 
   static GetGameDir() {
@@ -149,7 +148,7 @@ class ModManager {
   }
 
   static ModStart() {
-
+    //ModDebuger_1.ModDebuger.TestMethod();
     this.AddKey("ShowMenu", "Home");
     this.AddToggle("GodMode", "F5");
     this.AddToggle("HitMultiplier", "F6");
@@ -218,19 +217,18 @@ class ModManager {
 
     this.listenMod("AutoLoot", "NumPadZero", "AutoLoot");
     this.listenMod("AutoDestroy", "NumPadOne", "AutoDestroy");
-
+    // ModDebuger_1.ModDebuger.EnableDebug();
+    // if (ModDebuger_1.ModDebuger.Setting.EnableDebug) {
+    //   ModDebuger_1.ModDebuger.ListenDebug();
+    // }
 
     if (this.listenKey("MarkTp", "t")) {
-      if (this.Settings.MarkTp && ModUtils_1.ModUtils.IsInMapView()){
-        let z =this.Settings.MarkZ*100;
-        if(this.Settings.MarkZ==0)
-          z=this.Settings.MarkTpPosZ*100;
+      if (this.Settings.MarkTp && ModUtils_1.ModUtils.IsInMapView())
         this.TpNoloadingTo(
           this.Settings.MarkX * 100,
           this.Settings.MarkY * 100,
-          z
+          this.Settings.MarkZ * 100
         );
-      }
     }
 
     //this.listenMod("skip", "NumPadFour", "plot");

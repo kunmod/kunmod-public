@@ -53,11 +53,11 @@ class InteractionModel extends ModelBase_1.ModelBase {
       (this.InteractingEntity = void 0),
       (this.IsTriggerMobileGuide = !1),
       (this.IsTriggerDesktopGuide = !1),
-      (this.AutoLongPressTime = 0), //长按时间
-      (this.ActiveInteractGuideCount = 0), //活动交互指南计数
-      (this.ShowLongPressTime = 0), //显示长按时间
-      (this.AutoInteractionGuideCount = 0), //自动交互指南计数
-      (this.AutoInteractionGuideAppearCount = 0), //自动交互指南显示计数
+      (this.AutoLongPressTime = 0),//长按时间
+      (this.ActiveInteractGuideCount = 0),//活动交互指南计数
+      (this.ShowLongPressTime = 0),//显示长按时间
+      (this.AutoInteractionGuideCount = 0),//自动交互指南计数
+      (this.AutoInteractionGuideAppearCount = 0),//自动交互指南显示计数
       (this.ili = 0);
   }
   OnInit() {
@@ -66,10 +66,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "AutoLongPressTime"
         )),
-      puerts_1.logger.warn(
-        "[kundebug]:AutoLongPressTime:",
-        this.AutoLongPressTime
-      ),
+        (puerts_1.logger.warn("[kundebug]:AutoLongPressTime:",this.AutoLongPressTime)),
       (this.ActiveInteractGuideCount =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "ActiveInteractGuideCount"
@@ -78,18 +75,12 @@ class InteractionModel extends ModelBase_1.ModelBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "ShowLongPressTime"
         )),
-      puerts_1.logger.warn(
-        "[kundebug]:ShowLongPressTime:",
-        this.ShowLongPressTime
-      ),
+        (puerts_1.logger.warn("[kundebug]:ShowLongPressTime:",this.ShowLongPressTime)),
       (this.AutoInteractionGuideCount =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "AutoInteractionGuideCount"
         )),
-      puerts_1.logger.warn(
-        "[kundebug]:AutoInteractionGuideCount:",
-        this.AutoInteractionGuideCount
-      ),
+        (puerts_1.logger.warn("[kundebug]:AutoInteractionGuideCount:",this.AutoInteractionGuideCount)),
       TsInteractionUtils_1.TsInteractionUtils.Init(),
       !0
     );
@@ -123,8 +114,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
           !1
         ) ?? !1);
   }
-  LoadAutoInteractionGuideAppearCount() {
-    //加载自动交互指南显示计数
+  LoadAutoInteractionGuideAppearCount() {//加载自动交互指南显示计数
     this.AutoInteractionGuideAppearCount =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey
@@ -139,16 +129,14 @@ class InteractionModel extends ModelBase_1.ModelBase {
         t
       );
   }
-  SaveTriggerDesktopGuide(t) {
-    //保存触发器pc
+  SaveTriggerDesktopGuide(t) {//保存触发器pc
     (this.IsTriggerDesktopGuide = t),
       LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.IsTriggerDesktopGuide,
         t
       );
   }
-  SaveAutoInteractionGuideAppearCount(t) {
-    //保存自动交互指南显示计数
+  SaveAutoInteractionGuideAppearCount(t) {//保存自动交互指南显示计数
     (this.AutoInteractionGuideAppearCount = t),
       LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey
@@ -156,8 +144,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         t
       );
   }
-  IsInShowAutoInteractionGuideCountLimit() {
-    //自动交互指南计数限制
+  IsInShowAutoInteractionGuideCountLimit() {//自动交互指南计数限制
     return (
       this.AutoInteractionGuideAppearCount < this.AutoInteractionGuideCount
     );
@@ -176,8 +163,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
           )
         : (this.$hi = this.Qhi.交互选项组.Get(0));
   }
-  GetInteractEntitiesCount() {
-    //获取交互数量
+  GetInteractEntitiesCount() {//获取交互数量
     let t = 0;
     for (const e of this.zhi)
       e
@@ -188,8 +174,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         : t++;
     return t;
   }
-  GetInteractEntityByIndex(t) {
-    //获取交互实体
+  GetInteractEntityByIndex(t) {//获取交互实体
     let e = 0;
     for (const i of this.zhi)
       if (
@@ -201,8 +186,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         return i.EntityId;
     return -1;
   }
-  RefreshInteractEntities(e) {
-    //刷新交互实体
+  RefreshInteractEntities(e) {//刷新交互实体
     let t = 0;
     for (const n of this.zhi)
       if (n) {
@@ -227,8 +211,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
       t
     );
   }
-  GetInteractItemCount() {
-    //获取交互项目计数
+  GetInteractItemCount() {//获取交互项目计数
     return this.ili;
   }
   CanAutoPickUp(t) {
@@ -270,42 +253,34 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return this.$hi || this.rli(), this.$hi;
   }
   EnterInteractCd(t = DEFAULT_CD) {
-    this.Xhi = TimeUtil_1.TimeUtil.GetServerTime() + t;
+    //this.Xhi = TimeUtil_1.TimeUtil.GetServerTime() + t;
   }
   InInteractCd() {
     return false;
     return this.Xhi > TimeUtil_1.TimeUtil.GetServerTime();
   }
+  InteractPawn(Entity) { // new func
+    const Component = Entity.GetComponent(103);
+    const Opt = ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(0);
+    Component.ntn(Opt)
+    return;
+  }
   HandleInteractionHint(t, e, i = void 0, r = -1, n = void 0) {
-    if (n) {
+    if (n) { // auto interact
       const Entity = n.GetEntity();
-      if (!AutoInteraction.InteractionList.includes(Entity)) {
-        AutoInteraction.InteractionList.push(Entity);
+      const BlueprintType = EntityManager_1.EntityManager.GetBlueprintType3(Entity);
+      if (BlueprintType.startsWith("Collect") && ModManager_1.ModManager.Settings.AutoLoot) {
+          return this.InteractPawn(Entity);
       }
-
-      const BlueprintType =
-        EntityManager_1.EntityManager.GetBlueprintType3(Entity);
-      if (
-        (AutoInteraction.CollectList.includes(BlueprintType) ||
-          AutoInteraction.CollectAnimal.includes(BlueprintType)) &&
-        ModManager_1.ModManager.Settings.AutoLoot
-      )
-        return;
-      if (
-        AutoInteraction.TreasureList.includes(BlueprintType) &&
-        ModManager_1.ModManager.Settings.AutoPickTreasure
-      )
-        return;
-      if (
-        BlueprintType.startsWith("Teleport") &&
-        ModManager_1.ModManager.Settings.AutoTeleport
-      )
-        return;
-      if (
-        BlueprintType.startsWith("Vision") &&
-        ModManager_1.ModManager.Settings.AutoAbsorbnew
-      )
-        return;
+      if (BlueprintType.startsWith("Treasure") && ModManager_1.ModManager.Settings.AutoPickTreasure) {
+          return this.InteractPawn(Entity);
+      }
+      if (BlueprintType.startsWith("Teleport") && ModManager_1.ModManager.Settings.AutoTeleport) {
+          return this.InteractPawn(Entity);
+      }
+      if (BlueprintType.startsWith("Vision") && ModManager_1.ModManager.Settings.AutoAbsorbnew) {
+          return this.InteractPawn(Entity);
+      }
     }
 
     if (t) {
@@ -337,10 +312,12 @@ class InteractionModel extends ModelBase_1.ModelBase {
           );
     } else {
       t = this.Jhi.indexOf(e);
-      -1 < t && (this.Jhi.splice(t, 1), this.zhi.splice(t, 1));
-      0 < this.Jhi.length
-        ? TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
-        : TsInteractionUtils_1.TsInteractionUtils.CloseInteractHintView();
+      -1 < t &&
+        (this.Jhi.splice(t, 1),
+        this.zhi.splice(t, 1));
+        0 < this.Jhi.length
+          ? TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
+          : TsInteractionUtils_1.TsInteractionUtils.CloseInteractHintView()
     }
   }
   oli(t, e = void 0, i = -1) {
