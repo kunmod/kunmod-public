@@ -817,17 +817,13 @@ class ModEntityListener {
       ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     const count = entitylist.length;
     for (let i = 0; i < count; i++) {
-      AutoAbsorb_1.AutoAbsorb.AutoAbsorb(entitylist[i]);
       KillAura_1.KillAura.killAura(entitylist[i]);
       KillAura_1.KillAura.KillAnimal(entitylist[i]);
       AutoDestroy_1.AutoDestroy.AutoDestroy(entitylist[i]);
       MobVacuum_1.MobVacuum.VacuumCollect(entitylist[i]);
       MobVacuum_1.MobVacuum.MobVacuum(entitylist[i]);
       AutoPuzzle_1.AutoPuzzle.AutoPuzzle(entitylist[i]);
-
-      //AutoChest_1.AutoChest.RewardChest(entitylist[i]); //1.0.28 cant use
     }
-
     //puerts_1.logger.warn("kun:Runtime is working");
   }
 
@@ -846,6 +842,9 @@ class ModEntityListener {
       }
       if (ModManager.Settings.AutoLoot) {
         PerceptionRange_1.PerceptionRange.SetCollection(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoAbsorbnew) {
+        PerceptionRange_1.PerceptionRange.SetVision(entitylist[i]);
       }
     }
 

@@ -5,8 +5,7 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   ModManager_1 = require("../ModManager"),
   EntityManager_1 = require("./EntityManager"),
-  ModelManager_1 = require("../ModelManager"),
-  { InteractionHintView } = require("../../Module/Interaction/View/InteractionHintView");
+  ModelManager_1 = require("../ModelManager");
 
 class AutoInteraction {
     static InteractionList = [];
@@ -21,6 +20,9 @@ class AutoInteraction {
                 AutoInteraction.InteractPawn(i);
             }
             if (BlueprintType.startsWith("Teleport") && ModManager_1.ModManager.Settings.AutoTeleport) {
+                AutoInteraction.InteractPawn(i);
+            }
+            if (BlueprintType.startsWith("Vision") && ModManager_1.ModManager.Settings.AutoAbsorbnew) {
                 AutoInteraction.InteractPawn(i);
             }
         }

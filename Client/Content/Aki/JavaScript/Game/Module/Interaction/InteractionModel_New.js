@@ -267,15 +267,10 @@ class InteractionModel extends ModelBase_1.ModelBase {
       }
   
       const BlueprintType = EntityManager_1.EntityManager.GetBlueprintType3(Entity);
-      if (BlueprintType.startsWith("Collect") && ModManager_1.ModManager.Settings.AutoLoot) {
-          return;
-      }
-      if (BlueprintType.startsWith("Treasure") && ModManager_1.ModManager.Settings.AutoPickTreasure) {
-          return;
-      }
-      if (BlueprintType.startsWith("Teleport") && ModManager_1.ModManager.Settings.AutoTeleport) {
-          return;
-      }
+      if (BlueprintType.startsWith("Collect") && ModManager_1.ModManager.Settings.AutoLoot) return;
+      if (BlueprintType.startsWith("Treasure") && ModManager_1.ModManager.Settings.AutoPickTreasure) return;
+      if (BlueprintType.startsWith("Teleport") && ModManager_1.ModManager.Settings.AutoTeleport) return;
+      if (BlueprintType.startsWith("Vision") && ModManager_1.ModManager.Settings.AutoAbsorbnew) return;
     }
 
     if (t) {
