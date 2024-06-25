@@ -114,10 +114,10 @@ class EntityFilter  {
   ];
 
   static isneedLoot(blueprint) {
-    return CollectList.includes(blueprint)||CollectAnimal.includes(blueprint);
+    return this.CollectList.includes(blueprint)||this.CollectAnimal.includes(blueprint);
   }
   static isneedTreasure(blueprint) {
-    return TreasureList.includes(blueprint);
+    return this.TreasureList.includes(blueprint);
   }
 }
 

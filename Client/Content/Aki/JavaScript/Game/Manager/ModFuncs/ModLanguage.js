@@ -537,6 +537,7 @@ class ModLanguage {
       es: "Depurar Entidad",
       id: "Entitas Debug",
       ja: "デバッグエンティティ",
+      ko: "Debug",
       vi: "Gỡ lỗi Entity",
     },
     {
@@ -898,6 +899,16 @@ class ModLanguage {
       ja: "プロットのスキップ",
       ko: "Plot Skip",
       vi: "",
+    },
+    {
+      Text: "TEXT_AUTO_PUZZLE",
+      chs: "自动解谜",
+      en: "Auto Puzzle",
+      es: "Auto Puzzle",
+      id: "Auto Puzzle",
+      ja: "Auto Puzzle",
+      ko: "Auto Puzzle",
+      vi: "Auto Puzzle",
     },
   ];
 

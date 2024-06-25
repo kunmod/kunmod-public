@@ -25,7 +25,6 @@ const puerts_1 = require("puerts"),
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
 const { BluePrintType } = require("./Manager/ModFuncs/BluePrintType");
-const { AutoInteraction } = require("./Manager/ModFuncs/AutoInteraction");
 
 const ESP_INTERVAL = 10;
 
@@ -852,27 +851,26 @@ class ModEntityListener {
       ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     const count = entitylist.length;
     for (let i = 0; i < count; i++) {
-      if (ModManager.Settings.AutoPickTreasure) {
-        PerceptionRange_1.PerceptionRange.SetTreasure(entitylist[i]);
-      }
-      if (ModManager.Settings.AutoTeleport) {
-        PerceptionRange_1.PerceptionRange.SetTeleport(entitylist[i]);
-      }
-      if (ModManager.Settings.AutoLoot) {
-        PerceptionRange_1.PerceptionRange.SetCollection(entitylist[i]);
-      }
-      if (ModManager.Settings.AutoAbsorbnew) {
-        PerceptionRange_1.PerceptionRange.SetVision(entitylist[i]);
-      }
-      if (ModManager.Settings.AutoSonanceCasket) {
-        PerceptionRange_1.PerceptionRange.SetSonanceCasket(entitylist[i]);
-      }
       if (ModManager.Settings.PerceptionRange) {
         PerceptionRange_1.PerceptionRange.SetAll(entitylist[i]);
+      } else {
+        if (ModManager.Settings.AutoPickTreasure) {
+          PerceptionRange_1.PerceptionRange.SetTreasure(entitylist[i]);
+        }
+        if (ModManager.Settings.AutoTeleport) {
+          PerceptionRange_1.PerceptionRange.SetTeleport(entitylist[i]);
+        }
+        if (ModManager.Settings.AutoLoot) {
+          PerceptionRange_1.PerceptionRange.SetCollection(entitylist[i]);
+        }
+        if (ModManager.Settings.AutoAbsorbnew) {
+          PerceptionRange_1.PerceptionRange.SetVision(entitylist[i]);
+        }
+        if (ModManager.Settings.AutoSonanceCasket) {
+          PerceptionRange_1.PerceptionRange.SetSonanceCasket(entitylist[i]);
+        }
       }
     }
-
-    // AutoInteraction.CurrentInteraction();
   }
 }
 class ESPmain {
@@ -951,10 +949,10 @@ class ESPmain {
       ].includes(Blueprint);
       const isBlobfly = ["Animal032"].includes(Blueprint);
 
-      // Remove entity that have _ in blueprint
-      // if (Blueprint.includes("_")) {
-      //   continue;
-      // }
+      //Remove entity that have _ in blueprint
+      if (Blueprint.includes("_")) {
+        continue;
+      }
 
       if (EntityManager.isMonster(Entity)) {
         // Monster
@@ -971,7 +969,7 @@ class ESPmain {
           Color = MainMenu.ESPColor.orange;
           if (!ModManager.Settings.ShowAnimal) continue;
         }
-      } else if (AutoInteraction.isNeedLoot(Entity)) {
+      } else if (EntityManager.isCollection(Entity)) {
         // Collection
         Color = MainMenu.ESPColor.green;
         if (!ModManager.Settings.ShowCollect) continue;
