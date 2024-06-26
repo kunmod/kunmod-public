@@ -103,10 +103,10 @@ class ESP  {
           ].includes(Blueprint);
           const isBlobfly = ["Animal032"].includes(Blueprint);
     
-          //Remove entity that have _ in blueprint
-          if (Blueprint.includes("_")) {
-            continue;
-          }
+          // Remove entity that have _ in blueprint
+          // if (Blueprint.includes("_")) {
+          //   continue;
+          // }
     
           if (EntityManager.isMonster(Entity)) {
             // Monster
@@ -183,9 +183,8 @@ class ESP  {
     
           // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
           if (ModManager.Settings.DebugEntity) {
-            TextShow.push(EntityManager.GetBlueprintType2(Entity));
-            let id = Entity.Entity.Id;
-            TextShow.push(id);
+            TextShow.push(Blueprint);
+            TextShow.push(Entity.Entity.Id);
           }
     
           if (ModManager.Settings.ShowName) {
