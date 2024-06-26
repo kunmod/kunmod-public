@@ -9,9 +9,9 @@ const puerts_1 = require("puerts"),
   ModelManager_1 = require("../ModelManager"),
   ModUtils_1 = require("./ModUtils"),
   GlobalData_1 = require("../../GlobalData"),
-  EntityManager_1 = require("./EntityManager");
-
-  const  Main_1= require("../../Main");
+  EntityManager_1 = require("./EntityManager"),
+  BluePrintType_1 = require("./BluePrintType"),
+  Main_1 = require("../../Main");
 
 const ModManager = ModManager_1.ModManager;
 const EntityManager = EntityManager_1.EntityManager;
@@ -177,10 +177,6 @@ class ESP  {
     
           ScreenPos = ESP.ProjectWorldToScreen(Location);
     
-          if (ScreenPos.X < 0 && ScreenPos.Y < 0) {
-            continue;
-          }
-    
           // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
           if (ModManager.Settings.DebugEntity) {
             TextShow.push(Blueprint);
@@ -189,7 +185,9 @@ class ESP  {
     
           if (ModManager.Settings.ShowName) {
             let Name = EntityManager.GetName(Entity);
-            if (Name === "") Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
+            if (Name == "") {
+              Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
+            }
             TextShow.push(Name);
           }
     

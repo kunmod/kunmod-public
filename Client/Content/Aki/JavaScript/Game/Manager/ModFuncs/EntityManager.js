@@ -111,7 +111,7 @@ class EntityManager {
   static GetName(entity) {
     try {
       let CreatureComponent = entity.Entity.GetComponent(0);
-      let Name = PublicUtil_1.PublicUtil.GetConfigTextByKey(CreatureComponent.GetBaseInfo()?.TidName);
+      let Name = PublicUtil_1.PublicUtil.GetConfigTextByKey(CreatureComponent.GetBaseInfo().TidName);
   
       return Name;
     } catch (e) {
