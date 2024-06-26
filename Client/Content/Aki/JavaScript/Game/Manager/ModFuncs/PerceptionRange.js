@@ -44,15 +44,8 @@ class PerceptionRange extends EntityManager {
   }
 
   static SetAll(entity) {
-    if (
-      this.isCollection(entity) ||
-      this.isTeleport(entity) ||
-      this.isTreasure(entity) ||
-      this.isVision(entity) ||
-      this.isSonanceCasket(entity)
-    ) {
-      PerceptionRange.SetInteractRange(entity, Range*100);
-    }
+    // Set All Entities Perception Range
+    PerceptionRange.SetInteractRange(entity, Range*100);
   }
 
   static SetInteractRange(entity, range) {
