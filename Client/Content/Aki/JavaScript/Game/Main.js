@@ -659,8 +659,22 @@ class MainMenu {
         return "This hack is completely free, if you paid to get this, you have been scammed.";
       case "chs":
         return "免费软件，如果你是付费获得，那你被骗了";
+      case "en":
+        return "This hack is completely free, if you paid to get this, you have been scammed.";
+      case "ko":
+        return "이 해킹은 완전히 무료입니다. 이것을 얻기 위해 돈을 지불했다면 당신은 베코 사기를 당한 것입니다.";
+      case "vi":
+        return "Bản hack này hoàn toàn miễn phí, nếu bạn đã mua nó từ ai, bạn đã bị lừa đảo."
+      case "es":
+        return "Este hack es completamente gratuito, si pagaste por obtenerlo, has sido estafado.";
+      case "id":
+        return "Hack ini sepenuhnya gratis, jika Anda membayar untuk mendapatkan ini, Anda telah tertipu."
       case "ja":
         return "このハックは完全に無料です。これにお金を払ったのなら、あなたはだまされています。";
+      case "ko":
+        return "이 해킹은 완전히 무료입니다. 이것을 얻기 위해 돈을 지불했다면 당신은 베코 사기를 당한 것입니다.";
+      case "vi":
+        return "Bản hack này hoàn toàn miễn phí, nếu bạn đã mua nó từ ai, bạn đã bị lừa đảo."
       default:
         return "This hack is completely free, if you paid to get this, you have been scammed.";
     }
