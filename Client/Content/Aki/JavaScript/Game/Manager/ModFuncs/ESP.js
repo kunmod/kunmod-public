@@ -38,16 +38,19 @@ class ESP  {
             GlobalData_1.GlobalData.World,
             0
           );
+
           let ScreenPosition = puerts_1.$ref(undefined);
+
           if (
             PlayerController.ProjectWorldLocationToScreen(
               Location,
               ScreenPosition,
-              false
+              true
             )
           ) {
             puerts_1.$unref(ScreenPosition);
           }
+
           ScreenPosition = ScreenPosition[0];
           if (FixViewport) {
             let ViewportPosition = puerts_1.$ref(undefined);
@@ -71,7 +74,7 @@ class ESP  {
           return null;
         }
       }
-      //esp测试test
+
       static RuntimeESP() {
         if (!ModUtils.isInGame()) return;
         if (!ModManager.Settings.ESP) return;
@@ -176,8 +179,7 @@ class ESP  {
           }
     
           ScreenPos = ESP.ProjectWorldToScreen(Location);
-    
-          // ShowBox = { X: Bounds.BoxExtent.X + Bounds.SphereRadius, Y: Bounds.BoxExtent.Y + Bounds.SphereRadius };
+
           if (ModManager.Settings.DebugEntity) {
             TextShow.push(Blueprint);
             TextShow.push(Entity.Entity.Id);
@@ -195,15 +197,16 @@ class ESP  {
             TextShow.push(Distance.toString() + "m");
           }
     
+          ScreenPos = ESP.ProjectWorldToScreen(Location);
+    
+          if ((ScreenPos.X < 0 || ScreenPos.Y < 0)) {
+            continue;
+          }
+
           if (TextShow.length > 0) {
             Text = TextShow.join(" | ");
           }
-    
-          ScreenPos = ESP.ProjectWorldToScreen(Location);
-    
-          if (ScreenPos.X < 0 || ScreenPos.Y < 0) {
-            continue;
-          }
+          
           if (ModManager.Settings.ShowBox) {
             try {
               Bounds = Component.Actor.Mesh.Bounds;
