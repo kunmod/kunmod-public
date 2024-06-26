@@ -95,6 +95,7 @@ class MainMenu {
     MainMenu.updateMenuState();
     MainMenu.updatePlayerSpeed();
     MainMenu.updateWorldSpeed();
+    MainMenu.updateNoClip();
   }
 
   static KunLog(string) {
@@ -266,6 +267,11 @@ class MainMenu {
 
           Menu.PlayerSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.PlayerSpeed = isChecked;
+            if (ModManager.Settings.PlayerSpeed) {
+              EntityManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
+            } else {
+              EntityManager.SetPlayerSpeed(1);
+            }
             MainMenu.KunLog("Player Speed: " + isChecked);
           });
 
@@ -343,6 +349,13 @@ class MainMenu {
 
           Menu.WorldSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.WorldSpeed = isChecked;
+            if (ModManager.Settings.WorldSpeed) {
+              ModMethod_1.ModMethod.SetWorldTimeDilation(
+                ModManager.Settings.WorldSpeedValue
+              );
+            } else {
+              ModMethod_1.ModMethod.SetWorldTimeDilation(1);
+            }
             MainMenu.KunLog("World Speed: " + isChecked);
           });
 
@@ -747,8 +760,6 @@ class MainMenu {
   static updatePlayerSpeed() {
     if (ModManager.Settings.PlayerSpeed) {
       EntityManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
-    } else {
-      EntityManager.SetPlayerSpeed(1);
     }
   }
 
