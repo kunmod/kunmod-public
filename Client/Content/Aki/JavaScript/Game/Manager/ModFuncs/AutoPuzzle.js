@@ -18,6 +18,7 @@ const ModManager = ModManager_1.ModManager;
 const EntityManager = EntityManager_1.EntityManager;
 const HitGearList = [
   "Gameplay050", //玩法_打击机关
+  "Gameplay060",//藤曼玩法_禁锢陷阱
 ];
 
 
