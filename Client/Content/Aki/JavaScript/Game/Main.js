@@ -95,6 +95,7 @@ class MainMenu {
     MainMenu.updateMenuState();
     MainMenu.updatePlayerSpeed();
     MainMenu.updateWorldSpeed();
+    MainMenu.updateNoClip();
   }
 
   static KunLog(string) {
@@ -266,6 +267,11 @@ class MainMenu {
 
           Menu.PlayerSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.PlayerSpeed = isChecked;
+            if (ModManager.Settings.PlayerSpeed) {
+              EntityManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
+            } else {
+              EntityManager.SetPlayerSpeed(1);
+            }
             MainMenu.KunLog("Player Speed: " + isChecked);
           });
 
@@ -343,6 +349,13 @@ class MainMenu {
 
           Menu.WorldSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
             ModManager.Settings.WorldSpeed = isChecked;
+            if (ModManager.Settings.WorldSpeed) {
+              ModMethod_1.ModMethod.SetWorldTimeDilation(
+                ModManager.Settings.WorldSpeedValue
+              );
+            } else {
+              ModMethod_1.ModMethod.SetWorldTimeDilation(1);
+            }
             MainMenu.KunLog("World Speed: " + isChecked);
           });
 
@@ -655,12 +668,20 @@ class MainMenu {
   static Getfreetip() {
     let lang = ModLanguage.GetCurrLang();
     switch (lang) {
-      case "en":
-        return "This hack is completely free, if you paid to get this, you have been scammed.";
       case "chs":
         return "免费软件，如果你是付费获得，那你被骗了";
+      case "en":
+        return "This hack is completely free, if you paid to get this, you have been scammed.";
+      case "es":
+        return "Este hack es completamente gratuito, si pagaste por obtenerlo, has sido estafado.";
+      case "id":
+        return "Hack ini sepenuhnya gratis, jika Anda membayar untuk mendapatkan ini, Anda telah tertipu."
       case "ja":
         return "このハックは完全に無料です。これにお金を払ったのなら、あなたはだまされています。";
+      case "ko":
+        return "이 해킹은 완전히 무료입니다. 이것을 얻기 위해 돈을 지불했다면 당신은 베코 사기를 당한 것입니다.";
+      case "vi":
+        return "Bản hack này hoàn toàn miễn phí, nếu bạn đã mua nó từ ai, bạn đã bị lừa đảo."
       default:
         return "This hack is completely free, if you paid to get this, you have been scammed.";
     }
@@ -733,8 +754,6 @@ class MainMenu {
   static updatePlayerSpeed() {
     if (ModManager.Settings.PlayerSpeed) {
       EntityManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
-    } else {
-      EntityManager.SetPlayerSpeed(1);
     }
   }
 
@@ -743,8 +762,12 @@ class MainMenu {
       ModMethod_1.ModMethod.SetWorldTimeDilation(
         ModManager.Settings.WorldSpeedValue
       );
-    } else {
-      ModMethod_1.ModMethod.SetWorldTimeDilation(1);
+    }
+  }
+
+  static updateNoClip() {
+    if (ModManager.Settings.NoClip) {
+      NoClip_1.NoClip.NoClip(true);
     }
   }
 

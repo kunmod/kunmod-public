@@ -109,12 +109,14 @@ class EntityManager {
   }
 
   static GetName(entity) {
-    let a = entity.Entity.GetComponent(0);
-    let name = PublicUtil_1.PublicUtil.GetConfigTextByKey(
-      a.GetBaseInfo()?.TidName ?? ""
-    );
-
-    return name;
+    try {
+      let CreatureComponent = entity.Entity.GetComponent(0);
+      let Name = PublicUtil_1.PublicUtil.GetConfigTextByKey(CreatureComponent.GetBaseInfo().TidName);
+  
+      return Name;
+    } catch (e) {
+      return "";
+    }
   }
 
   static GetBlueprintType(entity) {
