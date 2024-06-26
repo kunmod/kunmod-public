@@ -28,7 +28,7 @@ const puerts_1 = require("puerts"),
   ModUtils_1 = require("./ModFuncs/ModUtils"),
   ModDebuger_1 = require("./ModFuncs/ModDebuger"),
   EntityManager_1 = require("./ModFuncs/EntityManager"),
-  MainMenu_1 = require("../Main");
+  NoClip_1 = require("./ModFuncs/NoClip")
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const { MobVacuum } = require("./ModFuncs/MobVacuum");
@@ -222,13 +222,14 @@ class ModManager {
     //   ModDebuger_1.ModDebuger.ListenDebug();
     // }
 
-    if (this.listenKey("MarkTp", "t")) {
-      if (this.Settings.MarkTp && ModUtils_1.ModUtils.IsInMapView())
+    if (this.Settings.MarkTp && ModUtils_1.ModUtils.IsInMapView()) {
+      if (this.listenKey("MarkTp", "t")) {
         this.TpNoloadingTo(
           this.Settings.MarkX * 100,
           this.Settings.MarkY * 100,
           this.Settings.MarkZ * 100
         );
+      }
     }
 
     //this.listenMod("skip", "NumPadFour", "plot");
