@@ -28,8 +28,7 @@ const puerts_1 = require("puerts"),
   ModUtils_1 = require("./ModFuncs/ModUtils"),
   ModDebuger_1 = require("./ModFuncs/ModDebuger"),
   EntityManager_1 = require("./ModFuncs/EntityManager"),
-  NoClip_1 = require("./ModFuncs/NoClip"),
-  MainMenu_1 = require("../Main");
+  NoClip_1 = require("./ModFuncs/NoClip")
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const { MobVacuum } = require("./ModFuncs/MobVacuum");
