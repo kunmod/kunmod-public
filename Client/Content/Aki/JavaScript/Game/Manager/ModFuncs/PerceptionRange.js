@@ -8,7 +8,7 @@ const puerts_1 = require("puerts"),
   ModManager_1 = require("../ModManager"),
   ModMethod_1 = require("./ModMethod"),
   EntityManager_1 = require("./EntityManager");
-  const Range =500;
+  const Range = 1e50;
 
 const EntityManager = EntityManager_1.EntityManager;
 
