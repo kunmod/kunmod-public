@@ -175,6 +175,13 @@ class MainMenu {
     DCG.SetVisibility(2);
     IS_INVALID = false;
 
+    //check if config exists
+    if (!ModManager.CheckConfigExists()) {
+      ModManager.SaveConfig();
+    } else {
+      ModManager.LoadConfig();
+    }
+
     this.Menu.DiscordLink.SetVisibility(0);
     this.Menu.GithubLink.SetVisibility(0);
     this.Menu.DisclaimerText.SetVisibility(0);
@@ -631,13 +638,6 @@ class MainMenu {
     this.Menu.SetVisibility(2);
     ModManager.ShowTip("KUN-MOD Menu Loaded!");
     this.KunLog("KUN-MOD Menu Loaded!");
-
-    //check if config exists
-    if (!ModManager.CheckConfigExists()) {
-      ModManager.SaveConfig();
-    } else {
-      ModManager.LoadConfig();
-    }
   }
 
   static getTranslation() {
