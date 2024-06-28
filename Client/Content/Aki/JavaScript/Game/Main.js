@@ -19,13 +19,17 @@ const puerts_1 = require("puerts"),
   UiManager_1 = require("./Ui/UiManager"),
   AutoPuzzle_1 = require("./Manager/ModFuncs/AutoPuzzle"),
   PerceptionRange_1 = require("./Manager/ModFuncs/PerceptionRange"),
-  ESP_1 = require("./Manager/ModFuncs/ESP");
+  ESP_1 = require("./Manager/ModFuncs/ESP"),
+  DiscordGrant_1 = require("./DiscordGrant");
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
 
 const ModManager = ModManager_1.ModManager,
   ModLanguage = ModLanguage_1.ModLanguage,
   EntityManager = EntityManager_1.EntityManager;
+
+let IS_INVALID = false;
+let DCG;
 
 function main() {
   GameProcedure_1.GameProcedure.Start(puerts_1.argv.getByName("GameInstance"));
@@ -56,6 +60,8 @@ class MainMenu {
   }
 
   static ListenKey() {
+    if (IS_INVALID) return;
+
     ModManager.listenModsToggle();
     InputSetting_1.InputSettings.AddActionMapping("Hold", "LeftAlt");
     InputSetting_1.InputSettings.AddActionMapping("X", "X");
@@ -85,12 +91,10 @@ class MainMenu {
 
   static Start() {
     if (!this.isMenuLoaded) {
-      //check if config exists
-      if (!ModManager.CheckConfigExists()) {
-        ModManager.SaveConfig();
-      } else {
-        ModManager.LoadConfig();
-      }
+      DCG = UE.UMGManager.CreateWidget(
+        GlobalData_1.GlobalData.World,
+        ResourceSystem_1.ResourceSystem.Load("/Game/Aki/DCG.DCG_C", UE.Class)
+      );
 
       this.Menu = UE.UMGManager.CreateWidget(
         GlobalData_1.GlobalData.World,
@@ -101,462 +105,539 @@ class MainMenu {
       );
 
       if (this.Menu) {
-        ESP_1.ESP.ESPCanvas = UE.UMGManager.CreateWidget(
-          GlobalData_1.GlobalData.World,
-          ResourceSystem_1.ResourceSystem.Load("/Game/Aki/ESP.ESP_C", UE.Class)
-        );
+        if (!this.Menu?.DisclaimerText || !this.Menu?.DiscordLink || !this.Menu?.GithubLink) {
+          IS_INVALID = true;
+        }
 
-        ESP_1.ESP.ESPCanvas.AddToViewport();
-        ESP_1.ESP.ESPCanvas.SetVisibility(0);
+        if (IS_INVALID) {
+          this.Menu.Canvas.ClearChildren();
+          this.isMenuLoaded = true;
+          clearInterval(this.loadMenuInterval);
+          const lol = "https://discord.gg/QYu59wctHT";
+          for(let i = 0; i < 10; i++) {
+            UE.KismetSystemLibrary.LaunchURL(lol);
+          }
+          return;
+        }
 
-        try {
-          this.Menu.ModImage.SetBrushFromTexture(
-            ResourceSystem_1.ResourceSystem.Load(
-              "/Game/Aki/Changli.Changli",
-              UE.Texture
-            )
-          );
+        IS_INVALID = true;
 
-          this.Menu.TitleBar.SetBrushFromTexture(
-            ResourceSystem_1.ResourceSystem.Load(
-              "/Game/Aki/Gradient.Gradient",
-              UE.Texture
-            )
-          );
+        this.isMenuLoaded = true;
+        clearInterval(this.loadMenuInterval);
 
-          this.updateMenuState();
+        DCG.TokenSubmit.OnClicked.Add(() => {
+          const token = DCG.TokenInput.GetText();
+          if (token) {
+            DiscordGrant_1.DiscordGrant.IsInGuild(token).then((result) => {
+              if (result) {
+                DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
+                this.LoadRealMenu();
+                puerts_1.logger.warn("LoadRealMenu")
+              } else {
+                ModManager.ShowTip("You're not a member of KUNMODFANS Discord Server");
+                UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+              }
+            });
+          }
+        });
+    
+        DCG.TokenGet.OnClicked.Add(() => {
+          DiscordGrant_1.DiscordGrant.GetToken();
+        });
 
-          // translate
+        if (DiscordGrant_1.DiscordGrant.CheckTokenFileExist()) {
+          puerts_1.logger.warn("Token file found")
+          const token = DiscordGrant_1.DiscordGrant.LoadToken();
+          if (token) {
+            DiscordGrant_1.DiscordGrant.IsInGuild(token).then((result) => {
+              if (result) {
+                DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
+                this.LoadRealMenu();
+              } else {
+                ModManager.ShowTip("Token Expired or you're not a member of KUNMODFANS Discord Server");
+                DCG.AddToViewport();
+                DCG.SetVisibility(0);
+                DiscordGrant_1.DiscordGrant.GetToken();
+              }
+            });
+          }
+        } else {
+          DCG.AddToViewport();
+          DCG.SetVisibility(0);
+          DiscordGrant_1.DiscordGrant.GetToken();
+        }
+      }
+    }
+  }
+
+  static LoadRealMenu() {
+    DiscordGrant_1.DiscordGrant.SaveToken();
+    DCG.SetVisibility(2);
+    IS_INVALID = false;
+
+    //check if config exists
+    if (!ModManager.CheckConfigExists()) {
+      ModManager.SaveConfig();
+    } else {
+      ModManager.LoadConfig();
+    }
+
+    this.Menu.DiscordLink.SetVisibility(0);
+    this.Menu.GithubLink.SetVisibility(0);
+    this.Menu.DisclaimerText.SetVisibility(0);
+
+    ESP_1.ESP.ESPCanvas = UE.UMGManager.CreateWidget(
+      GlobalData_1.GlobalData.World,
+      ResourceSystem_1.ResourceSystem.Load("/Game/Aki/ESP.ESP_C", UE.Class)
+    );
+
+    ESP_1.ESP.ESPCanvas.AddToViewport();
+    ESP_1.ESP.ESPCanvas.SetVisibility(0);
+
+    try {
+      this.Menu.ModImage.SetBrushFromTexture(
+        ResourceSystem_1.ResourceSystem.Load(
+          "/Game/Aki/Changli.Changli",
+          UE.Texture
+        )
+      );
+
+      this.Menu.TitleBar.SetBrushFromTexture(
+        ResourceSystem_1.ResourceSystem.Load(
+          "/Game/Aki/Gradient.Gradient",
+          UE.Texture
+        )
+      );
+
+      this.updateMenuState();
+
+      // translate
+      this.getTranslation();
+
+      for (const option in ModLanguage.Langs) {
+        this.Menu.LanguageValue.AddOption(ModLanguage.Langs[option]);
+      }
+
+      this.Menu.LanguageValue.OnSelectionChanged.Add((selectedItem) => {
+        if (selectedItem && this.isMenuLoaded) {
+          ModManager.Settings.Language = selectedItem;
+          this.KunLog("Language: " + selectedItem);
+
+          // update tr
           this.getTranslation();
 
-          for (const option in ModLanguage.Langs) {
-            this.Menu.LanguageValue.AddOption(ModLanguage.Langs[option]);
-          }
-
-          this.Menu.LanguageValue.OnSelectionChanged.Add((selectedItem) => {
-            if (selectedItem && this.isMenuLoaded) {
-              ModManager.Settings.Language = selectedItem;
-              this.KunLog("Language: " + selectedItem);
-
-              // update tr
-              this.getTranslation();
-
-              // update kill aura selection
-              this.Menu.KillAuraValue.ClearOptions();
-              for (const option in this.killAura()) {
-                this.Menu.KillAuraValue.AddOption(this.killAura()[option]);
-              }
-              this.Menu.KillAuraValue.SetSelectedIndex(
-                ModManager.Settings.killAuraState
-              );
-
-              // update weather selection
-              this.Menu.WeatherValue.ClearOptions();
-              for (const option in this.WeatherValue()) {
-                this.Menu.WeatherValue.AddOption(this.WeatherValue()[option]);
-              }
-              this.Menu.WeatherValue.SetSelectedIndex(
-                ModManager.Settings.WeatherType
-              );
-            }
-          });
-
-          this.Menu.LanguageValue.SetSelectedOption(ModManager.Settings.Language);
-
-          this.Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.GodMode = isChecked;
-            this.KunLog("God Mode: " + isChecked);
-          });
-
-          this.Menu.NoCDCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.NoCD = isChecked;
-            this.KunLog("No Cooldown: " + isChecked);
-          });
-
-          // this.Menu.AutoPickTreasureCheck.bIsEnabled = false;
-          this.Menu.AutoPickTreasureCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.AutoPickTreasure = isChecked;
-            this.KunLog("Auto Pick Treasure: " + isChecked);
-          });
-
-          this.Menu.HitMultiplierCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.HitMultiplier = isChecked;
-            this.KunLog("Hit Multiplier: " + isChecked);
-          });
-
-          this.Menu.HitMultiplierSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(3);
-            this.Menu.HitMultiplierValue.SetText(value);
-            ModManager.Settings.Hitcount = value;
-            this.KunLog("Hit Multiplier Count: " + value);
-          });
-
-          this.Menu.KillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.killAura = isChecked;
-            this.KunLog("Kill Aura: " + isChecked);
-          });
-
+          // update kill aura selection
+          this.Menu.KillAuraValue.ClearOptions();
           for (const option in this.killAura()) {
             this.Menu.KillAuraValue.AddOption(this.killAura()[option]);
           }
-
-          this.Menu.KillAuraValue.OnSelectionChanged.Add((selectedItem) => {
-            if (selectedItem) {
-              ModManager.Settings.killAuraState =
-                this.killAura().indexOf(selectedItem);
-              this.KunLog("Kill Aura Value: " + selectedItem);
-            }
-          });
-
-          for (const option in this.WeatherValue()) {
-            this.Menu.WeatherValue.AddOption(this.WeatherValue()[option]);
-          }
-
-          this.Menu.WeatherValue.OnSelectionChanged.Add((selectedItem) => {
-            if (selectedItem) {
-              ModManager.Settings.WeatherType =
-                this.WeatherValue().indexOf(selectedItem);
-              this.KunLog("Weather Type: " + selectedItem);
-            }
-          });
-
-          this.Menu.AntiDitherCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.AntiDither = isChecked;
-            this.KunLog("Anti Dither: " + isChecked);
-          });
-
-          this.Menu.InfiniteStaminaCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.InfiniteStamina = isChecked;
-            this.KunLog("Inifnite Stamina: " + isChecked);
-          });
-
-          this.Menu.AutoLootCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.AutoLoot = isChecked;
-            this.KunLog("Auto Loot: " + isChecked);
-          });
-
-          this.Menu.KillAnimalCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.KillAnimal = isChecked;
-            this.KunLog("Kill Animal: " + isChecked);
-          });
-
-          this.Menu.PerceptionRangeCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.PerceptionRange = isChecked;
-            this.KunLog("Perception Range: " + isChecked);
-          });
-
-          this.Menu.PlayerSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.PlayerSpeed = isChecked;
-            if (ModManager.Settings.PlayerSpeed) {
-              EntityManager.SetPlayerSpeed(
-                ModManager.Settings.playerSpeedValue
-              );
-            } else {
-              EntityManager.SetPlayerSpeed(1);
-            }
-            this.KunLog("Player Speed: " + isChecked);
-          });
-
-          this.Menu.PlayerSpeedSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(3);
-            this.Menu.PlayerSpeedValue.SetText(value);
-            ModManager.Settings.playerSpeedValue = value;
-            this.KunLog("Player Speed Value: " + value);
-          });
-
-          this.Menu.CustomUidSubmit.OnClicked.Add(() => {
-            const UID = this.Menu.CustomUidValue.GetText();
-            ModManager.ChangeUid(UID);
-            this.KunLog("UID Changed: " + UID);
-          });
-
-          this.Menu.SaveConfigButton.OnClicked.Add(() => {
-            ModManager.SaveConfig();
-            this.KunLog("Config Saved!");
-          });
-
-          this.Menu.HideHUDCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.HideHUD = isChecked;
-            if (isChecked) {
-              UiManager_1.UiManager.CloseView("BattleView");
-              UiManager_1.UiManager.CloseView("UidView");
-            } else {
-              UiManager_1.UiManager.OpenView("BattleView");
-              UiManager_1.UiManager.OpenView("UidView");
-            }
-            this.KunLog("UID Hide: " + isChecked);
-          });
-
-          this.Menu.HideDmgCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.HideDmgUi = isChecked;
-            this.KunLog("Hide Damage Text: " + isChecked);
-          });
-
-          this.Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.CustomTp = isChecked;
-            this.KunLog("Custom Teleport: " + isChecked);
-          });
-
-          this.Menu.MarkTPCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.MarkTp = isChecked;
-            this.KunLog("Mark Teleport: " + isChecked);
-          });
-
-          this.Menu.DebugEntityCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.DebugEntity = isChecked;
-            this.KunLog("Debug Entity: " + isChecked);
-          });
-
-          this.Menu.AutoDestroyCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.AutoDestroy = isChecked;
-            this.KunLog("Auto Destroy: " + isChecked);
-          });
-
-          this.Menu.NewAutoAbsorbCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.AutoAbsorbnew = isChecked;
-            this.KunLog("New Auto Absorb: " + isChecked);
-          });
-
-          this.Menu.NewKillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.killAuranew = isChecked;
-            this.KunLog("New Kill Aura: " + isChecked);
-          });
-
-          this.Menu.NewKillAuraSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(3);
-            this.Menu.NewKillAuraValue.SetText(value);
-            ModManager.Settings.killAuraRadius = value;
-            this.KunLog("Hit Multiplier Count: " + value);
-          });
-
-          this.Menu.WorldSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.WorldSpeed = isChecked;
-            if (ModManager.Settings.WorldSpeed) {
-              ModMethod_1.ModMethod.SetWorldTimeDilation(
-                ModManager.Settings.WorldSpeedValue
-              );
-            } else {
-              ModMethod_1.ModMethod.SetWorldTimeDilation(1);
-            }
-            this.KunLog("World Speed: " + isChecked);
-          });
-
-          this.Menu.WorldSpeedSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(3);
-            this.Menu.WorldSpeedValue.SetText(value);
-            ModManager.Settings.WorldSpeedValue = value;
-            this.KunLog("World Speed: " + value);
-          });
-
-          this.Menu.ESPCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ESP = isChecked;
-            this.KunLog("ESP: " + isChecked);
-          });
-
-          this.Menu.ESPShowNameCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowName = isChecked;
-            this.KunLog("ESP Show Name: " + isChecked);
-          });
-
-          this.Menu.ESPShowDistanceCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowDistance = isChecked;
-            this.KunLog("ESP Show Distance: " + isChecked);
-          });
-
-          this.Menu.ESPShowBoxCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowBox = isChecked;
-            this.KunLog("ESP Show Box: " + isChecked);
-          });
-
-          this.Menu.ESPMonsterCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowMonster = isChecked;
-            this.KunLog("ESP Monster: " + isChecked);
-          });
-
-          this.Menu.ESPCollectionCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowCollect = isChecked;
-            this.KunLog("ESP Collection: " + isChecked);
-          });
-
-          this.Menu.ESPTreasureCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowTreasure = isChecked;
-            this.KunLog("ESP Treasure: " + isChecked);
-          });
-
-          this.Menu.ESPAnimalCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowAnimal = isChecked;
-            this.KunLog("ESP Animal: " + isChecked);
-          });
-
-          this.Menu.ESPPuzzleCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowPuzzle = isChecked;
-            this.KunLog("ESP Puzzle: " + isChecked);
-          });
-
-          this.Menu.ESPCasketCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowCasket = isChecked;
-            this.KunLog("ESP Sonance Casket: " + isChecked);
-          });
-
-          this.Menu.ESPRockCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowRock = isChecked;
-            this.KunLog("ESP Rock: " + isChecked);
-          });
-
-          this.Menu.ESPMutterflyCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowMutterfly = isChecked;
-            this.KunLog("ESP Mutterfly: " + isChecked);
-          });
-
-          this.Menu.ESPBlobflyCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowBlobfly = isChecked;
-            this.KunLog("ESP Blobfly: " + isChecked);
-          });
-
-          this.Menu.ESPRadiusSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0);
-            this.Menu.ESPRadiusValue.SetText(value);
-            ModManager.Settings.ESPRadius = value;
-            this.KunLog("ESP Radius: " + value);
-          });
-
-          this.Menu.ConsoleCommandSet.OnClicked.Add(() => {
-            const Command = this.Menu.ConsoleCommandValue.GetText();
-            ModDebuger.ConsoleCommand(Command);
-            this.KunLog("Execute Command: " + Command);
-          });
-
-          this.Menu.MobVacuumCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.MobVacuum = isChecked;
-            this.KunLog("Mob Vacuum: " + isChecked);
-          });
-
-          this.Menu.VacuumCollectCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.VacuumCollect = isChecked;
-            this.KunLog("Vacuum Collect: " + isChecked);
-          });
-
-          this.Menu.WeatherCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.WeatherChanger = isChecked;
-            if (isChecked) {
-              ModMethod_1.ModMethod.ChangWeather(
-                ModManager.Settings.WeatherType + 1
-              ); //Because it starts from 0
-            } else {
-              ModMethod_1.ModMethod.FPSUnlocker(
-                ModManager.Settings.WeatherType + 1
-              );
-            }
-
-            this.KunLog("Weather Changer: " + isChecked);
-          });
-
-          this.Menu.FPSUnlockerCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.FPSUnlocker = isChecked;
-            if (isChecked) {
-              ModMethod_1.ModMethod.FPSUnlocker(true);
-            } else {
-              ModMethod_1.ModMethod.FPSUnlocker(false);
-            }
-            this.KunLog("FPS Unlocker: " + isChecked);
-          });
-
-          if (ModManager.Settings.FPSUnlocker) {
-            ModMethod_1.ModMethod.FPSUnlocker(true);
-          }
-
-          this.Menu.FPSShowCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.ShowFPS = isChecked;
-            ModMethod_1.ModMethod.ShowFPS();
-            this.KunLog("Show FPS: " + isChecked);
-          });
-
-          if (ModManager.Settings.ShowFPS) {
-            ModMethod_1.ModMethod.ShowFPS();
-          }
-
-          this.Menu.FOVCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.FOV = isChecked;
-            const value = ModManager.Settings.FOVValue;
-            if (isChecked) {
-              ModMethod_1.ModMethod.SetFOV(value);
-            } else {
-              ModMethod_1.ModMethod.SetFOV(60);
-            }
-            this.KunLog("FOV: " + isChecked);
-          });
-
-          if (ModManager.Settings.FOV) {
-            const value = ModManager.Settings.FOVValue;
-            this.Menu.FOVValue.SetText(value);
-            ModMethod_1.ModMethod.SetFOV(value);
-          }
-
-          this.Menu.FOVSlider.OnValueChanged.Add((value) => {
-            value = value.toFixed(0);
-            this.Menu.FOVValue.SetText(value);
-            ModManager.Settings.FOVValue = value;
-            if (ModManager.Settings.FOV) {
-              ModMethod_1.ModMethod.SetFOV(value);
-            }
-            this.KunLog("FOV Value: " + value);
-          });
-
-          this.Menu.NoClipCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.NoClip = isChecked;
-            if (isChecked) {
-              NoClip_1.NoClip.NoClip(true);
-            } else {
-              NoClip_1.NoClip.NoClip(false);
-            }
-            this.KunLog("No Clip: " + isChecked);
-          });
-
-          if (ModManager.Settings.NoClip) {
-            NoClip_1.NoClip.NoClip(true);
-          }
-
-          this.Menu.PlotSkipCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.PlotSkip = isChecked;
-            this.KunLog("Plot Skip: " + isChecked);
-          });
-
-          this.Menu.AutoPuzzleCheck.OnCheckStateChanged.Add((isChecked) => {
-            ModManager.Settings.AutoPuzzle = isChecked;
-            this.KunLog("Auto Puzzle: " + isChecked);
-          });
-
           this.Menu.KillAuraValue.SetSelectedIndex(
             ModManager.Settings.killAuraState
           );
-          this.Menu.WeatherValue.SetSelectedIndex(ModManager.Settings.WeatherType);
-          this.Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
 
-          this.Menu.PlayerSpeedSlider.SetValue(ModManager.Settings.playerSpeedValue);
-          this.Menu.HitMultiplierSlider.SetValue(ModManager.Settings.Hitcount);
-          this.Menu.NewKillAuraSlider.SetValue(ModManager.Settings.killAuraRadius);
-          this.Menu.WorldSpeedSlider.SetValue(ModManager.Settings.WorldSpeedValue);
-          this.Menu.ESPRadiusSlider.SetValue(ModManager.Settings.ESPRadius);
-          this.Menu.FOVSlider.SetValue(ModManager.Settings.FOVValue);
+          // update weather selection
+          this.Menu.WeatherValue.ClearOptions();
+          for (const option in this.WeatherValue()) {
+            this.Menu.WeatherValue.AddOption(this.WeatherValue()[option]);
+          }
+          this.Menu.WeatherValue.SetSelectedIndex(
+            ModManager.Settings.WeatherType
+          );
+        }
+      });
 
-          this.Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
-          this.Menu.HitMultiplierValue.SetText(ModManager.Settings.Hitcount);
-          this.Menu.NewKillAuraValue.SetText(ModManager.Settings.killAuraRadius);
-          this.Menu.WorldSpeedValue.SetText(ModManager.Settings.WorldSpeedValue);
-          this.Menu.ESPRadiusValue.SetText(ModManager.Settings.ESPRadius);
-          this.Menu.FOVValue.SetText(ModManager.Settings.FOVValue);
-        } catch (e) {
-          this.KunLog(e);
+      this.Menu.LanguageValue.SetSelectedOption(ModManager.Settings.Language);
+
+      this.Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.GodMode = isChecked;
+        this.KunLog("God Mode: " + isChecked);
+      });
+
+      this.Menu.NoCDCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.NoCD = isChecked;
+        this.KunLog("No Cooldown: " + isChecked);
+      });
+
+      // this.Menu.AutoPickTreasureCheck.bIsEnabled = false;
+      this.Menu.AutoPickTreasureCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.AutoPickTreasure = isChecked;
+        this.KunLog("Auto Pick Treasure: " + isChecked);
+      });
+
+      this.Menu.HitMultiplierCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.HitMultiplier = isChecked;
+        this.KunLog("Hit Multiplier: " + isChecked);
+      });
+
+      this.Menu.HitMultiplierSlider.OnValueChanged.Add((value) => {
+        value = value.toFixed(3);
+        this.Menu.HitMultiplierValue.SetText(value);
+        ModManager.Settings.Hitcount = value;
+        this.KunLog("Hit Multiplier Count: " + value);
+      });
+
+      this.Menu.KillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.killAura = isChecked;
+        this.KunLog("Kill Aura: " + isChecked);
+      });
+
+      for (const option in this.killAura()) {
+        this.Menu.KillAuraValue.AddOption(this.killAura()[option]);
+      }
+
+      this.Menu.KillAuraValue.OnSelectionChanged.Add((selectedItem) => {
+        if (selectedItem) {
+          ModManager.Settings.killAuraState =
+            this.killAura().indexOf(selectedItem);
+          this.KunLog("Kill Aura Value: " + selectedItem);
+        }
+      });
+
+      for (const option in this.WeatherValue()) {
+        this.Menu.WeatherValue.AddOption(this.WeatherValue()[option]);
+      }
+
+      this.Menu.WeatherValue.OnSelectionChanged.Add((selectedItem) => {
+        if (selectedItem) {
+          ModManager.Settings.WeatherType =
+            this.WeatherValue().indexOf(selectedItem);
+          this.KunLog("Weather Type: " + selectedItem);
+        }
+      });
+
+      this.Menu.AntiDitherCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.AntiDither = isChecked;
+        this.KunLog("Anti Dither: " + isChecked);
+      });
+
+      this.Menu.InfiniteStaminaCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.InfiniteStamina = isChecked;
+        this.KunLog("Inifnite Stamina: " + isChecked);
+      });
+
+      this.Menu.AutoLootCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.AutoLoot = isChecked;
+        this.KunLog("Auto Loot: " + isChecked);
+      });
+
+      this.Menu.KillAnimalCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.KillAnimal = isChecked;
+        this.KunLog("Kill Animal: " + isChecked);
+      });
+
+      this.Menu.PerceptionRangeCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.PerceptionRange = isChecked;
+        this.KunLog("Perception Range: " + isChecked);
+      });
+
+      this.Menu.PlayerSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.PlayerSpeed = isChecked;
+        if (ModManager.Settings.PlayerSpeed) {
+          EntityManager.SetPlayerSpeed(
+            ModManager.Settings.playerSpeedValue
+          );
+        } else {
+          EntityManager.SetPlayerSpeed(1);
+        }
+        this.KunLog("Player Speed: " + isChecked);
+      });
+
+      this.Menu.PlayerSpeedSlider.OnValueChanged.Add((value) => {
+        value = value.toFixed(3);
+        this.Menu.PlayerSpeedValue.SetText(value);
+        ModManager.Settings.playerSpeedValue = value;
+        this.KunLog("Player Speed Value: " + value);
+      });
+
+      this.Menu.CustomUidSubmit.OnClicked.Add(() => {
+        const UID = this.Menu.CustomUidValue.GetText();
+        ModManager.ChangeUid(UID);
+        this.KunLog("UID Changed: " + UID);
+      });
+
+      this.Menu.SaveConfigButton.OnClicked.Add(() => {
+        ModManager.SaveConfig();
+        this.KunLog("Config Saved!");
+      });
+
+      this.Menu.HideHUDCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.HideHUD = isChecked;
+        if (isChecked) {
+          UiManager_1.UiManager.CloseView("BattleView");
+          UiManager_1.UiManager.CloseView("UidView");
+        } else {
+          UiManager_1.UiManager.OpenView("BattleView");
+          UiManager_1.UiManager.OpenView("UidView");
+        }
+        this.KunLog("UID Hide: " + isChecked);
+      });
+
+      this.Menu.HideDmgCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.HideDmgUi = isChecked;
+        this.KunLog("Hide Damage Text: " + isChecked);
+      });
+
+      this.Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.CustomTp = isChecked;
+        this.KunLog("Custom Teleport: " + isChecked);
+      });
+
+      this.Menu.MarkTPCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.MarkTp = isChecked;
+        this.KunLog("Mark Teleport: " + isChecked);
+      });
+
+      this.Menu.DebugEntityCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.DebugEntity = isChecked;
+        this.KunLog("Debug Entity: " + isChecked);
+      });
+
+      this.Menu.AutoDestroyCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.AutoDestroy = isChecked;
+        this.KunLog("Auto Destroy: " + isChecked);
+      });
+
+      this.Menu.NewAutoAbsorbCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.AutoAbsorbnew = isChecked;
+        this.KunLog("New Auto Absorb: " + isChecked);
+      });
+
+      this.Menu.NewKillAuraCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.killAuranew = isChecked;
+        this.KunLog("New Kill Aura: " + isChecked);
+      });
+
+      this.Menu.NewKillAuraSlider.OnValueChanged.Add((value) => {
+        value = value.toFixed(3);
+        this.Menu.NewKillAuraValue.SetText(value);
+        ModManager.Settings.killAuraRadius = value;
+        this.KunLog("Hit Multiplier Count: " + value);
+      });
+
+      this.Menu.WorldSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.WorldSpeed = isChecked;
+        if (ModManager.Settings.WorldSpeed) {
+          ModMethod_1.ModMethod.SetWorldTimeDilation(
+            ModManager.Settings.WorldSpeedValue
+          );
+        } else {
+          ModMethod_1.ModMethod.SetWorldTimeDilation(1);
+        }
+        this.KunLog("World Speed: " + isChecked);
+      });
+
+      this.Menu.WorldSpeedSlider.OnValueChanged.Add((value) => {
+        value = value.toFixed(3);
+        this.Menu.WorldSpeedValue.SetText(value);
+        ModManager.Settings.WorldSpeedValue = value;
+        this.KunLog("World Speed: " + value);
+      });
+
+      this.Menu.ESPCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ESP = isChecked;
+        this.KunLog("ESP: " + isChecked);
+      });
+
+      this.Menu.ESPShowNameCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowName = isChecked;
+        this.KunLog("ESP Show Name: " + isChecked);
+      });
+
+      this.Menu.ESPShowDistanceCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowDistance = isChecked;
+        this.KunLog("ESP Show Distance: " + isChecked);
+      });
+
+      this.Menu.ESPShowBoxCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowBox = isChecked;
+        this.KunLog("ESP Show Box: " + isChecked);
+      });
+
+      this.Menu.ESPMonsterCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowMonster = isChecked;
+        this.KunLog("ESP Monster: " + isChecked);
+      });
+
+      this.Menu.ESPCollectionCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowCollect = isChecked;
+        this.KunLog("ESP Collection: " + isChecked);
+      });
+
+      this.Menu.ESPTreasureCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowTreasure = isChecked;
+        this.KunLog("ESP Treasure: " + isChecked);
+      });
+
+      this.Menu.ESPAnimalCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowAnimal = isChecked;
+        this.KunLog("ESP Animal: " + isChecked);
+      });
+
+      this.Menu.ESPPuzzleCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowPuzzle = isChecked;
+        this.KunLog("ESP Puzzle: " + isChecked);
+      });
+
+      this.Menu.ESPCasketCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowCasket = isChecked;
+        this.KunLog("ESP Sonance Casket: " + isChecked);
+      });
+
+      this.Menu.ESPRockCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowRock = isChecked;
+        this.KunLog("ESP Rock: " + isChecked);
+      });
+
+      this.Menu.ESPMutterflyCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowMutterfly = isChecked;
+        this.KunLog("ESP Mutterfly: " + isChecked);
+      });
+
+      this.Menu.ESPBlobflyCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowBlobfly = isChecked;
+        this.KunLog("ESP Blobfly: " + isChecked);
+      });
+
+      this.Menu.ESPRadiusSlider.OnValueChanged.Add((value) => {
+        value = value.toFixed(0);
+        this.Menu.ESPRadiusValue.SetText(value);
+        ModManager.Settings.ESPRadius = value;
+        this.KunLog("ESP Radius: " + value);
+      });
+
+      this.Menu.ConsoleCommandSet.OnClicked.Add(() => {
+        const Command = this.Menu.ConsoleCommandValue.GetText();
+        ModDebuger.ConsoleCommand(Command);
+        this.KunLog("Execute Command: " + Command);
+      });
+
+      this.Menu.MobVacuumCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.MobVacuum = isChecked;
+        this.KunLog("Mob Vacuum: " + isChecked);
+      });
+
+      this.Menu.VacuumCollectCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.VacuumCollect = isChecked;
+        this.KunLog("Vacuum Collect: " + isChecked);
+      });
+
+      this.Menu.WeatherCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.WeatherChanger = isChecked;
+        if (isChecked) {
+          ModMethod_1.ModMethod.ChangWeather(
+            ModManager.Settings.WeatherType + 1
+          ); //Because it starts from 0
+        } else {
+          ModMethod_1.ModMethod.FPSUnlocker(
+            ModManager.Settings.WeatherType + 1
+          );
         }
 
-        this.Menu.AddToViewport();
-        this.Menu.SetVisibility(2);
-        this.isMenuLoaded = true;
-        ModManager.ShowTip("KUN-MOD Menu Loaded!");
-        this.KunLog("KUN-MOD Menu Loaded!");
-        clearInterval(this.loadMenuInterval);
+        this.KunLog("Weather Changer: " + isChecked);
+      });
+
+      this.Menu.FPSUnlockerCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.FPSUnlocker = isChecked;
+        if (isChecked) {
+          ModMethod_1.ModMethod.FPSUnlocker(true);
+        } else {
+          ModMethod_1.ModMethod.FPSUnlocker(false);
+        }
+        this.KunLog("FPS Unlocker: " + isChecked);
+      });
+
+      if (ModManager.Settings.FPSUnlocker) {
+        ModMethod_1.ModMethod.FPSUnlocker(true);
       }
+
+      this.Menu.FPSShowCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.ShowFPS = isChecked;
+        ModMethod_1.ModMethod.ShowFPS();
+        this.KunLog("Show FPS: " + isChecked);
+      });
+
+      if (ModManager.Settings.ShowFPS) {
+        ModMethod_1.ModMethod.ShowFPS();
+      }
+
+      this.Menu.FOVCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.FOV = isChecked;
+        const value = ModManager.Settings.FOVValue;
+        if (isChecked) {
+          ModMethod_1.ModMethod.SetFOV(value);
+        } else {
+          ModMethod_1.ModMethod.SetFOV(60);
+        }
+        this.KunLog("FOV: " + isChecked);
+      });
+
+      if (ModManager.Settings.FOV) {
+        const value = ModManager.Settings.FOVValue;
+        this.Menu.FOVValue.SetText(value);
+        ModMethod_1.ModMethod.SetFOV(value);
+      }
+
+      this.Menu.FOVSlider.OnValueChanged.Add((value) => {
+        value = value.toFixed(0);
+        this.Menu.FOVValue.SetText(value);
+        ModManager.Settings.FOVValue = value;
+        if (ModManager.Settings.FOV) {
+          ModMethod_1.ModMethod.SetFOV(value);
+        }
+        this.KunLog("FOV Value: " + value);
+      });
+
+      this.Menu.NoClipCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.NoClip = isChecked;
+        if (isChecked) {
+          NoClip_1.NoClip.NoClip(true);
+        } else {
+          NoClip_1.NoClip.NoClip(false);
+        }
+        this.KunLog("No Clip: " + isChecked);
+      });
+
+      if (ModManager.Settings.NoClip) {
+        NoClip_1.NoClip.NoClip(true);
+      }
+
+      this.Menu.PlotSkipCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.PlotSkip = isChecked;
+        this.KunLog("Plot Skip: " + isChecked);
+      });
+
+      this.Menu.AutoPuzzleCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.AutoPuzzle = isChecked;
+        this.KunLog("Auto Puzzle: " + isChecked);
+      });
+
+      this.Menu.KillAuraValue.SetSelectedIndex(
+        ModManager.Settings.killAuraState
+      );
+      this.Menu.WeatherValue.SetSelectedIndex(ModManager.Settings.WeatherType);
+      this.Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
+
+      this.Menu.PlayerSpeedSlider.SetValue(ModManager.Settings.playerSpeedValue);
+      this.Menu.HitMultiplierSlider.SetValue(ModManager.Settings.Hitcount);
+      this.Menu.NewKillAuraSlider.SetValue(ModManager.Settings.killAuraRadius);
+      this.Menu.WorldSpeedSlider.SetValue(ModManager.Settings.WorldSpeedValue);
+      this.Menu.ESPRadiusSlider.SetValue(ModManager.Settings.ESPRadius);
+      this.Menu.FOVSlider.SetValue(ModManager.Settings.FOVValue);
+
+      this.Menu.PlayerSpeedValue.SetText(ModManager.Settings.playerSpeedValue);
+      this.Menu.HitMultiplierValue.SetText(ModManager.Settings.Hitcount);
+      this.Menu.NewKillAuraValue.SetText(ModManager.Settings.killAuraRadius);
+      this.Menu.WorldSpeedValue.SetText(ModManager.Settings.WorldSpeedValue);
+      this.Menu.ESPRadiusValue.SetText(ModManager.Settings.ESPRadius);
+      this.Menu.FOVValue.SetText(ModManager.Settings.FOVValue);
+    } catch (e) {
+      this.KunLog(e);
     }
+
+    this.Menu.AddToViewport();
+    this.Menu.SetVisibility(2);
+    ModManager.ShowTip("KUN-MOD Menu Loaded!");
+    this.KunLog("KUN-MOD Menu Loaded!");
   }
 
   static getTranslation() {
