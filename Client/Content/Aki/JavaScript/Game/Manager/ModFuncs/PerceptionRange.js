@@ -6,6 +6,7 @@ const
   Range = 1e50;
 
 const EntityManager = EntityManager_1.EntityManager;
+const { EntityFilter } = require("./EntityFilter");
 
 class PerceptionRange extends EntityManager {
   static SetCollection(entity) {
@@ -21,7 +22,8 @@ class PerceptionRange extends EntityManager {
   }
 
   static SetTreasure(entity) {
-    if (this.isTreasure(entity)) {
+    const BlueprintType = EntityManager_1.EntityManager.GetBlueprintType3(Entity);
+    if (EntityFilter.isneedTreasure(BlueprintType)) {
       PerceptionRange.SetInteractRange(entity, Range * 100);
     }
   }
