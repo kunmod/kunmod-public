@@ -10,7 +10,6 @@ const puerts_1 = require("puerts"),
   AudioDefine_1 = require("../../../Core/Audio/AudioDefine"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Log_1 = require("../../../Core/Common/Log"),
-  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   GameBudgetInterfaceController_1 = require("../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
@@ -25,10 +24,10 @@ const puerts_1 = require("puerts"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  SimpleNpcController_1 = require("../../NewWorld/Character/SimpleNpc/Logics/SimpleNpcController"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   UiManager_1 = require("../../Ui/UiManager"),
   LevelLoadingController_1 = require("../LevelLoading/LevelLoadingController"),
+  PlotCleanRange_1 = require("./PlotCleanRange"),
   PlotController_1 = require("./PlotController"),
   PlotData_1 = require("./PlotData"),
   PlotGlobalConfig_1 = require("./PlotGlobalConfig"),
@@ -49,12 +48,12 @@ const puerts_1 = require("puerts"),
     LevelB: "level_b",
     LevelC: "level_c",
     LevelD: "level_d",
+    Prompt: "level_d",
   };
-  const ModManager_1= require("../../Manager/ModManager");
+const ModManager_1 = require("../../Manager/ModManager");
 class PlotConfig {
   constructor() {
     (this.DisableInput = !1),
-      (this.DisableViewControl = !1),
       (this.CanSkip = !1),
       (this.CanSkipDebug = !1),
       (this.CanInteractive = !1),
@@ -68,6 +67,7 @@ class PlotConfig {
       (this.SkipTalkWhenFighting = !1),
       (this.SkipHiddenBlackScreenAtEnd = !1),
       (this.IsGmPlayPlotOnce = !1),
+      (this.IsPreStreaming = !1),
       (this.IsSkipConfirmBoxShow = !0);
   }
   SetMode(t, e = !1) {
@@ -82,12 +82,12 @@ class PlotConfig {
           (this.CanInteractive = !1),
           (this.CanSkip = (CAN_SKIP && !t.NoSkip) || this.CanSkipDebug),
           (this.DisableInput = !0),
-          (this.DisableViewControl = !0),
           (this.CanPause = !1),
           (this.PlotLevel = "LevelA"),
           (this.IsAutoPlay = !0),
           (this.ShouldSwitchMainRole = !1),
           (this.PauseTime = !0),
+          (this.SkipTalkWhenFighting = !1),
           PlotController_1.PlotController.TogglePlotProtect(!0);
         break;
       case "LevelB":
@@ -95,12 +95,12 @@ class PlotConfig {
           (this.CanInteractive = !0),
           (this.CanSkip = (CAN_SKIP && !t.NoSkip) || this.CanSkipDebug),
           (this.DisableInput = !0),
-          (this.DisableViewControl = !0),
           (this.CanPause = !0),
           (this.IsAutoPlay = this.IsAutoPlayCache),
           (this.PlotLevel = "LevelB"),
           (this.ShouldSwitchMainRole = !1),
           (this.PauseTime = !0),
+          (this.SkipTalkWhenFighting = !1),
           PlotController_1.PlotController.TogglePlotProtect(!0);
         break;
       case "LevelC":
@@ -110,12 +110,12 @@ class PlotConfig {
           (this.CanInteractive = !0),
           (this.CanSkip = (CAN_SKIP && !t.NoSkip) || this.CanSkipDebug),
           (this.DisableInput = !0),
-          (this.DisableViewControl = !1),
           (this.CanPause = !e),
           (this.IsAutoPlay = this.IsAutoPlayCache),
           (this.PlotLevel = "LevelC"),
           (this.ShouldSwitchMainRole = t.IsSwitchMainRole),
           (this.PauseTime = !e),
+          (this.SkipTalkWhenFighting = !1),
           PlotController_1.PlotController.TogglePlotProtect(!0);
         break;
       case "LevelD":
@@ -123,11 +123,22 @@ class PlotConfig {
           (this.CanInteractive = !1),
           (this.CanSkip = !1),
           (this.DisableInput = !1),
-          (this.DisableViewControl = !1),
           (this.CanPause = !1),
           (this.IsAutoPlay = !0),
           (this.ShouldSwitchMainRole = !1),
           (this.PlotLevel = "LevelD"),
+          (this.PauseTime = !1),
+          (this.SkipTalkWhenFighting = t.Interruptible),
+          (this.SkipHiddenBlackScreenAtEnd = !0);
+        break;
+      case "Prompt":
+        (this.CameraMode = 1),
+          (this.CanInteractive = !1),
+          (this.CanSkip = !1),
+          (this.DisableInput = !1),
+          (this.CanPause = !1),
+          (this.IsAutoPlay = this.IsAutoPlayCache),
+          (this.PlotLevel = "Prompt"),
           (this.PauseTime = !1),
           (this.SkipTalkWhenFighting = t.Interruptible),
           (this.SkipHiddenBlackScreenAtEnd = !0);
@@ -149,30 +160,26 @@ class PlotModel extends ModelBase_1.ModelBase {
       (this.PlotConfig = new PlotConfig()),
       (this.PlotResult = new PlotData_1.PlotResultInfo()),
       (this.TmpPlotResult = new PlotData_1.PlotResultInfo()),
-      (this.ZQi = void 0),
+      (this.N$i = void 0),
       (this.PlotPendingList = new Array()),
       (this.GrayOptionMap = new Map()),
       (this.CurContext = void 0),
-      (this.e$i = !1),
-      (this.t$i = void 0),
-      (this.i$i = void 0),
-      (this.r$i = void 0),
-      (this.o$i = void 0),
-      (this.ExclusivePlayerEntityInst = void 0),
-      (this.CachedPreSequenceFormationPosition = 0),
+      (this.O$i = !1),
+      (this.k$i = void 0),
+      (this.jZ = void 0),
+      (this.WZ = void 0),
+      (this.F$i = void 0),
       (this.PlotTemplate = new PlotTemplate_1.PlotTemplate()),
       (this.KeepBgAudio = !1),
-      (this.n$i = !1),
+      (this.V$i = !1),
       (this.CenterText = new PlotData_1.PlotCenterText()),
-      (this.s$i = !1),
+      (this.H$i = !1),
       (this.PlotGlobalConfig = new PlotGlobalConfig_1.PlotGlobalConfig()),
       (this.PlotTextReplacer = new PlotTextReplacer_1.PlotTextReplacer()),
       (this.PlotWeather = new PlotWeather_1.PlotWeather()),
       (this.PlotTimeOfDay = new PlotTimeOfDay_1.PlotTimeOfDay()),
-      (this.a$i = !1),
-      (this.DisableId = 0),
+      (this.PlotCleanRange = new PlotCleanRange_1.PlotCleanRange()),
       (this.InteractController = void 0),
-      (this.IsClientChangeRole = !1),
       (this.IsGmCanSkip = !1),
       (this.IsMuteAllPlot = !1),
       (this.IsChangeLevelCToLevelB = !1),
@@ -184,11 +191,11 @@ class PlotModel extends ModelBase_1.ModelBase {
       (this.HasSetRender = !1),
       (this.HasSetGameBudget = !1),
       (this.CurTalkItem = void 0),
-      (this.NeedHideVision = !1),
-      (this.HandleRemoveArray = new Array()),
+      (this.CurShowTalk = void 0),
       (this.GoBattleMaterial = void 0),
-      (this.FormationPromise = void 0),
       (this.InSeamlessFormation = !1),
+      (this.IsTipsViewShowed = !1),
+      (this.OptionEnable = !1),
       (this.OnShowCenterTextFinished = () => {
         (this.PlayFlow = void 0),
           ModelManager_1.ModelManager.TeleportModel.CgTeleportCompleted &&
@@ -205,43 +212,38 @@ class PlotModel extends ModelBase_1.ModelBase {
   }
   OnInit() {
     (this.PlotConfig.IsAutoPlay = !0),
-    (this.IsInPlot = !1),
-    (this.IsInInteraction = !1),
-    (this.IsBackInteractionAfterFlow = !1),
-    (this.n$i = !1),
-    (this.ExclusivePlayerEntityInst = void 0),
-    (this.CachedPreSequenceFormationPosition = -1),
-    (this.PlotGlobalConfig.Init()),
-    (this.PlotWeather.Init());
-    if(ModManager_1.ModManager.Settings.PlotSkip)
-      {
-        (this.CanSkip = 1),//add
-        (this.CanSkipDebug = 1),////add
+      (this.IsInPlot = !1),
+      (this.IsInInteraction = !1),
+      (this.IsBackInteractionAfterFlow = !1),
+      (this.V$i = !1),
+      this.PlotGlobalConfig.Init(),
+      this.PlotWeather.Init();
+    if (ModManager_1.ModManager.Settings.PlotSkip) {
+      (this.CanSkip = 1), 
+        (this.CanSkipDebug = 1), 
         (this.SkipTalkWhenFighting = 1),
         (this.IsAutoPlay = 1);
-      }
+    }
 
-    return (
-      !0
-    );
+    return !0;
   }
   OnClear() {
-    return (
-      this.PlotTextReplacer.Clear(),
-      this.PlotWeather.Clear(),
-      !(this.FormationPromise = void 0)
-    );
+    return this.PlotTextReplacer.Clear(), this.PlotWeather.Clear(), !0;
   }
   CheckCanPlayNow(t) {
     if (t.StateActions) {
       if (!this.IsInPlot) return !0;
       this.PendingPlot(t),
-        "LevelD" === this.PlotConfig.PlotLevel &&
+        ("LevelD" === this.PlotConfig.PlotLevel ||
+          ("Prompt" === this.PlotConfig.PlotLevel &&
+            "LevelD" !== t.PlotLevel &&
+            "Prompt" !== t.PlotLevel)) &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Plot",
               27,
-              "打断当前D级剧情",
+              "打断当前DE级剧情",
+              ["Level", this.PlotConfig.PlotLevel],
               ["FlowIncId", this.PlotResult.FlowIncId],
               ["FlowListName", this.PlotResult.FlowListName],
               ["FlowId", this.PlotResult.FlowId],
@@ -266,7 +268,11 @@ class PlotModel extends ModelBase_1.ModelBase {
     return !1;
   }
   IsInHighLevelPlot() {
-    return this.IsInPlot && "LevelD" !== this.PlotConfig.PlotLevel;
+    return (
+      this.IsInPlot &&
+      "LevelD" !== this.PlotConfig.PlotLevel &&
+      "Prompt" !== this.PlotConfig.PlotLevel
+    );
   }
   IsInSequencePlot() {
     return (
@@ -275,46 +281,67 @@ class PlotModel extends ModelBase_1.ModelBase {
         "LevelB" === this.PlotConfig.PlotLevel)
     );
   }
-  PendingPlot(t) {
-    var e = this.PlotPendingList.length - 1;
-    0 <= e &&
-      "LevelD" === (e = this.PlotPendingList[e])?.PlotLevel &&
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Plot",
-          27,
-          "缓存队列中的D级剧情被中断/后台播放",
-          ["FlowIncId", e.FlowIncId],
-          ["FlowListName", e.FlowListName],
-          ["FlowId", e.FlowId],
-          ["PlotState", e.StateId],
-          ["IsServer", e.IsServerNotify]
-        ),
-      e.IsServerNotify ? (e.IsBackground = !0) : this.PlotPendingList.pop()),
-      this.PlotPendingList.push(t),
+  PendingPlot(e) {
+    for (let t = this.PlotPendingList.length - 1; 0 <= t; t--) {
+      var i = this.PlotPendingList[t];
+      if ("LevelD" === i.PlotLevel)
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Plot",
+            27,
+            "缓存队列中的D级剧情被中断/后台播放",
+            ["FlowIncId", i.FlowIncId],
+            ["FlowListName", i.FlowListName],
+            ["FlowId", i.FlowId],
+            ["PlotState", i.StateId],
+            ["IsServer", i.IsServerNotify]
+          );
+      else {
+        if (
+          "Prompt" !== i.PlotLevel ||
+          ("LevelA" !== e.PlotLevel &&
+            "LevelB" !== e.PlotLevel &&
+            "LevelC" !== e.PlotLevel)
+        )
+          break;
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Plot",
+            27,
+            "缓存队列中的E级剧情被中断/后台播放",
+            ["FlowIncId", i.FlowIncId],
+            ["FlowListName", i.FlowListName],
+            ["FlowId", i.FlowId],
+            ["PlotState", i.StateId],
+            ["IsServer", i.IsServerNotify]
+          );
+      }
+      i.IsServerNotify ? (i.IsBackground = !0) : this.PlotPendingList.pop();
+    }
+    this.PlotPendingList.push(e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Plot",
           27,
           "剧情被缓存",
-          ["FlowIncId", t.FlowIncId],
-          ["FlowListName", t.FlowListName],
-          ["FlowId", t.FlowId],
-          ["PlotState", t.StateId]
+          ["FlowIncId", e.FlowIncId],
+          ["FlowListName", e.FlowListName],
+          ["FlowId", e.FlowId],
+          ["PlotState", e.StateId]
         );
   }
   SetPendingPlotState(t, e, i, o) {
-    for (const l of this.PlotPendingList)
-      if (l.FlowIncId === t)
+    for (const s of this.PlotPendingList)
+      if (s.FlowIncId === t)
         return (
-          (l.IsBackground = i), (l.IsBreakdown = e), (l.IsServerEnd = o), !0
+          (s.IsBackground = i), (s.IsBreakdown = e), (s.IsServerEnd = o), !0
         );
     return !1;
   }
   CenterTextTransition(t, e) {
-    this.s$i === t
+    this.H$i === t
       ? e && e()
-      : (this.s$i = t)
+      : (this.H$i = t)
       ? LevelLoadingController_1.LevelLoadingController.OpenLoading(
           11,
           3,
@@ -370,18 +397,18 @@ class PlotModel extends ModelBase_1.ModelBase {
       PlotController_1.PlotController.HandleShowCenterText(!1));
   }
   ApplyPlotConfig(t = !1) {
-    this.h$i(),
-      this.l$i(),
-      this._$i(t),
-      this.u$i(),
-      this.c$i(),
-      this.m$i(),
-      this.d$i(),
+    this.W$i(),
+      this.K$i(),
+      this.Q$i(t),
+      this.X$i(),
+      this.$$i(),
+      this.Y$i(),
+      this.J$i(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.PlotConfigChanged
       );
   }
-  m$i() {
+  Y$i() {
     "LevelC" === this.PlotConfig.PlotLevel
       ? this.SetRender(!0)
       : this.SetRender(!1);
@@ -396,7 +423,7 @@ class PlotModel extends ModelBase_1.ModelBase {
             .GetCurrentQualityInfo()
             .CancleSequenceFrameRateLimit());
   }
-  d$i() {
+  J$i() {
     "LevelD" !== this.PlotConfig.PlotLevel && this.SetInPlotGameBudget(!0);
   }
   SetInPlotGameBudget(t) {
@@ -406,7 +433,7 @@ class PlotModel extends ModelBase_1.ModelBase {
         t
       ));
   }
-  l$i() {
+  K$i() {
     this.PlotTimeOfDay.OnPlotStart(this.PlotConfig.PauseTime);
   }
   IsInTemplate() {
@@ -423,7 +450,7 @@ class PlotModel extends ModelBase_1.ModelBase {
           ["FlowId", this.PlotResult.FlowId],
           ["PlotState", this.PlotResult.StateId]
         ),
-      this.PlotTemplate.EndTemplateNew().finally(void 0));
+      this.PlotTemplate.EndTemplateNew());
   }
   SetTemplatePlayerTransform(t) {
     this.PlotTemplate.IsInTemplate &&
@@ -444,9 +471,9 @@ class PlotModel extends ModelBase_1.ModelBase {
   PlayCameraAnim(t) {
     this.PlotTemplate.IsInTemplate &&
       3 === this.PlotConfig.CameraMode &&
-      this.PlotTemplate.PlayCameraAnim(t);
+      this.PlotTemplate.PlayCameraAnimCompatible(t);
   }
-  h$i() {
+  W$i() {
     var t;
     "LevelD" !== this.PlotConfig.PlotLevel &&
       Global_1.Global.BaseCharacter &&
@@ -456,13 +483,13 @@ class PlotModel extends ModelBase_1.ModelBase {
         ))?.Valid &&
       t.StopAllSkills("PlotModel.StopMainCharacterSkill");
   }
-  u$i() {
+  X$i() {
     InputDistributeController_1.InputDistributeController.RefreshInputTag();
   }
   SwitchCameraMode(t) {
-    (this.PlotConfig.CameraMode = t), this._$i();
+    (this.PlotConfig.CameraMode = t), this.Q$i();
   }
-  _$i(t = !1) {
+  Q$i(t = !1) {
     if (GlobalData_1.GlobalData.World)
       switch (this.PlotConfig.CameraMode) {
         case 0:
@@ -487,10 +514,10 @@ class PlotModel extends ModelBase_1.ModelBase {
             CameraController_1.CameraController.EnterCameraMode(1, 0, 0, 0);
       }
   }
-  c$i() {
+  $$i() {
     "LevelD" === this.PlotConfig.PlotLevel
       ? this.ResetAudioState()
-      : ((this.n$i = !0),
+      : ((this.V$i = !0),
         AudioSystem_1.AudioSystem.SetState(
           AudioDefine_1.STATEGROUP,
           AudioDefine_1.STATEINCUTSCENE
@@ -502,8 +529,8 @@ class PlotModel extends ModelBase_1.ModelBase {
         );
   }
   ResetAudioState() {
-    this.n$i &&
-      ((this.n$i = !1),
+    this.V$i &&
+      ((this.V$i = !1),
       AudioSystem_1.AudioSystem.SetState(
         AudioDefine_1.STATEGROUP,
         AudioDefine_1.STATENORMAL
@@ -512,7 +539,7 @@ class PlotModel extends ModelBase_1.ModelBase {
         AUDIO_STATE_PLOT_LEVEL_GROUP,
         AUDIO_STATE_NOT_PLOT
       ),
-      AudioSystem_1.AudioSystem.PostEvent(PLOT_END_AUDIO_EVENT).finally(void 0);
+      AudioSystem_1.AudioSystem.PostEvent(PLOT_END_AUDIO_EVENT);
   }
   MarkGrayOption(t, e) {
     this.GrayOptionMap.has(t) || this.GrayOptionMap.set(t, new Set());
@@ -525,32 +552,36 @@ class PlotModel extends ModelBase_1.ModelBase {
   CheckOptionCondition(t, e) {
     if (!t.PreCondition) return !0;
     let i = !1;
-    return (i = "PreOption" === t.PreCondition.Type ? this.C$i(t, e) : i);
+    return (i = "PreOption" === t.PreCondition.Type ? this.z$i(t, e) : i);
   }
-  C$i(t, e) {
+  z$i(t, e) {
     let i = !0;
-    for (const l of t.PreCondition.PreOptions) {
+    for (const s of t.PreCondition.PreOptions) {
       var o = this.GrayOptionMap.get(e.Id);
-      i = i && !!o && o.has(l);
+      i = i && !!o && o.has(s);
     }
     return i;
   }
-  GetOptionIndex(t) {
-    return this.CurTalkItem?.Options?.indexOf(t) ?? -1;
+  GetOptionIndex(t, e) {
+    return (
+      this.CurShowTalk?.TalkItems.find((t) => t.Id === e)?.Options?.indexOf(
+        t
+      ) ?? -1
+    );
   }
   SaveCharacterLockOn() {
     var t;
-    this.g$i() &&
+    this.Z$i() &&
       ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       EntitySystem_1.EntitySystem.Get(t)
-        ?.GetComponent(184)
-        ?.ContainsTagById(-1150819426)) &&
-      (this.e$i = !0);
+        ?.GetComponent(185)
+        ?.HasTag(-1150819426)) &&
+      (this.O$i = !0);
   }
   RevertCharacterLockOn() {
-    this.e$i && ((this.e$i = !1), this.g$i()?.EnterLockDirection(!0));
+    this.O$i && ((this.O$i = !1), this.Z$i()?.EnterLockDirection());
   }
-  g$i() {
+  Z$i() {
     var t = Global_1.Global.BaseCharacter?.GetEntityIdNoBlueprint();
     if (t) {
       t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(29);
@@ -561,48 +592,15 @@ class PlotModel extends ModelBase_1.ModelBase {
     this.CurContext?.Release(), (this.CurContext = void 0);
   }
   HandlePlayMontage(t) {
-    this.ZQi || (this.ZQi = new PlotMontage_1.PlotMontage()),
-      this.ZQi.StopAllMontage(!1),
-      this.ZQi.StartPlayMontage(t);
+    this.N$i || (this.N$i = new PlotMontage_1.PlotMontage()),
+      this.N$i.StopAllMontage(!1),
+      this.N$i.StartPlayMontage(t);
   }
   FinishMontage() {
-    this.ZQi && this.ZQi.StopAllMontage();
-  }
-  OpenPlotCleaning(t) {
-    (this.a$i = t) &&
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "演出清理SimpleNPC"),
-      SimpleNpcController_1.SimpleNpcController.SetClearOutState(0, !0));
-    for (
-      t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
-      0 < this.HandleRemoveArray.length;
-
-    )
-      this.HandleRemoveArray.pop();
-    for (const i of t) {
-      var e = i.Entity.GetComponent(0);
-      e.GetEntityConfigType() ===
-        Protocol_1.Aki.Protocol.EntityConfigType.Template &&
-        14000056 === e?.GetPbDataId() &&
-        (this.HandleRemoveArray.push(i),
-        ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-          i.Entity,
-          !1,
-          "FlowActionHideByRangeInFlow",
-          !0
-        ));
-    }
-    0 < this.HandleRemoveArray.length && (this.NeedHideVision = !0);
-  }
-  ClosePlotCleaning() {
-    this.a$i &&
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "演出恢复SimpleNPC"),
-      SimpleNpcController_1.SimpleNpcController.SetClearOutState(0, !1),
-      (this.a$i = !1));
+    this.N$i && this.N$i.StopAllMontage();
   }
   InitPlotTemplate() {
-    this.t$i = new Map();
+    this.k$i = new Map();
     let t = (0, PublicUtil_1.getConfigPath)(
       IGlobal_1.globalConfig.FlowTemplateCameraConfigPath
     );
@@ -615,10 +613,10 @@ class PlotModel extends ModelBase_1.ModelBase {
       (UE.KuroStaticLibrary.LoadFileToString(e, t),
       (e = (0, puerts_1.$unref)(e)))
     )
-      for (const i of JSON.parse(e).List) this.t$i.set(i.Id, i);
+      for (const i of JSON.parse(e).List) this.k$i.set(i.Id, i);
   }
   InitMontageConfig() {
-    this.i$i = new Map();
+    this.jZ = new Map();
     let t = (0, PublicUtil_1.getConfigPath)(
       IGlobal_1.globalConfig.MontageConfigPath
     );
@@ -631,11 +629,11 @@ class PlotModel extends ModelBase_1.ModelBase {
       (UE.KuroStaticLibrary.LoadFileToString(e, t),
       (e = (0, puerts_1.$unref)(e)))
     )
-      for (const i of JSON.parse(e).Montages) this.i$i.set(i.Id, i);
+      for (const i of JSON.parse(e).Montages) this.jZ.set(i.Id, i);
   }
   GetMontageConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      if ((this.i$i || (this.i$i = new Map()), !this.i$i.get(t))) {
+      if ((this.jZ || (this.jZ = new Map()), !this.jZ.get(t))) {
         var e =
           ConfigManager_1.ConfigManager.PlotMontageConfig.GetPlotMontageConfig(
             t
@@ -647,13 +645,13 @@ class PlotModel extends ModelBase_1.ModelBase {
           ExpressionMontage: e.ExpressionMontage,
           MouthSequence: e.MouthSequence,
         };
-        this.i$i.set(t, e);
+        this.jZ.set(t, e);
       }
-    } else this.i$i || this.InitMontageConfig();
-    return this.i$i.get(t);
+    } else this.jZ || this.InitMontageConfig();
+    return this.jZ.get(t);
   }
-  f$i() {
-    this.r$i = new Map();
+  QZ() {
+    this.WZ = new Map();
     let t = (0, PublicUtil_1.getConfigPath)(
       IGlobal_1.globalConfig.AbpMontageConfigPath
     );
@@ -666,11 +664,11 @@ class PlotModel extends ModelBase_1.ModelBase {
       (UE.KuroStaticLibrary.LoadFileToString(e, t),
       (e = (0, puerts_1.$unref)(e)))
     )
-      for (const i of JSON.parse(e).Montages) this.r$i.set(i.Id, i);
+      for (const i of JSON.parse(e).Montages) this.WZ.set(i.Id, i);
   }
   GetAbpMontageConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      if ((this.r$i || (this.r$i = new Map()), !this.r$i.get(t))) {
+      if ((this.WZ || (this.WZ = new Map()), !this.WZ.get(t))) {
         var e =
           ConfigManager_1.ConfigManager.PlotMontageConfig.GetPlotAbpMontageConfig(
             t
@@ -682,13 +680,13 @@ class PlotModel extends ModelBase_1.ModelBase {
           ExpressionMontage: "",
           MouthSequence: "",
         };
-        this.r$i.set(t, e);
+        this.WZ.set(t, e);
       }
-    } else this.r$i || this.f$i();
-    return this.r$i.get(t);
+    } else this.WZ || this.QZ();
+    return this.WZ.get(t);
   }
-  p$i() {
-    this.o$i = new Map();
+  eYi() {
+    this.F$i = new Map();
     let t = (0, PublicUtil_1.getConfigPath)(
       IGlobal_1.globalConfig.AbpOverlayMontageConfigPath
     );
@@ -701,11 +699,11 @@ class PlotModel extends ModelBase_1.ModelBase {
       (UE.KuroStaticLibrary.LoadFileToString(e, t),
       (e = (0, puerts_1.$unref)(e)))
     )
-      for (const i of JSON.parse(e).Montages) this.o$i.set(i.Id, i);
+      for (const i of JSON.parse(e).Montages) this.F$i.set(i.Id, i);
   }
   GetOverlayAbpMontageConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      if ((this.o$i || (this.o$i = new Map()), !this.o$i.get(t))) {
+      if ((this.F$i || (this.F$i = new Map()), !this.F$i.get(t))) {
         var e =
           ConfigManager_1.ConfigManager.PlotMontageConfig.GetOverlayAbpMontageConfig(
             t
@@ -717,14 +715,14 @@ class PlotModel extends ModelBase_1.ModelBase {
           ExpressionMontage: "",
           MouthSequence: "",
         };
-        this.o$i.set(t, e);
+        this.F$i.set(t, e);
       }
-    } else this.o$i || this.p$i();
-    return this.o$i.get(t);
+    } else this.F$i || this.eYi();
+    return this.F$i.get(t);
   }
   GetPlotTemplateConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      if ((this.t$i || (this.t$i = new Map()), !this.t$i.get(t))) {
+      if ((this.k$i || (this.k$i = new Map()), !this.k$i.get(t))) {
         var e =
           ConfigManager_1.ConfigManager.CameraTemplateConfig.GetCameraTemplateConfig(
             t
@@ -740,10 +738,10 @@ class PlotModel extends ModelBase_1.ModelBase {
           ActorDataArray: JSON.parse(e.ActorDataArray),
           CameraData: JSON.parse(e.CameraData),
         };
-        this.t$i.set(t, e);
+        this.k$i.set(t, e);
       }
-    } else this.t$i || this.InitPlotTemplate();
-    return this.t$i.get(t);
+    } else this.k$i || this.InitPlotTemplate();
+    return this.k$i.get(t);
   }
 }
 exports.PlotModel = PlotModel;

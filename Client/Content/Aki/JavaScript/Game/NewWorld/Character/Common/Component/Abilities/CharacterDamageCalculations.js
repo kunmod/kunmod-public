@@ -1,7 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: !0,
-}),
+Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Calculation = exports.ENERGY_SHARE_RATE = void 0);
 const Log_1 = require("../../../../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById"),
@@ -25,10 +23,9 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   REACTION_LIMIT_CONSTANT = 3e3,
   REACTION_EXTRACT_CONSTANT = 8,
   REACTION_LOWER_BOUND_CONSTANT = 1830,
-  ModManager_1 = require("../../../../../../Game/Manager/ModManager"),//add my code
   DAMAGE_FALLING_10000 = 1e4;
 function getAttrFromSnapshots(t, e, r) {
-  return r < CharacterAttributeTypes_1.EAttributeId.Lv ||
+  return r < CharacterAttributeTypes_1.EAttributeId.Proto_Lv ||
     r >= CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX
     ? 0
     : (0 !== e ? t.TargetSnapshot : t.AttackerSnapshot).GetCurrentValue(r);
@@ -44,10 +41,10 @@ const formulas = {
         N(T, c) * n;
     return 1 === e
       ? ((h =
-          t.TargetSnapshot.CurrentValues.HealedChange *
+          t.TargetSnapshot.CurrentValues.Proto_HealedChange *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
         (b =
-          t.AttackerSnapshot.CurrentValues.HealChange *
+          t.AttackerSnapshot.CurrentValues.Proto_HealChange *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
         Math.max(C * (1 + h + b), 0))
       : ((o = Calculation.CalculateHurt(
@@ -69,8 +66,8 @@ const formulas = {
         (C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
       n;
     return 1 === e
-      ? -Math.min(t.TargetSnapshot.CurrentValues.Life - T, 0)
-      : Math.max(t.TargetSnapshot.CurrentValues.Life - T, 0);
+      ? -Math.min(t.TargetSnapshot.CurrentValues.Proto_Life - T, 0)
+      : Math.max(t.TargetSnapshot.CurrentValues.Proto_Life - T, 0);
   },
   3: function (t, e, r, a, A, s, i, _, u, c, T, C, n) {
     return (
@@ -91,7 +88,7 @@ const formulas = {
   },
   5: function (t, e, r, a, A, s, i, _, u, c, T) {
     return (
-      (t.TargetSnapshot.CurrentValues.LifeMax *
+      (t.TargetSnapshot.CurrentValues.Tkn *
         (c * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND)) /
         u +
       T
@@ -110,8 +107,8 @@ const formulas = {
         (C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
       n),
       (c =
-        t.TargetSnapshot.CurrentValues.Life -
-        (t.TargetSnapshot.CurrentValues.LifeMax *
+        t.TargetSnapshot.CurrentValues.Proto_Life -
+        (t.TargetSnapshot.CurrentValues.Tkn *
           h *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
           b));
@@ -121,7 +118,7 @@ const formulas = {
     var r = r.Element,
       l = t.AttackerSnapshot,
       t = t.TargetSnapshot,
-      y = l.CurrentValues.Lv;
+      y = l.CurrentValues.Proto_Lv;
     let o = 0;
     switch (r) {
       case 1:
@@ -171,21 +168,21 @@ const formulas = {
         : N - r < DAMAGE_CONSTANT5
         ? 1 - (N - r)
         : 1 / (1 + (N - r) * DAMAGE_CONSTANT6);
-    (N = t.CurrentValues.Def),
+    (N = t.CurrentValues.Proto_Def),
       (r =
-        l.CurrentValues.IgnoreDefRate *
+        l.CurrentValues.Proto_IgnoreDefRate *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
       (N = Math.min(
         DAMAGE_CONSTANT1,
         1 / ((N * (1 - r)) / (DAMAGE_CONSTANT2 + y * DAMAGE_CONSTANT3) + 1)
       )),
       (r = Math.min(
-        t.CurrentValues.DamageReduce *
+        t.CurrentValues.Proto_DamageReduce *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
         1
       )),
       (t = Math.max(
-        l.CurrentValues.SpecialDamageChange *
+        l.CurrentValues.Proto_SpecialDamageChange *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
         -1
       ));
@@ -210,34 +207,34 @@ class Calculation {
         : 1 / (1 + (h - b) * DAMAGE_CONSTANT6);
     (h = this.GetAttackTypeDamageBonus(c, r)),
       (b = getAttrFromSnapshots(t, 0, a)),
-      (r = T.CurrentValues.Def),
+      (r = T.CurrentValues.Proto_Def),
       (t =
-        c.CurrentValues.IgnoreDefRate *
+        c.CurrentValues.Proto_IgnoreDefRate *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
-      (a = c.CurrentValues.Lv),
+      (a = c.CurrentValues.Proto_Lv),
       (r = Math.min(
         DAMAGE_CONSTANT1,
         1 / ((r * (1 - t)) / (DAMAGE_CONSTANT2 + a * DAMAGE_CONSTANT3) + 1)
       )),
       (t =
         1 +
-        c.CurrentValues.DamageChange *
+        c.CurrentValues.Proto_DamageChange *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
         C +
         h),
-      (a = T.CurrentValues.ElementPropertyType),
+      (a = T.CurrentValues.Proto_ElementPropertyType),
       (C = Math.min(
-        T.CurrentValues.DamageReduce *
+        T.CurrentValues.Proto_DamageReduce *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
         1
       )),
       (h =
         1 +
-        c.CurrentValues.SpecialDamageChange *
+        c.CurrentValues.Proto_SpecialDamageChange *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
       (T = Calculation.CalculateElementMatchUpRate(e, a)),
       (e =
-        c.CurrentValues.CritDamage *
+        c.CurrentValues.Proto_CritDamage *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
       (a =
         (A * b + i + u) *
@@ -251,43 +248,42 @@ class Calculation {
         T *
         Math.max(1 + _ * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND, 0));
     return Math.max(0, a);
-
   }
   static GetElementResistant(t, e) {
     switch (e) {
       case 0:
         return (
-          t.CurrentValues.DamageResistancePhys *
+          t.CurrentValues.Proto_DamageResistancePhys *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 1:
         return (
-          t.CurrentValues.DamageResistanceElement1 *
+          t.CurrentValues.Proto_DamageResistanceElement1 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 2:
         return (
-          t.CurrentValues.DamageResistanceElement2 *
+          t.CurrentValues.Proto_DamageResistanceElement2 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 3:
         return (
-          t.CurrentValues.DamageResistanceElement3 *
+          t.CurrentValues.Proto_DamageResistanceElement3 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 4:
         return (
-          t.CurrentValues.DamageResistanceElement4 *
+          t.CurrentValues.Proto_DamageResistanceElement4 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 5:
         return (
-          t.CurrentValues.DamageResistanceElement5 *
+          t.CurrentValues.Proto_DamageResistanceElement5 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 6:
         return (
-          t.CurrentValues.DamageResistanceElement6 *
+          t.CurrentValues.Proto_DamageResistanceElement6 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       default:
@@ -299,37 +295,37 @@ class Calculation {
     switch (e) {
       case 0:
         return (
-          t.CurrentValues.IgnoreDamageResistancePhys *
+          t.CurrentValues.Proto_IgnoreDamageResistancePhys *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 1:
         return (
-          t.CurrentValues.IgnoreDamageResistanceElement1 *
+          t.CurrentValues.Proto_IgnoreDamageResistanceElement1 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 2:
         return (
-          t.CurrentValues.IgnoreDamageResistanceElement2 *
+          t.CurrentValues.Proto_IgnoreDamageResistanceElement2 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 3:
         return (
-          t.CurrentValues.IgnoreDamageResistanceElement3 *
+          t.CurrentValues.Proto_IgnoreDamageResistanceElement3 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 4:
         return (
-          t.CurrentValues.IgnoreDamageResistanceElement4 *
+          t.CurrentValues.Proto_IgnoreDamageResistanceElement4 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 5:
         return (
-          t.CurrentValues.IgnoreDamageResistanceElement5 *
+          t.CurrentValues.Proto_IgnoreDamageResistanceElement5 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 6:
         return (
-          t.CurrentValues.IgnoreDamageResistanceElement6 *
+          t.CurrentValues.Proto_IgnoreDamageResistanceElement6 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       default:
@@ -341,37 +337,37 @@ class Calculation {
     switch (e) {
       case 0:
         return (
-          t.CurrentValues.DamageReducePhys *
+          t.CurrentValues.Proto_DamageReducePhys *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 1:
         return (
-          t.CurrentValues.DamageReduceElement1 *
+          t.CurrentValues.Proto_DamageReduceElement1 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 2:
         return (
-          t.CurrentValues.DamageReduceElement2 *
+          t.CurrentValues.Proto_DamageReduceElement2 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 3:
         return (
-          t.CurrentValues.DamageReduceElement3 *
+          t.CurrentValues.Proto_DamageReduceElement3 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 4:
         return (
-          t.CurrentValues.DamageReduceElement4 *
+          t.CurrentValues.Proto_DamageReduceElement4 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 5:
         return (
-          t.CurrentValues.DamageReduceElement5 *
+          t.CurrentValues.Proto_DamageReduceElement5 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 6:
         return (
-          t.CurrentValues.DamageReduceElement6 *
+          t.CurrentValues.Proto_DamageReduceElement6 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       default:
@@ -383,37 +379,37 @@ class Calculation {
     switch (e) {
       case 0:
         return (
-          t.CurrentValues.DamageChangePhys *
+          t.CurrentValues.Proto_DamageChangePhys *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 1:
         return (
-          t.CurrentValues.DamageChangeElement1 *
+          t.CurrentValues.Proto_DamageChangeElement1 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 2:
         return (
-          t.CurrentValues.DamageChangeElement2 *
+          t.CurrentValues.Proto_DamageChangeElement2 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 3:
         return (
-          t.CurrentValues.DamageChangeElement3 *
+          t.CurrentValues.Proto_DamageChangeElement3 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 4:
         return (
-          t.CurrentValues.DamageChangeElement4 *
+          t.CurrentValues.Proto_DamageChangeElement4 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 5:
         return (
-          t.CurrentValues.DamageChangeElement5 *
+          t.CurrentValues.Proto_DamageChangeElement5 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 6:
         return (
-          t.CurrentValues.DamageChangeElement6 *
+          t.CurrentValues.Proto_DamageChangeElement6 *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       default:
@@ -425,56 +421,56 @@ class Calculation {
     switch (e) {
       case 0:
         return (
-          t.CurrentValues.DamageChangeAuto *
+          t.CurrentValues.Proto_DamageChangeAuto *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 1:
         return (
-          t.CurrentValues.DamageChangeCast *
+          t.CurrentValues.Proto_DamageChangeCast *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 2:
         return (
-          t.CurrentValues.DamageChangeUltra *
+          t.CurrentValues.Proto_DamageChangeUltra *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 3:
         return (
-          t.CurrentValues.DamageChangeQte *
+          t.CurrentValues.Proto_DamageChangeQte *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 4:
         return (
-          t.CurrentValues.DamageChangeNormalSkill *
+          t.CurrentValues.Proto_DamageChangeNormalSkill *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
       case 5:
         return (
-          t.CurrentValues.DamageChangePhantom *
+          t.CurrentValues.Proto_DamageChangePhantom *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND
         );
     }
     return 0;
   }
-  static mjr(t, e, r, a) {
+  static LKo(t, e, r, a) {
     var r = getAttrFromSnapshots(t, 0, r),
       a = a * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       A =
-        t.TargetSnapshot.CurrentValues.HealedChange *
+        t.TargetSnapshot.CurrentValues.Proto_HealedChange *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       t =
-        t.AttackerSnapshot.CurrentValues.HealChange *
+        t.AttackerSnapshot.CurrentValues.Proto_HealChange *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
     return Math.max(0, (a * r + e) * (A + t + 1));
   }
   static ToughCalculation(t, e, r) {
     return (
       r *
-      (t.CurrentValues.ToughChange *
+      (t.CurrentValues.Proto_ToughChange *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) *
-      (e.CurrentValues.ToughReduce *
+      (e.CurrentValues.Proto_ToughReduce *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) *
-      (e.CurrentValues.SkillToughRatio *
+      (e.CurrentValues.Proto_SkillToughRatio *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND)
     );
   }
@@ -489,15 +485,28 @@ class Calculation {
       i = Math.pow(r, i) * _,
       _ = s + i,
       u = Math.floor(_ * a);
-      if(ModManager_1.ModManager.Settings.GodMode === true)
-        {
-            return 0; //坠落伤害
-        }
-        else{
-            return 0 < u ? (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Battle", 29, "角色跌落伤害", ["上一帧速度", t], ["这一帧速度", e], ["damage", u], ["time", r], ["lifeMax", a], ["landing_damage_args_role", A], ["rateBase", s], ["rateT", i], ["rate", _]), u) : 0
-
-        }
-    
+    if (ModManager_1.ModManager.Settings.GodMode === true) {
+      return 0;
+    } else {
+      return 0 < u
+        ? (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Battle",
+              29,
+              "角色跌落伤害",
+              ["上一帧速度", t],
+              ["这一帧速度", e],
+              ["damage", u],
+              ["time", r],
+              ["lifeMax", a],
+              ["landing_damage_args_role", A],
+              ["rateBase", s],
+              ["rateT", i],
+              ["rate", _]
+            ),
+          u)
+        : 0;
+    }
   }
   static LandingDamageCalculationMonster(t, e) {
     var r,
@@ -532,29 +541,29 @@ class Calculation {
     let _ = 0;
     switch (a) {
       case 0:
-        _ = t.CurrentValues.DamageChangePhys;
+        _ = t.CurrentValues.Proto_DamageChangePhys;
         break;
       case 1:
-        _ = t.CurrentValues.DamageChangeElement1;
+        _ = t.CurrentValues.Proto_DamageChangeElement1;
         break;
       case 2:
-        _ = t.CurrentValues.DamageChangeElement2;
+        _ = t.CurrentValues.Proto_DamageChangeElement2;
         break;
       case 3:
-        _ = t.CurrentValues.DamageChangeElement3;
+        _ = t.CurrentValues.Proto_DamageChangeElement3;
         break;
       case 4:
-        _ = t.CurrentValues.DamageChangeElement4;
+        _ = t.CurrentValues.Proto_DamageChangeElement4;
         break;
       case 5:
-        _ = t.CurrentValues.DamageChangeElement5;
+        _ = t.CurrentValues.Proto_DamageChangeElement5;
         break;
       case 6:
-        _ = t.CurrentValues.DamageChangeElement6;
+        _ = t.CurrentValues.Proto_DamageChangeElement6;
     }
     _ *= CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
     var a =
-        t.CurrentValues.CritDamage *
+        t.CurrentValues.Proto_CritDamage *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       i = i ? a : 1,
       a = A.A * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
@@ -564,9 +573,9 @@ class Calculation {
       C = A.E * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       n = A.F * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       A = A.G * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
-      h = t.CurrentValues.Lv,
-      b = t.CurrentValues.Atk,
-      e = e.CurrentValues.Lv,
+      h = t.CurrentValues.Proto_Lv,
+      b = t.CurrentValues.Proto_Atk,
+      e = e.CurrentValues.Proto_Lv,
       l =
         DAMAGE_CONSTANT_WEIGHT /
         (1 / DAMAGE_CONSTANT_K +
@@ -655,10 +664,10 @@ class Calculation {
               a,
               0
             )),
-            this.mjr(e, A, c, u));
+            this.LKo(e, A, c, u));
     }
     (i = t.RandomSeed),
-      (t.RandomSeed = RandomSystem_1.default.NextXorShift32(i)),
+      (t.RandomSeed = RandomSystem_1.default.GetNextRandomSeed(i, 1)),
       (_ = AbilityUtils_1.AbilityUtils.GetLevelValue(
         r.FluctuationUpper,
         a,
