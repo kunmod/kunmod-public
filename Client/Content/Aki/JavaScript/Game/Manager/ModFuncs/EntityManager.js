@@ -15,60 +15,11 @@ const puerts_1 = require("puerts"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
 
 class EntityManager {
-  static PlayerEntity = null;
-  static AllEntityInfo = [];
-  static EntitiesSortedList = [];
-  static ModsEntitys = {
-    EntityList: null,
-    EntityCount: 0,
-  };
-
-  EntityInfo = {
-    ConfigType: 0,
-    CreatureDataId: 0,
-    Id: 0,
-    Index: 0,
-    PbDataId: 0,
-    Priority: 0,
-    IsInit: false,
-    Valid: false,
-    Entity: this.Entity,
-  };
-
-  Entity = {};
-
-  EntityData = {
-    AreaId: 0,
-    BlueprintType: "",
-    Id: 0,
-    InSleep: false,
-    Transform: this.Transform,
-  };
-
-  Transform = {
-    Pos: this.Pos,
-    Rot: this.Rot,
-  };
-
-  Pos = {
-    X: 0,
-    Y: 0,
-    Z: 0,
-  };
-
-  Rot = {
-    X: 0,
-    Y: 0,
-    Z: 0,
-  };
   static GetEntitybyId(entityId) {
     return EntitySystem_1.EntitySystem.Get(entityId);
   }
   static GetPlayerEntity() {
-    this.PlayerEntity =
-      Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity;
-
-    return this.PlayerEntity;
+    return Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity;
   }
   static GetPlayerPos() {
     let Actor = Global_1.Global.BaseCharacter?.CharacterActorComponent.Actor;
@@ -77,11 +28,7 @@ class EntityManager {
     return pos;
   }
 
-  static GetEntitySortedList() {
-    this.EntitiesSortedList =
-      ModelManager_1.ModelManager.CreatureModel.EntitiesSortedList;
-    return this.EntitiesSortedList;
-  }
+
   static GetEntityType(entity) {
     let type = entity.Entity.GetComponent(0).GetEntityType();
     if (type == Protocol_1.Aki.Protocol.EEntityType.Player) return "Player";
@@ -93,13 +40,8 @@ class EntityManager {
     if (type == Protocol_1.Aki.Protocol.EEntityType.Animal) return "Animal";
     if (type == Protocol_1.Aki.Protocol.EEntityType.Custom) return "Custom";
   }
-  static GetEntityCount() {
-    this.ModsEntitys.EntityCount = this.EntitiesSortedList.length;
-    return this.ModsEntitys.EntityCount;
-  }
-  static GetEntityId(entity) {
-    return entity.Id;
-  }
+
+
   static GetPosition(Entity) {
     let a = Entity.GetComponent(1);
     let actor = a.ActorInternal;
@@ -111,8 +53,10 @@ class EntityManager {
   static GetName(entity) {
     try {
       let CreatureComponent = entity.Entity.GetComponent(0);
-      let Name = PublicUtil_1.PublicUtil.GetConfigTextByKey(CreatureComponent.GetBaseInfo().TidName);
-  
+      let Name = PublicUtil_1.PublicUtil.GetConfigTextByKey(
+        CreatureComponent.GetBaseInfo().TidName
+      );
+
       return Name;
     } catch (e) {
       return "";
@@ -129,7 +73,7 @@ class EntityManager {
   }
   static GetBlueprintType2(entity) {
     try {
-      let Type = entity.Entity.Components[0].C9o;
+      let Type = entity.Entity.Components[0].qXr;
       return Type;
     } catch (error) {
       return "unknownBlueprintType";
@@ -138,7 +82,7 @@ class EntityManager {
 
   static GetBlueprintType3(Entity) {
     try {
-      let Type = Entity.Components[0].C9o;
+      let Type = Entity.Components[0].qXr;
       return Type;
     } catch (error) {
       return "unknownBlueprintType";
@@ -151,22 +95,6 @@ class EntityManager {
     } catch (error) {
       return null;
     }
-  }
-
-  static PushEntityInfo(onlydebug) {
-    this.AllEntityInfo = [];
-    this.GetEntitySortedList();
-    for (let i = 0; i < this.EntitiesSortedList.length; i++) {
-      let entityInfo = this.EntitiesSortedList[i];
-      let entityData = this.GetEntityData(entityInfo.PbDataId);
-      this.AllEntityInfo.push({
-        ...entityInfo,
-        EntityData: entityData,
-      });
-    }
-
-    puerts_1.logger.warn("[KUNMODDEBUG]:PushEntityInfo", this.AllEntityInfo);
-    return this.AllEntityInfo;
   }
 
   static isCollection(entity) {
@@ -202,7 +130,7 @@ class EntityManager {
     return BlueprintType.startsWith("Quest");
   }
   static isVision(entity) {
-    return entity.Entity.Components[0].C9o.startsWith("VisionItem");
+    return entity.Entity.Components[0].qXr.startsWith("VisionItem");
   }
   static isWeapon(entity) {
     let BlueprintType = this.GetBlueprintType(entity);
@@ -217,13 +145,13 @@ class EntityManager {
     return BlueprintType.startsWith("SceneObj");
   }
   static isTeleport(entity) {
-    return (entity.Entity.Components[0].C9o).startsWith("Teleport");
+    return entity.Entity.Components[0].qXr.startsWith("Teleport");
   }
   static isSonanceCasket(entity) {
-    return entity.Entity.Components[0].C9o == "Gameplay021";
+    return entity.Entity.Components[0].qXr == "Gameplay021";
   }
   static isMutterfly(entity) {
-    return entity.Entity.Components[0].C9o == "Gameplay111";
+    return entity.Entity.Components[0].qXr == "Gameplay111";
   }
   static SetPlayerSpeed(value) {
     let player = this.GetPlayerEntity();
@@ -231,7 +159,7 @@ class EntityManager {
   }
   static GetCurrRoleId() {
     let player = this.GetPlayerEntity();
-    return player.Components[0].DOe;
+    return player.Components[0].wDe;
   }
 }
 
