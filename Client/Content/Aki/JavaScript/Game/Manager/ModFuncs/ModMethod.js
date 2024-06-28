@@ -14,24 +14,22 @@ const puerts_1 = require("puerts"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
-  BattleNetController_1 = require("../../World/Controller/BattleNetController"), //add
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   WeatherController_1 = require("../../Module/Weather/WeatherController"),
-  ModDebuger_1 = require("./ModDebuger"),
-  UiManager_1 = require("../../../Ui/UiManager");
+  ModDebuger_1 = require("./ModDebuger");
 
 class ModMethod {
   //怪物淹死
-  static MonsterDrownRequest(entity) {
+  static MonsterDrownRequest(entity) {//v1.10
     CombatMessage_1.CombatNet.Call(
-      NetDefine_1.ERequestMessageId.MonsterDrownRequest,
+      24697/*NetDefine_1.ERequestMessageId.MonsterDrownRequest*/,
       entity,
-      Protocol_1.Aki.Protocol.MonsterDrownRequest.create()
+      Protocol_1.Aki.Protocol.jNn.create()
     );
   }
 
-  static ThrowDamageChangeRequest(Entity, count, DamageId) {
+  static ThrowDamageChangeRequest(Entity, count, DamageId) {//1.1work
     for (let i = 0; i < count; i++) {
       LevelGamePlayController_1.LevelGamePlayController.ThrowDamageChangeRequest(
         Entity.Id,
@@ -40,14 +38,14 @@ class ModMethod {
     }
   }
 
-  static AnimalDieRequest(entity) {
+  static AnimalDieRequest(entity) {//v1.1work
     ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
       entity.GetComponent(0).GetCreatureDataId(),
       entity.GetComponent(1).ActorLocationProxy
     );
-    entity.CheckGetComponent(0).SetLivingStatus(Protocol_1.Aki.Protocol.LivingStatus.Dead);
+    entity.CheckGetComponent(0).SetLivingStatus(Protocol_1.Aki.Protocol.Rvs.Proto_Dead);
   }
-  static AnimalDropRequest(entity)//cant use seems
+  static AnimalDropRequest(entity)
   {
     let id =entity.Entity.Id;
     ControllerHolder_1.ControllerHolder.CreatureController.AnimalDropItemRequest(id);
@@ -66,13 +64,7 @@ class ModMethod {
       t
     );
   }
-  //宝箱
-  static RewardChest(entity) {
-
-    LevelGamePlayController_1.LevelGamePlayController.GetRewardTreasureBoxRequest(
-      entity.Id
-    );
-  }
+ 
   static ChangWeather(weatherID) {
     //1.sunny 2.Cloudy 3.Thunder 4.Snow 5.Rain
     WeatherController_1.WeatherController.TestChangeWeather(weatherID);
