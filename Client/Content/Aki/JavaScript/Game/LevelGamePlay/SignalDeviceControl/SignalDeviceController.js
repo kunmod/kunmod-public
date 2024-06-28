@@ -10,11 +10,10 @@ class SignalDeviceController extends UiControllerBase_1.UiControllerBase {
   static OpenGameplay(e, a) {
     ModelManager_1.ModelManager.SignalDeviceModel.InitData(e),
       UiManager_1.UiManager.OpenView("SignalDeviceView", e),
-      (this.tDe = a);
+      (this.HDe = a);
       if(ModManager_1.ModManager.Settings.AutoPuzzle){
-        ModelManager_1.ModelManager.SignalDeviceModel.ILe();
+        ModelManager_1.ModelManager.SignalDeviceModel.SDe();
       }
-        
   }
   static OnDotPressed(e, a) {
     ModelManager_1.ModelManager.SignalDeviceModel.IsGridFinished(e) ||
@@ -32,8 +31,8 @@ class SignalDeviceController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.SignalDeviceModel.ResetData();
   }
   static CallFinishCallback() {
-    this.tDe && this.tDe();
+    this.HDe && this.HDe();
   }
 }
-(exports.SignalDeviceController = SignalDeviceController).tDe = void 0;
+(exports.SignalDeviceController = SignalDeviceController).HDe = void 0;
 //# sourceMappingURL=SignalDeviceController.js.map
