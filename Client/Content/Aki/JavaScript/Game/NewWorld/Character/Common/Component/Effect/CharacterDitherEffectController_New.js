@@ -70,6 +70,7 @@ class CharacterDitherEffectController {
     } else {
       this.F$o = MathUtils_1.MathUtils.Clamp(t, 0, 1);
     }
+    return;
     (this.k$o = MathUtils_1.MathUtils.Clamp(t, 0, 1)),
       (this.F$o = i),
       this.H$o ||
