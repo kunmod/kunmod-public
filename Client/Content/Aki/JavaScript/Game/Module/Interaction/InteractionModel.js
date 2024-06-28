@@ -23,6 +23,7 @@ const puerts_1 = require("puerts"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   TsInteractionUtils_1 = require("./TsInteractionUtils"),
   DEFAULT_CD = 0.5;
+  const { EntityFilter } = require("../../Manager/ModFuncs/EntityFilter");
 class SameTipInteract {
   constructor() {
     (this.EntityId = 0), (this.CurrentDistance = 0);
