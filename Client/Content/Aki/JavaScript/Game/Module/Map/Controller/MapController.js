@@ -3,7 +3,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapController = void 0);
 const UE = require("ue"),
-							 
+  puerts_1 = require("puerts"),
   Log_1 = require("../../../../Core/Common/Log"),
   QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
@@ -50,7 +50,6 @@ class LineTraceSaver {
         ((a = o.LocationZ_Array.Get(0)),
         (a /= SCALE_XY),
         (r = Vector_1.Vector.Create(e, t, a))),
-        (puerts_1.logger.info("[KUNDEBUG]:GetMarkPosition:", r)), 
         (Modmanager_1.ModManager.Settings.MarkX=e),
         (Modmanager_1.ModManager.Settings.MarkY=t),
         (Modmanager_1.ModManager.Settings.MarkZ=a),												 
