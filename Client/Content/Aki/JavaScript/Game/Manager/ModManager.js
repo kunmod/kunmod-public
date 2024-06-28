@@ -8,9 +8,7 @@ const puerts_1 = require("puerts"),
   Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Protocol_1 = require("../../Core/Define/Net/Protocol"),
-  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   InputSettings_1 = require("../InputSettings/InputSettings"),
-  InputController_1 = require("../Input/InputController"),
   TeleportController_1 = require("../Module/Teleport/TeleportController"),
   CreatureController_1 = require("../World/Controller/CreatureController"),
   ConfirmBoxController_1 = require("../Module/ConfirmBox/ConfirmBoxController"),
@@ -18,25 +16,24 @@ const puerts_1 = require("puerts"),
   ScrollingTipsController_1 = require("../Module/ScrollingTips/ScrollingTipsController"),
   MapController_1 = require("../Module/Map/Controller/MapController"),
   ModelManager_1 = require("../Manager/ModelManager"),
-  CharacterController_1 = require("..//NewWorld/Character/CharacterController"),
   UidView_1 = require("../Module/UidShow/UidView"),
-  LguiUtil_1 = require("../Module/Util/LguiUtil"),
   UiManager_1 = require("../../Ui/UiManager"),
-  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
-  WorldDebugModel_1 = require("../World/Model/WorldDebugModel"), //
   ModCustomTp_1 = require("./ModFuncs/ModCustomTp"),
   ModUtils_1 = require("./ModFuncs/ModUtils"),
   ModDebuger_1 = require("./ModFuncs/ModDebuger"),
   EntityManager_1 = require("./ModFuncs/EntityManager"),
-  NoClip_1 = require("./ModFuncs/NoClip")
+  NoClip_1 = require("./ModFuncs/NoClip"),
+  keys_State = {};
 
 const ModLanguage_1 = require("./ModFuncs/ModLanguage");
 const { MobVacuum } = require("./ModFuncs/MobVacuum");
 const ModTr = ModLanguage_1.ModLanguage.ModTr;
 const ConfigFileName = "KunModConfig.json";
 class ModManager {
+  constructor() {
+     this.key_State = false;
+  }
   static Settings = {
-
     ModEnabled: true,
     GodMode: true,
     HitMultiplier: false,
@@ -74,36 +71,36 @@ class ModManager {
     PlotSkip: true,
     MobVacuum: false,
     VacuumCollect: false,
-    VacuumRadius:300,
-    AttributeModifier:false,
+    VacuumRadius: 300,
+    AttributeModifier: false,
     Uid: "100000000",
     Language: "English",
-    ESP:true,
-    ESPRadius:300,
-    ShowMonster:true,
-    ShowAnimal:true,
-    ShowNpc:false,
-    ShowTreasure:true,
-    ShowCollect:true,
-    ShowPuzzle:false,
-    ShowCasket:false,
-    ShowMutterfly:false,
-    ShowRock:false,
-    ShowBlobfly:false,
-    ShowBox:true,  
-    ShowEntityId:false,
-    ShowDistance:true,
-    ShowName:true,
-    ShowUnkown:true,
-    FPSUnlocker:false,
-    ShowFPS:false,
-    FOV:false,
-    FOVValue:60, // default
-    NoClip:false,
-    AutoPuzzle:true,
-    ShowType:true,
-    AutoTeleport:true,
-    AutoSonanceCasket:true,
+    ESP: true,
+    ESPRadius: 300,
+    ShowMonster: true,
+    ShowAnimal: true,
+    ShowNpc: false,
+    ShowTreasure: true,
+    ShowCollect: true,
+    ShowPuzzle: false,
+    ShowCasket: false,
+    ShowMutterfly: false,
+    ShowRock: false,
+    ShowBlobfly: false,
+    ShowBox: true,
+    ShowEntityId: false,
+    ShowDistance: true,
+    ShowName: true,
+    ShowUnkown: true,
+    FPSUnlocker: false,
+    ShowFPS: false,
+    FOV: false,
+    FOVValue: 60, // default
+    NoClip: false,
+    AutoPuzzle: true,
+    ShowType: true,
+    AutoTeleport: true,
+    AutoSonanceCasket: true,
   };
 
   static GetGameDir() {
@@ -133,7 +130,9 @@ class ModManager {
     puerts_1.$unref(Config);
     Config = JSON.parse(Config[0]);
     // compare current settings
-    const Diff = Object.keys(ModManager.Settings).filter(x => !Object.keys(Config).includes(x));
+    const Diff = Object.keys(ModManager.Settings).filter(
+      (x) => !Object.keys(Config).includes(x)
+    );
     if (Diff.length > 0) {
       // add new settings
       for (const i in Diff) {
@@ -148,8 +147,6 @@ class ModManager {
   }
 
   static ModStart() {
-    //ModDebuger_1.ModDebuger.TestMethod();
-    this.AddKey("ShowMenu", "Home");
     this.AddToggle("GodMode", "F5");
     this.AddToggle("HitMultiplier", "F6");
     this.AddToggle("AutoPickTreasure", "F7");
@@ -232,9 +229,42 @@ class ModManager {
       }
     }
 
-    //this.listenMod("skip", "NumPadFour", "plot");
+
+  }
+  static IsMyKeyDown(str) {
+    //add key func
+    var IsInputKeyDown_1 = InputSettings_1.InputSettings.IsInputKeyDown(str);
+    if (IsInputKeyDown_1 && !this.key_State) {
+      this.key_State = true;
+      return true;
+    }
+    if (!IsInputKeyDown_1) {
+      this.key_State = false;
+      return false;
+    }
+    return false;
   }
 
+  static IsMyKeyUp(str) {
+    if (!keys_State[str]) {
+      keys_State[str] = { key_Down: false, key_Up: false };
+    }
+    var keyState = keys_State[str];
+    var IsInputKeyDown_1 = InputSettings_1.InputSettings.IsInputKeyDown(str);
+    if (IsInputKeyDown_1 && !keyState.key_Down) {
+      keyState.key_Down = true;
+      keyState.key_Up = false;
+    }
+    if (!IsInputKeyDown_1 && keyState.key_Down && !keyState.key_Up) {
+      keyState.key_Up = true;
+    }
+    if (keyState.key_Down && keyState.key_Up) {
+      keyState.key_Down = false;
+      keyState.key_Up = false;
+      return true;
+    }
+    return false;
+  }
   static AddToggle(desc, key) {
     InputSettings_1.InputSettings.AddActionMapping(desc, key);
   }
@@ -267,7 +297,7 @@ class ModManager {
   }
 
   static listenMod(func, key, funcname) {
-    if (InputController_1.InputController.IsMyKeyUp(key)) {
+    if (this.IsMyKeyUp(key)) {
       if (this.Settings.hasOwnProperty(func)) {
         this.Settings[func] = !this.Settings[func];
         ModUtils_1.ModUtils.PlayAudio("play_ui_fx_com_count_number");
@@ -278,7 +308,7 @@ class ModManager {
     return false;
   }
   static listenKey(desc, key) {
-    var press = InputController_1.InputController.IsMyKeyUp(key);
+    var press = this.IsMyKeyUp(key);
     if (press) {
       ModUtils_1.ModUtils.PlayAudio("play_ui_fx_com_count_number");
     }

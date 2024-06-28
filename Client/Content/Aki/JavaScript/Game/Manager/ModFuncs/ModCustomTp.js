@@ -284,7 +284,7 @@ class ModCustomTp {
 
 
   static listenAuto() {
-    if (InputController_1.InputController.IsMyKeyUp("End")) {
+    if (ModManager_1.ModManager.IsMyKeyUp("End")) {
       this.Settings.AutoMode = !this.Settings.AutoMode;
       var info = "Unknown";
       var string = ModTr("TEXT_AUTO_MODE");
