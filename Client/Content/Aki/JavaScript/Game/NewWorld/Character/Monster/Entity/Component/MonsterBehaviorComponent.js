@@ -1,29 +1,25 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, e, i, o) {
+  function (t, e, o, i) {
     var s,
-      n = arguments.length,
-      r =
-        n < 3
+      r = arguments.length,
+      n =
+        r < 3
           ? e
-          : null === o
-          ? (o = Object.getOwnPropertyDescriptor(e, i))
-          : o;
+          : null === i
+          ? (i = Object.getOwnPropertyDescriptor(e, o))
+          : i;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(t, e, i, o);
+      n = Reflect.decorate(t, e, o, i);
     else
       for (var a = t.length - 1; 0 <= a; a--)
-        (s = t[a]) && (r = (n < 3 ? s(r) : 3 < n ? s(e, i, r) : s(e, i)) || r);
-    return 3 < n && r && Object.defineProperty(e, i, r), r;
+        (s = t[a]) && (n = (r < 3 ? s(n) : 3 < r ? s(e, o, n) : s(e, o)) || n);
+    return 3 < r && n && Object.defineProperty(e, o, n), n;
   };
-Object.defineProperty(exports, "__esModule", {
-  value: !0,
-}),
+Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterBehaviorComponent = void 0);
 const Log_1 = require("../../../../../../Core/Common/Log"),
-puerts_1 = require("puerts"),
-  NetDefine_1 = require("../../../../../../Core/Define/Net/NetDefine"),
   Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
@@ -34,50 +30,42 @@ puerts_1 = require("puerts"),
   CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
   ModManager_1 = require("../../../../../Manager/ModManager"), //add
   CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
-  MonsterFrozenComponent_1 =
-    require("./MonsterFrozenComponent").MonsterFrozenComponent,
   CharacterUnifiedStateTypes_1 = require("../../../Common/Component/Abilities/CharacterUnifiedStateTypes");
 let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.fte = void 0),
-      (this.Ste = void 0),
-      (this.aat = void 0),
-      (this.wat = void 0),
-      (this.ZNo = void 0),
-      (this.ZUo = (t, e) => {
-        var i;
+      (this.Hte = void 0),
+      (this.Xte = void 0),
+      (this.elt = void 0),
+      (this.Llt = void 0),
+      (this.EVr = void 0),
+      (this.gGr = (t, e) => {
+        var o;
         e !== CharacterUnifiedStateTypes_1.ECharPositionState.Water ||
-          this.Ste.ContainsTagById(-1714966381) ||
-          ((e = this.fte.ActorLocationProxy),
-          ((i = Protocol_1.Aki.Protocol.MonsterDrownRequest.create()).Pos = e),
-          CombatMessage_1.CombatNet.Call(
-            NetDefine_1.ERequestMessageId.MonsterDrownRequest,
-            this.Entity,
-            i
-          ));
+          this.Xte.HasTag(-1714966381) ||
+          ((e = this.Hte.ActorLocationProxy),
+          ((o = Protocol_1.Aki.Protocol.jNn.create()).M3n = e),
+          CombatMessage_1.CombatNet.Call(24697, this.Entity, o));
       }),
-      (this.B$o = () => {
-        this.fte.IsAutonomousProxy && this.b$o();
+      (this.iin = () => {
+        this.Hte.IsAutonomousProxy && this.oin();
       }),
-      (this.q$o = (t, e) => {
-        //add code
+      (this.rin = (t, e) => {
         if (//Only Hatred
-          ModManager_1.ModManager.Settings.killAura === true &&
-          ModManager_1.ModManager.Settings.killAuraState == 0
-        ) {
-          CombatMessage_1.CombatNet.Call(
-            NetDefine_1.ERequestMessageId.MonsterDrownRequest,
-            this.Entity,
-            Protocol_1.Aki.Protocol.MonsterDrownRequest.create()
-          );
-          //puerts_1.logger.warn("测试Drown实体信息",this.Entity);
-        }
+            ModManager_1.ModManager.Settings.killAura === true &&
+            ModManager_1.ModManager.Settings.killAuraState == 0
+          ) {
+            CombatMessage_1.CombatNet.Call(
+                6947, // NetDefine_1.ERequestMessageId.MonsterDrownRequest
+                this.Entity,
+                Protocol_1.Aki.Protocol.MonsterDrownRequest.create()
+              );
+          }
         e &&
-          (this.G$o(!0),
+          (this.nin(!0),
           ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-            this.ZNo.SetEnableMovementSync(!0),
-          (e = this.fte?.CreatureData.GetPbDataId()),
+            this.EVr.SetEnableMovementSync(!0),
+          (e = this.Hte?.CreatureData.GetPbDataId()),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Character", 51, "怪物进入战斗，开启位置同步", [
               "PbDataId",
@@ -92,105 +80,105 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
   }
   OnStart() {
     if (//Infinity
-      ModManager_1.ModManager.Settings.killAura === true &&
-      ModManager_1.ModManager.Settings.killAuraState == 1
-    ) {
-      CombatMessage_1.CombatNet.Call(
-        NetDefine_1.ERequestMessageId.MonsterDrownRequest,
-        this.Entity,
-        Protocol_1.Aki.Protocol.MonsterDrownRequest.create()
-      );
-    }
+        ModManager_1.ModManager.Settings.killAura === true &&
+        ModManager_1.ModManager.Settings.killAuraState == 1
+      ) {
+        CombatMessage_1.CombatNet.Call(
+            6947, // NetDefine_1.ERequestMessageId.MonsterDrownRequest
+            this.Entity,
+            Protocol_1.Aki.Protocol.MonsterDrownRequest.create()
+          );
+      }
     return (
-      (this.fte = this.Entity.CheckGetComponent(3)),
-      (this.aat = this.Entity.CheckGetComponent(156)),
-      (this.Ste = this.Entity.CheckGetComponent(184)),
-      (this.ZNo = this.Entity.CheckGetComponent(56)),
+      (this.Hte = this.Entity.CheckGetComponent(3)),
+      (this.elt = this.Entity.CheckGetComponent(157)),
+      (this.Xte = this.Entity.CheckGetComponent(185)),
+      (this.EVr = this.Entity.CheckGetComponent(57)),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnPositionStateChanged,
-        this.ZUo
+        this.gGr
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.AiTaskWanderForResetEnd,
-        this.B$o
+        this.iin
       ),
-      (this.wat = this.Ste.ListenForTagAddOrRemove(1996802261, this.q$o)),
+      (this.Llt = this.Xte.ListenForTagAddOrRemove(1996802261, this.rin)),
       !0
     );
   }
   OnActivate() {
     ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-      this.ZNo?.SetEnableMovementSync(!1);
+      this.EVr?.SetEnableMovementSync(!1);
   }
   OnEnd() {
     return (
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnPositionStateChanged,
-        this.ZUo
+        this.gGr
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.AiTaskWanderForResetEnd,
-        this.B$o
+        this.iin
       ),
-      this.wat && this.wat.EndTask(),
-      !(this.wat = void 0)
+      this.Llt && this.Llt.EndTask(),
+      !(this.Llt = void 0)
     );
   }
-  b$o() {
+  oin() {
     CombatDebugController_1.CombatDebugController.CombatInfo(
       "Ai",
       this.Entity,
       "怪物退出脱战状态"
     ),
-      this.G$o(!1),
+      this.nin(!1),
       ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-        this.ZNo.SetEnableMovementSync(!1);
-    var t = this.fte?.CreatureData.GetPbDataId(),
+        this.EVr.SetEnableMovementSync(!1);
+    var t = this.Hte?.CreatureData.GetPbDataId(),
       t =
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Character", 51, "怪物退出战斗，关闭位置同步", [
             "PbDataId",
             t,
           ]),
-        this.Entity.GetComponent(64));
-    t?.StateMachineGroup?.Inited || this.N$o();
+        this.Entity.GetComponent(65));
+    t?.StateMachineGroup?.Inited || this.ain();
   }
-  N$o() {
+  ain() {
     CombatDebugController_1.CombatDebugController.CombatInfo(
       "Ai",
       this.Entity,
       "怪物重置状态"
     ),
-      this.aat.RemoveAllBuffs("怪物脱战重置状态"),
-      this.Entity.CheckGetComponent(157).InitCharState(),
-      this.Entity.CheckGetComponent(68).ResetWeaponTag();
+      this.elt.RemoveAllBuffs("怪物脱战重置状态"),
+      this.Entity.CheckGetComponent(158).InitCharState(),
+      this.Entity.CheckGetComponent(69).ResetWeaponTag();
   }
   static BattleStateChangeNotify(t, e) {}
-  G$o(t) {
+  nin(t) {
     CombatMessage_1.CombatNet.Call(
-      NetDefine_1.ERequestMessageId.BattleStateChangeRequest,
+      19057,
       this.Entity,
-      Protocol_1.Aki.Protocol.BattleStateChangeRequest.create({
-        EntityId: MathUtils_1.MathUtils.NumberToLong(
+      Protocol_1.Aki.Protocol.CNn.create({
+        rkn: MathUtils_1.MathUtils.NumberToLong(
           this.Entity.GetComponent(0).GetCreatureDataId()
         ),
-        InBattle: t,
+        g9n: t,
       })
     );
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("BattleStateChangeNotify")],
+  [CombatMessage_1.CombatNet.SyncHandle("_2n")],
   MonsterBehaviorComponent,
   "BattleStateChangeNotify",
   null
 ),
   (MonsterBehaviorComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(76)],
+    [(0, RegisterComponent_1.RegisterComponent)(77)],
     MonsterBehaviorComponent
   )),
   (exports.MonsterBehaviorComponent = MonsterBehaviorComponent);
