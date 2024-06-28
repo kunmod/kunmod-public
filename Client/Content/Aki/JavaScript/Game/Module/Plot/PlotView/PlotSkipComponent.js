@@ -7,76 +7,76 @@ const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  ModManager_1 = require("../../../Manager/ModManager"),
+	ModManager_1 = require("../../../Manager/ModManager"),													
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
 class PlotSkipComponent {
   constructor(e, t, i, o) {
-    (this.Fue = !1),
-      (this.MYi = void 0),
-      (this.EYi = StringUtils_1.EMPTY_STRING),
-      (this.SYi = !0),
-      (this.yYi = void 0),
+    (this.dce = !1),
+      (this.tzi = void 0),
+      (this.izi = StringUtils_1.EMPTY_STRING),
+      (this.ozi = !0),
+      (this.rzi = void 0),
       (this.EnableSkipButton = (e) => {
         if (ModManager_1.ModManager.Settings.PlotSkip) {
           this.Fue = e;
           this.IYi.SetUIActive(this.Fue);
-        } else {
-          (e && !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanSkip) ||
-            this.Fue === e ||
-            ((this.Fue = e), this.IYi.SetUIActive(this.Fue), this.Fue) ||
-            ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
-        }
+        } else {				
+        (e && !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanSkip) ||
+          this.dce === e ||
+          ((this.dce = e), this.nzi.SetUIActive(this.dce), this.dce) ||
+          ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
+		} 
       }),
-      (this.TYi = () => {
+      (this.szi = () => {
         var e;
-        this.Fue &&
-          (this.VSt?.(),
+        this.dce &&
+          (this.wIt?.(),
           ModelManager_1.ModelManager.PlotModel.PlotConfig.IsSkipConfirmBoxShow
-            ? ((this.SYi = !0),
+            ? ((this.ozi = !0),
               ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(180)).HasToggle =
                 !0),
-              (e.ToggleText = this.EYi),
-              e.SetToggleFunction(this.LYi), //lyi设置函数
-              (e.AttachView = this.yYi),
+              (e.ToggleText = this.izi),
+              e.SetToggleFunction(this.azi),
+              (e.AttachView = this.rzi),
               e.FunctionMap.set(2, () => {
-                this?.Fue &&
+                this?.dce &&
                   ((ModelManager_1.ModelManager.PlotModel.PlotConfig.IsSkipConfirmBoxShow =
-                    this.SYi),
-                  (this.Fue = !1),
-                  this.DYi?.());
+                    this.ozi),
+                  (this.dce = !1),
+                  this.hzi?.());
               }),
               ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
                 e
               ))
-            : this.DYi?.());
+            : this.hzi?.());
       }),
-      (this.LYi = (e) => {
-        this?.Fue && (this.SYi = !e);
+      (this.azi = (e) => {
+        this?.dce && (this.ozi = !e);
       }),
-      (this.MYi = e),
-      (this.IYi = e.RootUIComp),
-      (this.DYi = t),
-      (this.VSt = i),
-      (this.yYi = o),
-      (this.Fue = !1),
-      this.MYi.OnClickCallBack.Bind(this.TYi), //
-      (this.EYi = ConfigManager_1.ConfigManager.TextConfig?.GetTextById(
+      (this.tzi = e),
+      (this.nzi = e.RootUIComp),
+      (this.hzi = t),
+      (this.wIt = i),
+      (this.rzi = o),
+      (this.dce = !1),
+      this.tzi.OnClickCallBack.Bind(this.szi),
+      (this.izi = ConfigManager_1.ConfigManager.TextConfig?.GetTextById(
         "PlotSkipConfirmToggle"
       )),
-      StringUtils_1.StringUtils.IsEmpty(this.EYi) &&
+      StringUtils_1.StringUtils.IsEmpty(this.izi) &&
         (ControllerHolder_1.ControllerHolder.FlowController.LogError(
           '剧情跳过二次确认框读不到Toggle文本 "PlotSkipConfirmToggle"'
         ),
-        (this.EYi = ""));
+        (this.izi = ""));
   }
   OnClear() {
-    (this.Fue = !1),
-      this.MYi?.OnClickCallBack.Unbind(),
-      (this.MYi = void 0),
-      (this.IYi = void 0),
-      (this.yYi = void 0),
-      (this.DYi = void 0),
-      (this.VSt = void 0),
+    (this.dce = !1),
+      this.tzi?.OnClickCallBack.Unbind(),
+      (this.tzi = void 0),
+      (this.nzi = void 0),
+      (this.rzi = void 0),
+      (this.hzi = void 0),
+      (this.wIt = void 0),
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
   }
   AddEventListener() {
