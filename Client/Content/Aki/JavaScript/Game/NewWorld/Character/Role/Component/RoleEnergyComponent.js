@@ -25,6 +25,7 @@ var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 const ModManager_1 = require("../../../../Manager/ModManager"),
   energyAttrIds = [EAttributeId.Proto_Energy, EAttributeId.Proto_EnergyMax];
+  let originalGetCurrentValue;
 let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -44,7 +45,7 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
     this.nXt = this.Entity.CheckGetComponent(3);
     this.$te = this.Entity.CheckGetComponent(156);
 
-    const originalGetCurrentValue = this.$te.GetCurrentValue.bind(this.$te);
+    originalGetCurrentValue = this.$te.GetCurrentValue.bind(this.$te);
 
     this.$te.GetCurrentValue = (attributeId) => {
         if (attributeId === EAttributeId.Energy) {
@@ -58,7 +59,11 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
     return !0;
   }
   OnEnd() {
-    return this.$te.RemoveListeners(energyAttrIds, this.mon), !0;
+    if (this.$te.GetCurrentValue) {
+      this.$te.GetCurrentValue = originalGetCurrentValue;
+    }
+    return this.$te.RemoveListeners(energyAttrIds, this.mon);
+    !0;
   }
 };
 (RoleEnergyComponent = __decorate(
