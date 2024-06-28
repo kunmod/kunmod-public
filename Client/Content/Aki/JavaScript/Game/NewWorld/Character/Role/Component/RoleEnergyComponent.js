@@ -17,53 +17,44 @@ var __decorate =
         (n = t[c]) && (s = (i < 3 ? n(s) : 3 < i ? n(e, o, s) : n(e, o)) || s);
     return 3 < i && s && Object.defineProperty(e, o, s), s;
   };
-Object.defineProperty(exports, "__esModule", {
-  value: !0,
-}),
+Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleEnergyComponent = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-var EAttributeId = Protocol_1.Aki.Protocol.EAttributeType;
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
-  energyAttrIds = [EAttributeId.Energy, EAttributeId.EnergyMax];
-  const ModManager_1  = require("../../../../Manager/ModManager");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+const ModManager_1 = require("../../../../Manager/ModManager"),
+  energyAttrIds = [EAttributeId.Proto_Energy, EAttributeId.Proto_EnergyMax];
 let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.U6r = void 0),
-      (this.yte = void 0),
-      (this.HXo = (t, e, o) => {
-        var r = this.yte.GetCurrentValue(EAttributeId.Energy),
-          n = this.yte.GetCurrentValue(EAttributeId.EnergyMax);
-        this.U6r.Actor?.CharRenderingComponent.SetStarScarEnergy(r / n);
+      (this.nXt = void 0),
+      (this.$te = void 0),
+      (this.mon = (t, e, o) => {
+        var r = this.$te.GetCurrentValue(EAttributeId.Proto_Energy),
+          n = this.$te.GetCurrentValue(EAttributeId.Proto_EnergyMax);
+        this.nXt.Actor?.CharRenderingComponent.SetStarScarEnergy(r / n);
       });
   }
   OnStart() {
-    this.U6r = this.Entity.CheckGetComponent(3);
-    this.yte = this.Entity.CheckGetComponent(155);
+    this.nXt = this.Entity.CheckGetComponent(3);
+    this.$te = this.Entity.CheckGetComponent(156);
 
-    const originalGetCurrentValue = this.yte.GetCurrentValue.bind(this.yte);
-    this.yte.GetCurrentValue = (attributeId) => {
-      if (attributeId === EAttributeId.Energy) {
-        if(ModManager_1.ModManager.Settings.NoCD)
-           return originalGetCurrentValue(EAttributeId.EnergyMax);
-      }
-      return originalGetCurrentValue(attributeId);
-    };
+    const originalGetCurrentValue = this.$te.GetCurrentValue.bind(this.$te);
 
-    this.yte.AddListeners(energyAttrIds, this.HXo, "RoleEnergyComponent");
-    this.HXo();
+    this.$te.GetCurrentValue = (attributeId) => {
+        if (attributeId === EAttributeId.Energy) {
+          if (ModManager_1.ModManager.Settings.NoCD) return originalGetCurrentValue(EAttributeId.EnergyMax);
+        }
+        return originalGetCurrentValue(attributeId);
+      };
+
+    this.$te.AddListeners(energyAttrIds, this.mon, "RoleEnergyComponent");
+    this.mon();
     return !0;
   }
   OnEnd() {
-    if(ModManager_1.ModManager.Settings.NoCD){
-      if (this.yte.GetCurrentValue) {
-        this.yte.GetCurrentValue = originalGetCurrentValue;
-      }
-    }
-
-    this.yte.RemoveListeners(energyAttrIds, this.HXo);
-    return !0;
+    return this.$te.RemoveListeners(energyAttrIds, this.mon), !0;
   }
 };
 (RoleEnergyComponent = __decorate(
