@@ -12,43 +12,44 @@ const UE = require("ue"),
   HEARTBEAT_DATA_EVENT_ID = "9";
 class AntiCheatModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.Eoe = ""), (this.Q9e = ""), (this.$9e = 0);
+    super(...arguments), (this.Qre = ""), (this.IHe = ""), (this.THe = 0);
   }
   GetVersion() {
-    return this.Eoe;
+    return this.Qre;
   }
   GetBundleId() {
-    return this.Q9e;
+    return this.IHe;
   }
   OnInit() {
     var e = UE.KuroLauncherLibrary.GetAppVersion();
     return (
-      (this.Eoe = LocalStorage_1.LocalStorage.GetGlobal(
+      (this.Qre = LocalStorage_1.LocalStorage.GetGlobal(
         LocalStorageDefine_1.ELocalStorageGlobalKey.PatchVersion,
         e
       )),
-      (this.Q9e = UE.KismetSystemLibrary.GetGameBundleId()),
+      (this.IHe = UE.KismetSystemLibrary.GetGameBundleId()),
       !0
     );
   }
   static GetBundleData() {
-    // Return empty data
     return {};
   }
   ResetHeartbeatException() {
-    this.$9e = 0;
+    this.THe = 0;
   }
   HitHeartbeatException() {
-    this.$9e += 1;
+    this.THe += 1;
   }
   GetHeartbeatException() {
-    return this.$9e;
+    return this.THe;
   }
   HasHeartbeatException() {
-    return 0 < this.$9e;
+    return 0 < this.THe;
   }
   GetHeartbeatData() {
-    // Return empty data
+    // var e = new AntiCheatData_1.AntiCheatHeartbeatData();
+    // e.event_id = HEARTBEAT_DATA_EVENT_ID;
+    // let t = ModelManager_1.ModelManager.LoginModel.GetAccount();
     return {};
   }
 }

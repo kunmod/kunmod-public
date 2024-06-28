@@ -33,8 +33,8 @@ class MobVacuum extends EntityManager {
     if (this.isMonster(entity) && this.isIndistance(entity)) {
       let playerpos = EntityManager.GetPlayerPos();
       let ActorComp = entity.Entity.GetComponent(1);
-      this.SyncMonster(entity, playerpos);
       ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
+      this.SyncMonster(entity, playerpos);
     }
   }
 
@@ -53,14 +53,18 @@ class MobVacuum extends EntityManager {
   }
 
   static SyncMonster(entity, pos) {
-    var t = entity.Entity.GetComponent(56);
+    var t = entity.Entity.GetComponent(57);
     var i = t.GetCurrentMoveSample();
     i.Location = pos;
     t.PendingMoveInfos.push(i);
-    var s = Protocol_1.Aki.Protocol.MovePackagePush.create();
-    s.MovingEntities.push(t.CollectPendingMoveInfos());
-    Net_1.Net.Send(NetDefine_1.EPushMessageId.MovePackagePush, s);
+    var s = Protocol_1.Aki.Protocol.Xhs.create();
+    s.Mys.push(t.CollectPendingMoveInfos());
+    Net_1.Net.Send(29494/*NetDefine_1.EPushMessageId.MovePackagePush*/, s);
   }
+
+
+
+
 }
 //puerts.logger.info(debug)
 exports.MobVacuum = MobVacuum;
