@@ -19,34 +19,39 @@ const Json_1 = require("../../../Core/Common/Json"),
 class MapModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.kIi = 0),
-      (this.FIi = void 0),
-      (this.VIi = void 0),
-      (this.HIi = void 0),
-      (this.jIi = void 0),
-      (this.WIi = void 0),
-      (this.KIi = void 0),
-      (this.QIi = void 0),
-      (this.$Ii = void 0),
-      (this.XIi = void 0),
-      (this.YIi = void 0),
-      (this.JIi = void 0),
+      (this.MLi = 0),
+      (this.SLi = void 0),
+      (this.ELi = void 0),
+      (this.yLi = void 0),
+      (this.ILi = void 0),
+      (this.TLi = void 0),
+      (this.LLi = void 0),
+      (this.DLi = void 0),
+      (this.RLi = void 0),
+      (this.ULi = void 0),
+      (this.ALi = void 0),
+      (this.PLi = void 0),
+      (this.UnlockMultiMapIds = void 0),
+      (this.UnlockMapBlockIds = void 0),
+      (this.LastSafeLocation = Vector_1.Vector.Create()),
       (this.MapLifeEventListenerTriggerMap = void 0);
   }
   OnInit() {
     return (
-      (this.FIi = new Map()),
-      (this.KIi = new Map()),
-      (this.QIi = new Map()),
-      (this.YIi = new Map()),
-      (this.$Ii = void 0),
-      (this.XIi = new Map()),
-      (this.WIi = new Map()),
-      (this.VIi = new Map()),
-      (this.HIi = new Map()),
-      (this.jIi = new Map()),
-      (this.JIi = new Map()),
+      (this.SLi = new Map()),
+      (this.LLi = new Map()),
+      (this.DLi = new Map()),
+      (this.ALi = new Map()),
+      (this.RLi = void 0),
+      (this.ULi = new Map()),
+      (this.TLi = new Map()),
+      (this.ELi = new Map()),
+      (this.yLi = new Map()),
+      (this.ILi = new Map()),
+      (this.PLi = new Map()),
       (this.MapLifeEventListenerTriggerMap = new Map()),
+      (this.UnlockMapBlockIds = []),
+      (this.UnlockMultiMapIds = []),
       !0
     );
   }
@@ -59,76 +64,83 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     return (
-      this.FIi.clear(),
-      this.KIi.clear(),
-      this.QIi.clear(),
-      this.YIi.clear(),
-      this.VIi.clear(),
-      this.HIi.clear(),
-      this.jIi.clear(),
-      this.JIi.clear(),
-      (this.FIi = void 0),
-      (this.KIi = void 0),
-      (this.QIi = void 0),
-      (this.YIi = void 0),
-      !(this.$Ii = void 0)
+      this.SLi.clear(),
+      this.LLi.clear(),
+      this.DLi.clear(),
+      this.ALi.clear(),
+      this.ELi.clear(),
+      this.yLi.clear(),
+      this.ILi.clear(),
+      this.PLi.clear(),
+      (this.SLi = void 0),
+      (this.LLi = void 0),
+      (this.DLi = void 0),
+      (this.ALi = void 0),
+      (this.RLi = void 0),
+      (this.UnlockMapBlockIds = void 0),
+      !(this.UnlockMultiMapIds = void 0)
     );
   }
   GetUnlockedTeleportMap() {
-    return this.KIi;
+    return this.LLi;
   }
   GetDynamicMark(e) {
-    return this.WIi?.get(e);
+    return this.TLi?.get(e);
   }
   GetMark(e, t) {
-    return this.FIi.get(e)?.get(t);
+    return this.SLi.get(e)?.get(t);
   }
   GetMarkCountByType(e) {
-    return this.FIi.get(e)?.size ?? 0;
+    return this.SLi.get(e)?.size ?? 0;
   }
   GetAllDynamicMarks() {
-    return this.FIi;
+    return this.SLi;
   }
   GetDynamicMarkInfoById(t) {
     let r = void 0;
     return (
-      this.FIi.forEach((e) => {
+      this.SLi.forEach((e) => {
         e.has(t) && (r = e.get(t));
       }),
       r
     );
   }
   SetCurTrackMark(e) {
-    this.$Ii = e;
+    this.RLi = e;
   }
   GetCurTrackMark() {
-    return this.$Ii;
+    return this.RLi;
   }
   CreateServerSaveMark(e) {
-    this.zIi(e);
+    this.xLi(e);
   }
   CreateMapMark(e) {
-    return (e.MarkId = this.SpawnDynamicMarkId()), this.zIi(e), e.MarkId;
+    return (e.MarkId = this.SpawnDynamicMarkId()), this.xLi(e), e.MarkId;
   }
-  ZIi(e) {
-    return !(12 === e.MarkType || 15 === e.MarkType || 17 === e.MarkType);
+  wLi(e) {
+    return !(
+      12 === e.MarkType ||
+      15 === e.MarkType ||
+      17 === e.MarkType ||
+      9 === e.MarkType
+    );
   }
   ResetDynamicMarkData() {
-    var e = this.FIi.get(12);
-    this.FIi?.clear(),
-      this.WIi?.clear(),
+    var e = this.SLi.get(12);
+    this.SLi?.clear(),
+      this.TLi?.clear(),
       e &&
-        (this.FIi?.set(12, e),
+        (this.SLi?.set(12, e),
         e.forEach((e) => {
-          this.WIi?.set(e.MarkId, e);
+          this.TLi?.set(e.MarkId, e);
         }));
   }
-  zIi(r) {
-    if (this.FIi) {
-      let e = this.FIi.get(r.MarkType),
-        t = (e || ((e = new Map()), this.FIi.set(r.MarkType, e)), void 0);
+  xLi(r) {
+    if (this.SLi) {
+      let e = this.SLi.get(r.MarkType),
+        t = (e || ((e = new Map()), this.SLi.set(r.MarkType, e)), void 0);
       e.forEach((e) => {
-        this.ZIi(r) &&
+        this.wLi(r) &&
           e.TrackTarget instanceof Vector_1.Vector &&
           r.TrackTarget instanceof Vector_1.Vector &&
           e.TrackTarget.Equality(r.TrackTarget) &&
@@ -136,7 +148,7 @@ class MapModel extends ModelBase_1.ModelBase {
       }),
         t && this.RemoveMapMark(t.MarkType, t.MarkId),
         e.set(r.MarkId, r),
-        this.WIi?.set(r.MarkId, r),
+        this.TLi?.set(r.MarkId, r),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.CreateMapMark,
           r
@@ -151,14 +163,14 @@ class MapModel extends ModelBase_1.ModelBase {
       r
     ),
       r ||
-        (this.FIi &&
-          (r = this.FIi.get(e)) &&
+        (this.SLi &&
+          (r = this.SLi.get(e)) &&
           r.get(t)?.DestroyOnUnTrack &&
           this.RemoveMapMark(e, t));
   }
   IsMarkIdExist(e, t) {
-    if (this.FIi && e && t) {
-      var r = this.FIi.get(e);
+    if (this.SLi && e && t) {
+      var r = this.SLi.get(e);
       if (r) return r.has(t);
       for (const i of ConfigManager_1.ConfigManager.MapConfig.GetConfigMarks(
         MapDefine_1.BIG_WORLD_MAP_ID
@@ -172,16 +184,16 @@ class MapModel extends ModelBase_1.ModelBase {
     return (
       !!t &&
       !!ModelManager_1.ModelManager.MapModel.IsMarkIdExist(t.ObjectType, e) &&
-      ((e = this.eTi(t)), (t = this.tTi(t)), e) &&
+      ((e = this.BLi(t)), (t = this.bLi(t)), e) &&
       t
     );
   }
-  eTi(e) {
+  BLi(e) {
     return (
       1 === e.FogShow || 0 === e.FogHide || this.CheckAreasUnlocked(e.FogHide)
     );
   }
-  tTi(e) {
+  bLi(e) {
     var t = e.ShowCondition,
       e = e.MarkId;
     return t < 0
@@ -190,19 +202,31 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   RemoveMapMark(e, t) {
     var r;
-    this.FIi &&
+    this.SLi &&
       void 0 !== e &&
       void 0 !== t &&
-      (r = this.FIi.get(e)) &&
-      ((r = r.delete(t)), this.WIi?.delete(t), r) &&
+      (r = this.SLi.get(e)) &&
+      ((r = r.delete(t)), this.TLi?.delete(t), r) &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RemoveMapMark,
         e,
         t
       );
   }
+  RemoveMapMarksByConfigId(e, t) {
+    if (this.SLi && void 0 !== e && void 0 !== t) {
+      t = this.SLi.get(e);
+      if (t) {
+        var r,
+          i,
+          o = [];
+        for ([r, i] of t) i.MarkType === e && o.push(r);
+        for (const n of o) this.RemoveMapMark(e, n);
+      }
+    }
+  }
   RemoveDynamicMapMark(e) {
-    var t = this.WIi?.get(e);
+    var t = this.TLi?.get(e);
     t
       ? this.RemoveMapMark(t?.MarkType, t?.MarkId)
       : Log_1.Log.CheckError() &&
@@ -210,15 +234,15 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   UpdateCustomMarkInfo(e, t) {
     var r;
-    this.FIi &&
-      ((r = this.FIi.get(9))
+    this.SLi &&
+      ((r = this.SLi.get(9))
         ? (r.get(e).TrackTarget = t)
         : Log_1.Log.CheckError() && Log_1.Log.Error("Map", 50, "找不到markId"));
   }
   ReplaceCustomMarkIcon(e, t) {
     var r;
-    this.FIi &&
-      (r = this.FIi.get(9)) &&
+    this.SLi &&
+      (r = this.SLi.get(9)) &&
       (r = r.get(e)) &&
       ((r.MarkConfigId = t),
       EventSystem_1.EventSystem.Emit(
@@ -229,30 +253,30 @@ class MapModel extends ModelBase_1.ModelBase {
       ));
   }
   SpawnDynamicMarkId() {
-    return --this.kIi;
+    return --this.MLi;
   }
   UnlockTeleports(e, t = !1) {
-    if ((t && this.KIi.clear(), !(e.length <= 0))) {
+    if ((t && this.LLi.clear(), !(e.length <= 0))) {
       var r = new Array();
-      for (const n of e) {
-        var i = TeleporterById_1.configTeleporterById.GetConfig(n);
-        r.push(i);
+      for (const o of e) {
+        var i = TeleporterById_1.configTeleporterById.GetConfig(o);
+        i && r.push(i);
       }
-      for (const o of r)
-        o.TeleportEntityConfigId &&
+      for (const n of r)
+        n.TeleportEntityConfigId &&
           ControllerHolder_1.ControllerHolder.CreatureController.ChangeLockTagByTeleportPbDataId(
-            o.TeleportEntityConfigId,
+            n.TeleportEntityConfigId,
             1196894179
           ),
-          this.KIi.set(o.Id, !0),
+          this.LLi.set(n.Id, !0),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.UnlockTeleport,
-            o.Id
+            n.Id
           );
     }
   }
   UnlockTeleport(e) {
-    this.KIi.set(e, !0);
+    this.LLi.set(e, !0);
     var t = ConfigManager_1.ConfigManager.MapConfig.GetTeleportConfigById(e);
     t &&
       t.TeleportEntityConfigId &&
@@ -266,50 +290,96 @@ class MapModel extends ModelBase_1.ModelBase {
       );
   }
   CheckTeleportUnlocked(e) {
-    return this.KIi.get(e);
+    return this.LLi.get(e);
   }
   GetAllUnlockedAreas() {
-    return this.QIi;
+    return this.DLi;
   }
   AddUnlockedAreas(e) {
-    this.QIi.set(e, !0),
+    this.DLi.set(e, !0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MapOpenAreaChange,
         e
       );
   }
+  FullUpdateUnlockedAreas(e) {
+    this.DLi.clear();
+    for (const t of e) this.DLi.set(t, !0);
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.MapOpenAreaFullUpdate,
+      this.DLi
+    );
+  }
   CheckAreasUnlocked(e) {
-    return this.QIi.get(e);
+    return this.DLi.get(e);
+  }
+  SetUnlockMultiMapIds(e) {
+    this.UnlockMultiMapIds = e;
+  }
+  SetUnlockMapBlockIds(e) {
+    this.UnlockMapBlockIds = e;
+  }
+  CheckUnlockMultiMapIds(e) {
+    return this.UnlockMultiMapIds.includes(e);
+  }
+  CheckUnlockMapBlockIds(e) {
+    let t = 0;
+    for (const i of this.UnlockMapBlockIds ?? []) {
+      var r =
+        ConfigManager_1.ConfigManager.MapConfig.GetUnlockMapTileConfigById(i);
+      if (r?.Block === e) {
+        t = r.Id;
+        break;
+      }
+    }
+    return t;
+  }
+  CheckIsInMultiMapWithAreaId(e) {
+    let t = 0;
+    for (const r of ConfigManager_1.ConfigManager.MapConfig?.GetAllSubMapConfig())
+      if (r.Area.includes(e)) {
+        t = r.Id;
+        break;
+      }
+    return t;
   }
   AddEntityIdToPendingList(e, t) {
-    this.YIi.set(e, t);
+    this.ALi.set(e, t);
   }
   RemoveEntityIdToPendingList(e) {
-    this.YIi.delete(e);
+    this.ALi.delete(e);
   }
   GetEntityPendingList() {
-    return this.YIi;
+    return this.ALi;
   }
   IsInMapPolygon(e) {
+    var t;
     return (
       ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.MapConfigId !==
         MapDefine_1.BIG_WORLD_MAP_ID ||
-      UnopenedAreaController_1.UnopenedAreaController.OnCheckUnopenedArea(e)
+      ((t =
+        UnopenedAreaController_1.UnopenedAreaController.OnCheckUnopenedArea(
+          e
+        )) && this.LastSafeLocation.DeepCopy(e),
+      t)
     );
   }
+  GetLastSafeLocation() {
+    return this.LastSafeLocation;
+  }
   IsInUnopenedAreaPullback() {
-    // return (
-    //   !!ModelManager_1.ModelManager.GameModeModel.WorldDone &&
-    //   !ModelManager_1.ModelManager.GameModeModel.IsTeleport &&
-    //   ModelManager_1.ModelManager.GameModeModel?.InstanceDungeon
-    //     ?.MapConfigId === MapDefine_1.BIG_WORLD_MAP_ID &&
-    //   UnopenedAreaController_1.UnopenedAreaController.CheckInPullback()
-    // );
     return false;
+    return (
+      !!ModelManager_1.ModelManager.GameModeModel.WorldDone &&
+      !ModelManager_1.ModelManager.GameModeModel.IsTeleport &&
+      ModelManager_1.ModelManager.GameModeModel?.InstanceDungeon
+        ?.MapConfigId === MapDefine_1.BIG_WORLD_MAP_ID &&
+      UnopenedAreaController_1.UnopenedAreaController.CheckInPullback()
+    );
   }
   SetMarkExtraShowState(e, t, r, i) {
     return (
-      this.XIi.set(e, { Id: e, IsShow: t, NeedFocus: r, ShowFlag: i }),
+      this.ULi.set(e, { Id: e, IsShow: t, NeedFocus: r, ShowFlag: i }),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnMarkItemShowStateChange,
         e
@@ -319,11 +389,11 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   GetMarkExtraShowState(e) {
     return (
-      this.XIi.get(e) ?? {
+      this.ULi.get(e) ?? {
         Id: e,
         IsShow: !1,
         NeedFocus: !1,
-        ShowFlag: Protocol_1.Aki.Protocol.MapMarkShowFlag.ShowNormal,
+        ShowFlag: Protocol_1.Aki.Protocol.BNs.Proto_ShowNormal,
       }
     );
   }
@@ -347,17 +417,17 @@ class MapModel extends ModelBase_1.ModelBase {
     return t;
   }
   ForceSetMarkVisible(e, t, r) {
-    let i = this.VIi.get(e);
-    void 0 === i && ((i = new Map()), this.VIi.set(e, i)), i.set(t, r);
+    let i = this.ELi.get(e);
+    void 0 === i && ((i = new Map()), this.ELi.set(e, i)), i.set(t, r);
   }
   GetMarkForceVisible(e, t) {
     let r = !0;
-    e = this.VIi.get(e);
+    e = this.ELi.get(e);
     return (r = e && e.has(t) ? e.get(t) ?? !1 : r);
   }
   AddOccupationInfo(e) {
     var t = ConfigManager_1.ConfigManager.QuestNewConfig.GetNewOccupationConfig(
-      e.ResourceName
+      e.cvs
     );
     if (
       t &&
@@ -369,27 +439,27 @@ class MapModel extends ModelBase_1.ModelBase {
       if (t) {
         t = t.LevelPlayIds;
         for (const r of t)
-          this.HIi.set(r, MathUtils_1.MathUtils.LongToBigInt(e.IncId));
-        this.jIi.set(e.ResourceName, t);
+          this.yLi.set(r, MathUtils_1.MathUtils.LongToBigInt(e.Ykn));
+        this.ILi.set(e.cvs, t);
       }
     }
   }
   RemoveOccupationInfo(e) {
-    if (this.jIi.has(e)) {
-      var t = this.jIi.get(e);
-      this.jIi.delete(e);
-      for (const r of t) this.HIi.delete(r);
+    if (this.ILi.has(e)) {
+      var t = this.ILi.get(e);
+      this.ILi.delete(e);
+      for (const r of t) this.yLi.delete(r);
     }
   }
   IsLevelPlayOccupied(e) {
-    e = this.HIi.get(e);
+    e = this.yLi.get(e);
     return { IsOccupied: !!e, QuestId: e };
   }
   IsMarkUnlockedByServer(e) {
-    return this.JIi.get(e) ?? !1;
+    return this.PLi.get(e) ?? !1;
   }
   SetMarkServerOpenState(e, t) {
-    this.JIi.set(e, t);
+    this.PLi.set(e, t);
   }
 }
 exports.MapModel = MapModel;
