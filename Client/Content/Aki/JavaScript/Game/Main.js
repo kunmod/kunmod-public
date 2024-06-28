@@ -221,20 +221,18 @@ class MainMenu {
       );
 
       this.updateMenuState();
-
-      // translate
       this.getTranslation();
 
       for (const option in ModLanguage.Langs) {
         this.Menu.LanguageValue.AddOption(ModLanguage.Langs[option]);
       }
 
+      this.Menu.LanguageValue.SetSelectedOption(ModManager.Settings.Language);
+
       this.Menu.LanguageValue.OnSelectionChanged.Add((selectedItem) => {
         if (selectedItem && this.isMenuLoaded) {
           ModManager.Settings.Language = selectedItem;
           this.KunLog("Language: " + selectedItem);
-
-          // update tr
           this.getTranslation();
 
           // update kill aura selection
@@ -256,8 +254,6 @@ class MainMenu {
           );
         }
       });
-
-      this.Menu.LanguageValue.SetSelectedOption(ModManager.Settings.Language);
 
       this.Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.GodMode = isChecked;
