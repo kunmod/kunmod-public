@@ -32,25 +32,25 @@ exports.STRENGTH_TOLERANCE = 0.01;
 let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.fte = void 0),
-      (this.DXr = void 0),
-      (this.Ste = void 0),
-      (this.YDo = void 0),
-      (this.nat = void 0),
-      (this.yJo = -0),
-      (this.IJo = -0),
-      (this.TJo = (t, e) => {
+      (this.Hte = void 0),
+      (this.zJo = void 0),
+      (this.Xte = void 0),
+      (this.mbr = void 0),
+      (this.zht = void 0),
+      (this.wrn = -0),
+      (this.Brn = -0),
+      (this.brn = (t, e) => {
         if (
-          this.nat?.GetPlayerId() ===
+          this.zht?.GetPlayerId() ===
             ModelManager_1.ModelManager.CreatureModel.GetPlayerId() &&
           e
         )
-          switch (this.YDo.PositionState) {
+          switch (this.mbr.PositionState) {
             case CharacterUnifiedStateTypes_1.ECharPositionState.Ground:
               return (
-                this.YDo.MoveState ===
+                this.mbr.MoveState ===
                   CharacterUnifiedStateTypes_1.ECharMoveState.Sprint &&
-                  this.YDo.SetMoveState(
+                  this.mbr.SetMoveState(
                     CharacterUnifiedStateTypes_1.ECharMoveState.Run
                   ),
                 void this.EmptyStrengthPunish()
@@ -60,50 +60,49 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
             case CharacterUnifiedStateTypes_1.ECharPositionState.Air:
               var i;
               return (
-                this.YDo.MoveState ===
+                this.mbr.MoveState ===
                   CharacterUnifiedStateTypes_1.ECharMoveState.Glide &&
-                  (i = this.Entity.GetComponent(49)).Valid &&
+                  (i = this.Entity.GetComponent(50)).Valid &&
                   i.ExitGlideState(),
                 void this.EmptyStrengthPunish()
               );
             case CharacterUnifiedStateTypes_1.ECharPositionState.Water:
-              this.Ste.ContainsTagById(400631093) ||
-                ModelManager_1.ModelManager.FormationModel?.GetCurrentEntity
+              this.Xte.HasTag(400631093) ||
+                ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity
                   ?.Id === this.Entity.Id;
-              if (ModManager_1.ModManager.Settings.InfiniteStamina == false) {
-                this.Entity.CheckGetComponent(171)?.Drowning();
-              }
+                if (ModManager_1.ModManager.Settings.InfiniteStamina) return;
+                this.Entity.CheckGetComponent(172)?.Drowning();
           }
       }),
-      (this.zUo = (t, e) => {
-        this.YDo.PositionState !==
+      (this.CGr = (t, e) => {
+        this.mbr.PositionState !==
           CharacterUnifiedStateTypes_1.ECharPositionState.Water &&
-          this.fte.IsMoveAutonomousProxy &&
+          this.Hte.IsMoveAutonomousProxy &&
           this.NewMoveStateStrengthDecrease(e);
       }),
-      (this.LJo = (t) => {
-        this.DXr.RemoveBuffByHandle(this.yJo),
+      (this.qrn = (t) => {
+        this.zJo.RemoveBuffByHandle(this.wrn),
           t !== BigInt(0) && this.UpdateStrengthDecrease(t);
       }),
-      (this.ZUo = (t, e) => {
+      (this.gGr = (t, e) => {
         var i =
           FormationAttributeController_1.FormationAttributeController.GetValue(
             1
           );
         switch (
           (t === CharacterUnifiedStateTypes_1.ECharPositionState.Water &&
-            this.DXr.RemoveBuffByHandle(this.yJo),
+            this.zJo.RemoveBuffByHandle(this.wrn),
           e === CharacterUnifiedStateTypes_1.ECharPositionState.Water &&
             i < exports.STRENGTH_TOLERANCE &&
-            this.TJo(1, !0),
+            this.brn(1, !0),
           e)
         ) {
           case CharacterUnifiedStateTypes_1.ECharPositionState.Air:
-            this.DXr?.HasBuffAuthority() &&
-              this.DXr.AddBuff(
+            this.zJo?.HasBuffAuthority() &&
+              this.zJo.AddBuff(
                 CharacterBuffIds_1.buffId.AirStrengthDecreaseRetain,
                 {
-                  InstigatorId: this.DXr.CreatureDataId,
+                  InstigatorId: this.zJo.CreatureDataId,
                   Reason: "进入空中状态",
                 }
               ),
@@ -118,38 +117,38 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
             );
             break;
           case CharacterUnifiedStateTypes_1.ECharPositionState.Ground:
-            this.DJo();
+            this.Grn();
         }
       }),
-      (this.Vwo = (t) => {});
+      (this.h2r = (t) => {});
   }
   OnStart() {
     return (
-      (this.fte = this.Entity.CheckGetComponent(3)),
-      (this.DXr = this.Entity.CheckGetComponent(156)),
-      (this.Ste = this.Entity.CheckGetComponent(184)),
-      (this.YDo = this.Entity.CheckGetComponent(157)),
-      (this.nat = this.Entity.CheckGetComponent(0)),
-      (this.IJo = -1),
-      this.RJo(),
+      (this.Hte = this.Entity.CheckGetComponent(3)),
+      (this.zJo = this.Entity.CheckGetComponent(157)),
+      (this.Xte = this.Entity.CheckGetComponent(185)),
+      (this.mbr = this.Entity.CheckGetComponent(158)),
+      (this.zht = this.Entity.CheckGetComponent(0)),
+      (this.Brn = -1),
+      this.Nrn(),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
-        this.zUo
+        this.CGr
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnPositionStateChanged,
-        this.ZUo
+        this.gGr
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharSwimStrengthChanged,
-        this.LJo
+        this.qrn
       ),
       FormationAttributeController_1.FormationAttributeController.AddThresholdListener(
         1,
-        this.TJo,
+        this.brn,
         0,
         0,
         "Strength.RoleStrengthComponent"
@@ -157,7 +156,7 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.RoleOnStateInherit,
-        this.Vwo
+        this.h2r
       ),
       !0
     );
@@ -167,66 +166,63 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
-        this.zUo
+        this.CGr
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnPositionStateChanged,
-        this.ZUo
+        this.gGr
       ),
       FormationAttributeController_1.FormationAttributeController.RemoveThresholdListener(
         1,
-        this.TJo
+        this.brn
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.RoleOnStateInherit,
-        this.Vwo
+        this.h2r
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharSwimStrengthChanged,
-        this.LJo
+        this.qrn
       ),
       !0
     );
   }
-  RJo() {}
+  Nrn() {}
   EmptyStrengthPunish() {
-    if (ModManager_1.ModManager.Settings.InfiniteStamina == false) {
-      this.DXr.HasBuffAuthority() &&
-        this.DXr.GetBuffTotalStackById(
-          CharacterBuffIds_1.buffId.EmptyStrengthPunish
-        ) < 1 &&
-        this.DXr.AddBuff(CharacterBuffIds_1.buffId.EmptyStrengthPunish, {
-          InstigatorId: this.DXr.CreatureDataId,
-          Reason: "体力耗尽",
-        }),
-        this.Ste.RemoveTagById(388142570);
-    }
+    if (ModManager_1.ModManager.Settings.InfiniteStamina) return;
+    this.zJo.HasBuffAuthority() &&
+      this.zJo.GetBuffTotalStackById(
+        CharacterBuffIds_1.buffId.EmptyStrengthPunish
+      ) < 1 &&
+      this.zJo.AddBuff(CharacterBuffIds_1.buffId.EmptyStrengthPunish, {
+        InstigatorId: this.zJo.CreatureDataId,
+        Reason: "体力耗尽",
+      }),
+      this.Xte.RemoveTag(388142570);
   }
   UpdateStrengthDecrease(t) {
-    if (ModManager_1.ModManager.Settings.InfiniteStamina == false) {
-      this.yJo = this.DXr.AddBuffLocal(t, {
-        InstigatorId: this.DXr.CreatureDataId,
-        Reason: "RoleStrengthComponent.UpdateStrengthDecrease",
-      });
-    }
+    if (ModManager_1.ModManager.Settings.InfiniteStamina) return;
+    this.wrn = this.zJo.AddBuffLocal(t, {
+      InstigatorId: this.zJo.CreatureDataId,
+      Reason: "RoleStrengthComponent.UpdateStrengthDecrease",
+    });
   }
   ToggleStrengthForbiddenGe(t) {
-    if (ModManager_1.ModManager.Settings.InfiniteStamina == false) {
-      this.DXr.RemoveBuffByHandle(this.IJo, -1),
-        (this.IJo = this.DXr.AddBuffLocal(t, {
-          InstigatorId: this.DXr.CreatureDataId,
-          Reason: "RoleStrengthComponent.ToggleStrengthForbiddenGe",
-        }));
-    }
+    if (ModManager_1.ModManager.Settings.InfiniteStamina) return;
+    this.zJo.RemoveBuffByHandle(this.Brn, -1),
+      (this.Brn = this.zJo.AddBuffLocal(t, {
+        InstigatorId: this.zJo.CreatureDataId,
+        Reason: "RoleStrengthComponent.ToggleStrengthForbiddenGe",
+      }));
   }
-  DJo() {
-    this.DXr.RemoveBuffByHandle(this.IJo, -1);
+  Grn() {
+    this.zJo.RemoveBuffByHandle(this.Brn, -1);
   }
   NewMoveStateStrengthDecrease(t) {
-    switch ((this.DXr.RemoveBuffByHandle(this.yJo), t)) {
+    switch ((this.zJo.RemoveBuffByHandle(this.wrn), t)) {
       case CharacterUnifiedStateTypes_1.ECharMoveState.Sprint:
         return void this.UpdateStrengthDecrease(
           CharacterBuffIds_1.buffId.SprintCost
@@ -235,8 +231,8 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
         this.UpdateStrengthDecrease(CharacterBuffIds_1.buffId.FastClimbCost);
         break;
       case CharacterUnifiedStateTypes_1.ECharMoveState.Glide:
-        this.DXr.AddBuff(CharacterBuffIds_1.buffId.GlideCoolDown, {
-          InstigatorId: this.DXr.CreatureDataId,
+        this.zJo.AddBuff(CharacterBuffIds_1.buffId.GlideCoolDown, {
+          InstigatorId: this.zJo.CreatureDataId,
           Reason: "进入滑翔状态",
         }),
           this.UpdateStrengthDecrease(CharacterBuffIds_1.buffId.GlideCost);
