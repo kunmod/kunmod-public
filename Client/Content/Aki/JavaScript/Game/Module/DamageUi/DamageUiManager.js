@@ -50,40 +50,40 @@ class DamageUiManager {
           "MaxDamageOffsetDistance"
         )),
       (this.DamagePositionCache = Vector_1.Vector.Create()),
-      (this.FNt =
+      (this.Okt =
         ConfigManager_1.ConfigManager.DamageUiConfig.GetAllDamageTextConfig()),
       this.InitializeDamageViewData();
   }
   static InitializeDamageViewData() {
-    for (const e of this.FNt) {
+    for (const e of this.Okt) {
       var a = new DamageViewData_1.DamageViewData();
-      a.Initialize(e), this.VNt.set(e.Id, a);
+      a.Initialize(e), this.kkt.set(e.Id, a);
     }
   }
   static ClearDamageViewData() {
-    this.VNt.clear();
+    this.kkt.clear();
   }
   static GetDamageViewData(a) {
-    return this.VNt.get(a);
+    return this.kkt.get(a);
   }
   static PreloadDamageView() {
-    for (let a = this.HNt.length; a < PRELOAD_DAMAGE_VIEW_COUNT; a++) {
+    for (let a = this.Fkt.length; a < PRELOAD_DAMAGE_VIEW_COUNT; a++) {
       var e = new DamageView_1.DamageView();
-      e.Init(), this.TotalDamageViewNum++, this.HNt.push(e);
+      e.Init(), this.TotalDamageViewNum++, this.Fkt.push(e);
     }
   }
   static PreloadSequence() {}
   static ApplyDamage(e, i, t, r, g, n, o = -1, s = "") {
     if (
-      DamageUiManager.jNt &&
+      DamageUiManager.Vkt &&
       r.Active &&
       !(o < 0 || (1 === o && n && 0 === e))
     ) {
-      var m = ModelManager_1.ModelManager.FormationModel.GetCurrentEntity;
+      var m = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
       if (m) {
         m = m.Id === r.Id;
         let a = void 0;
-        ((a = 0 < this.WNt.length ? this.WNt.pop() : new DamageInfo()).Damage =
+        ((a = 0 < this.Hkt.length ? this.Hkt.pop() : new DamageInfo()).Damage =
           e),
           (a.ElementId = i),
           (a.DamagePosition = t),
@@ -92,16 +92,16 @@ class DamageUiManager {
           (a.IsCure = n),
           (a.DamageTextId = o),
           (a.DamageText = s),
-          this.KNt.Push(a);
+          this.jkt.Push(a);
       }
     }
   }
-  static QNt(a) {
+  static Wkt(a) {
     if (ModManager_1.ModManager.Settings.HideDmgUi) return false;
     var e, i, t, r;
-    DamageUiManager.jNt &&
+    DamageUiManager.Vkt &&
       ((e = Math.floor(Math.abs(a.Damage))),
-      (i = DamageUiManager.$Nt(
+      (i = DamageUiManager.Kkt(
         a.ElementId,
         a.IsCure,
         a.Damage,
@@ -122,7 +122,7 @@ class DamageUiManager {
             ? (r = this.ProjectWorldLocationToScreenPosition(
                 a.DamagePosition
               )) &&
-              DamageUiManager.XNt(
+              DamageUiManager.Qkt(
                 e,
                 this.DamagePositionCache,
                 r,
@@ -139,13 +139,13 @@ class DamageUiManager {
               ])));
   }
   static Tick(a) {
-    for (const i of DamageUiManager.YNt) i.Tick(a);
-    for (let a = 0; a < MAX_DAMAGE_PER_FRAME && !this.KNt.Empty; a++) {
-      var e = this.KNt.Pop();
-      this.QNt(e), this.WNt.push(e);
+    for (const i of DamageUiManager.Xkt) i.Tick(a);
+    for (let a = 0; a < MAX_DAMAGE_PER_FRAME && !this.jkt.Empty; a++) {
+      var e = this.jkt.Pop();
+      this.Wkt(e), this.Hkt.push(e);
     }
   }
-  static $Nt(a, e, i, t = -1) {
+  static Kkt(a, e, i, t = -1) {
     let r = -1;
     return (r =
       t && -1 !== t
@@ -160,8 +160,8 @@ class DamageUiManager {
   }
   static ProjectWorldLocationToScreenPosition(a) {
     var e = Global_1.Global.CharacterController;
-    if (UE.GameplayStatics.ProjectWorldToScreen(e, a, this.JNt, !1)) {
-      e = (0, puerts_1.$unref)(this.JNt);
+    if (UE.GameplayStatics.ProjectWorldToScreen(e, a, this.$kt, !1)) {
+      e = (0, puerts_1.$unref)(this.$kt);
       if (e) {
         var a = e.X,
           i = e.Y;
@@ -174,49 +174,49 @@ class DamageUiManager {
       a
     );
   }
-  static XNt(a, e, i, t, r = !1, g = !1, n = !1, o = "") {
+  static Qkt(a, e, i, t, r = !1, g = !1, n = !1, o = "") {
     let s = void 0;
     return (
-      0 < this.HNt.length
-        ? (s = this.HNt.pop())
+      0 < this.Fkt.length
+        ? (s = this.Fkt.pop())
         : ((s = new DamageView_1.DamageView()).Init(),
           this.TotalDamageViewNum++),
-      this.YNt.add(s),
+      this.Xkt.add(s),
       s.InitializeData(a, e, i, t, r, g, n, o),
       s
     );
   }
   static RemoveDamageView(a) {
-    this.YNt.has(a) && (a.ClearData(), this.YNt.delete(a), this.HNt.push(a));
+    this.Xkt.has(a) && (a.ClearData(), this.Xkt.delete(a), this.Fkt.push(a));
   }
   static OnEditorPlatformChanged() {
-    for (const a of DamageUiManager.YNt) a.RefreshFontSize();
-    for (const e of DamageUiManager.HNt) e.RefreshFontSize();
+    for (const a of DamageUiManager.Xkt) a.RefreshFontSize();
+    for (const e of DamageUiManager.Fkt) e.RefreshFontSize();
   }
   static OnLeaveLevel() {
-    for (const a of DamageUiManager.YNt) a.ClearData(), a.Destroy();
-    DamageUiManager.YNt.clear();
-    for (const e of DamageUiManager.HNt) e.Destroy();
-    (DamageUiManager.HNt.length = 0),
+    for (const a of DamageUiManager.Xkt) a.ClearData(), a.Destroy();
+    DamageUiManager.Xkt.clear();
+    for (const e of DamageUiManager.Fkt) e.Destroy();
+    (DamageUiManager.Fkt.length = 0),
       (DamageUiManager.TotalDamageViewNum = 0),
       DamageUiSequencePool_1.DamageUiSequencePool.Clear(),
-      DamageUiManager.KNt.Clear(),
-      (DamageUiManager.WNt.length = 0);
+      DamageUiManager.jkt.Clear(),
+      (DamageUiManager.Hkt.length = 0);
   }
   static Clear() {}
 }
-((exports.DamageUiManager = DamageUiManager).KNt = new Queue_1.Queue()),
-  (DamageUiManager.WNt = []),
+((exports.DamageUiManager = DamageUiManager).jkt = new Queue_1.Queue()),
+  (DamageUiManager.Hkt = []),
   (DamageUiManager.TotalDamageViewNum = 0),
-  (DamageUiManager.YNt = new Set()),
-  (DamageUiManager.HNt = new Array()),
-  (DamageUiManager.VNt = new Map()),
-  (DamageUiManager.jNt = !0),
+  (DamageUiManager.Xkt = new Set()),
+  (DamageUiManager.Fkt = new Array()),
+  (DamageUiManager.kkt = new Map()),
+  (DamageUiManager.Vkt = !0),
   (DamageUiManager.MinDamageOffsetScale = 0),
   (DamageUiManager.MaxDamageOffsetScale = 0),
   (DamageUiManager.MinDamageOffsetDistance = 0),
   (DamageUiManager.MaxDamageOffsetDistance = 0),
   (DamageUiManager.DamagePositionCache = void 0),
-  (DamageUiManager.FNt = void 0),
-  (DamageUiManager.JNt = (0, puerts_1.$ref)(void 0));
+  (DamageUiManager.Okt = void 0),
+  (DamageUiManager.$kt = (0, puerts_1.$ref)(void 0));
 //# sourceMappingURL=DamageUiManager.js.map
