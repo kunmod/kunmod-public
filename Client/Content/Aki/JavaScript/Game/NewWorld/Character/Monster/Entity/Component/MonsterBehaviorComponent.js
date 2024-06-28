@@ -56,9 +56,9 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
             ModManager_1.ModManager.Settings.killAuraState == 0
           ) {
             CombatMessage_1.CombatNet.Call(
-                6947, // NetDefine_1.ERequestMessageId.MonsterDrownRequest
+                24697,
                 this.Entity,
-                Protocol_1.Aki.Protocol.MonsterDrownRequest.create()
+                Protocol_1.Aki.Protocol.jNn.create()
               );
           }
         e &&
@@ -84,9 +84,9 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
         ModManager_1.ModManager.Settings.killAuraState == 1
       ) {
         CombatMessage_1.CombatNet.Call(
-            6947, // NetDefine_1.ERequestMessageId.MonsterDrownRequest
+            24697,
             this.Entity,
-            Protocol_1.Aki.Protocol.MonsterDrownRequest.create()
+            Protocol_1.Aki.Protocol.jNn.create()
           );
       }
     return (
