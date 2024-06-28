@@ -21,81 +21,81 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.InputData = void 0),
-      (this.BDt = void 0),
+      (this.DUt = void 0),
       (this.j3 = CommonDefine_1.INVALID_VALUE),
-      (this.bDt = void 0),
+      (this.RUt = void 0),
       (this.ConfirmButton = void 0),
-      (this.LDt = void 0),
-      (this.qDt = void 0),
-      (this.GDt = (t) => {
-        t && 1 === this.BDt && this.RefreshTips(0);
+      (this.vUt = void 0),
+      (this.UUt = void 0),
+      (this.AUt = (t) => {
+        t && 1 === this.DUt && this.RefreshTips(0);
       }),
-      (this.NDt = () => {
+      (this.PUt = () => {
         this.CloseMe();
       }),
-      (this.ODt = () => {
-        var t = this.LDt.GetText()
-        this.ExecuteInputConfirm(t)
-        //   i = StringUtils_1.StringUtils.GetStringRealCount(t);
+      (this.xUt = () => {
+        var t = this.vUt.GetText();
+        this.ExecuteInputConfirm(t);
+        //  i = StringUtils_1.StringUtils.GetStringRealCount(t);
         // i > this.GetMaxLimit()
-        //   ? (this.RefreshTips(2), (this.j3 = 0))
-        //   : 0 === i && this.InputData.IsCheckNone
-        //   ? (this.RefreshTips(1), (this.j3 = 0))
-        //   : i < this.GetMinLimit()
-        //   ? (this.RefreshTips(3), (this.j3 = 0))
-        //   : this.ExtraConfirmCheck(i, t) && this.ExecuteInputConfirm(t);
+        //  ? (this.RefreshTips(2), (this.j3 = 0))
+        //  : 0 === i && this.InputData.IsCheckNone
+        // ? (this.RefreshTips(1), (this.j3 = 0))
+        //  : i < this.GetMinLimit()
+        //  ? (this.RefreshTips(3), (this.j3 = 0))
+        //  : this.ExtraConfirmCheck(i, t) && this.ExecuteInputConfirm(t);
       }),
-      (this.kDt = () => {
+      (this.wUt = () => {
         this.SetTipsVisible(!1),
           this.ConfirmButton.SetSelfInteractive(!0),
           (this.j3 = CommonDefine_1.INVALID_VALUE);
       }),
-      (this.FDt = () => {
-        this.VDt("PrefabTextItem_Entertext_Text", 0);
+      (this.BUt = () => {
+        this.bUt("PrefabTextItem_Entertext_Text", 0);
       }),
-      (this.HDt = () => {
-        // this.VDt(
-        //   "PrefabTextItem_Textoverlength_Text",
+      (this.qUt = () => {
+        // this.bUt(
+        //    "PrefabTextItem_Textoverlength_Text",
         //   CommonDefine_1.INVALID_VALUE
-        // ),
+        //  ),
         //   this.ConfirmButton.SetSelfInteractive(!1);
       }),
-      (this.jDt = () => {
-        this.VDt("CDKey_TooShort", 0),
+      (this.GUt = () => {
+        this.bUt("CDKey_TooShort", 0),
           this.ConfirmButton.SetSelfInteractive(!1);
       }),
-      (this.WDt = () => {
-        this.VDt("PrefabTextItem_Textillegality_Text", 0);
+      (this.NUt = () => {
+        this.bUt("PrefabTextItem_Textillegality_Text", 0);
       }),
       (this.CdKeyErrorText =
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew("CDKey_Error")),
-      (this.KDt = () => {
-        this.QDt(this.CdKeyErrorText, 0),
+      (this.OUt = () => {
+        this.kUt(this.CdKeyErrorText, 0),
           this.ConfirmButton.SetSelfInteractive(!1);
       }),
-      (this.$Dt = () => {
+      (this.FUt = () => {
         var t =
           CdKeyInputController_1.CdKeyInputController.GetCdKeyUseCd().toString();
-        this.VDt("CDKey_CDtime", 0, t),
+        this.bUt("CDKey_CDtime", 0, t),
           this.ConfirmButton.SetSelfInteractive(!1);
       }),
-      (this.XDt = () => {
-        this.LDt.SetText("", !0);
+      (this.VUt = () => {
+        this.vUt.SetText("", !0);
       }),
-      (this.YDt = () => {
+      (this.HUt = () => {
         var t = (0, puerts_1.$ref)("");
         UE.LGUIBPLibrary.ClipBoardPaste(t),
           (t = (0, puerts_1.$unref)(t)),
-          StringUtils_1.StringUtils.IsEmpty(t) || this.LDt.SetText(t, !0);
+          StringUtils_1.StringUtils.IsEmpty(t) || this.vUt.SetText(t, !0);
       }),
-      (this.JDt = () => {
+      (this.jUt = () => {
         var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             "SetNameSuccess"
           );
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(t);
       }),
-      (this.zDt = () => {
+      (this.WUt = () => {
         var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             "SetSignSuccess"
@@ -121,23 +121,23 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       [7, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [5, this.GDt],
-        [3, this.NDt],
-        [4, this.ODt],
+        [5, this.AUt],
+        [3, this.PUt],
+        [4, this.xUt],
       ]);
   }
   ExtraConfirmCheck(t, i) {
     return !0;
   }
   ExecuteInputConfirm(t) {
-    if (this.InputData?.CustomFunc) {//Add CustomFunc
-      this.InputData.CustomFunc?.(t).then(
-        () => this.CloseMe()
-      );
-    } else {//The original
+    if (this.InputData?.CustomFunc) {
+      //Add CustomFunc
+      this.InputData.CustomFunc?.(t).then(() => this.CloseMe());
+    } else {
+      //The original
       this.InputData.ConfirmFunc?.(t).then(
         (t) => {
-          t === Protocol_1.Aki.Protocol.ErrorCode.ContainsDirtyWord
+          t === Protocol_1.Aki.Protocol.lkn.Proto_ContainsDirtyWord
             ? this.RefreshTips(4)
             : this.CloseMe();
         },
@@ -150,50 +150,50 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
   }
   OnBeforeCreate() {
     (this.InputData = this.OpenParam),
-      (this.bDt = {
-        [0]: this.kDt,
-        1: this.FDt,
-        2: this.HDt,
-        3: this.jDt,
-        4: this.WDt,
-        5: this.KDt,
-        6: this.$Dt,
+      (this.RUt = {
+        [0]: this.wUt,
+        1: this.BUt,
+        2: this.qUt,
+        3: this.GUt,
+        4: this.NUt,
+        5: this.OUt,
+        6: this.FUt,
       });
   }
-  VDt(t, i, ...e) {
+  bUt(t, i, ...e) {
     this.SetTipsVisible(!0);
     var s = this.GetText(2);
     LguiUtil_1.LguiUtil.SetLocalTextNew(s, t, e), (this.j3 = i);
   }
-  QDt(t, i) {
+  kUt(t, i) {
     this.SetTipsVisible(!0), this.GetText(2).SetText(t), (this.j3 = i);
   }
   OnBeforeShow() {
-    this.ZDt(), this.uqe(), this.RefreshTips(0), this.InitExtraParam();
+    this.KUt(), this.mGe(), this.RefreshTips(0), this.InitExtraParam();
   }
   SetClearOrPaste() {
-    "" === this.LDt.GetText()
-      ? (this.qDt.RefreshSprite("SP_Paste"), this.qDt.BindCallback(this.YDt))
-      : (this.qDt.RefreshSprite("SP_Clear"), this.qDt.BindCallback(this.XDt));
+    "" === this.vUt.GetText()
+      ? (this.UUt.RefreshSprite("SP_Paste"), this.UUt.BindCallback(this.HUt))
+      : (this.UUt.RefreshSprite("SP_Clear"), this.UUt.BindCallback(this.VUt));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnNameChange,
-      this.JDt
+      this.jUt
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSignChange,
-        this.zDt
+        this.WUt
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnNameChange,
-      this.JDt
+      this.jUt
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSignChange,
-        this.zDt
+        this.WUt
       );
   }
   OnTick(t) {
@@ -202,19 +202,19 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       this.RefreshTips(0);
   }
   OnBeforeDestroy() {
-    this.eRt(),
-      (this.qDt = void 0),
-      (this.LDt = void 0),
+    this.QUt(),
+      (this.UUt = void 0),
+      (this.vUt = void 0),
       (this.ConfirmButton = void 0);
   }
-  ZDt() {
-    (this.qDt = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(this.GetItem(7))),
+  KUt() {
+    (this.UUt = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(this.GetItem(7))),
       this.GetItem(7).SetUIActive(this.InputData.NeedFunctionButton),
       (this.ConfirmButton = this.GetButton(4)),
-      (this.LDt = this.GetInputText(5)),
-      (this.LDt.bAllowMultiLine = this.IsAllowMultiLine()),
-      this.LDt.OnTextChange.Bind(this.OnTextChange),
-      this.LDt.SetText(this.InputData.InputText, !0),
+      (this.vUt = this.GetInputText(5)),
+      (this.vUt.bAllowMultiLine = this.IsAllowMultiLine()),
+      this.vUt.OnTextChange.Bind(this.OnTextChange),
+      this.vUt.SetText(this.InputData.InputText, !0),
       this.GetText(6).SetText(this.InputData.DefaultText),
       this.SetClearOrPaste(),
       this.SetTipsVisible(!1);
@@ -223,12 +223,12 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
     this.GetItem(1).SetUIActive(t);
   }
   InitExtraParam() {}
-  eRt() {
-    this.LDt.OnTextChange.Unbind();
+  QUt() {
+    this.vUt.OnTextChange.Unbind();
   }
-  uqe() {
+  mGe() {
     if (this.InputData?.Title) {
-      this.GetText(0).SetText(this.InputData.Title)
+      this.GetText(0).SetText(this.InputData.Title);
     } else {
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(0),
@@ -237,8 +237,9 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       );
     }
   }
+
   RefreshTips(t) {
-    t !== this.BDt && ((this.BDt = t), this.bDt[t]());
+    t !== this.DUt && ((this.DUt = t), this.RUt[t]());
   }
   GetMinLimit() {
     return 0;

@@ -18,63 +18,63 @@ class WaterMaskView extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnGetPlayerBasicInfo,
-      this.Lqr
+      this.ENo
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetResolution,
-        this.Dqr
+        this.yNo
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BackLoginView,
-        this.Rqr
+        this.INo
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnGetPlayerBasicInfo,
-      this.Lqr
+      this.ENo
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetResolution,
-        this.Dqr
+        this.yNo
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BackLoginView,
-        this.Rqr
+        this.INo
       );
   }
 }
 (exports.WaterMaskView = WaterMaskView),
-  ((_a = WaterMaskView).Uqr = void 0),
-  (WaterMaskView.Aqr = 300),
-  (WaterMaskView.xqr = 1500),
-  (WaterMaskView.Pqr = 30),
-  (WaterMaskView.wqr = 0.09),
-  (WaterMaskView.MOt = 60),
-  (WaterMaskView.Lqr = () => {
-    void 0 !== _a.Uqr && _a.Rqr();
+  ((_a = WaterMaskView).TNo = void 0),
+  (WaterMaskView.LNo = 300),
+  (WaterMaskView.DNo = 300),
+  (WaterMaskView.RNo = 30),
+  (WaterMaskView.UNo = 0.09),
+  (WaterMaskView.p2t = 40),
+  (WaterMaskView.ENo = () => {
+    void 0 !== _a.TNo && _a.INo();
     var e = UiLayer_1.UiLayer.GetLayerRootUiItem(
         UiLayerType_1.ELayerType.WaterMask
       ),
       t =
-        ((_a.Uqr = UE.KuroActorManager.SpawnActor(
+        ((_a.TNo = UE.KuroActorManager.SpawnActor(
           Info_1.Info.World,
           UE.UIContainerActor.StaticClass(),
           MathUtils_1.MathUtils.DefaultTransform,
           void 0
         )),
-        _a.Uqr.RootComponent),
+        _a.TNo.RootComponent),
       e =
         (t.SetDisplayName("WaterMaskContainer"),
-        UE.KuroStaticLibrary.SetActorPermanent(_a.Uqr, !0, !0),
-        _a.Uqr.K2_AttachRootComponentTo(e),
+        UE.KuroStaticLibrary.SetActorPermanent(_a.TNo, !0, !0),
+        _a.TNo.K2_AttachRootComponentTo(e),
         t.GetRootCanvas().GetOwner().RootComponent),
-      i = (e.widget.width % _a.Aqr) / 2,
-      r = (e.widget.height % _a.xqr) / 2,
+      i = (e.widget.width % _a.LNo) / 2,
+      r = (e.widget.height % _a.DNo) / 2,
       n = e.widget.width / 2,
       _ = e.widget.height / 2,
-      s = Math.ceil(e.widget.width / _a.Aqr),
-      o = Math.ceil(e.widget.height / _a.xqr),
+      s = Math.ceil(e.widget.width / _a.LNo),
+      o = Math.ceil(e.widget.height / _a.DNo),
       //v = ModelManager_1.ModelManager.FunctionModel.PlayerId.toString();
       v = "there is no watermask";
     for (let a = 0; a < s; a++)
@@ -90,22 +90,22 @@ class WaterMaskView extends UiControllerBase_1.UiControllerBase {
             (E.K2_AttachRootComponentTo(t),
             U.SetDisplayName("WaterMaskText"),
             E.GetComponentByClass(UE.UIText.StaticClass()));
-        U.SetFontSize(_a.MOt),
+        U.SetFontSize(_a.p2t),
           U.SetOverflowType(0),
-          U.SetAlpha(1),
+          U.SetAlpha(_a.UNo),
           U.SetFont(UE.LGUIFontData.GetDefaultFont()),
           U.SetText(v),
           U.SetUIRelativeLocation(
-            new UE.Vector(a * _a.Aqr - n + i, e * _a.xqr - _ + r, 0)
+            new UE.Vector(a * _a.LNo - n + i, e * _a.DNo - _ + r, 0)
           ),
-          U.SetUIRelativeRotation(new UE.Rotator(0, _a.Pqr, 0)),
+          U.SetUIRelativeRotation(new UE.Rotator(0, _a.RNo, 0)),
           UE.KuroStaticLibrary.SetActorPermanent(E, !0, !0);
       }
   }),
-  (WaterMaskView.Rqr = () => {
-    void 0 !== _a.Uqr && (_a.Uqr.K2_DestroyActor(), (_a.Uqr = void 0));
+  (WaterMaskView.INo = () => {
+    void 0 !== _a.TNo && (_a.TNo.K2_DestroyActor(), (_a.TNo = void 0));
   }),
-  (WaterMaskView.Dqr = () => {
-    _a.Rqr(), _a.Lqr();
+  (WaterMaskView.yNo = () => {
+    _a.INo(), _a.ENo();
   });
 //# sourceMappingURL=WaterMaskController.js.map
