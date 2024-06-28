@@ -97,46 +97,50 @@ let SceneItemHitComponent =
         )
       );
     }
+    OnSceneItemHitOne(t, e) {
+      // copy old
+    if (
+      (EventSystem_1.EventSystem.EmitWithTarget(
+        this.Entity,
+        EventDefine_1.EEventName.OnSceneItemEntityHitAlways,
+        t
+      ),
+      !LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
+        this.efn,
+        !1
+      ))
+    )
+      return !1;
+    var i = EntitySystem_1.EntitySystem.Get(
+      t.BulletEntityId
+    )?.GetBulletInfo();
+    if (i) {
+      if (this.Entity.GetComponent(146)?.ReboundBullet(t, i)) return !1;
+      if (0 !== t.CalculateType) return !1;
+      if (this.zfn(t)) {
+        this.c6r(t), this.tpn(t, e), this.ipn(t), this.Lwr(t);
+        for (var [n] of this.Qfn)
+          this.epn(n, t) && this.Zfn(n, t) && this.opn(n, t);
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.OnSceneItemEntityHit
+        ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.OnAnySceneItemEntityHit,
+            this.Entity
+          );
+      }
+    }
+    return !0;
+  }
     OnSceneItemHit(t, e) {
         if (ModManager_1.ModManager.Settings.HitMultiplier === true) {
-            // for (let j = 0; j < ModManager_1.ModManager.Settings.Hitcount; j++) {
-            //   this.OnSceneItemHitOne(t, e);
-            // }
-            // return ;
+            for (let j = 0; j < ModManager_1.ModManager.Settings.Hitcount; j++) {
+              this.OnSceneItemHitOne(t, e);
+            }
+        } else {
+          this.OnSceneItemHitOne(t, e);
         }
-      if (
-        (EventSystem_1.EventSystem.EmitWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnSceneItemEntityHitAlways,
-          t
-        ),
-        !LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
-          this.efn,
-          !1
-        ))
-      )
-        return !1;
-      var i = EntitySystem_1.EntitySystem.Get(
-        t.BulletEntityId
-      )?.GetBulletInfo();
-      if (i) {
-        if (this.Entity.GetComponent(146)?.ReboundBullet(t, i)) return !1;
-        if (0 !== t.CalculateType) return !1;
-        if (this.zfn(t)) {
-          this.c6r(t), this.tpn(t, e), this.ipn(t), this.Lwr(t);
-          for (var [n] of this.Qfn)
-            this.epn(n, t) && this.Zfn(n, t) && this.opn(n, t);
-          EventSystem_1.EventSystem.EmitWithTarget(
-            this.Entity,
-            EventDefine_1.EEventName.OnSceneItemEntityHit
-          ),
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.OnAnySceneItemEntityHit,
-              this.Entity
-            );
-        }
-      }
-      return !0;
     }
     GetPenetrationType() {
       return this.Entity.GetComponent(0).GetBaseInfo().Category

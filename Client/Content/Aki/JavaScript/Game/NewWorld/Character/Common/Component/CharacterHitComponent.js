@@ -576,20 +576,15 @@ let CharacterHitComponent =
         this.u6r();
     }
     OnHit(t, i, e, s, h, r, o, a, n){
+      var Player = Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity
       if (ModManager_1.ModManager.Settings.GodMode === true) {
         var Target = EntitySystem_1.EntitySystem.Get(t.Target.Id);
-        if (
-          Target.GetComponent(0).GetEntityType() ===
-          Protocol_1.Aki.Protocol.EEntityType.Player
-        )
+        if (Target == Player)
           return;
       }
       if (ModManager_1.ModManager.Settings.HitMultiplier === true) {
-        var attacker = EntitySystem_1.EntitySystem.Get(t.Attacker.Id);
-        if (
-          attacker.GetComponent(0).GetEntityType() ===
-          Protocol_1.Aki.Protocol.EEntityType.Player
-        ) {
+        var Attacker = EntitySystem_1.EntitySystem.Get(t.Attacker.Id);
+        if (Attacker == Player) {
           for (let j = 0; j < ModManager_1.ModManager.Settings.Hitcount; j++) {
             this.OnHitone(t, i, e, s, h, r, o, a, n);
           }
