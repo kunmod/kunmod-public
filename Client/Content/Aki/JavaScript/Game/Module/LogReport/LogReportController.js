@@ -14,7 +14,7 @@ const ue_1 = require("ue"),
 class LogReportController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
-      (LogReportController.lfi =
+      (LogReportController.Fpi =
         BaseConfigController_1.BaseConfigController.GetVersionString()),
       !0
     );
@@ -23,7 +23,7 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
     "" === e.event_id &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error("LogReport", 31, "event_id 不能为空", ["logData", e]),
-      (e.client_version = LogReportController.lfi),
+      (e.client_version = LogReportController.Fpi),
       (e.platform = ModelManager_1.ModelManager.LoginModel.Platform),
       e instanceof LogReportDefine_1.PlayerCommonLogData &&
         ((e.player_id =
@@ -34,7 +34,7 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
         ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
           (e.device_id = ue_1.KuroSDKManager.GetBasicInfo().DeviceId),
         (e.net_status =
-          Protocol_1.Aki.Protocol.NetStatusType[
+          Protocol_1.Aki.Protocol.D2s[
             ModelManager_1.ModelManager.PlatformModel.GetNetStatus()
           ]),
         (e.world_level =
@@ -45,12 +45,12 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
           "0"),
         (e.world_own_id = ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? ModelManager_1.ModelManager.CreatureModel.GetWorldOwner().toString()
-          : "0"))
+          : "0"));
       // ThinkingAnalyticsReporter_1.ThinkingAnalyticsReporter.Report(
       //   "c" + e.event_id,
       //   Json_1.Json.Stringify(e) ?? ""
       // );
   }
 }
-(exports.LogReportController = LogReportController).lfi = "";
+(exports.LogReportController = LogReportController).Fpi = "";
 //# sourceMappingURL=LogReportController.js.map

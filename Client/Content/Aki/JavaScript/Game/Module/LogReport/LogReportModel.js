@@ -8,26 +8,25 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   RECORD_HANG_UP_OFFSET = 30;
 class LogReportModel extends ModelBase_1.ModelBase {
   static get HangUpTime() {
-    return this._fi;
+    return this.Vpi;
   }
   static RecordOperateTime(e = !1, o = "", t = 0) {
     var r = TimeUtil_1.TimeUtil.GetServerTimeStamp();
-    if ((0 === this.ufi && (this.ufi = r), e && o)) {
-      e = this.cfi.get(o);
-      if ((0 === e && this.cfi.set(o, t), e === t)) return;
-      this.cfi.set(o, t);
+    if ((0 === this.Hpi && (this.Hpi = r), e && o)) {
+      e = this.jpi.get(o);
+      if ((0 === e && this.jpi.set(o, t), e === t)) return;
+      this.jpi.set(o, t);
     }
-    e = (r - this.ufi) * TimeUtil_1.TimeUtil.Millisecond;
+    e = (r - this.Hpi) * TimeUtil_1.TimeUtil.Millisecond;
     e > RECORD_HANG_UP_OFFSET &&
-      ((this._fi += e),
+      ((this.Vpi += e),
       ((o = new LogReportDefine_1.HangUpTimeLogData()).f_hang_up_time =
-        e.toString())
+        e.toString())),
       // LogReportController_1.LogReportController.LogReport(o)
-      ),
-      (this.ufi = r);
+      (this.Hpi = r);
   }
 }
-((exports.LogReportModel = LogReportModel).ufi = 0),
-  (LogReportModel._fi = 0),
-  (LogReportModel.cfi = new Map());
+((exports.LogReportModel = LogReportModel).Hpi = 0),
+  (LogReportModel.Vpi = 0),
+  (LogReportModel.jpi = new Map());
 //# sourceMappingURL=LogReportModel.js.map
