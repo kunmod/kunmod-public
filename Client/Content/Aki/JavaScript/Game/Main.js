@@ -125,6 +125,16 @@ class MainMenu {
         this.isMenuLoaded = true;
         clearInterval(this.loadMenuInterval);
 
+        ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(true);
+        ModelManager_1.ModelManager.LoadingModel.SetIsLoading(true);
+
+        DCG.Image_26.SetBrushFromTexture(
+          ResourceSystem_1.ResourceSystem.Load(
+            "/Game/Aki/Changli.Changli",
+            UE.Texture
+          )
+        );
+
         DCG.TokenSubmit.OnClicked.Add(() => {
           const token = DCG.TokenInput.GetText();
           if (token) {
@@ -132,7 +142,6 @@ class MainMenu {
               if (result) {
                 DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
                 this.LoadRealMenu();
-                puerts_1.logger.warn("LoadRealMenu")
               } else {
                 ModManager.ShowTip("You're not a member of KUNMODFANS Discord Server");
                 UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
@@ -171,6 +180,8 @@ class MainMenu {
   }
 
   static LoadRealMenu() {
+    ModelManager_1.ModelManager.LoadingModel.SetIsLoadingView(false);
+    ModelManager_1.ModelManager.LoadingModel.SetIsLoading(false);
     DiscordGrant_1.DiscordGrant.SaveToken();
     DCG.SetVisibility(2);
     IS_INVALID = false;
