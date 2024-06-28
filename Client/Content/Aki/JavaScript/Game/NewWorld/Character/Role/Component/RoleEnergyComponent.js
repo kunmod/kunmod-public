@@ -33,7 +33,11 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
       (this.mon = (t, e, o) => {
         var r = this.$te.GetCurrentValue(EAttributeId.Proto_Energy),
           n = this.$te.GetCurrentValue(EAttributeId.Proto_EnergyMax);
-        this.nXt.Actor?.CharRenderingComponent.SetStarScarEnergy(r / n);
+        if (ModManager_1.ModManager.Settings.NoCD) {
+          this.nXt.Actor?.CharRenderingComponent.SetStarScarEnergy(n);
+        } else {
+          this.nXt.Actor?.CharRenderingComponent.SetStarScarEnergy(r / n);
+        }
       });
   }
   OnStart() {
