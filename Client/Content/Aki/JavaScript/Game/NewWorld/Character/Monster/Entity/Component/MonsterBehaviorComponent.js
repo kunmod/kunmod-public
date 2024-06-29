@@ -53,7 +53,12 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
       (this.rin = (t, e) => {
         // only hatred
         if (ModManager_1.ModManager.Settings.killAura && ModManager_1.ModManager.Settings.killAuraState == 0) {
-          CombatMessage_1.CombatNet.Call(24697, this.Entity, Protocol_1.Aki.Protocol.jNn.create());
+          // var o, e
+          // this.Entity.GetComponent(89).SetPositionState(3);
+          var o, e;
+          (e = this.Hte.ActorLocationProxy),
+          ((o = Protocol_1.Aki.Protocol.jNn.create()).M3n = e)
+          CombatMessage_1.CombatNet.Call(24697, this.Entity, o);
         }
         e &&
           (this.nin(!0),
@@ -75,7 +80,10 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
   OnStart() {
     // infinity
     if (ModManager_1.ModManager.Settings.killAura && ModManager_1.ModManager.Settings.killAuraState == 1) {
-      CombatMessage_1.CombatNet.Call(24697, this.Entity, Protocol_1.Aki.Protocol.jNn.create());
+      var o, e;
+      (e = this.Hte.ActorLocationProxy),
+      ((o = Protocol_1.Aki.Protocol.jNn.create()).M3n = e)
+      CombatMessage_1.CombatNet.Call(24697, this.Entity, o);
     }
     return (
       (this.Hte = this.Entity.CheckGetComponent(3)),

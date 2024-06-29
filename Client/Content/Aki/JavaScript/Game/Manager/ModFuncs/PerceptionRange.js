@@ -22,7 +22,7 @@ class PerceptionRange extends EntityManager {
   }
 
   static SetTreasure(entity) {
-    const BlueprintType = EntityManager_1.EntityManager.GetBlueprintType3(Entity);
+    const BlueprintType = EntityManager_1.EntityManager.GetBlueprintType2(entity);
     if (EntityFilter.isneedTreasure(BlueprintType)) {
       PerceptionRange.SetInteractRange(entity, Range * 100);
     }

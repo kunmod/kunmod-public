@@ -5,6 +5,8 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
+  Net_1 = require("../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   NetDefine_1 = require("../../../Core/Define/Net/NetDefine"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ModManager_1 = require("../ModManager"),
@@ -50,13 +52,15 @@ class ModMethod {
     let id =entity.Entity.Id;
     ControllerHolder_1.ControllerHolder.CreatureController.AnimalDropItemRequest(id);
   }
-  // static LandingDamageRequest(Entity)
-  // {
-  //   let id =Entity.Id;
-  //   let speedz =100;
-  //   let TimeExceeding=1;
-  //   ControllerHolder_1.ControllerHolder.CreatureController.LandingDamageRequest(id,100,1);
-  // }
+
+  static LandingDamageRequest(Entity)
+  {
+    let Protocol = Protocol_1.Aki.Protocol.Ezn.create();
+    Protocol.rkn = MathUtils_1.MathUtils.NumberToLong(Entity.Id);
+    Protocol.K7n = -4000;
+    Protocol.Q7n = 66;
+    Net_1.Net.Call(25622, Protocol);
+  }
   
   static SetWorldTimeDilation(t) {
     UE.GameplayStatics.SetGlobalTimeDilation(

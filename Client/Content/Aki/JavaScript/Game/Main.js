@@ -884,22 +884,21 @@ class ModEntityListener {
     for (let i = 0; i < count; i++) {
       if (ModManager.Settings.PerceptionRange) {
         PerceptionRange_1.PerceptionRange.SetAll(entitylist[i]);
-      } else {
-        if (ModManager.Settings.AutoPickTreasure) {
-          PerceptionRange_1.PerceptionRange.SetTreasure(entitylist[i]);
-        }
-        if (ModManager.Settings.AutoTeleport) {
-          PerceptionRange_1.PerceptionRange.SetTeleport(entitylist[i]);
-        }
-        if (ModManager.Settings.AutoLoot) {
-          PerceptionRange_1.PerceptionRange.SetCollection(entitylist[i]);
-        }
-        if (ModManager.Settings.AutoAbsorbnew) {
-          PerceptionRange_1.PerceptionRange.SetVision(entitylist[i]);
-        }
-        if (ModManager.Settings.AutoSonanceCasket) {
-          PerceptionRange_1.PerceptionRange.SetSonanceCasket(entitylist[i]);
-        }
+      }
+      if (ModManager.Settings.AutoPickTreasure) {
+        PerceptionRange_1.PerceptionRange.SetTreasure(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoTeleport) {
+        PerceptionRange_1.PerceptionRange.SetTeleport(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoLoot) {
+        PerceptionRange_1.PerceptionRange.SetCollection(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoAbsorbnew) {
+        PerceptionRange_1.PerceptionRange.SetVision(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoSonanceCasket) {
+        PerceptionRange_1.PerceptionRange.SetSonanceCasket(entitylist[i]);
       }
     }
   }
