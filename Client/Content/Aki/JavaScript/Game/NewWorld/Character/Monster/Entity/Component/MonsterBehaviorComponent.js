@@ -51,16 +51,15 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
         this.Hte.IsAutonomousProxy && this.oin();
       }),
       (this.rin = (t, e) => {
-        if (//Only Hatred
-            ModManager_1.ModManager.Settings.killAura === true &&
-            ModManager_1.ModManager.Settings.killAuraState == 0
-          ) {
-            CombatMessage_1.CombatNet.Call(
-                24697,
-                this.Entity,
-                Protocol_1.Aki.Protocol.jNn.create()
-              );
-          }
+        // only hatred
+        if (ModManager_1.ModManager.Settings.killAura && ModManager_1.ModManager.Settings.killAuraState == 0) {
+          // var o, e
+          // this.Entity.GetComponent(89).SetPositionState(3);
+          var o, e;
+          (e = this.Hte.ActorLocationProxy),
+          ((o = Protocol_1.Aki.Protocol.jNn.create()).M3n = e)
+          CombatMessage_1.CombatNet.Call(24697, this.Entity, o);
+        }
         e &&
           (this.nin(!0),
           ModelManager_1.ModelManager.GameModeModel.IsMulti ||
@@ -79,16 +78,13 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
       });
   }
   OnStart() {
-    if (//Infinity
-        ModManager_1.ModManager.Settings.killAura === true &&
-        ModManager_1.ModManager.Settings.killAuraState == 1
-      ) {
-        CombatMessage_1.CombatNet.Call(
-            24697,
-            this.Entity,
-            Protocol_1.Aki.Protocol.jNn.create()
-          );
-      }
+    // infinity
+    if (ModManager_1.ModManager.Settings.killAura && ModManager_1.ModManager.Settings.killAuraState == 1) {
+      var o, e;
+      (e = this.Hte.ActorLocationProxy),
+      ((o = Protocol_1.Aki.Protocol.jNn.create()).M3n = e)
+      CombatMessage_1.CombatNet.Call(24697, this.Entity, o);
+    }
     return (
       (this.Hte = this.Entity.CheckGetComponent(3)),
       (this.elt = this.Entity.CheckGetComponent(157)),

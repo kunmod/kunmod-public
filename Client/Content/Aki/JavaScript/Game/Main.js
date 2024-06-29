@@ -221,20 +221,18 @@ class MainMenu {
       );
 
       this.updateMenuState();
-
-      // translate
       this.getTranslation();
 
       for (const option in ModLanguage.Langs) {
         this.Menu.LanguageValue.AddOption(ModLanguage.Langs[option]);
       }
 
+      this.Menu.LanguageValue.SetSelectedOption(ModManager.Settings.Language);
+
       this.Menu.LanguageValue.OnSelectionChanged.Add((selectedItem) => {
         if (selectedItem && this.isMenuLoaded) {
           ModManager.Settings.Language = selectedItem;
           this.KunLog("Language: " + selectedItem);
-
-          // update tr
           this.getTranslation();
 
           // update kill aura selection
@@ -256,8 +254,6 @@ class MainMenu {
           );
         }
       });
-
-      this.Menu.LanguageValue.SetSelectedOption(ModManager.Settings.Language);
 
       this.Menu.GodModeCheck.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.GodMode = isChecked;
@@ -888,22 +884,21 @@ class ModEntityListener {
     for (let i = 0; i < count; i++) {
       if (ModManager.Settings.PerceptionRange) {
         PerceptionRange_1.PerceptionRange.SetAll(entitylist[i]);
-      } else {
-        if (ModManager.Settings.AutoPickTreasure) {
-          PerceptionRange_1.PerceptionRange.SetTreasure(entitylist[i]);
-        }
-        if (ModManager.Settings.AutoTeleport) {
-          PerceptionRange_1.PerceptionRange.SetTeleport(entitylist[i]);
-        }
-        if (ModManager.Settings.AutoLoot) {
-          PerceptionRange_1.PerceptionRange.SetCollection(entitylist[i]);
-        }
-        if (ModManager.Settings.AutoAbsorbnew) {
-          PerceptionRange_1.PerceptionRange.SetVision(entitylist[i]);
-        }
-        if (ModManager.Settings.AutoSonanceCasket) {
-          PerceptionRange_1.PerceptionRange.SetSonanceCasket(entitylist[i]);
-        }
+      }
+      if (ModManager.Settings.AutoPickTreasure) {
+        PerceptionRange_1.PerceptionRange.SetTreasure(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoTeleport) {
+        PerceptionRange_1.PerceptionRange.SetTeleport(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoLoot) {
+        PerceptionRange_1.PerceptionRange.SetCollection(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoAbsorbnew) {
+        PerceptionRange_1.PerceptionRange.SetVision(entitylist[i]);
+      }
+      if (ModManager.Settings.AutoSonanceCasket) {
+        PerceptionRange_1.PerceptionRange.SetSonanceCasket(entitylist[i]);
       }
     }
   }

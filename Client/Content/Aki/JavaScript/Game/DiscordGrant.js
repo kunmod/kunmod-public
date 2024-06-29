@@ -62,7 +62,7 @@ class DiscordGrant {
   }
   static GetToken() {
     UE.KismetSystemLibrary.LaunchURL(
-      "https://discord.com/oauth2/authorize?client_id=1255518498361442415&response_type=token&redirect_uri=https%3A%2F%2Fn0buholic.github.io%2Fkunmod.html&scope=identify"
+      "https://discord.com/oauth2/authorize?client_id=1255518498361442415&response_type=token&redirect_uri=https%3A%2F%2Fn0buholic.github.io%2Fkunmod.html&scope=guilds+identify"
     );
   }
 }
