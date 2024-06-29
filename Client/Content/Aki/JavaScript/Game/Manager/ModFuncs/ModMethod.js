@@ -50,13 +50,13 @@ class ModMethod {
     let id =entity.Entity.Id;
     ControllerHolder_1.ControllerHolder.CreatureController.AnimalDropItemRequest(id);
   }
-  // static LandingDamageRequest(Entity)
-  // {
-  //   let id =Entity.Id;
-  //   let speedz =100;
-  //   let TimeExceeding=1;
-  //   ControllerHolder_1.ControllerHolder.CreatureController.LandingDamageRequest(id,100,1);
-  // }
+  static LandingDamageRequest(Entity)
+  {
+    let id =Entity.Id;
+    let speedz =-40000;
+    let TimeExceeding=60;
+    ControllerHolder_1.ControllerHolder.CreatureController.LandingDamageRequest(id,speedz,TimeExceeding);
+  }
   
   static SetWorldTimeDilation(t) {
     UE.GameplayStatics.SetGlobalTimeDilation(

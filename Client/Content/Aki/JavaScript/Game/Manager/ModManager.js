@@ -31,7 +31,7 @@ const ModTr = ModLanguage_1.ModLanguage.ModTr;
 const ConfigFileName = "KunModConfig.json";
 class ModManager {
   constructor() {
-     this.key_State = false;
+    this.key_State = false;
   }
   static Settings = {
     ModEnabled: true,
@@ -75,32 +75,36 @@ class ModManager {
     AttributeModifier: false,
     Uid: "100000000",
     Language: "English",
-    ESP:false,
-    ESPRadius:300,
-    ShowMonster:false,
-    ShowAnimal:false,
-    ShowNpc:false,
-    ShowTreasure:false,
-    ShowCollect:false,
-    ShowPuzzle:false,
-    ShowCasket:false,
-    ShowMutterfly:false,
-    ShowRock:false,
-    ShowBlobfly:false,
-    ShowBox:false,  
-    ShowEntityId:false,
-    ShowDistance:false,
-    ShowName:false,
-    ShowUnkown:false,
-    FPSUnlocker:false,
-    ShowFPS:false,
-    FOV:false,
-    FOVValue:60, // default
-    NoClip:false,
-    AutoPuzzle:false,
-    ShowType:false,
-    AutoTeleport:false,
-    AutoSonanceCasket:false,
+    ESP: false,
+    ESPRadius: 300,
+    ShowMonster: false,
+    ShowAnimal: false,
+    ShowNpc: false,
+    ShowTreasure: false,
+    ShowCollect: false,
+    ShowPuzzle: false,
+    ShowCasket: false,
+    ShowMutterfly: false,
+    ShowRock: false,
+    ShowBlobfly: false,
+    ShowBox: false,
+    ShowEntityId: false,
+    ShowDistance: false,
+    ShowName: false,
+    ShowUnkown: false,
+    FPSUnlocker: false,
+    ShowFPS: false,
+    FOV: false,
+    FOVValue: 60, // default
+    NoClip: false,
+    AutoPuzzle: false,
+    ShowType: false,
+    AutoTeleport: false,
+    AutoSonanceCasket: false,
+    QuestTp: true,
+    QuestX: 0,
+    QuestY: 0,
+    QuestZ: 0,
   };
 
   static GetGameDir() {
@@ -158,8 +162,8 @@ class ModManager {
     this.AddToggle("CustomTp", "Insert");
     this.AddToggle("AutoLoot", "NumPadZero");
     this.AddToggle("AutoDestroy", "NumPadOne");
-    this.AddToggle("skip", "NumPadFour");
     this.AddKey("MarkTp", "t");
+    this.AddKey("QuestTp", "v");
   }
 
   static listenModsToggle() {
@@ -221,15 +225,29 @@ class ModManager {
 
     if (this.Settings.MarkTp && ModUtils_1.ModUtils.IsInMapView()) {
       if (this.listenKey("MarkTp", "t")) {
+        let posz = this.Settings.MarkZ;
+        if (posz == 0) posz = this.Settings.MarkTpPosZ;
+
         this.TpNoloadingTo(
           this.Settings.MarkX * 100,
           this.Settings.MarkY * 100,
-          this.Settings.MarkZ * 100
+          posz * 100
         );
       }
     }
-
-
+    if (this.Settings.QuestTp && this.listenKey("QuestTp", "v")) {
+      if (
+        this.Settings.QuestX != 0 &&
+        this.Settings.QuestY != 0 &&
+        this.Settings.QuestZ != 0
+      ) {
+        this.TpNoloadingTo(
+          this.Settings.QuestX,
+          this.Settings.QuestY,
+          this.Settings.QuestZ
+        );
+      }
+    }
   }
   static IsMyKeyDown(str) {
     //add key func
