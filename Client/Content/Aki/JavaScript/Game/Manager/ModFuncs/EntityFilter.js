@@ -63,6 +63,14 @@ class EntityFilter  {
     "Collect602", //兽肉
     "Collect603", //禽肉
     //"Collect604",//玩法_永夜长明
+    "Collect_CXS01",//银雪莲
+
+    "Collect_CXS03",//雀翎果
+    "Collect_CXS04",//雀翎果
+    "Collect_CXS05",//雀翎果
+    "Collect_CXS06",//雀翎果
+    "Collect_CXS08",//龙吐珠
+    "Collect_CXS09",//龙吐珠
   ];
   static CollectAnimal = [
     "Animal016", //霄凤蝶

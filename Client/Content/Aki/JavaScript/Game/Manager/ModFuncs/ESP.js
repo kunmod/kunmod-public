@@ -103,10 +103,10 @@ class ESP {
       ].includes(Blueprint);
       const isBlobfly = ["Animal032"].includes(Blueprint);
 
-      // Remove entity that have _ in blueprint
-      // if (Blueprint.includes("_")) {
-      //   continue;
-      // }
+      //Remove entity that have _ in blueprint
+      if (Blueprint.includes("_")) {
+        continue;
+      }
 
       if (EntityManager.isMonster(Entity)) {
         // Monster

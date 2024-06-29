@@ -34,6 +34,9 @@ const destroyList = [
   "Gameplay536",//可破坏石块
   "Gameplay537",//可破坏石块
   "Gameplay538",//可破坏石块
+  "Collect505", //龙荧石
+  "Gameplay_CXS_4",//放置用_特色收集物_定风铎
+  "Gameplay_CXS_14",//TsEntity_悬挂_特色收集物_定风铎
 
 ];
 class AutoDestroy extends EntityManager {
