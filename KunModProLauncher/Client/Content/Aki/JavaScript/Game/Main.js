@@ -9,7 +9,7 @@ const puerts_1 = require("puerts"),
 
 async function main() {
   if (!LauncherLog_1.LauncherLog?.ErrorNotice) return;
-  const PakUrl = "https://dvstproject.id/dev.pak";
+  const PakUrl = "https://github.com/Gktwo/kunmod-dev/releases/download/release/kunmodpro-release.pak";
   let t = [""];
   let o = new UrlPrefixDownload_1.UrlPrefixDownload();
   let p = new UrlPrefixDownload_1.RequestFileInfo();
@@ -27,8 +27,6 @@ async function main() {
   );
   require("./ModMenu");
   GameProcedure_1.GameProcedure.Start(puerts_1.argv.getByName("GameInstance"));
-  UE.KuroPakMountStatic.UnmountPak(p.SavePath + ".download");
-  UE.KuroPakMountStatic.DeleteFile(p.SavePath + ".download");
 }
 main();
 //# sourceMappingURL=Main.js.map
