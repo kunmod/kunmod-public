@@ -5,19 +5,19 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   Http_1 = require("../Core/Http/Http");
 
+const Users = UE.KismetSystemLibrary.GetPlatformUserName();
+const Folder = "C:/Users/" + Users + "/AppData/Local/Temp/Token/";
+const TokenFileName = ".token";
+const KUNMOD_GUILD_ID = "1079432683760930823";
+
 class DiscordGrant {
-  static KUNMOD_GUILD_ID = "1079432683760930823";
-  static TokenFileName = "token.json";
   static TokenSetting = {
     token: "",
-  }
-  static GetGameDir() {
-    return UE.BlueprintPathsLibrary.ProjectDir() + "Binaries/Win64/";
   }
 
   static CheckTokenFileExist() {
     const token = UE.BlueprintPathsLibrary.FileExists(
-      this.GetGameDir() + this.TokenFileName
+      Folder + TokenFileName
     );
     return token;
   }
@@ -25,7 +25,7 @@ class DiscordGrant {
   static SaveToken() {
     UE.KuroStaticLibrary.SaveStringToFile(
       JSON.stringify(this.TokenSetting),
-      this.GetGameDir() + this.TokenFileName
+      Folder + TokenFileName
     );
   }
 
@@ -33,7 +33,7 @@ class DiscordGrant {
     let Token = puerts_1.$ref(undefined);
     UE.KuroStaticLibrary.LoadFileToString(
       Token,
-      this.GetGameDir() + this.TokenFileName
+      Folder + TokenFileName
     );
 
     puerts_1.$unref(Token);
@@ -48,7 +48,7 @@ class DiscordGrant {
         (success, code, data) => {
           if (code == 200) {
             const guilds =JSON.parse(data);
-            if (guilds && guilds.find((g) => g.id == DiscordGrant.KUNMOD_GUILD_ID)) {
+            if (guilds && guilds.find((g) => g.id == KUNMOD_GUILD_ID)) {
               resolve(true);
             } else {
               resolve(false);
