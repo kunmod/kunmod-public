@@ -51,6 +51,7 @@ class ModManager {
     MarkZ: 0,
     MarkTpPosZ: 300,
     CustomTp: false,
+    HasCustomTpFile: false,
     playerSpeedValue: 3,
     PlayerSpeed: false,
     AutoLoot: false,
@@ -101,11 +102,13 @@ class ModManager {
     ShowType: false,
     AutoTeleport: false,
     AutoSonanceCasket: false,
-    QuestTp: true,
+    QuestTp: false,
     QuestX: 0,
     QuestY: 0,
     QuestZ: 0,
   };
+
+  // please set all settings to false, preventing unverified users
 
   static GetGameDir() {
     return UE.BlueprintPathsLibrary.ProjectDir() + "Binaries/Win64/";
@@ -185,13 +188,16 @@ class ModManager {
         EntityManager_1.EntityManager.SetPlayerSpeed(1);
       }
     }
-    if (this.listenMod("CustomTp", "Insert", "CustomTp")) {
-      if (this.Settings.CustomTp) {
-        ModCustomTp_1.ModCustomTp.CustomTpEnable();
-      } else {
-        ModCustomTp_1.ModCustomTp.CustomTpDisable();
+    if (this.Settings.HasCustomTpFile) {
+      if (this.listenMod("CustomTp", "Insert", "CustomTp")) {
+        if (this.Settings.CustomTp) {
+          ModCustomTp_1.ModCustomTp.CustomTpEnable();
+        } else {
+          ModCustomTp_1.ModCustomTp.CustomTpDisable();
+        }
       }
     }
+
     if (this.Settings.CustomTp) {
       ModCustomTp_1.ModCustomTp.listenAuto();
       ModCustomTp_1.ModCustomTp.listenSelect();

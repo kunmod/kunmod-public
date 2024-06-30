@@ -56,6 +56,14 @@ class MainMenu {
   }
 
   static ListenKey() {
+    try {
+      require("./Manager/ModFuncs/ModTpFile");
+      ModManager_1.ModManager.Settings.HasCustomTpFile = true;
+    }
+    catch (error) {
+      ModManager_1.ModManager.Settings.HasCustomTpFile = false;
+    }
+
     if (IS_INVALID) return;
 
     ModManager.listenModsToggle();
