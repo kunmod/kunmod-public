@@ -21,6 +21,7 @@ const AnimalList = [
   "Animal004", //灰冠鸥
   "Animal005", //赤脚雁
   "Animal012", //青杂兔
+  //"Animal035",//嵩雪鸮
 
 
 ];
@@ -28,6 +29,7 @@ const BigAnimalList = [
   "Animal013", //岩角羊
   "Animal014", //灰脊牛
   "Animal015", //森栖牛
+  "Animal033"//惊霜狍
 ];
 const dropanimal =[
   "Animal006"//雪云鹤

@@ -18,10 +18,10 @@ class PlotSkipComponent {
       (this.rzi = void 0),
       (this.EnableSkipButton = (e) => {
         if (ModManager_1.ModManager.Settings.PlotSkip) {
-          this.Fue = e;
-          this.IYi.SetUIActive(this.Fue);
+          this.dce = e;
+          this.nzi.SetUIActive(this.dce);
         } else {				
-        (e && !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanSkip) ||
+          (e && !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanSkip) ||
           this.dce === e ||
           ((this.dce = e), this.nzi.SetUIActive(this.dce), this.dce) ||
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
