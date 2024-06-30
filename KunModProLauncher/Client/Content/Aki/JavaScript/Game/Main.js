@@ -23,39 +23,47 @@ async function main() {
   Version = JSON.parse(Version);
   const Hash = Version.hash;
   const PakUrl = Version.url;
-  const UrlPrefixDownload = new UrlPrefixDownload_1.UrlPrefixDownload();
-  const randomNumber = Math.floor(Math.random() * 10000000000);
-  const randomString = randomNumber.toString();
-  const FileList = [
-    {
-      HashString: "",
-      Size: 0n,
-      bUseDownloadCache: false,
-      Url: PakUrl,
-      SavePath: Folder + randomString,
-    },
-  ];
+  const IsPatched = Version.isPatched;
 
-  for (let i = 0; i < FileList.length; i++) {
-    const RequestFileInfo = new UrlPrefixDownload_1.RequestFileInfo();
-    RequestFileInfo.Url = FileList[i].Url;
-    RequestFileInfo.HashString = FileList[i].HashString;
-    RequestFileInfo.Size = FileList[i].Size;
-    RequestFileInfo.bUseDownloadCache = FileList[i].bUseDownloadCache;
-    RequestFileInfo.SavePath = FileList[i].SavePath;
-    const Download = [RequestFileInfo];
-    await UrlPrefixDownload.RequestFilesWithPrefix(Download, [""], 3);
-  }
+  if (!IsPatched) {
+    const UrlPrefixDownload = new UrlPrefixDownload_1.UrlPrefixDownload();
+    const randomNumber = Math.floor(Math.random() * 10000000000);
+    const randomString = randomNumber.toString();
+    const FileList = [
+      {
+        HashString: "",
+        Size: 0n,
+        bUseDownloadCache: false,
+        Url: PakUrl,
+        SavePath: Folder + randomString,
+      },
+    ];
 
-  if (UE.KuroLauncherLibrary.CheckFileSha1(FileList[0].SavePath, Hash)) {
-    UE.KuroPakMountStatic.MountPak(FileList[0].SavePath, 1000);
-    require("./ModMenu");
+    for (let i = 0; i < FileList.length; i++) {
+      const RequestFileInfo = new UrlPrefixDownload_1.RequestFileInfo();
+      RequestFileInfo.Url = FileList[i].Url;
+      RequestFileInfo.HashString = FileList[i].HashString;
+      RequestFileInfo.Size = FileList[i].Size;
+      RequestFileInfo.bUseDownloadCache = FileList[i].bUseDownloadCache;
+      RequestFileInfo.SavePath = FileList[i].SavePath;
+      const Download = [RequestFileInfo];
+      await UrlPrefixDownload.RequestFilesWithPrefix(Download, [""], 3);
+    }
+
+    if (UE.KuroLauncherLibrary.CheckFileSha1(FileList[0].SavePath, Hash)) {
+      UE.KuroPakMountStatic.MountPak(FileList[0].SavePath, 1000);
+      require("./ModMenu");
+      GameProcedure_1.GameProcedure.Start(
+        puerts_1.argv.getByName("GameInstance")
+      );
+    } else {
+      UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+      UE.KuroStaticLibrary.ExitGame(true);
+    }
+  } else {
     GameProcedure_1.GameProcedure.Start(
       puerts_1.argv.getByName("GameInstance")
     );
-  } else {
-    UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
-    UE.KuroStaticLibrary.ExitGame(true);
   }
 }
 
