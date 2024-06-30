@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PerceptionRange = void 0);
-const 
-  EntityManager_1 = require("./EntityManager"),
+const EntityManager_1 = require("./EntityManager"),
   Range = 1e50;
 
 const EntityManager = EntityManager_1.EntityManager;
@@ -10,7 +9,7 @@ const { EntityFilter } = require("./EntityFilter");
 
 class PerceptionRange extends EntityManager {
   static SetCollection(entity) {
-    if (this.isCollection(entity)) {
+    if (EntityFilter.isneedLoot(this.GetBlueprintType2(entity))) {
       PerceptionRange.SetInteractRange(entity, Range * 100);
     }
   }
@@ -22,8 +21,7 @@ class PerceptionRange extends EntityManager {
   }
 
   static SetTreasure(entity) {
-    const BlueprintType = EntityManager_1.EntityManager.GetBlueprintType2(entity);
-    if (EntityFilter.isneedTreasure(BlueprintType)) {
+    if (EntityFilter.isneedTreasure(this.GetBlueprintType2(entity))) {
       PerceptionRange.SetInteractRange(entity, Range * 100);
     }
   }
@@ -42,7 +40,14 @@ class PerceptionRange extends EntityManager {
 
   static SetAll(entity) {
     // Set All Entities Perception Range
-    PerceptionRange.SetInteractRange(entity, Range * 100);
+    if (
+      this.isCollection(entity) ||
+      this.isTeleport(entity) ||
+      this.isVision(entity) ||
+      EntityFilter.isneedTreasure(this.GetBlueprintType2(entity))||
+      EntityFilter.isFilter(EntityFilter.CasketDelivery,this.GetBlueprintType2(entity))
+    )
+      PerceptionRange.SetInteractRange(entity, Range * 100);
   }
 
   static SetInteractRange(entity, range) {

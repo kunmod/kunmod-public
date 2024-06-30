@@ -8,10 +8,12 @@ const puerts_1 = require("puerts"),
   ModUtils_1 = require("./ModUtils"),
   GlobalData_1 = require("../../GlobalData"),
   EntityManager_1 = require("./EntityManager"),
-  BluePrintType_1 = require("./BluePrintType")
+  EntityFilter_1 = require("./EntityFilter"),
+  BluePrintType_1 = require("./BluePrintType");
 
 const ModManager = ModManager_1.ModManager;
 const EntityManager = EntityManager_1.EntityManager;
+const EntityFilter = EntityFilter_1.EntityFilter;
 const ModUtils = ModUtils_1.ModUtils;
 
 class ESP {
@@ -94,7 +96,7 @@ class ESP {
       const Blueprint = EntityManager.GetBlueprintType2(Entity);
       //Puzzle
       const isMutterfly = ["Gameplay111"].includes(Blueprint);
-      const isCasket = ["Gameplay021"].includes(Blueprint);
+
       const isRock = [
         "Gameplay003",
         "Gameplay537",
@@ -104,9 +106,9 @@ class ESP {
       const isBlobfly = ["Animal032"].includes(Blueprint);
 
       //Remove entity that have _ in blueprint
-      if (Blueprint.includes("_")) {
-        continue;
-      }
+      // if (Blueprint.includes("_")) {
+      //   continue;
+      // }
 
       if (EntityManager.isMonster(Entity)) {
         // Monster
@@ -133,7 +135,7 @@ class ESP {
         if (!ModManager.Settings.ShowTreasure) continue;
       } else if (EntityManager.isGameplay(Entity)) {
         // Gameplay like Puzzle, Game, Sonance Casket ETC
-        if (isCasket) {
+        if (EntityFilter.isFilter(EntityFilter.CasketDelivery,Blueprint)) {
           Color = this.ESPColor.yellow;
           if (!ModManager.Settings.ShowCasket) continue;
         } else if (isMutterfly) {

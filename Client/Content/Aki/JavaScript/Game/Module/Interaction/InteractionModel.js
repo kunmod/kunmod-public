@@ -263,7 +263,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         if (EntityFilter.isneedLoot(BlueprintType) && ModManager_1.ModManager.Settings.AutoLoot) {
             return this.InteractPawn(Entity);
         }
-        if (/*BlueprintType.startsWith("Treasure")*/EntityFilter.isneedTreasure(BlueprintType) && ModManager_1.ModManager.Settings.AutoPickTreasure) {
+        if (EntityFilter.isneedTreasure(BlueprintType) && ModManager_1.ModManager.Settings.AutoPickTreasure) {
             return this.InteractPawn(Entity);
         }
         if (BlueprintType.startsWith("VisionItem") && ModManager_1.ModManager.Settings.AutoAbsorbnew) {
