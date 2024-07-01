@@ -18,14 +18,17 @@ const ModManager = ModManager_1.ModManager;
 const EntityManager = EntityManager_1.EntityManager;
 const HitGearList = [
   "Gameplay050", //玩法_打击机关
-  "Gameplay059",//射击靶
-  "Gameplay060",//藤曼玩法_禁锢陷阱
-  "Gameplay311",//光幕锁
+  "Gameplay059", //射击靶
+  "Gameplay060", //藤曼玩法_禁锢陷阱
+  "Gameplay311", //光幕锁
 ];
 
+const SetGuidelist = [
+  "Gameplay111", //隙声蝶
+];
 
 class AutoPuzzle extends EntityManager {
-  static isneed(entity,list) {
+  static isneed(entity, list) {
     let blueprintType = this.GetBlueprintType2(entity);
     return list.includes(blueprintType);
   }
@@ -34,11 +37,12 @@ class AutoPuzzle extends EntityManager {
     if (ModManager.Settings.AutoPuzzle) {
       this.HitGear(entity);
       this.Gameplay004(entity);
+      this.SetGuideRange(entity);
     }
   }
 
   static HitGear(entity) {
-    if (this.isneed(entity,HitGearList)) {
+    if (this.isneed(entity, HitGearList)) {
       //if (entity.Entity.GetComponent(116).IsInState(3)) return;//不确定3
       LevelGamePlayController_1.LevelGamePlayController.ShootTargetHitGearStateChangeRequest(
         entity.Entity.Id,
@@ -53,15 +57,20 @@ class AutoPuzzle extends EntityManager {
     }
   }
 
-  static Gameplay004(entity){
-    if (this.GetBlueprintType2(entity)=="Gameplay004") {
-      ModMethod.ThrowDamageChangeRequest(entity.Entity, 3, 210002001n);//爆裂鸣晶demageid Gameplay018
+  static Gameplay004(entity) {
+    if (this.GetBlueprintType2(entity) == "Gameplay004") {
+      ModMethod.ThrowDamageChangeRequest(entity.Entity, 3, 210002001n); //爆裂鸣晶demageid Gameplay018
     }
   }
 
-
-
-
+  static SetGuideRange(entity) {
+    if (this.isneed(entity, SetGuidelist)) {
+      let PawnPerceptionComponent = entity.Entity.GetComponent(104);
+      try {
+        PawnPerceptionComponent.SetGuideRange(100000);
+      } catch (error) {}
+    }
+  }
 }
 
 exports.AutoPuzzle = AutoPuzzle;
