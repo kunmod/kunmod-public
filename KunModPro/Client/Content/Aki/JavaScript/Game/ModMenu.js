@@ -141,16 +141,25 @@ class MainMenu {
           )
         );
 
+        DCG.ErrorMessage.SetText("");
+
         DCG.TokenSubmit.OnClicked.Add(() => {
           const token = DCG.TokenInput.GetText();
           if (token) {
             DiscordGrant_1.DiscordGrant.IsInGuild(token).then((result) => {
-              if (result) {
-                DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
-                this.LoadRealMenu();
-              } else {
-                ModManager.ShowTip("You're not a member of KUNMODFANS Discord Server");
-                UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+              if (result == 'granted') {
+                DiscordGrant_1.DiscordGrant.HasRole(token).then((result) => {
+                  if (result) {
+                    DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
+                    this.LoadRealMenu();
+                  } else {
+                    this.GrantError(ModLanguage.ModTr("DC_NO_ROLE"));
+                    this.ShowDiscordGrant();
+                  }
+                })
+              } else if (result == "not_member") {
+                this.GrantError(ModLanguage.ModTr("DC_NOT_MEMBER"));
+                this.LaunchDiscordServer();
               }
             });
           }
@@ -164,30 +173,45 @@ class MainMenu {
           const token = DiscordGrant_1.DiscordGrant.LoadToken();
           if (token) {
             DiscordGrant_1.DiscordGrant.IsInGuild(token).then((result) => {
-              if (result) {
+              if (result == 'granted') {
                 DiscordGrant_1.DiscordGrant.HasRole(token).then((result) => {
                   if (result) {
                     DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
                     this.LoadRealMenu();
                   } else {
-                    ModManager.ShowTip("You don't have required roles for using this mod");
+                    this.GrantError(ModLanguage.ModTr("DC_NO_ROLE"));
+                    this.ShowDiscordGrant();
                   }
                 })
-              } else {
-                ModManager.ShowTip("Token Expired or you're not a member of KUNMODFANS Discord Server");
-                DCG.AddToViewport();
-                DCG.SetVisibility(0);
-                DiscordGrant_1.DiscordGrant.GetToken();
+              } else if (result == "expired") {
+                this.GrantError(ModLanguage.ModTr("DC_EXPIRED_TOKEN"));
+                this.ShowDiscordGrant();
+              } else if (result == "not_member") {
+                this.GrantError(ModLanguage.ModTr("DC_NOT_MEMBER"));
+                this.ShowDiscordGrant();
               }
             });
           }
         } else {
-          DCG.AddToViewport();
-          DCG.SetVisibility(0);
-          DiscordGrant_1.DiscordGrant.GetToken();
+          this.ShowDiscordGrant();
         }
       }
     }
+  }
+
+  static GrantError(text) {
+    DCG.ErrorMessage.SetText(text);
+  }
+
+  static LaunchDiscordServer() {
+    UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+  }
+
+  static ShowDiscordGrant() {
+    this.LaunchDiscordServer();
+    DCG.AddToViewport();
+    DCG.SetVisibility(0);
+    DiscordGrant_1.DiscordGrant.GetToken();
   }
 
   static LoadRealMenu() {
@@ -288,7 +312,7 @@ class MainMenu {
       });
 
       this.Menu.HitMultiplierSlider.OnValueChanged.Add((value) => {
-        value = value.toFixed(3);
+        value = value.toFixed(1);
         this.Menu.HitMultiplierValue.SetText(value);
         ModManager.Settings.Hitcount = value;
         this.KunLog("Hit Multiplier Count: " + value);
@@ -361,7 +385,7 @@ class MainMenu {
       });
 
       this.Menu.PlayerSpeedSlider.OnValueChanged.Add((value) => {
-        value = value.toFixed(3);
+        value = value.toFixed(1);
         this.Menu.PlayerSpeedValue.SetText(value);
         ModManager.Settings.playerSpeedValue = value;
         this.KunLog("Player Speed Value: " + value);
@@ -395,11 +419,6 @@ class MainMenu {
         this.KunLog("Hide Damage Text: " + isChecked);
       });
 
-      this.Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
-        ModManager.Settings.CustomTp = isChecked;
-        this.KunLog("Custom Teleport: " + isChecked);
-      });
-
       this.Menu.MarkTPCheck.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.MarkTp = isChecked;
         this.KunLog("Mark Teleport: " + isChecked);
@@ -426,7 +445,7 @@ class MainMenu {
       });
 
       this.Menu.NewKillAuraSlider.OnValueChanged.Add((value) => {
-        value = value.toFixed(3);
+        value = value.toFixed(1);
         this.Menu.NewKillAuraValue.SetText(value);
         ModManager.Settings.killAuraRadius = value;
         this.KunLog("Hit Multiplier Count: " + value);
@@ -445,7 +464,7 @@ class MainMenu {
       });
 
       this.Menu.WorldSpeedSlider.OnValueChanged.Add((value) => {
-        value = value.toFixed(3);
+        value = value.toFixed(1);
         this.Menu.WorldSpeedValue.SetText(value);
         ModManager.Settings.WorldSpeedValue = value;
         this.KunLog("World Speed: " + value);
@@ -629,6 +648,16 @@ class MainMenu {
         this.KunLog("Auto Puzzle: " + isChecked);
       });
 
+      this.Menu.AlwaysCritCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.AlwaysCrit = isChecked;
+        this.KunLog("Always Critical: " + isChecked);
+      });
+
+      this.Menu.QuestTPCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.QuestTp = isChecked;
+        this.KunLog("Quest Teleport: " + isChecked);
+      });
+
       this.Menu.KillAuraValue.SetSelectedIndex(
         ModManager.Settings.killAuraState
       );
@@ -654,7 +683,7 @@ class MainMenu {
 
     this.Menu.AddToViewport();
     this.Menu.SetVisibility(2);
-    ModManager.ShowTip("KUN-MOD Menu Loaded!");
+    ModManager.ShowTip(ModLanguage.ModTr("KUN_MOD_LOADED"));
     this.KunLog("KUN-MOD Menu Loaded!");
   }
 
@@ -686,10 +715,12 @@ class MainMenu {
       );
       this.Menu.AntiDitherText.SetText(ModLanguage.ModTr("TEXT_ANTI_DITHER"));
       this.Menu.NoClipText.SetText(ModLanguage.ModTr("TEXT_NOCLIP"));
+      this.Menu.AlwaysCritText.SetText(ModLanguage.ModTr("TEXT_ALWAYS_CRIT"));
 
       // teleport
       this.Menu.MarkTPText.SetText(ModLanguage.ModTr("TEXT_MARK_TELEPORT"));
       this.Menu.CustomTPText.SetText(ModLanguage.ModTr("TEXT_CUSTOM_TP"));
+      this.Menu.QuestTPText.SetText(ModLanguage.ModTr("TEXT_QUEST_TP"));
 
       // world
       this.Menu.WorldSpeedText.SetText(ModLanguage.ModTr("TEXT_WORLD_SPEED"));
@@ -780,6 +811,7 @@ class MainMenu {
       );
       this.Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
       this.Menu.NoClipCheck.SetIsChecked(ModManager.Settings.NoClip);
+      this.Menu.AlwaysCritCheck.SetIsChecked(ModManager.Settings.AlwaysCrit);
 
       // world
       this.Menu.AutoPickTreasureCheck.SetIsChecked(
@@ -811,6 +843,7 @@ class MainMenu {
 
       // teleport
       this.Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
+      this.Menu.QuestTPCheck.SetIsChecked(ModManager.Settings.QuestTp);
 
       // esp
       this.Menu.ESPCheck.SetIsChecked(ModManager.Settings.ESP);

@@ -11,16 +11,15 @@ const TokenFileName = ".token";
 const KUNMOD_GUILD_ID = "1079432683760930823";
 const TESTER_ROLE_ID = "1256483300571218002";
 const DEV_ROLE_ID = "1246372245459304469";
+const MANAGER_ROLE_ID = "1248134343319359580";
 
 class DiscordGrant {
   static TokenSetting = {
     token: "",
-  }
+  };
 
   static CheckTokenFileExist() {
-    const token = UE.BlueprintPathsLibrary.FileExists(
-      Folder + TokenFileName
-    );
+    const token = UE.BlueprintPathsLibrary.FileExists(Folder + TokenFileName);
     return token;
   }
 
@@ -33,10 +32,7 @@ class DiscordGrant {
 
   static LoadToken() {
     let Token = puerts_1.$ref(undefined);
-    UE.KuroStaticLibrary.LoadFileToString(
-      Token,
-      Folder + TokenFileName
-    );
+    UE.KuroStaticLibrary.LoadFileToString(Token, Folder + TokenFileName);
 
     puerts_1.$unref(Token);
     Token = JSON.parse(Token[0]);
@@ -49,14 +45,14 @@ class DiscordGrant {
         new Map([["Authorization", `Bearer ${token}`]]),
         (success, code, data) => {
           if (code == 200) {
-            const guilds =JSON.parse(data);
+            const guilds = JSON.parse(data);
             if (guilds && guilds.find((g) => g.id == KUNMOD_GUILD_ID)) {
-              resolve(true);
+              resolve("granted");
             } else {
-              resolve(false);
+              resolve("not_member");
             }
           } else {
-            resolve(false);
+            resolve("expired");
           }
         }
       );
@@ -65,12 +61,18 @@ class DiscordGrant {
   static async HasRole(token) {
     return new Promise((resolve) => {
       Http_1.Http.Get(
-        "https://discord.com/api/users/@me/guilds/" + KUNMOD_GUILD_ID + "/member",
+        "https://discord.com/api/users/@me/guilds/" +
+          KUNMOD_GUILD_ID +
+          "/member",
         new Map([["Authorization", `Bearer ${token}`]]),
         (success, code, data) => {
           if (code == 200) {
-            const guild =JSON.parse(data);
-            if (guild && (guild.roles.includes(TESTER_ROLE_ID) || guild.roles.includes(DEV_ROLE_ID))) {
+            const guild = JSON.parse(data);
+            if (
+              guild.roles.includes(TESTER_ROLE_ID) ||
+              guild.roles.includes(DEV_ROLE_ID) ||
+              guild.roles.includes(MANAGER_ROLE_ID)
+            ) {
               resolve(true);
             } else {
               resolve(false);
