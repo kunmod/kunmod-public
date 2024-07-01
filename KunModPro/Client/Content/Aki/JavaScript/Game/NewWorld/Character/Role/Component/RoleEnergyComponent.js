@@ -20,12 +20,11 @@ var __decorate =
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleEnergyComponent = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
-  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  ModManager_1 = require("../../../../Manager/ModManager");
 var EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ModManager_1 = require("../../../../Manager/ModManager"),
+const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   energyAttrIds = [EAttributeId.Proto_Energy, EAttributeId.Proto_EnergyMax];
-  let originalGetCurrentValue;
 let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -36,23 +35,21 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
           n = this.$te.GetCurrentValue(EAttributeId.Proto_EnergyMax);
         if (ModManager_1.ModManager.Settings.NoCD) {
           this.nXt.Actor?.CharRenderingComponent.SetStarScarEnergy(n);
-        } else {
-          this.nXt.Actor?.CharRenderingComponent.SetStarScarEnergy(r / n);
-        }
+        } else this.nXt.Actor?.CharRenderingComponent.SetStarScarEnergy(r / n);
       });
   }
   OnStart() {
     this.nXt = this.Entity.CheckGetComponent(3);
     this.$te = this.Entity.CheckGetComponent(156);
 
-    originalGetCurrentValue = this.$te.GetCurrentValue.bind(this.$te);
-
+    var originalGetCurrentValue = this.$te.GetCurrentValue.bind(this.$te);
     this.$te.GetCurrentValue = (attributeId) => {
-        if (attributeId === EAttributeId.Energy) {
-          if (ModManager_1.ModManager.Settings.NoCD) return originalGetCurrentValue(EAttributeId.EnergyMax);
-        }
-        return originalGetCurrentValue(attributeId);
-      };
+      if (attributeId === EAttributeId.Proto_Energy) {
+        if (ModManager_1.ModManager.Settings.NoCD)
+          return originalGetCurrentValue(EAttributeId.Proto_EnergyMax);
+      }
+      return originalGetCurrentValue(attributeId);
+    };
 
     this.$te.AddListeners(energyAttrIds, this.mon, "RoleEnergyComponent");
     this.mon();
@@ -62,8 +59,8 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
     if (this.$te.GetCurrentValue) {
       this.$te.GetCurrentValue = originalGetCurrentValue;
     }
-    return this.$te.RemoveListeners(energyAttrIds, this.mon);
-    !0;
+    this.$te.RemoveListeners(energyAttrIds, this.mon);
+    return !0;
   }
 };
 (RoleEnergyComponent = __decorate(

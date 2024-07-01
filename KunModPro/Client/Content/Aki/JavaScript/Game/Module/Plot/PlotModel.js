@@ -219,8 +219,8 @@ class PlotModel extends ModelBase_1.ModelBase {
       this.PlotGlobalConfig.Init(),
       this.PlotWeather.Init();
     if (ModManager_1.ModManager.Settings.PlotSkip) {
-      (this.CanSkip = 1), 
-        (this.CanSkipDebug = 1), 
+      (this.CanSkip = 1),
+        (this.CanSkipDebug = 1),
         (this.SkipTalkWhenFighting = 1),
         (this.IsAutoPlay = 1);
     }

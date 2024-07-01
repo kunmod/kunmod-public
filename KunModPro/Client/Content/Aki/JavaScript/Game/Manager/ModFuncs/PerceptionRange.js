@@ -44,8 +44,11 @@ class PerceptionRange extends EntityManager {
       this.isCollection(entity) ||
       this.isTeleport(entity) ||
       this.isVision(entity) ||
-      EntityFilter.isneedTreasure(this.GetBlueprintType2(entity))||
-      EntityFilter.isFilter(EntityFilter.CasketDelivery,this.GetBlueprintType2(entity))
+      EntityFilter.isneedTreasure(this.GetBlueprintType2(entity)) ||
+      EntityFilter.isFilter(
+        EntityFilter.CasketDelivery,
+        this.GetBlueprintType2(entity)
+      )
     )
       PerceptionRange.SetInteractRange(entity, Range * 100);
   }

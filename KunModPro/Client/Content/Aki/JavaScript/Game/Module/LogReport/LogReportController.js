@@ -46,10 +46,10 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
         (e.world_own_id = ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? ModelManager_1.ModelManager.CreatureModel.GetWorldOwner().toString()
           : "0"));
-      // ThinkingAnalyticsReporter_1.ThinkingAnalyticsReporter.Report(
-      //   "c" + e.event_id,
-      //   Json_1.Json.Stringify(e) ?? ""
-      // );
+    // ThinkingAnalyticsReporter_1.ThinkingAnalyticsReporter.Report(
+    //   "c" + e.event_id,
+    //   Json_1.Json.Stringify(e) ?? ""
+    // );
   }
 }
 (exports.LogReportController = LogReportController).Fpi = "";

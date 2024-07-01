@@ -135,7 +135,7 @@ class ESP {
         if (!ModManager.Settings.ShowTreasure) continue;
       } else if (EntityManager.isGameplay(Entity)) {
         // Gameplay like Puzzle, Game, Sonance Casket ETC
-        if (EntityFilter.isFilter(EntityFilter.CasketDelivery,Blueprint)) {
+        if (EntityFilter.isFilter(EntityFilter.CasketDelivery, Blueprint)) {
           Color = this.ESPColor.yellow;
           if (!ModManager.Settings.ShowCasket) continue;
         } else if (isMutterfly) {

@@ -601,7 +601,7 @@ let PawnInteractNewComponent = class PawnInteractNewComponent extends PawnIntera
       )
         return !1;
     }
-    return (2 !== this.GZo && !!(0 !== this.GZo || (this.WGo && this.Cen))) // bypass error tips
+    return 2 !== this.GZo && !!(0 !== this.GZo || (this.WGo && this.Cen)); // bypass error tips
     return (
       (2 !== this.man && !!(0 !== this.man || (this._5r && this.Kan))) ||
       (LevelGamePlayController_1.LevelGamePlayController.ShowFakeErrorCodeTips(),
@@ -725,25 +725,25 @@ let PawnInteractNewComponent = class PawnInteractNewComponent extends PawnIntera
         const s = this._5r.Entity;
         e = s.GetComponent(185);
         if (this.SJi.IsPlayerTurnAround && e?.HasTag(-1898186757)) {
-            (i.IsInteractionTurning = !1), // default !0
+          (i.IsInteractionTurning = !1), // default !0
             InputDistributeController_1.InputDistributeController.RefreshInputTag(),
             (this.ihn = !0);
           const s = this._5r.Entity;
           (e = s.GetComponent(160)),
             (i =
               (e &&
-                (e.StopMontage() /*, e.MainAnimInstance.ConsumeExtractedRootMotion(1) */),
+                e.StopMontage() /*, e.MainAnimInstance.ConsumeExtractedRootMotion(1) */,
               s.GetComponent(36)));
           i &&
             ((i.ForceExitStateStop = !0),
             (i.CanMoveFromInput = !0), // default !1
-            i.CharacterMovement) // &&
-            // (i.CharacterMovement.Velocity = Vector_1.Vector.ZeroVector),
-            // TimerSystem_1.TimerSystem.Delay(
-            //   this.nhn,
-            //   MAX_WAIT_PLAYER_STAND_TIME
-            // );
-            this.nhn();
+            i.CharacterMovement); // &&
+          // (i.CharacterMovement.Velocity = Vector_1.Vector.ZeroVector),
+          // TimerSystem_1.TimerSystem.Delay(
+          //   this.nhn,
+          //   MAX_WAIT_PLAYER_STAND_TIME
+          // );
+          this.nhn();
         } else (this.thn = !0), this.shn(), this.hhn();
         (this.CanRestartAi = !1),
           this.fie === Protocol_1.Aki.Protocol.HBs.Proto_Npc && this.Bhn(t),

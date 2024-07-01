@@ -28,7 +28,6 @@ class EntityManager {
     return pos;
   }
 
-
   static GetEntityType(entity) {
     let type = entity.Entity.GetComponent(0).GetEntityType();
     if (type == Protocol_1.Aki.Protocol.EEntityType.Player) return "Player";
@@ -40,7 +39,6 @@ class EntityManager {
     if (type == Protocol_1.Aki.Protocol.EEntityType.Animal) return "Animal";
     if (type == Protocol_1.Aki.Protocol.EEntityType.Custom) return "Custom";
   }
-
 
   static GetPosition(Entity) {
     let a = Entity.GetComponent(1);

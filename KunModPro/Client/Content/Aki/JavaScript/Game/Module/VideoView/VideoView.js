@@ -133,10 +133,9 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
             this.OCn();
         else {
           const o = this.OpenParam.VideoDataConf;
-          if(o&&ModManager_1.ModManager.Settings.PlotSkip)
-            {
-              o.CanSkip =1;             
-            }
+          if (o && ModManager_1.ModManager.Settings.PlotSkip) {
+            o.CanSkip = 1;
+          }
           o
             ? ((this.xRe = ResourceSystem_1.ResourceSystem.LoadAsync(
                 o.CgFile,
@@ -158,10 +157,11 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
                           .PlayTravelMp4 &&
                         // (ModelManager_1.ModelManager.PlotModel.IsGmCanSkip ||
                         //   o.CanSkip)),
-                       (ModManager_1.ModManager.Settings.PlotSkip||o.CanSkip)),
+                        (ModManager_1.ModManager.Settings.PlotSkip ||
+                          o.CanSkip)),
                         (i =
                           (ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(
-                            1//i
+                            1 //i
                           ),
                           (this.Fbr = [
                             ...ConfigManager_1.ConfigManager.VideoConfig.GetVideoCaptions(

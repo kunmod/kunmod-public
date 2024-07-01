@@ -23,7 +23,7 @@ const puerts_1 = require("puerts"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   TsInteractionUtils_1 = require("./TsInteractionUtils"),
   DEFAULT_CD = 0.5;
-  const { EntityFilter } = require("../../Manager/ModFuncs/EntityFilter");
+const { EntityFilter } = require("../../Manager/ModFuncs/EntityFilter");
 class SameTipInteract {
   constructor() {
     (this.EntityId = 0), (this.CurrentDistance = 0);
@@ -250,25 +250,40 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return false;
     return this.T1i > TimeUtil_1.TimeUtil.GetServerTime();
   }
-  InteractPawn(Entity) { // new func
+  InteractPawn(Entity) {
+    // new func
     const Component = Entity.GetComponent(103);
-    const Opt = ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(0);
-    Component.whn(Opt)
+    const Opt =
+      ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
+        0
+      );
+    Component.whn(Opt);
     return;
   }
   HandleInteractionHint(t, e, i = void 0, r = -1, n = void 0) {
-    if (n) { // auto interact
-        const Entity = n.GetEntity();
-        const BlueprintType = EntityManager_1.EntityManager.GetBlueprintType3(Entity);
-        if (EntityFilter.isneedLoot(BlueprintType) && ModManager_1.ModManager.Settings.AutoLoot) {
-            return this.InteractPawn(Entity);
-        }
-        if (EntityFilter.isneedTreasure(BlueprintType) && ModManager_1.ModManager.Settings.AutoPickTreasure) {
-            return this.InteractPawn(Entity);
-        }
-        if (BlueprintType.startsWith("VisionItem") && ModManager_1.ModManager.Settings.AutoAbsorbnew) {
-            return this.InteractPawn(Entity);
-        }
+    if (n) {
+      // auto interact
+      const Entity = n.GetEntity();
+      const BlueprintType =
+        EntityManager_1.EntityManager.GetBlueprintType3(Entity);
+      if (
+        EntityFilter.isneedLoot(BlueprintType) &&
+        ModManager_1.ModManager.Settings.AutoLoot
+      ) {
+        return this.InteractPawn(Entity);
+      }
+      if (
+        EntityFilter.isneedTreasure(BlueprintType) &&
+        ModManager_1.ModManager.Settings.AutoPickTreasure
+      ) {
+        return this.InteractPawn(Entity);
+      }
+      if (
+        BlueprintType.startsWith("VisionItem") &&
+        ModManager_1.ModManager.Settings.AutoAbsorbnew
+      ) {
+        return this.InteractPawn(Entity);
+      }
     }
 
     if (t) {

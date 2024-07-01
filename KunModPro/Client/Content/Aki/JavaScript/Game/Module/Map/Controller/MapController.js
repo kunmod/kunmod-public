@@ -20,7 +20,7 @@ const UE = require("ue"),
   SCALE_XY = 100,
   SCALE_Z = 1e6,
   PROFILE_KEY = "WorldMapView_CreateNewCustomMarkItem",
-	  Modmanager_1 = require("../../../Manager/ModManager"),													
+  Modmanager_1 = require("../../../Manager/ModManager"),
   assistantMap = { [0]: void 0, 1: void 0, 2: void 0 };
 class LineTraceSaver {
   constructor() {
@@ -50,9 +50,9 @@ class LineTraceSaver {
         ((a = o.LocationZ_Array.Get(0)),
         (a /= SCALE_XY),
         (r = Vector_1.Vector.Create(e, t, a))),
-        (Modmanager_1.ModManager.Settings.MarkX=e),
-        (Modmanager_1.ModManager.Settings.MarkY=t),
-        (Modmanager_1.ModManager.Settings.MarkZ=a),												 
+      (Modmanager_1.ModManager.Settings.MarkX = e),
+      (Modmanager_1.ModManager.Settings.MarkY = t),
+      (Modmanager_1.ModManager.Settings.MarkZ = a),
       r
     );
   }
@@ -125,17 +125,12 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
     return this.NTi.GetMarkPosition(e, t);
   }
   static RequestUnlockTeleport(e) {
-															   
     MapController.c$t(1).RequestUnlockTeleport(e);
   }
   static RequestMapMarkReplace(e, t) {
-																 
-																 
     MapController.c$t(0).RequestMapMarkReplace(e, t);
   }
   static RequestCreateCustomMark(e, t) {
-																   
-																   
     MapController.c$t(0).RequestCreateCustomMark(e, t);
   }
   static RequestRemoveMapMark(e, t) {
@@ -154,7 +149,6 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
           MapController.c$t(0).RequestCancelTrackMapMark(r[0], r[1]),
         MapController.c$t(0).RequestTrackMapMark(e, t),
         ModelManager_1.ModelManager.MapModel.SetCurTrackMark([e, t]))
-																								   
       : (ModelManager_1.ModelManager.MapModel.SetCurTrackMark(void 0),
         MapController.c$t(0).RequestCancelTrackMapMark(e, t));
   }
