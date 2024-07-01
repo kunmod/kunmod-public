@@ -106,6 +106,7 @@ class ModManager {
     QuestX: 0,
     QuestY: 0,
     QuestZ: 0,
+    AlwaysCrit: false
   };
 
   // please set all settings to false, preventing unverified users
