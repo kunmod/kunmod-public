@@ -15,7 +15,7 @@ async function main() {
   const Folder = "C:/Users/" + Users + "/AppData/Local/Temp/Unreal/";
   UE.KuroStaticLibrary.DeleteFolder(Folder, true, true);
 
-  let Version = CurrentVersion();
+  let Version = await CurrentVersion();
   Version = JSON.parse(Version);
   const Hash = Version.hash;
   const PakUrl = Version.url;
