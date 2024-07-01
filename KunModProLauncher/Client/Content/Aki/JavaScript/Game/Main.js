@@ -13,13 +13,9 @@ async function main() {
   if (!LauncherLog_1.LauncherLog?.ErrorNotice) return;
   const Users = UE.KismetSystemLibrary.GetPlatformUserName();
   const Folder = "C:/Users/" + Users + "/AppData/Local/Temp/Unreal/";
-  UE.KuroStaticLibrary.DeleteFolder(
-    Folder,
-    true,
-    true
-  );
+  UE.KuroStaticLibrary.DeleteFolder(Folder, true, true);
 
-  let Version = await Get("https://api.npoint.io/efec65e4b17c319331e8");
+  let Version = CurrentVersion();
   Version = JSON.parse(Version);
   const Hash = Version.hash;
   const PakUrl = Version.url;
@@ -69,12 +65,13 @@ async function main() {
 
 function ReadFile(file) {
   let result = puerts_1.$ref(undefined);
-  UE.KuroStaticLibrary.LoadFileToString(
-    result,
-    file
-  );
+  UE.KuroStaticLibrary.LoadFileToString(result, file);
   puerts_1.$unref(result);
   return result[0];
+}
+
+async function CurrentVersion() {
+  return await Get("https://api.npoint.io/efec65e4b17c319331e8");
 }
 
 async function Get(url) {
@@ -85,8 +82,8 @@ async function Get(url) {
       } else {
         reject(code);
       }
-    })
-  })
+    });
+  });
 }
 
 main();

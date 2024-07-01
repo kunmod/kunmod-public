@@ -908,16 +908,6 @@ class ModEntityListener {
       }
     }
   }
-
-  static CheckVersion(){
-    let version ="";
-    //Http_1.Http.Get()
-
-    if(version!==currentVersion){
-      ModManager.ShowConfirmBox("Notice","Found new version,Please go to Discord to download")
-    }
-      
-  }
 }
 
 function Start() {
@@ -936,9 +926,6 @@ function Start() {
   setInterval(() => {
     ESP_1.ESP.RuntimeESP();
   }, ESP_1.ESP.ESP_INTERVAL);
-  // setInterval(() => {
-  //   MainMenu.CheckVersion();
-  // }, 600000);
 }
 
 Start();
