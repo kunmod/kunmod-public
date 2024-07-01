@@ -161,13 +161,18 @@ class MainMenu {
         });
 
         if (DiscordGrant_1.DiscordGrant.CheckTokenFileExist()) {
-          puerts_1.logger.warn("Token file found")
           const token = DiscordGrant_1.DiscordGrant.LoadToken();
           if (token) {
             DiscordGrant_1.DiscordGrant.IsInGuild(token).then((result) => {
               if (result) {
-                DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
-                this.LoadRealMenu();
+                DiscordGrant_1.DiscordGrant.HasRole(token).then((result) => {
+                  if (result) {
+                    DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
+                    this.LoadRealMenu();
+                  } else {
+                    ModManager.ShowTip("You don't have required roles for using this mod");
+                  }
+                })
               } else {
                 ModManager.ShowTip("Token Expired or you're not a member of KUNMODFANS Discord Server");
                 DCG.AddToViewport();

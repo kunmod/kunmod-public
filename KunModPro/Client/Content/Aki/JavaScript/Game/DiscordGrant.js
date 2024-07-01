@@ -9,6 +9,8 @@ const Users = UE.KismetSystemLibrary.GetPlatformUserName();
 const Folder = "C:/Users/" + Users + "/AppData/Local/Temp/Token/";
 const TokenFileName = ".token";
 const KUNMOD_GUILD_ID = "1079432683760930823";
+const TESTER_ROLE_ID = "1256483300571218002";
+const DEV_ROLE_ID = "1246372245459304469";
 
 class DiscordGrant {
   static TokenSetting = {
@@ -60,9 +62,29 @@ class DiscordGrant {
       );
     });
   }
+  static async HasRole(token) {
+    return new Promise((resolve) => {
+      Http_1.Http.Get(
+        "https://discord.com/api/users/@me/guilds/" + KUNMOD_GUILD_ID + "/member",
+        new Map([["Authorization", `Bearer ${token}`]]),
+        (success, code, data) => {
+          if (code == 200) {
+            const guild =JSON.parse(data);
+            if (guild && (guild.roles.includes(TESTER_ROLE_ID) || guild.roles.includes(DEV_ROLE_ID))) {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          } else {
+            resolve(false);
+          }
+        }
+      );
+    });
+  }
   static GetToken() {
     UE.KismetSystemLibrary.LaunchURL(
-      "https://discord.com/oauth2/authorize?client_id=1255518498361442415&response_type=token&redirect_uri=https%3A%2F%2Fkunmod.github.io&scope=identify+guilds"
+      "https://discord.com/oauth2/authorize?client_id=1255518498361442415&response_type=token&redirect_uri=https%3A%2F%2Fkunmod.github.io&scope=identify+guilds+guilds.members.read"
     );
   }
 }
