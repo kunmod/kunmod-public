@@ -19,9 +19,7 @@ const AnimalList = [
   "Animal002", //青翎鸽
   "Animal003", //蓝冠鸽
   "Animal004", //灰冠鸥
-  "Animal005", //赤脚雁
   "Animal012", //青杂兔
-  //"Animal035",//嵩雪鸮
 ];
 const BigAnimalList = [
   "Animal013", //岩角羊
@@ -31,6 +29,8 @@ const BigAnimalList = [
 ];
 const dropanimal = [
   "Animal006", //雪云鹤
+  "Animal005", //赤脚雁
+  "Animal035", //嵩雪鸮
 ];
 
 class KillAura extends EntityManager {
