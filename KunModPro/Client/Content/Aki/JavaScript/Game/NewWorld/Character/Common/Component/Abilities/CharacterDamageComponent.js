@@ -247,7 +247,7 @@ let CharacterDamageComponent =
               a.Attacker?.Entity?.Valid &&
               (this.bqr(e, a, t),
               this.qqr(e, a, t, i),
-              s?.OnDamage(e.Damage, !0, a.Attacker.Entity, !1));
+              s?.OnDamage(e.Damage, ModManager_1.ModManager.Settings.AlwaysCrit ? !0 : a.ForceCritical, a.Attacker.Entity, !1));
           },
           e
         ),
