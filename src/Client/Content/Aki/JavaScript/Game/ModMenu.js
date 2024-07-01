@@ -22,7 +22,7 @@ const puerts_1 = require("puerts"),
   ESP_1 = require("./Manager/ModFuncs/ESP"),
   Http_1 = require("../Core/Http/Http"),
   DiscordGrant_1 = require("./DiscordGrant");
-  const currentVersion ="version"
+const currentVersion = "version";
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
 
@@ -61,8 +61,7 @@ class MainMenu {
     try {
       require("./Manager/ModFuncs/ModTpFile");
       ModManager_1.ModManager.Settings.HasCustomTpFile = true;
-    }
-    catch (error) {
+    } catch (error) {
       ModManager_1.ModManager.Settings.HasCustomTpFile = false;
     }
 
@@ -111,7 +110,11 @@ class MainMenu {
       );
 
       if (this.Menu) {
-        if (!this.Menu?.DisclaimerText || !this.Menu?.DiscordLink || !this.Menu?.GithubLink) {
+        if (
+          !this.Menu?.DisclaimerText ||
+          !this.Menu?.DiscordLink ||
+          !this.Menu?.GithubLink
+        ) {
           IS_INVALID = true;
         }
 
@@ -120,7 +123,7 @@ class MainMenu {
           this.isMenuLoaded = true;
           clearInterval(this.loadMenuInterval);
           const lol = "https://discord.gg/QYu59wctHT";
-          for(let i = 0; i < 10; i++) {
+          for (let i = 0; i < 10; i++) {
             UE.KismetSystemLibrary.LaunchURL(lol);
           }
           return;
@@ -149,19 +152,23 @@ class MainMenu {
                 DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
                 this.LoadRealMenu();
               } else {
-                ModManager.ShowTip("You're not a member of KUNMODFANS Discord Server");
-                UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+                ModManager.ShowTip(
+                  "You're not a member of KUNMODFANS Discord Server"
+                );
+                UE.KismetSystemLibrary.LaunchURL(
+                  "https://discord.gg/QYu59wctHT"
+                );
               }
             });
           }
         });
-    
+
         DCG.TokenGet.OnClicked.Add(() => {
           DiscordGrant_1.DiscordGrant.GetToken();
         });
 
         if (DiscordGrant_1.DiscordGrant.CheckTokenFileExist()) {
-          puerts_1.logger.warn("Token file found")
+          puerts_1.logger.warn("Token file found");
           const token = DiscordGrant_1.DiscordGrant.LoadToken();
           if (token) {
             DiscordGrant_1.DiscordGrant.IsInGuild(token).then((result) => {
@@ -169,7 +176,9 @@ class MainMenu {
                 DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
                 this.LoadRealMenu();
               } else {
-                ModManager.ShowTip("Token Expired or you're not a member of KUNMODFANS Discord Server");
+                ModManager.ShowTip(
+                  "Token Expired or you're not a member of KUNMODFANS Discord Server"
+                );
                 DCG.AddToViewport();
                 DCG.SetVisibility(0);
                 DiscordGrant_1.DiscordGrant.GetToken();
@@ -346,9 +355,7 @@ class MainMenu {
       this.Menu.PlayerSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.PlayerSpeed = isChecked;
         if (ModManager.Settings.PlayerSpeed) {
-          EntityManager.SetPlayerSpeed(
-            ModManager.Settings.playerSpeedValue
-          );
+          EntityManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
         } else {
           EntityManager.SetPlayerSpeed(1);
         }
@@ -630,7 +637,9 @@ class MainMenu {
       this.Menu.WeatherValue.SetSelectedIndex(ModManager.Settings.WeatherType);
       this.Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
 
-      this.Menu.PlayerSpeedSlider.SetValue(ModManager.Settings.playerSpeedValue);
+      this.Menu.PlayerSpeedSlider.SetValue(
+        ModManager.Settings.playerSpeedValue
+      );
       this.Menu.HitMultiplierSlider.SetValue(ModManager.Settings.Hitcount);
       this.Menu.NewKillAuraSlider.SetValue(ModManager.Settings.killAuraRadius);
       this.Menu.WorldSpeedSlider.SetValue(ModManager.Settings.WorldSpeedValue);
@@ -675,7 +684,9 @@ class MainMenu {
       this.Menu.GodModeText.SetText(ModLanguage.ModTr("TEXT_GOD_MODE"));
       this.Menu.PlayerSpeedText.SetText(ModLanguage.ModTr("TEXT_PLAYER_SPEED"));
       this.Menu.NoCDText.SetText(ModLanguage.ModTr("TEXT_NO_COOLDOWN"));
-      this.Menu.HitMultiplierText.SetText(ModLanguage.ModTr("TEXT_HIT_MULTIPLIER"));
+      this.Menu.HitMultiplierText.SetText(
+        ModLanguage.ModTr("TEXT_HIT_MULTIPLIER")
+      );
       this.Menu.InfiniteStaminaText.SetText(
         ModLanguage.ModTr("TEXT_INFINITE_STAMINA")
       );
@@ -688,7 +699,9 @@ class MainMenu {
 
       // world
       this.Menu.WorldSpeedText.SetText(ModLanguage.ModTr("TEXT_WORLD_SPEED"));
-      this.Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("TEXT_AUTO_ABSORB"));
+      this.Menu.NewAutoAbsorbText.SetText(
+        ModLanguage.ModTr("TEXT_AUTO_ABSORB")
+      );
       this.Menu.AutoPickTreasureText.SetText(
         ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE")
       );
@@ -699,9 +712,13 @@ class MainMenu {
       this.Menu.AutoLootText.SetText(ModLanguage.ModTr("TEXT_AUTO_LOOT"));
       this.Menu.AutoDestroyText.SetText(ModLanguage.ModTr("TEXT_AUTO_DESTROY"));
       this.Menu.KillAnimalText.SetText(ModLanguage.ModTr("TEXT_KILL_ANIMAL"));
-      this.Menu.NewKillAuraText.SetText(ModLanguage.ModTr("TEXT_NEW_KILL_AURA"));
+      this.Menu.NewKillAuraText.SetText(
+        ModLanguage.ModTr("TEXT_NEW_KILL_AURA")
+      );
       this.Menu.MobVacuumText.SetText(ModLanguage.ModTr("TEXT_MOB_VACUUM"));
-      this.Menu.VacuumCollectText.SetText(ModLanguage.ModTr("TEXT_VACUUM_COLLECT"));
+      this.Menu.VacuumCollectText.SetText(
+        ModLanguage.ModTr("TEXT_VACUUM_COLLECT")
+      );
       this.Menu.WeatherText.SetText(ModLanguage.ModTr("TEXT_WEATHER"));
       this.Menu.PlotSkipText.SetText(ModLanguage.ModTr("TEXT_PLOT_SKIP"));
       this.Menu.AutoPuzzleText.SetText(ModLanguage.ModTr("TEXT_AUTO_PUZZLE"));
@@ -709,7 +726,9 @@ class MainMenu {
       // esp
       this.Menu.ESPText.SetText(ModLanguage.ModTr("HEADING_ESP"));
       this.Menu.ESPShowNameText.SetText(ModLanguage.ModTr("TEXT_SHOW_NAME"));
-      this.Menu.ESPShowDistanceText.SetText(ModLanguage.ModTr("TEXT_SHOW_DISTANCE"));
+      this.Menu.ESPShowDistanceText.SetText(
+        ModLanguage.ModTr("TEXT_SHOW_DISTANCE")
+      );
       this.Menu.ESPShowBoxText.SetText(ModLanguage.ModTr("TEXT_SHOW_BOX"));
       this.Menu.ESPMonsterText.SetText(ModLanguage.ModTr("TEXT_MONSTER"));
       this.Menu.ESPCollectionText.SetText(ModLanguage.ModTr("TEXT_COLLECTION"));
@@ -768,7 +787,9 @@ class MainMenu {
       // player
       this.Menu.GodModeCheck.SetIsChecked(ModManager.Settings.GodMode);
       this.Menu.NoCDCheck.SetIsChecked(ModManager.Settings.NoCD);
-      this.Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
+      this.Menu.HitMultiplierCheck.SetIsChecked(
+        ModManager.Settings.HitMultiplier
+      );
       this.Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
       this.Menu.InfiniteStaminaCheck.SetIsChecked(
         ModManager.Settings.InfiniteStamina
@@ -787,12 +808,18 @@ class MainMenu {
         ModManager.Settings.PerceptionRange
       );
       this.Menu.AutoDestroyCheck.SetIsChecked(ModManager.Settings.AutoDestroy);
-      this.Menu.NewAutoAbsorbCheck.SetIsChecked(ModManager.Settings.AutoAbsorbnew);
+      this.Menu.NewAutoAbsorbCheck.SetIsChecked(
+        ModManager.Settings.AutoAbsorbnew
+      );
       this.Menu.NewKillAuraCheck.SetIsChecked(ModManager.Settings.killAuranew);
       this.Menu.WorldSpeedCheck.SetIsChecked(ModManager.Settings.WorldSpeed);
       this.Menu.MobVacuumCheck.SetIsChecked(ModManager.Settings.MobVacuum);
-      this.Menu.VacuumCollectCheck.SetIsChecked(ModManager.Settings.VacuumCollect);
-      this.Menu.VacuumCollectCheck.SetIsChecked(ModManager.Settings.VacuumCollect);
+      this.Menu.VacuumCollectCheck.SetIsChecked(
+        ModManager.Settings.VacuumCollect
+      );
+      this.Menu.VacuumCollectCheck.SetIsChecked(
+        ModManager.Settings.VacuumCollect
+      );
       this.Menu.WeatherCheck.SetIsChecked(ModManager.Settings.WeatherChanger);
       this.Menu.PlotSkipCheck.SetIsChecked(ModManager.Settings.PlotSkip);
       this.Menu.AutoPuzzleCheck.SetIsChecked(ModManager.Settings.AutoPuzzle);
@@ -810,16 +837,22 @@ class MainMenu {
       // esp
       this.Menu.ESPCheck.SetIsChecked(ModManager.Settings.ESP);
       this.Menu.ESPShowNameCheck.SetIsChecked(ModManager.Settings.ShowName);
-      this.Menu.ESPShowDistanceCheck.SetIsChecked(ModManager.Settings.ShowDistance);
+      this.Menu.ESPShowDistanceCheck.SetIsChecked(
+        ModManager.Settings.ShowDistance
+      );
       this.Menu.ESPShowBoxCheck.SetIsChecked(ModManager.Settings.ShowBox);
       this.Menu.ESPMonsterCheck.SetIsChecked(ModManager.Settings.ShowMonster);
-      this.Menu.ESPCollectionCheck.SetIsChecked(ModManager.Settings.ShowCollect);
+      this.Menu.ESPCollectionCheck.SetIsChecked(
+        ModManager.Settings.ShowCollect
+      );
       this.Menu.ESPTreasureCheck.SetIsChecked(ModManager.Settings.ShowTreasure);
       this.Menu.ESPAnimalCheck.SetIsChecked(ModManager.Settings.ShowAnimal);
       this.Menu.ESPPuzzleCheck.SetIsChecked(ModManager.Settings.ShowPuzzle);
       this.Menu.ESPCasketCheck.SetIsChecked(ModManager.Settings.ShowCasket);
       this.Menu.ESPRockCheck.SetIsChecked(ModManager.Settings.ShowRock);
-      this.Menu.ESPMutterflyCheck.SetIsChecked(ModManager.Settings.ShowMutterfly);
+      this.Menu.ESPMutterflyCheck.SetIsChecked(
+        ModManager.Settings.ShowMutterfly
+      );
       this.Menu.ESPBlobflyCheck.SetIsChecked(ModManager.Settings.ShowBlobfly);
 
       // debug
@@ -909,14 +942,16 @@ class ModEntityListener {
     }
   }
 
-  static CheckVersion(){
-    let version ="";
+  static CheckVersion() {
+    let version = "";
     //Http_1.Http.Get()
 
-    if(version!==currentVersion){
-      ModManager.ShowConfirmBox("Notice","Found new version,Please go to Discord to download")
+    if (version !== currentVersion) {
+      ModManager.ShowConfirmBox(
+        "Notice",
+        "Found new version,Please go to Discord to download"
+      );
     }
-      
   }
 }
 

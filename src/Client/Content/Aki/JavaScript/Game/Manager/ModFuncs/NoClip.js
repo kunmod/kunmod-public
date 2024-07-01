@@ -20,11 +20,10 @@ class NoClip extends EntityManager {
     const playerentity = this.GetPlayerEntity();
     const ActorComp = playerentity.GetComponent(3);
     const Actor = ActorComp.Actor;
-    Actor.SetActorEnableCollision(!bool); 
+    Actor.SetActorEnableCollision(!bool);
     const Movement = ActorComp.ActorInternal.CharacterMovement;
-    if (bool) Movement.MovementMode = 5; 
+    if (bool) Movement.MovementMode = 5;
     else Movement.MovementMode = 1;
-
   }
 }
 exports.NoClip = NoClip;

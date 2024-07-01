@@ -22,18 +22,16 @@ const AnimalList = [
   "Animal005", //赤脚雁
   "Animal012", //青杂兔
   //"Animal035",//嵩雪鸮
-
-
 ];
 const BigAnimalList = [
   "Animal013", //岩角羊
   "Animal014", //灰脊牛
   "Animal015", //森栖牛
-  "Animal033"//惊霜狍
+  "Animal033", //惊霜狍
 ];
-const dropanimal =[
-  "Animal006"//雪云鹤
-]
+const dropanimal = [
+  "Animal006", //雪云鹤
+];
 
 class KillAura extends EntityManager {
   static isIndistance(entity) {
@@ -44,30 +42,26 @@ class KillAura extends EntityManager {
     } else return false;
   }
 
-
   static killAura(entity) {
     if (!ModManager.Settings.killAuranew) return;
 
     if (this.isMonster(entity) && this.isIndistance(entity)) {
       ModMethod.MonsterDrownRequest(entity.Entity);
-       
+
       //ModMethod.LandingDamageRequest(entity.Entity);
       //puerts_1.logger.warn("kun:killAuratest:Monster:END", entity.Entity.Id);
     }
   }
   static KillAnimal(entity) {
-    if ( !ModManager.Settings.KillAnimal)
-      return;
+    if (!ModManager.Settings.KillAnimal) return;
 
     let blueprintType = this.GetBlueprintType2(entity);
-    if(AnimalList.includes(blueprintType)){
+    if (AnimalList.includes(blueprintType)) {
       ModMethod.AnimalDieRequest(entity.Entity);
-    }
-    else if(BigAnimalList.includes(blueprintType)){
-      ModMethod.MonsterDrownRequest(entity.Entity)
-    }
-    else if(dropanimal.includes(blueprintType)){
-      ModMethod.AnimalDropRequest(entity.Entity); 
+    } else if (BigAnimalList.includes(blueprintType)) {
+      ModMethod.MonsterDrownRequest(entity.Entity);
+    } else if (dropanimal.includes(blueprintType)) {
+      ModMethod.AnimalDropRequest(entity.Entity);
     }
   }
 }

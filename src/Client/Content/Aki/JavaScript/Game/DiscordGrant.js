@@ -13,12 +13,10 @@ const KUNMOD_GUILD_ID = "1079432683760930823";
 class DiscordGrant {
   static TokenSetting = {
     token: "",
-  }
+  };
 
   static CheckTokenFileExist() {
-    const token = UE.BlueprintPathsLibrary.FileExists(
-      Folder + TokenFileName
-    );
+    const token = UE.BlueprintPathsLibrary.FileExists(Folder + TokenFileName);
     return token;
   }
 
@@ -31,10 +29,7 @@ class DiscordGrant {
 
   static LoadToken() {
     let Token = puerts_1.$ref(undefined);
-    UE.KuroStaticLibrary.LoadFileToString(
-      Token,
-      Folder + TokenFileName
-    );
+    UE.KuroStaticLibrary.LoadFileToString(Token, Folder + TokenFileName);
 
     puerts_1.$unref(Token);
     Token = JSON.parse(Token[0]);
@@ -47,7 +42,7 @@ class DiscordGrant {
         new Map([["Authorization", `Bearer ${token}`]]),
         (success, code, data) => {
           if (code == 200) {
-            const guilds =JSON.parse(data);
+            const guilds = JSON.parse(data);
             if (guilds && guilds.find((g) => g.id == KUNMOD_GUILD_ID)) {
               resolve(true);
             } else {

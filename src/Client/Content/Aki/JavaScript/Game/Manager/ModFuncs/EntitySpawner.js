@@ -4,10 +4,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const CreatureController_1 = require("../../World/Controller/CreatureController"),
   puerts_1 = require("puerts"),
   Global_1 = require("../../Global"),
-  ModManager_1 =require("../ModManager"),
-  EntityManager_1 =require("./EntityManager"),
+  ModManager_1 = require("../ModManager"),
+  EntityManager_1 = require("./EntityManager"),
   UE = require("ue");
-
 
 class EntitySpawner {
   // 修改 low 和 ConfigId 达到添加实体的效果
@@ -41,25 +40,24 @@ class EntitySpawner {
     }
   }
   //
-//   Animal: 8;
-//   Custom: 6;
-//   Monster: 2;
-//   Npc: 1;
-//   Player: 0;
-//   SceneItem: 5;
-//   Vision: 7;
+  //   Animal: 8;
+  //   Custom: 6;
+  //   Monster: 2;
+  //   Npc: 1;
+  //   Player: 0;
+  //   SceneItem: 5;
+  //   Vision: 7;
   static SpawnEntity(id, entitytype) {
     let seed = Math.floor(Math.random() * 1000);
     const MyEntity = new EntitySpawner();
     MyEntity.Id.low = seed;
     MyEntity.ConfigId = id;
-    MyEntity.EntityType=entitytype;
+    MyEntity.EntityType = entitytype;
     MyEntity.updatePosition();
-    puerts_1.logger.warn("kunSpawn :", MyEntity);  
+    puerts_1.logger.warn("kunSpawn :", MyEntity);
     CreatureController_1.CreatureController.CreateEntity(MyEntity);
-   // let a =EntityManager_1.EntityManager.GetPlayerPos();
+    // let a =EntityManager_1.EntityManager.GetPlayerPos();
     //ModManager_1.ModManager.TpNoloadingTo(a.X,a.Y,a.Z);
-    
   }
 }
 exports.EntitySpawner = EntitySpawner;

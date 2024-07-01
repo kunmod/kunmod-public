@@ -70,8 +70,8 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
               this.Xte.HasTag(400631093) ||
                 ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity
                   ?.Id === this.Entity.Id;
-                if (ModManager_1.ModManager.Settings.InfiniteStamina) return;
-                this.Entity.CheckGetComponent(172)?.Drowning();
+              if (ModManager_1.ModManager.Settings.InfiniteStamina) return;
+              this.Entity.CheckGetComponent(172)?.Drowning();
           }
       }),
       (this.CGr = (t, e) => {

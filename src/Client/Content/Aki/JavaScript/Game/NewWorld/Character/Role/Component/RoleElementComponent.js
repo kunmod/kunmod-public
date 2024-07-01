@@ -63,14 +63,16 @@ let RoleElementComponent =
             );
         }),
         (this.W3r = (t) => {
-            if (ModManager_1.ModManager.Settings.NoCD) {
-                this.ron = true
-                return
-            } else {
-                if (FormationDataController_1.FormationDataController.GlobalIsInFight) {
-                    this.ron = true;
-                }
+          if (ModManager_1.ModManager.Settings.NoCD) {
+            this.ron = true;
+            return;
+          } else {
+            if (
+              FormationDataController_1.FormationDataController.GlobalIsInFight
+            ) {
+              this.ron = true;
             }
+          }
         }),
         (this.Zpe = (t) => {
           (this.ron = t) || (this.son = !1);
@@ -143,11 +145,11 @@ let RoleElementComponent =
       );
     }
     OnEnd() {
-        if (ModManager_1.ModManager.Settings.NoCD) {
-            this.oon = void 0;
-            this.ron = true;
-            return true;
-        }
+      if (ModManager_1.ModManager.Settings.NoCD) {
+        this.oon = void 0;
+        this.ron = true;
+        return true;
+      }
       return (
         this.$te.RemoveListener(this.uon, this.WQe),
         EventSystem_1.EventSystem.RemoveWithTarget(
@@ -194,38 +196,38 @@ let RoleElementComponent =
         this.non = true;
         const buffId = RoleElementComponent_1.con.get(this.RoleElementType);
         this.elt.AddBuff(CharacterBuffIds_1.buffId.ActivateQte, {
-            InstigatorId: this.elt.CreatureDataId,
-            Reason: "RoleElementComponent获取激活QTE的Tag",
+          InstigatorId: this.elt.CreatureDataId,
+          Reason: "RoleElementComponent获取激活QTE的Tag",
         });
         this.elt.AddBuff(t, {
-            InstigatorId: this.elt.CreatureDataId,
-            Reason: "RoleElementComponent激活Buff特效",
-        })
+          InstigatorId: this.elt.CreatureDataId,
+          Reason: "RoleElementComponent激活Buff特效",
+        });
       } else {
         this.non !== t &&
-        this.nXt?.IsAutonomousProxy &&
-        ((this.non = t),
-        (t = RoleElementComponent_1.con.get(this.RoleElementType)),
-        this.non
-          ? (this.elt.AddBuff(
-              ModelManager_1.ModelManager.GameModeModel.IsMulti
-                ? CharacterBuffIds_1.buffId.ActivateMultiQte
-                : CharacterBuffIds_1.buffId.ActivateQte,
-              {
+          this.nXt?.IsAutonomousProxy &&
+          ((this.non = t),
+          (t = RoleElementComponent_1.con.get(this.RoleElementType)),
+          this.non
+            ? (this.elt.AddBuff(
+                ModelManager_1.ModelManager.GameModeModel.IsMulti
+                  ? CharacterBuffIds_1.buffId.ActivateMultiQte
+                  : CharacterBuffIds_1.buffId.ActivateQte,
+                {
+                  InstigatorId: this.elt.CreatureDataId,
+                  Reason: "RoleElementComponent获取激活QTE的Tag",
+                }
+              ),
+              this.elt.AddBuff(t, {
                 InstigatorId: this.elt.CreatureDataId,
-                Reason: "RoleElementComponent获取激活QTE的Tag",
-              }
-            ),
-            this.elt.AddBuff(t, {
-              InstigatorId: this.elt.CreatureDataId,
-              Reason: "RoleElementComponent激活Buff特效",
-            }))
-          : (this.elt.RemoveBuff(
-              CharacterBuffIds_1.buffId.ActivateQte,
-              -1,
-              "RoleElementComponent移除激活QTE的Tag"
-            ),
-            this.elt.RemoveBuff(t, -1, "RoleElementComponent移除Buff特效")));
+                Reason: "RoleElementComponent激活Buff特效",
+              }))
+            : (this.elt.RemoveBuff(
+                CharacterBuffIds_1.buffId.ActivateQte,
+                -1,
+                "RoleElementComponent移除激活QTE的Tag"
+              ),
+              this.elt.RemoveBuff(t, -1, "RoleElementComponent移除Buff特效")));
       }
     }
     get son() {
@@ -235,7 +237,7 @@ let RoleElementComponent =
       return this.$te.GetCurrentValue(EAttributeId.Proto_ElementPropertyType);
     }
     get RoleElementEnergy() {
-        if (ModManager_1.ModManager.Settings.NoCD) return Infinity;
+      if (ModManager_1.ModManager.Settings.NoCD) return Infinity;
       var t = this.uon;
       return 0 < t ? this.$te.GetCurrentValue(t) : 0;
     }

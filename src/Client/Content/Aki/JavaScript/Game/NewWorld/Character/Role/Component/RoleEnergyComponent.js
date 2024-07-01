@@ -25,7 +25,7 @@ var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 const ModManager_1 = require("../../../../Manager/ModManager"),
   energyAttrIds = [EAttributeId.Proto_Energy, EAttributeId.Proto_EnergyMax];
-  let originalGetCurrentValue;
+let originalGetCurrentValue;
 let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -48,11 +48,12 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
     originalGetCurrentValue = this.$te.GetCurrentValue.bind(this.$te);
 
     this.$te.GetCurrentValue = (attributeId) => {
-        if (attributeId === EAttributeId.Energy) {
-          if (ModManager_1.ModManager.Settings.NoCD) return originalGetCurrentValue(EAttributeId.EnergyMax);
-        }
-        return originalGetCurrentValue(attributeId);
-      };
+      if (attributeId === EAttributeId.Energy) {
+        if (ModManager_1.ModManager.Settings.NoCD)
+          return originalGetCurrentValue(EAttributeId.EnergyMax);
+      }
+      return originalGetCurrentValue(attributeId);
+    };
 
     this.$te.AddListeners(energyAttrIds, this.mon, "RoleEnergyComponent");
     this.mon();

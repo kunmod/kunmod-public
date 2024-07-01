@@ -59,12 +59,8 @@ class MobVacuum extends EntityManager {
     t.PendingMoveInfos.push(i);
     var s = Protocol_1.Aki.Protocol.Xhs.create();
     s.Mys.push(t.CollectPendingMoveInfos());
-    Net_1.Net.Send(29494/*NetDefine_1.EPushMessageId.MovePackagePush*/, s);
+    Net_1.Net.Send(29494 /*NetDefine_1.EPushMessageId.MovePackagePush*/, s);
   }
-
-
-
-
 }
 //puerts.logger.info(debug)
 exports.MobVacuum = MobVacuum;

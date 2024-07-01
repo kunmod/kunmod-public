@@ -52,12 +52,15 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
       }),
       (this.rin = (t, e) => {
         // only hatred
-        if (ModManager_1.ModManager.Settings.killAura && ModManager_1.ModManager.Settings.killAuraState == 0) {
+        if (
+          ModManager_1.ModManager.Settings.killAura &&
+          ModManager_1.ModManager.Settings.killAuraState == 0
+        ) {
           // var o, e
           // this.Entity.GetComponent(89).SetPositionState(3);
           var o, e;
           (e = this.Hte.ActorLocationProxy),
-          ((o = Protocol_1.Aki.Protocol.jNn.create()).M3n = e)
+            ((o = Protocol_1.Aki.Protocol.jNn.create()).M3n = e);
           CombatMessage_1.CombatNet.Call(24697, this.Entity, o);
         }
         e &&
@@ -79,10 +82,13 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
   }
   OnStart() {
     // infinity
-    if (ModManager_1.ModManager.Settings.killAura && ModManager_1.ModManager.Settings.killAuraState == 1) {
+    if (
+      ModManager_1.ModManager.Settings.killAura &&
+      ModManager_1.ModManager.Settings.killAuraState == 1
+    ) {
       var o, e;
       (e = this.Hte.ActorLocationProxy),
-      ((o = Protocol_1.Aki.Protocol.jNn.create()).M3n = e)
+        ((o = Protocol_1.Aki.Protocol.jNn.create()).M3n = e);
       CombatMessage_1.CombatNet.Call(24697, this.Entity, o);
     }
     return (

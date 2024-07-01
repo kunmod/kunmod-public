@@ -575,12 +575,12 @@ let CharacterHitComponent =
         this.U6r(),
         this.u6r();
     }
-    OnHit(t, i, e, s, h, r, o, a, n){
-      var Player = Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity
+    OnHit(t, i, e, s, h, r, o, a, n) {
+      var Player =
+        Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity;
       if (ModManager_1.ModManager.Settings.GodMode === true) {
         var Target = EntitySystem_1.EntitySystem.Get(t.Target.Id);
-        if (Target == Player)
-          return;
+        if (Target == Player) return;
       }
       if (ModManager_1.ModManager.Settings.HitMultiplier === true) {
         var Attacker = EntitySystem_1.EntitySystem.Get(t.Attacker.Id);

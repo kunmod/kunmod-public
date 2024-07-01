@@ -19,13 +19,11 @@ let loadInterval = setInterval(() => {
     try {
       ModTpFile = require("./ModTpFile").ModTpFile;
       isLoaded = true;
-    }
-    catch (error) {
-    }
+    } catch (error) {}
   } else {
     clearInterval(loadInterval);
   }
-}, 3000)
+}, 3000);
 
 class ModCustomTp {
   static Settings = {
@@ -279,7 +277,9 @@ class ModCustomTp {
         i--
       ) {
         ModManager_1.ModManager.ShowTip(
-          i === 1 ? ModTr("TEXT_GO") : `${ModTr("Remaining time")}: ${i} ${ModTr("TEXT_SECONDS")}`
+          i === 1
+            ? ModTr("TEXT_GO")
+            : `${ModTr("Remaining time")}: ${i} ${ModTr("TEXT_SECONDS")}`
         );
         await ModUtils_1.ModUtils.Sleep(1000);
       }
@@ -293,8 +293,7 @@ class ModCustomTp {
       }
     }
     this.isTimerRunning = false;
-}
-
+  }
 
   static listenAuto() {
     if (ModManager_1.ModManager.IsMyKeyUp("End")) {
@@ -333,7 +332,7 @@ class ModCustomTp {
         if (s !== "error") this.Settings.CurreNum = s - 1;
       },
       inputText: (this.Settings.CurreNum + 1).toString(),
-      defaultText: ("TEXT_ENTER_CURR_NUM"),
+      defaultText: "TEXT_ENTER_CURR_NUM",
       isCheckNone: true,
       needFunctionButton: false,
     });

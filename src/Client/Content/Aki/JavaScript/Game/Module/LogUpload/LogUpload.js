@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const cpp_1 = require("cpp"),
   puerts_1 = require("puerts"),
   UE = require("ue"),
-						 
   Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   Net_1 = require("../../../Core/Net/Net"),
@@ -17,7 +16,6 @@ const cpp_1 = require("cpp"),
   ModelManager_1 = require("../../Manager/ModelManager");
 class LogUpload {
   static Init() {
-															  
     UE.KuroTencentCOSLibrary.EnableAuthorization(!1);
     var e =
       BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()

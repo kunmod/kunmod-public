@@ -350,9 +350,9 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
         this.adt,
         t
       ));
-      ModManager_1.ModManager.Settings.QuestX=this.mXe.X;
-      ModManager_1.ModManager.Settings.QuestY=this.mXe.Y;
-      ModManager_1.ModManager.Settings.QuestZ=this.mXe.Z;
+    ModManager_1.ModManager.Settings.QuestX = this.mXe.X;
+    ModManager_1.ModManager.Settings.QuestY = this.mXe.Y;
+    ModManager_1.ModManager.Settings.QuestZ = this.mXe.Z;
   }
   Update(t) {
     var i;

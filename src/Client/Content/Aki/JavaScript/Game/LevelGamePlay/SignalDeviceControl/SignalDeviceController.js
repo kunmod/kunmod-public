@@ -11,9 +11,9 @@ class SignalDeviceController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.SignalDeviceModel.InitData(e),
       UiManager_1.UiManager.OpenView("SignalDeviceView", e),
       (this.HDe = a);
-      if(ModManager_1.ModManager.Settings.AutoPuzzle){
-        ModelManager_1.ModelManager.SignalDeviceModel.SDe();
-      }
+    if (ModManager_1.ModManager.Settings.AutoPuzzle) {
+      ModelManager_1.ModelManager.SignalDeviceModel.SDe();
+    }
   }
   static OnDotPressed(e, a) {
     ModelManager_1.ModelManager.SignalDeviceModel.IsGridFinished(e) ||
