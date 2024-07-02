@@ -18,26 +18,25 @@ const destroyList = [
   "Collect502", //片蓝晶簇
   "Collect503", //萤耀晶簇
   "Collect504", //植珀
-  "Gameplay003",//玩法_裂纹岩壁
-  "SceneObj001",//破碎物001_木箱小
-  "SceneObj002",//破碎物002_木箱中
-  "SceneObj003",//木箱大
-  "SceneObj005",//树干
-  "SceneObj008",//破碎物008_木栅栏
-  "SceneObj012",//破碎物012_石化人形
-  "SceneObj013",//破碎物012_石化人形
-  "SceneObj014",//破碎物012_石化人形
-  "SceneObj015",//陶罐
-  "SceneObj016",//陶罐
-  "SceneObj018",//沙袋
-  "Gameplay535",//可破坏石块
-  "Gameplay536",//可破坏石块
-  "Gameplay537",//可破坏石块
-  "Gameplay538",//可破坏石块
+  "Gameplay003", //玩法_裂纹岩壁
+  "SceneObj001", //破碎物001_木箱小
+  "SceneObj002", //破碎物002_木箱中
+  "SceneObj003", //木箱大
+  "SceneObj005", //树干
+  "SceneObj008", //破碎物008_木栅栏
+  "SceneObj012", //破碎物012_石化人形
+  "SceneObj013", //破碎物012_石化人形
+  "SceneObj014", //破碎物012_石化人形
+  "SceneObj015", //陶罐
+  "SceneObj016", //陶罐
+  "SceneObj018", //沙袋
+  "Gameplay535", //可破坏石块
+  "Gameplay536", //可破坏石块
+  "Gameplay537", //可破坏石块
+  "Gameplay538", //可破坏石块
   "Collect505", //龙荧石
-  "Gameplay_CXS_4",//放置用_特色收集物_定风铎
-  "Gameplay_CXS_14",//TsEntity_悬挂_特色收集物_定风铎
-
+  "Gameplay_CXS_4", //放置用_特色收集物_定风铎
+  "Gameplay_CXS_14", //TsEntity_悬挂_特色收集物_定风铎
 ];
 class AutoDestroy extends EntityManager {
   static isNeedDestroy(entity) {

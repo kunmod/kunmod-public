@@ -71,7 +71,7 @@ function ReadFile(file) {
 }
 
 async function CurrentVersion() {
-  return await Get("https://api.npoint.io/efec65e4b17c319331e8");
+  return await Get("https://api.npoint.io/4b0ef6689a421f9188ad");
 }
 
 async function Get(url) {

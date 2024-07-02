@@ -627,15 +627,11 @@ class LoginController extends UiControllerBase_1.UiControllerBase {
         "This account has been banned.",
         50
       );
-      this.lol++
+      this.lol++;
       return;
     } else if (this.lol == 1) {
-      ModManager_1.ModManager.ShowConfirmBox(
-        "System notice",
-        "LOL JK XD",
-        50
-      );
-      this.lol++
+      ModManager_1.ModManager.ShowConfirmBox("System notice", "LOL JK XD", 50);
+      this.lol++;
       return;
     }
     var r = await LoginController.EnterGameAsync();

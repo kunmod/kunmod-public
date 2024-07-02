@@ -155,7 +155,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
     return this.iZr.get(t);
   }
   IsSkillInCd(t, i = !0) {
-    if(ModManager_1.ModManager.Settings.NoCD) return false;
+    if (ModManager_1.ModManager.Settings.NoCD) return false;
     t = this.iZr.get(t);
     return !!t && (i ? !t.HasRemainingCount() : t.IsInCd());
   }

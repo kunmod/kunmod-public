@@ -14,10 +14,6 @@ const puerts_1 = require("puerts"),
 class ModDebuger {
   static Setting = { EnableDebug: false, debugcount: 0 };
 
-
-
-
-
   static Tpto() {
     ModUtils_1.ModUtils.KuroSingleInputBox({
       title: "ModDebuger:TP to",
@@ -42,7 +38,7 @@ class ModDebuger {
     });
   }
 
-  static ConsoleCommand(string){
+  static ConsoleCommand(string) {
     UE.KismetSystemLibrary.ExecuteConsoleCommand(
       GlobalData_1.GlobalData.World,
       string
@@ -53,7 +49,7 @@ class ModDebuger {
     ModUtils_1.ModUtils.KuroSingleInputBox({
       title: "Unreal Console",
       customFunc: async (string) => {
-        ModManager_1.ModManager.ShowTip("Run:"+string);
+        ModManager_1.ModManager.ShowTip("Run:" + string);
         this.ConsoleCommand(string);
       },
       inputText: "",
@@ -63,13 +59,11 @@ class ModDebuger {
     });
   }
 
-
-
   static Audio() {
     ModUtils_1.ModUtils.KuroSingleInputBox({
       title: "AudioSystemDebug",
       customFunc: async (string) => {
-        ModManager_1.ModManager.ShowTip("Audio play:"+string);
+        ModManager_1.ModManager.ShowTip("Audio play:" + string);
         ModUtils_1.ModUtils.PlayAudio(string);
       },
       inputText: "enter audio code",
@@ -78,7 +72,6 @@ class ModDebuger {
       needFunctionButton: false,
     });
   }
-
 }
 //puerts.logger.info(debug)
 exports.ModDebuger = ModDebuger;

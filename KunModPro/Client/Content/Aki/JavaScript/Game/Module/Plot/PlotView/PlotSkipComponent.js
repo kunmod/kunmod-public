@@ -7,7 +7,7 @@ const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-	ModManager_1 = require("../../../Manager/ModManager"),													
+  ModManager_1 = require("../../../Manager/ModManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
 class PlotSkipComponent {
   constructor(e, t, i, o) {
@@ -20,12 +20,12 @@ class PlotSkipComponent {
         if (ModManager_1.ModManager.Settings.PlotSkip) {
           this.dce = e;
           this.nzi.SetUIActive(this.dce);
-        } else {				
+        } else {
           (e && !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanSkip) ||
-          this.dce === e ||
-          ((this.dce = e), this.nzi.SetUIActive(this.dce), this.dce) ||
-          ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
-		} 
+            this.dce === e ||
+            ((this.dce = e), this.nzi.SetUIActive(this.dce), this.dce) ||
+            ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
+        }
       }),
       (this.szi = () => {
         var e;

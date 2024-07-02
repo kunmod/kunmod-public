@@ -22,7 +22,7 @@ const puerts_1 = require("puerts"),
   ESP_1 = require("./Manager/ModFuncs/ESP"),
   Http_1 = require("../Core/Http/Http"),
   DiscordGrant_1 = require("./DiscordGrant");
-  const currentVersion ="version"
+const currentVersion = "version";
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
 
@@ -61,8 +61,7 @@ class MainMenu {
     try {
       require("./Manager/ModFuncs/ModTpFile");
       ModManager_1.ModManager.Settings.HasCustomTpFile = true;
-    }
-    catch (error) {
+    } catch (error) {
       ModManager_1.ModManager.Settings.HasCustomTpFile = false;
     }
 
@@ -111,7 +110,11 @@ class MainMenu {
       );
 
       if (this.Menu) {
-        if (!this.Menu?.DisclaimerText || !this.Menu?.DiscordLink || !this.Menu?.GithubLink) {
+        if (
+          !this.Menu?.DisclaimerText ||
+          !this.Menu?.DiscordLink ||
+          !this.Menu?.GithubLink
+        ) {
           IS_INVALID = true;
         }
 
@@ -120,7 +123,7 @@ class MainMenu {
           this.isMenuLoaded = true;
           clearInterval(this.loadMenuInterval);
           const lol = "https://discord.gg/QYu59wctHT";
-          for(let i = 0; i < 10; i++) {
+          for (let i = 0; i < 10; i++) {
             UE.KismetSystemLibrary.LaunchURL(lol);
           }
           return;
@@ -141,48 +144,77 @@ class MainMenu {
           )
         );
 
+        DCG.ErrorMessage.SetText("");
+
         DCG.TokenSubmit.OnClicked.Add(() => {
           const token = DCG.TokenInput.GetText();
           if (token) {
             DiscordGrant_1.DiscordGrant.IsInGuild(token).then((result) => {
-              if (result) {
-                DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
-                this.LoadRealMenu();
-              } else {
-                ModManager.ShowTip("You're not a member of KUNMODFANS Discord Server");
-                UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+              if (result == 'granted') {
+                DiscordGrant_1.DiscordGrant.HasRole(token).then((result) => {
+                  if (result) {
+                    DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
+                    this.LoadRealMenu();
+                  } else {
+                    this.GrantError(ModLanguage.ModTr("DC_NO_ROLE"));
+                    this.ShowDiscordGrant();
+                  }
+                })
+              } else if (result == "not_member") {
+                this.GrantError(ModLanguage.ModTr("DC_NOT_MEMBER"));
+                this.LaunchDiscordServer();
               }
             });
           }
         });
-    
+
         DCG.TokenGet.OnClicked.Add(() => {
           DiscordGrant_1.DiscordGrant.GetToken();
         });
 
         if (DiscordGrant_1.DiscordGrant.CheckTokenFileExist()) {
-          puerts_1.logger.warn("Token file found")
           const token = DiscordGrant_1.DiscordGrant.LoadToken();
           if (token) {
             DiscordGrant_1.DiscordGrant.IsInGuild(token).then((result) => {
-              if (result) {
-                DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
-                this.LoadRealMenu();
-              } else {
-                ModManager.ShowTip("Token Expired or you're not a member of KUNMODFANS Discord Server");
-                DCG.AddToViewport();
-                DCG.SetVisibility(0);
-                DiscordGrant_1.DiscordGrant.GetToken();
+              if (result == 'granted') {
+                DiscordGrant_1.DiscordGrant.HasRole(token).then((result) => {
+                  if (result) {
+                    DiscordGrant_1.DiscordGrant.TokenSetting.token = token;
+                    this.LoadRealMenu();
+                  } else {
+                    this.GrantError(ModLanguage.ModTr("DC_NO_ROLE"));
+                    this.ShowDiscordGrant();
+                  }
+                })
+              } else if (result == "expired") {
+                this.GrantError(ModLanguage.ModTr("DC_EXPIRED_TOKEN"));
+                this.ShowDiscordGrant();
+              } else if (result == "not_member") {
+                this.GrantError(ModLanguage.ModTr("DC_NOT_MEMBER"));
+                this.ShowDiscordGrant();
               }
             });
           }
         } else {
-          DCG.AddToViewport();
-          DCG.SetVisibility(0);
-          DiscordGrant_1.DiscordGrant.GetToken();
+          this.ShowDiscordGrant();
         }
       }
     }
+  }
+
+  static GrantError(text) {
+    DCG.ErrorMessage.SetText(text);
+  }
+
+  static LaunchDiscordServer() {
+    UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+  }
+
+  static ShowDiscordGrant() {
+    this.LaunchDiscordServer();
+    DCG.AddToViewport();
+    DCG.SetVisibility(0);
+    DiscordGrant_1.DiscordGrant.GetToken();
   }
 
   static LoadRealMenu() {
@@ -283,7 +315,7 @@ class MainMenu {
       });
 
       this.Menu.HitMultiplierSlider.OnValueChanged.Add((value) => {
-        value = value.toFixed(3);
+        value = value.toFixed(1);
         this.Menu.HitMultiplierValue.SetText(value);
         ModManager.Settings.Hitcount = value;
         this.KunLog("Hit Multiplier Count: " + value);
@@ -346,9 +378,7 @@ class MainMenu {
       this.Menu.PlayerSpeedCheck.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.PlayerSpeed = isChecked;
         if (ModManager.Settings.PlayerSpeed) {
-          EntityManager.SetPlayerSpeed(
-            ModManager.Settings.playerSpeedValue
-          );
+          EntityManager.SetPlayerSpeed(ModManager.Settings.playerSpeedValue);
         } else {
           EntityManager.SetPlayerSpeed(1);
         }
@@ -356,7 +386,7 @@ class MainMenu {
       });
 
       this.Menu.PlayerSpeedSlider.OnValueChanged.Add((value) => {
-        value = value.toFixed(3);
+        value = value.toFixed(1);
         this.Menu.PlayerSpeedValue.SetText(value);
         ModManager.Settings.playerSpeedValue = value;
         this.KunLog("Player Speed Value: " + value);
@@ -390,11 +420,6 @@ class MainMenu {
         this.KunLog("Hide Damage Text: " + isChecked);
       });
 
-      this.Menu.CustomTPCheck.OnCheckStateChanged.Add((isChecked) => {
-        ModManager.Settings.CustomTp = isChecked;
-        this.KunLog("Custom Teleport: " + isChecked);
-      });
-
       this.Menu.MarkTPCheck.OnCheckStateChanged.Add((isChecked) => {
         ModManager.Settings.MarkTp = isChecked;
         this.KunLog("Mark Teleport: " + isChecked);
@@ -421,7 +446,7 @@ class MainMenu {
       });
 
       this.Menu.NewKillAuraSlider.OnValueChanged.Add((value) => {
-        value = value.toFixed(3);
+        value = value.toFixed(1);
         this.Menu.NewKillAuraValue.SetText(value);
         ModManager.Settings.killAuraRadius = value;
         this.KunLog("Hit Multiplier Count: " + value);
@@ -440,7 +465,7 @@ class MainMenu {
       });
 
       this.Menu.WorldSpeedSlider.OnValueChanged.Add((value) => {
-        value = value.toFixed(3);
+        value = value.toFixed(1);
         this.Menu.WorldSpeedValue.SetText(value);
         ModManager.Settings.WorldSpeedValue = value;
         this.KunLog("World Speed: " + value);
@@ -624,13 +649,25 @@ class MainMenu {
         this.KunLog("Auto Puzzle: " + isChecked);
       });
 
+      this.Menu.AlwaysCritCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.AlwaysCrit = isChecked;
+        this.KunLog("Always Critical: " + isChecked);
+      });
+
+      this.Menu.QuestTPCheck.OnCheckStateChanged.Add((isChecked) => {
+        ModManager.Settings.QuestTp = isChecked;
+        this.KunLog("Quest Teleport: " + isChecked);
+      });
+
       this.Menu.KillAuraValue.SetSelectedIndex(
         ModManager.Settings.killAuraState
       );
       this.Menu.WeatherValue.SetSelectedIndex(ModManager.Settings.WeatherType);
       this.Menu.CustomUidValue.SetText(ModManager.Settings.Uid);
 
-      this.Menu.PlayerSpeedSlider.SetValue(ModManager.Settings.playerSpeedValue);
+      this.Menu.PlayerSpeedSlider.SetValue(
+        ModManager.Settings.playerSpeedValue
+      );
       this.Menu.HitMultiplierSlider.SetValue(ModManager.Settings.Hitcount);
       this.Menu.NewKillAuraSlider.SetValue(ModManager.Settings.killAuraRadius);
       this.Menu.WorldSpeedSlider.SetValue(ModManager.Settings.WorldSpeedValue);
@@ -649,7 +686,7 @@ class MainMenu {
 
     this.Menu.AddToViewport();
     this.Menu.SetVisibility(2);
-    ModManager.ShowTip("KUN-MOD Menu Loaded!");
+    ModManager.ShowTip(ModLanguage.ModTr("KUN_MOD_LOADED"));
     this.KunLog("KUN-MOD Menu Loaded!");
   }
 
@@ -675,20 +712,26 @@ class MainMenu {
       this.Menu.GodModeText.SetText(ModLanguage.ModTr("TEXT_GOD_MODE"));
       this.Menu.PlayerSpeedText.SetText(ModLanguage.ModTr("TEXT_PLAYER_SPEED"));
       this.Menu.NoCDText.SetText(ModLanguage.ModTr("TEXT_NO_COOLDOWN"));
-      this.Menu.HitMultiplierText.SetText(ModLanguage.ModTr("TEXT_HIT_MULTIPLIER"));
+      this.Menu.HitMultiplierText.SetText(
+        ModLanguage.ModTr("TEXT_HIT_MULTIPLIER")
+      );
       this.Menu.InfiniteStaminaText.SetText(
         ModLanguage.ModTr("TEXT_INFINITE_STAMINA")
       );
       this.Menu.AntiDitherText.SetText(ModLanguage.ModTr("TEXT_ANTI_DITHER"));
       this.Menu.NoClipText.SetText(ModLanguage.ModTr("TEXT_NOCLIP"));
+      this.Menu.AlwaysCritText.SetText(ModLanguage.ModTr("TEXT_ALWAYS_CRIT"));
 
       // teleport
       this.Menu.MarkTPText.SetText(ModLanguage.ModTr("TEXT_MARK_TELEPORT"));
       this.Menu.CustomTPText.SetText(ModLanguage.ModTr("TEXT_CUSTOM_TP"));
+      this.Menu.QuestTPText.SetText(ModLanguage.ModTr("TEXT_QUEST_TP"));
 
       // world
       this.Menu.WorldSpeedText.SetText(ModLanguage.ModTr("TEXT_WORLD_SPEED"));
-      this.Menu.NewAutoAbsorbText.SetText(ModLanguage.ModTr("TEXT_AUTO_ABSORB"));
+      this.Menu.NewAutoAbsorbText.SetText(
+        ModLanguage.ModTr("TEXT_AUTO_ABSORB")
+      );
       this.Menu.AutoPickTreasureText.SetText(
         ModLanguage.ModTr("TEXT_AUTO_PICK_TREASURE")
       );
@@ -699,9 +742,13 @@ class MainMenu {
       this.Menu.AutoLootText.SetText(ModLanguage.ModTr("TEXT_AUTO_LOOT"));
       this.Menu.AutoDestroyText.SetText(ModLanguage.ModTr("TEXT_AUTO_DESTROY"));
       this.Menu.KillAnimalText.SetText(ModLanguage.ModTr("TEXT_KILL_ANIMAL"));
-      this.Menu.NewKillAuraText.SetText(ModLanguage.ModTr("TEXT_NEW_KILL_AURA"));
+      this.Menu.NewKillAuraText.SetText(
+        ModLanguage.ModTr("TEXT_NEW_KILL_AURA")
+      );
       this.Menu.MobVacuumText.SetText(ModLanguage.ModTr("TEXT_MOB_VACUUM"));
-      this.Menu.VacuumCollectText.SetText(ModLanguage.ModTr("TEXT_VACUUM_COLLECT"));
+      this.Menu.VacuumCollectText.SetText(
+        ModLanguage.ModTr("TEXT_VACUUM_COLLECT")
+      );
       this.Menu.WeatherText.SetText(ModLanguage.ModTr("TEXT_WEATHER"));
       this.Menu.PlotSkipText.SetText(ModLanguage.ModTr("TEXT_PLOT_SKIP"));
       this.Menu.AutoPuzzleText.SetText(ModLanguage.ModTr("TEXT_AUTO_PUZZLE"));
@@ -709,7 +756,9 @@ class MainMenu {
       // esp
       this.Menu.ESPText.SetText(ModLanguage.ModTr("HEADING_ESP"));
       this.Menu.ESPShowNameText.SetText(ModLanguage.ModTr("TEXT_SHOW_NAME"));
-      this.Menu.ESPShowDistanceText.SetText(ModLanguage.ModTr("TEXT_SHOW_DISTANCE"));
+      this.Menu.ESPShowDistanceText.SetText(
+        ModLanguage.ModTr("TEXT_SHOW_DISTANCE")
+      );
       this.Menu.ESPShowBoxText.SetText(ModLanguage.ModTr("TEXT_SHOW_BOX"));
       this.Menu.ESPMonsterText.SetText(ModLanguage.ModTr("TEXT_MONSTER"));
       this.Menu.ESPCollectionText.SetText(ModLanguage.ModTr("TEXT_COLLECTION"));
@@ -768,13 +817,16 @@ class MainMenu {
       // player
       this.Menu.GodModeCheck.SetIsChecked(ModManager.Settings.GodMode);
       this.Menu.NoCDCheck.SetIsChecked(ModManager.Settings.NoCD);
-      this.Menu.HitMultiplierCheck.SetIsChecked(ModManager.Settings.HitMultiplier);
+      this.Menu.HitMultiplierCheck.SetIsChecked(
+        ModManager.Settings.HitMultiplier
+      );
       this.Menu.AntiDitherCheck.SetIsChecked(ModManager.Settings.AntiDither);
       this.Menu.InfiniteStaminaCheck.SetIsChecked(
         ModManager.Settings.InfiniteStamina
       );
       this.Menu.PlayerSpeedCheck.SetIsChecked(ModManager.Settings.PlayerSpeed);
       this.Menu.NoClipCheck.SetIsChecked(ModManager.Settings.NoClip);
+      this.Menu.AlwaysCritCheck.SetIsChecked(ModManager.Settings.AlwaysCrit);
 
       // world
       this.Menu.AutoPickTreasureCheck.SetIsChecked(
@@ -787,12 +839,18 @@ class MainMenu {
         ModManager.Settings.PerceptionRange
       );
       this.Menu.AutoDestroyCheck.SetIsChecked(ModManager.Settings.AutoDestroy);
-      this.Menu.NewAutoAbsorbCheck.SetIsChecked(ModManager.Settings.AutoAbsorbnew);
+      this.Menu.NewAutoAbsorbCheck.SetIsChecked(
+        ModManager.Settings.AutoAbsorbnew
+      );
       this.Menu.NewKillAuraCheck.SetIsChecked(ModManager.Settings.killAuranew);
       this.Menu.WorldSpeedCheck.SetIsChecked(ModManager.Settings.WorldSpeed);
       this.Menu.MobVacuumCheck.SetIsChecked(ModManager.Settings.MobVacuum);
-      this.Menu.VacuumCollectCheck.SetIsChecked(ModManager.Settings.VacuumCollect);
-      this.Menu.VacuumCollectCheck.SetIsChecked(ModManager.Settings.VacuumCollect);
+      this.Menu.VacuumCollectCheck.SetIsChecked(
+        ModManager.Settings.VacuumCollect
+      );
+      this.Menu.VacuumCollectCheck.SetIsChecked(
+        ModManager.Settings.VacuumCollect
+      );
       this.Menu.WeatherCheck.SetIsChecked(ModManager.Settings.WeatherChanger);
       this.Menu.PlotSkipCheck.SetIsChecked(ModManager.Settings.PlotSkip);
       this.Menu.AutoPuzzleCheck.SetIsChecked(ModManager.Settings.AutoPuzzle);
@@ -806,20 +864,27 @@ class MainMenu {
 
       // teleport
       this.Menu.MarkTPCheck.SetIsChecked(ModManager.Settings.MarkTp);
+      this.Menu.QuestTPCheck.SetIsChecked(ModManager.Settings.QuestTp);
 
       // esp
       this.Menu.ESPCheck.SetIsChecked(ModManager.Settings.ESP);
       this.Menu.ESPShowNameCheck.SetIsChecked(ModManager.Settings.ShowName);
-      this.Menu.ESPShowDistanceCheck.SetIsChecked(ModManager.Settings.ShowDistance);
+      this.Menu.ESPShowDistanceCheck.SetIsChecked(
+        ModManager.Settings.ShowDistance
+      );
       this.Menu.ESPShowBoxCheck.SetIsChecked(ModManager.Settings.ShowBox);
       this.Menu.ESPMonsterCheck.SetIsChecked(ModManager.Settings.ShowMonster);
-      this.Menu.ESPCollectionCheck.SetIsChecked(ModManager.Settings.ShowCollect);
+      this.Menu.ESPCollectionCheck.SetIsChecked(
+        ModManager.Settings.ShowCollect
+      );
       this.Menu.ESPTreasureCheck.SetIsChecked(ModManager.Settings.ShowTreasure);
       this.Menu.ESPAnimalCheck.SetIsChecked(ModManager.Settings.ShowAnimal);
       this.Menu.ESPPuzzleCheck.SetIsChecked(ModManager.Settings.ShowPuzzle);
       this.Menu.ESPCasketCheck.SetIsChecked(ModManager.Settings.ShowCasket);
       this.Menu.ESPRockCheck.SetIsChecked(ModManager.Settings.ShowRock);
-      this.Menu.ESPMutterflyCheck.SetIsChecked(ModManager.Settings.ShowMutterfly);
+      this.Menu.ESPMutterflyCheck.SetIsChecked(
+        ModManager.Settings.ShowMutterfly
+      );
       this.Menu.ESPBlobflyCheck.SetIsChecked(ModManager.Settings.ShowBlobfly);
 
       // debug

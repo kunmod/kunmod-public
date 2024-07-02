@@ -16,8 +16,6 @@ const puerts_1 = require("puerts"),
   WorldFunctionLibrary_1 = require("../../World/Bridge/WorldFunctionLibrary"),
   UiManager_1 = require("../../../Ui/UiManager");
 
-
-
 class ModUtils {
   static isInGame() {
     let state = ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
@@ -84,13 +82,13 @@ class ModUtils {
   }
 
   static Getdistance(pos1, pos2) {
-    let dis = UE.KismetMathLibrary.Vector_Distance(pos1, pos2)
-    return dis ;
+    let dis = UE.KismetMathLibrary.Vector_Distance(pos1, pos2);
+    return dis;
   }
   static Getdistance2Player(pos1) {
     let pos2 = EntityManager_1.EntityManager.GetPlayerPos();
-    let dis = UE.KismetMathLibrary.Vector_Distance(pos1, pos2)
-    return dis ;
+    let dis = UE.KismetMathLibrary.Vector_Distance(pos1, pos2);
+    return dis;
   }
   static IsOpenWorld() {
     return WorldFunctionLibrary_1.WorldFunctionLibrary.IsOpenWorld();
