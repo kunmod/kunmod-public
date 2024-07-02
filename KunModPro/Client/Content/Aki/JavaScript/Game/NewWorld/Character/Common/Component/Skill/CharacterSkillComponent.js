@@ -1383,7 +1383,8 @@ let CharacterSkillComponent =
             this.pen(t),
             // hmmm this should fix stamina depleting so fast while dashing
             // you can put 0 but thats gonna hide the stamina ui due to unchanged value which is sad xD -0.5 for asthetics
-            (i.StrengthCost = (ModManager_1.ModManager.Settings.InfiniteStamina ? 0 : i.StrengthCost)), 
+            // it seems like this a direct write of the cost xD cant use i.StrengthCost as original value
+            (i.StrengthCost = (ModManager_1.ModManager.Settings.InfiniteStamina ? 0 : -1500)), 
             this.BZr?.IsMultiSkill(t.SkillInfo) &&
               this.BZr.StartMultiSkill(t, !1),
             this.BZr?.StartCd(t.SkillId),
