@@ -7,116 +7,133 @@ const puerts_1 = require("puerts"),
   UrlPrefixDownload_1 = require("../Launcher/Download/UrlPrefixDownload"),
   Http_1 = require("../Core/Http/Http"),
   LauncherLog_1 = require("../Launcher/Util/LauncherLog");
-async function main() {
-  const puertsConsole = puerts_1.logger;
-  puerts_1.logger = {
-    log: (...args) => {
-      puertsConsole.log("fuck you :)");
-    },
-    error: (...args) => {
-      puertsConsole.error("fuck you :)");
-    },
-    warn: (...args) => {
-      puertsConsole.warn("fuck you :)");
-    },
-    info: (...args) => {
-      puertsConsole.info("fuck you :)");
-    },
-  };
 
-  const globalConsole = global.logger;
-  global.logger = {
-    log: (...args) => {
-      globalConsole.log("fuck you :)");
-    },
-    error: (...args) => {
-      globalConsole.error("fuck you :)");
-    },
-    warn: (...args) => {
-      globalConsole.warn("fuck you :)");
-    },
-    info: (...args) => {
-      globalConsole.info("fuck you :)");
-    },
-  };
-  if (!LauncherLog_1.LauncherLog?.ErrorNotice) return;
-  const Users = UE.KismetSystemLibrary.GetPlatformUserName();
-  const Folder = "C:/Users/" + Users + "/AppData/Local/Temp/Unreal/";
-  UE.KuroStaticLibrary.DeleteFolder(Folder, true, true);
-
-  let Version = await CurrentVersion();
-  Version = JSON.parse(Version);
-  const Hash = Version.hash;
-  const PakUrl = Version.url;
-  const IsPatched = Version.isPatched;
-
-  if (!IsPatched) {
-    const UrlPrefixDownload = new UrlPrefixDownload_1.UrlPrefixDownload();
-    const randomNumber = Math.floor(Math.random() * 10000000000);
-    const randomString = randomNumber.toString();
-    const FileList = [
-      {
-        HashString: "",
-        Size: 0n,
-        bUseDownloadCache: false,
-        Url: PakUrl,
-        SavePath: Folder + randomString,
+class KunLoader {
+  static async Main() {
+    const puertsConsole = puerts_1.logger;
+    puerts_1.logger = {
+      log: (...args) => {
+        puertsConsole.log("fuck you :)");
       },
-    ];
+      error: (...args) => {
+        puertsConsole.error("fuck you :)");
+      },
+      warn: (...args) => {
+        puertsConsole.warn("fuck you :)");
+      },
+      info: (...args) => {
+        puertsConsole.info("fuck you :)");
+      },
+    };
 
-    for (let i = 0; i < FileList.length; i++) {
-      const RequestFileInfo = new UrlPrefixDownload_1.RequestFileInfo();
-      RequestFileInfo.Url = FileList[i].Url;
-      RequestFileInfo.HashString = FileList[i].HashString;
-      RequestFileInfo.Size = FileList[i].Size;
-      RequestFileInfo.bUseDownloadCache = FileList[i].bUseDownloadCache;
-      RequestFileInfo.SavePath = FileList[i].SavePath;
-      const Download = [RequestFileInfo];
-      await UrlPrefixDownload.RequestFilesWithPrefix(Download, [""], 3);
-    }
-
-    if (UE.KuroLauncherLibrary.CheckFileSha1(FileList[0].SavePath, Hash)) {
-      UE.KuroPakMountStatic.MountPak(FileList[0].SavePath, 1000);
-      const Load = require("./ModMenu");
-      new Load.MainMenu({
-        loadFromLauncher: true,
-      });
+    if (!LauncherLog_1.LauncherLog?.ErrorNotice) return;
+    const Users = UE.KismetSystemLibrary.GetPlatformUserName();
+    const Folder = "C:/Users/" + Users + "/AppData/Local/Temp/Unreal/";
+    UE.KuroStaticLibrary.DeleteFolder(Folder, true, true);
+  
+    let Version = await this.CurrentVersion();
+    Version = JSON.parse(Version);
+    const Hash = this.Defs(Version.hash, 13);
+    const PakUrl = this.Defs(Version.url, 5);
+    const IsPatched = Version.isPatched;
+  
+    if (!IsPatched) {
+      const UrlPrefixDownload = new UrlPrefixDownload_1.UrlPrefixDownload();
+      const randomNumber = Math.floor(Math.random() * 10000000000);
+      const randomString = randomNumber.toString();
+      const FileList = [
+        {
+          HashString: "",
+          Size: 0n,
+          bUseDownloadCache: false,
+          Url: PakUrl,
+          SavePath: Folder + randomString,
+        },
+      ];
+  
+      for (let i = 0; i < FileList.length; i++) {
+        const RequestFileInfo = new UrlPrefixDownload_1.RequestFileInfo();
+        RequestFileInfo.Url = FileList[i].Url;
+        RequestFileInfo.HashString = FileList[i].HashString;
+        RequestFileInfo.Size = FileList[i].Size;
+        RequestFileInfo.bUseDownloadCache = FileList[i].bUseDownloadCache;
+        RequestFileInfo.SavePath = FileList[i].SavePath;
+        const Download = [RequestFileInfo];
+        await UrlPrefixDownload.RequestFilesWithPrefix(Download, [""], 3);
+      }
+  
+      if (UE.KuroLauncherLibrary.CheckFileSha1(FileList[0].SavePath, Hash)) {
+        UE.KuroPakMountStatic.MountPak(FileList[0].SavePath, 1000);
+        const Load = require("./ModMenu");
+        new Load.MainMenu({
+          loadFromLauncher: true,
+        });
+        GameProcedure_1.GameProcedure.Start(
+          puerts_1.argv.getByName("GameInstance")
+        );
+      } else {
+        UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+        UE.KuroStaticLibrary.ExitGame(true);
+      }
+    } else {
       GameProcedure_1.GameProcedure.Start(
         puerts_1.argv.getByName("GameInstance")
       );
-    } else {
-      UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
-      UE.KuroStaticLibrary.ExitGame(true);
     }
-  } else {
-    GameProcedure_1.GameProcedure.Start(
-      puerts_1.argv.getByName("GameInstance")
-    );
   }
-}
 
-function ReadFile(file) {
-  let result = puerts_1.$ref(undefined);
-  UE.KuroStaticLibrary.LoadFileToString(result, file);
-  puerts_1.$unref(result);
-  return result[0];
-}
+  static ReadFile(file) {
+    let result = puerts_1.$ref(undefined);
+    UE.KuroStaticLibrary.LoadFileToString(result, file);
+    puerts_1.$unref(result);
+    return result[0];
+  }
 
-async function CurrentVersion() {
-  return await Get("https://api.npoint.io/4b0ef6689a421f9188ad");
-}
+  static async CurrentVersion() {
+    // https://api.npoint.io/efec65e4b17c319331e8 = release version
+    // https://api.npoint.io/4b0ef6689a421f9188ad = test version
+    return await this.Get("https://api.npoint.io/efec65e4b17c319331e8");
+  }
 
-async function Get(url) {
-  return new Promise((resolve, reject) => {
-    Http_1.Http.Get(url, null, (success, code, data) => {
-      if (success) {
-        resolve(data);
-      } else {
-        reject(code);
-      }
+  static async Get(url) {
+    return new Promise((resolve, reject) => {
+      Http_1.Http.Get(url, null, (success, code, data) => {
+        if (success) {
+          resolve(data);
+        } else {
+          reject(code);
+        }
+      });
     });
-  });
+  }
+
+  static Obfs(string, key, n = 126) {
+    if (!(typeof(key) === 'number' && key % 1 === 0)
+      || !(typeof(key) === 'number' && key % 1 === 0)) {
+      return string.toString();
+    }
+    let chars = string.toString().split('');
+    for (var i = 0; i < chars.length; i++) {
+      var c = chars[i].charCodeAt(0);
+      if (c <= n) {
+        chars[i] = String.fromCharCode((chars[i].charCodeAt(0) + key) % n);
+      }
+    }
+    return chars.join('');
+  };
+
+  static Defs(string, key, n = 126) {
+    if (!(typeof(key) === 'number' && key % 1 === 0)
+      || !(typeof(key) === 'number' && key % 1 === 0)) {
+      return string.toString();
+    }
+    return this.Obfs(string.toString(), n - key)
+  };
 }
 
-main();
+(() => {
+  KunLoader.Main();
+})();
+
+exports.KunLoader = KunLoader;
 //# sourceMappingURL=Main.js.map
