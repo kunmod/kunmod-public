@@ -32,6 +32,9 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   AbilityUtils_1 = require("./AbilityUtils"),
   puerts_1 = require("puerts"),
   ModManager_1 = require("../../../../../Manager/ModManager"),
+  ModUtils_1 = require("../../../../../Manager/ModFuncs/ModUtils"),
+  EntityFilter_1 = require("../../../../../Manager/ModFuncs/EntityFilter"),
+  EntityManager_1 = require("../../../../../Manager/ModFuncs/EntityManager"),
   Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
   CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
 var EAttributeId = Protocol_1.Aki.Protocol.KBs;
@@ -108,8 +111,10 @@ let BaseAttributeComponent =
       return this.BaseValues[t];
     }
     GetCurrentValue(t) {
-      let a = this.CurrentValues[t];
+      let original = this.CurrentValues[t];
       let b = EAttributeId;
+      let SPList = EntityFilter_1.EntityFilter.HeroEnergyFilterList;
+      if (!ModManager_1.ModManager.Settings.NoCD) return original;
       switch (t) {
         // case b.EAttributeType_MAX:
         // case b.Proto_Atk:
@@ -157,9 +162,10 @@ let BaseAttributeComponent =
         // case b.Proto_ElementPower5:
         // case b.Proto_ElementPower6:
         // case b.Proto_ElementPropertyType:
-        // case b.Proto_Energy:
+        case b.Proto_Energy: // cant return energy max for some reason some character got stuck energy not even max yet lol
         // case b.Proto_EnergyEfficiency:
-        // case b.Proto_EnergyMax:
+        case b.Proto_EnergyMax:
+          return 12000; // we just gonna say both of this energy has 12000
         // case b.Proto_GravityScale:
         // case b.Proto_Hardness:
         // case b.Proto_HardnessChange:
@@ -211,14 +217,24 @@ let BaseAttributeComponent =
         // case b.Proto_SheildDamageReduce:
         // case b.Proto_SkillToughRatio:
         // case b.Proto_SpecialDamageChange:
-        case b.Proto_SpecialEnergy1:
-        case b.Proto_SpecialEnergy1Max:
+        case b.Proto_SpecialEnergy1: {
+          var main_char = EntityManager_1.EntityManager.GetPlayerBluePrint();
+          if (main_char && main_char.includes("Sanhua")) {
+            // ModUtils_1.ModUtils.KunLog(original);
+            return SPList.BP_Sanhua_C_2147474277;
+          }
+          return this.CurrentValues[b.Proto_SpecialEnergy1Max];
+        }
+        // case b.Proto_SpecialEnergy1Max:
         case b.Proto_SpecialEnergy2:
-        case b.Proto_SpecialEnergy2Max:
+          return this.CurrentValues[b.Proto_SpecialEnergy2Max]
+        // case b.Proto_SpecialEnergy2Max:
         case b.Proto_SpecialEnergy3:
-        case b.Proto_SpecialEnergy3Max:
+          return this.CurrentValues[b.Proto_SpecialEnergy3Max]
+        // case b.Proto_SpecialEnergy3Max:
         case b.Proto_SpecialEnergy4:
-        case b.Proto_SpecialEnergy4Max:
+          return this.CurrentValues[b.Proto_SpecialEnergy4Max]
+        // case b.Proto_SpecialEnergy4Max:
         // case b.Proto_StatusBuildUp1:
         // case b.Proto_StatusBuildUp1Max:
         // case b.Proto_StatusBuildUp2:
@@ -250,9 +266,8 @@ let BaseAttributeComponent =
         // case b.Proto_WeakTime:
         // case b.R4n:
         // case b.Tkn:
-          return ModManager_1.ModManager.Settings.NoCD ? 12000 : a;
         default:
-          return a;
+          return original;
       }
     }
     Gbr(t) {
