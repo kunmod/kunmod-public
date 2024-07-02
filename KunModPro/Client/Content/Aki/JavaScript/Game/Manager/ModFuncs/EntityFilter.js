@@ -62,6 +62,7 @@ class EntityFilter {
     //"Collect601_2",//鸟蛋_组合
     "Collect602", //兽肉
     "Collect603", //禽肉
+    "Drop001",//羽毛feather?
     //"Collect604",//玩法_永夜长明
     "Collect_CXS01", //银雪莲
     "Collect_CXS03", //雀翎果
