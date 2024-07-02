@@ -22,7 +22,7 @@ const puerts_1 = require("puerts"),
   ESP_1 = require("./Manager/ModFuncs/ESP"),
   Http_1 = require("../Core/Http/Http"),
   DiscordGrant_1 = require("./DiscordGrant");
-const currentVersion = "version";
+//const currentVersion = "version";
 const { ModUtils } = require("./Manager/ModFuncs/ModUtils");
 const { ModDebuger } = require("./Manager/ModFuncs/ModDebuger");
 
