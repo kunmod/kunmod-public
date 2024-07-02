@@ -197,7 +197,6 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
     for (const h of n) h.ModifyRemainingCd(i, e);
   }
   StartCd(t, i = -1) {
-    if(ModManager_1.ModManager.Settings.NoCD) return false;
     var e = this.iZr.get(t);
     return !!e && (e.StartCd(t, this.eZr, i), !0);
   }
