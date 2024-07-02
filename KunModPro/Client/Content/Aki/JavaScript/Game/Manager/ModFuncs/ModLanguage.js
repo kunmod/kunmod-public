@@ -957,11 +957,21 @@ class ModLanguage {
       Text: "DC_EXPIRED_TOKEN",
       chs: "令牌已过期",
       en: "Token Expired",
-      es: "Token caducado",
+      es: "Token Caducado",
       id: "Token Kedaluwarsa",
       ja: "トークンの有効期限が切れました",
       ko: "토큰 만료됨",
       vi: "Mã thông báo đã hết hạn",
+    },
+    {
+      Text: "DC_INVALID_TOKEN",
+      chs: "令牌无效",
+      en: "Token Invalid",
+      es: "Token Inválido",
+      id: "Token Tidak Valid",
+      ja: "トークンが無効です",
+      ko: "토큰이 유효하지 않습니다",
+      vi: "Thẻ không hợp lệ",
     }
   ];
 
