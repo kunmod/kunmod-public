@@ -228,14 +228,14 @@ let BaseAttributeComponent =
           return this.CurrentValues[b.Proto_SpecialEnergy1Max];
         }
         // case b.Proto_SpecialEnergy1Max:
-        case b.Proto_SpecialEnergy2:
-          return this.CurrentValues[b.Proto_SpecialEnergy2Max]
+        // case b.Proto_SpecialEnergy2:
+          // return this.CurrentValues[b.Proto_SpecialEnergy2Max]
         // case b.Proto_SpecialEnergy2Max:
-        case b.Proto_SpecialEnergy3:
-          return this.CurrentValues[b.Proto_SpecialEnergy3Max]
+        // case b.Proto_SpecialEnergy3:
+          // return this.CurrentValues[b.Proto_SpecialEnergy3Max]
         // case b.Proto_SpecialEnergy3Max:
-        case b.Proto_SpecialEnergy4:
-          return this.CurrentValues[b.Proto_SpecialEnergy4Max]
+        // case b.Proto_SpecialEnergy4:
+          // return this.CurrentValues[b.Proto_SpecialEnergy4Max]
         // case b.Proto_SpecialEnergy4Max:
           // case b.Proto_StatusBuildUp1:
           // case b.Proto_StatusBuildUp1Max:

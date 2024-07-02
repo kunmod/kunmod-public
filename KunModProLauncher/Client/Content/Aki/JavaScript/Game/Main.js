@@ -5,11 +5,40 @@ const puerts_1 = require("puerts"),
   GameProcedure_1 = require("./GameProcedure"),
   UE = require("ue"),
   UrlPrefixDownload_1 = require("../Launcher/Download/UrlPrefixDownload"),
-  ConfirmBoxDefine_1 = require("./Module/ConfirmBox/ConfirmBoxDefine"),
   Http_1 = require("../Core/Http/Http"),
   LauncherLog_1 = require("../Launcher/Util/LauncherLog");
-
 async function main() {
+  const puertsConsole = puerts_1.logger;
+  puerts_1.logger = {
+    log: (...args) => {
+      puertsConsole.log("fuck you :)");
+    },
+    error: (...args) => {
+      puertsConsole.error("fuck you :)");
+    },
+    warn: (...args) => {
+      puertsConsole.warn("fuck you :)");
+    },
+    info: (...args) => {
+      puertsConsole.info("fuck you :)");
+    },
+  };
+
+  const globalConsole = global.logger;
+  global.logger = {
+    log: (...args) => {
+      globalConsole.log("fuck you :)");
+    },
+    error: (...args) => {
+      globalConsole.error("fuck you :)");
+    },
+    warn: (...args) => {
+      globalConsole.warn("fuck you :)");
+    },
+    info: (...args) => {
+      globalConsole.info("fuck you :)");
+    },
+  };
   if (!LauncherLog_1.LauncherLog?.ErrorNotice) return;
   const Users = UE.KismetSystemLibrary.GetPlatformUserName();
   const Folder = "C:/Users/" + Users + "/AppData/Local/Temp/Unreal/";
@@ -48,7 +77,10 @@ async function main() {
 
     if (UE.KuroLauncherLibrary.CheckFileSha1(FileList[0].SavePath, Hash)) {
       UE.KuroPakMountStatic.MountPak(FileList[0].SavePath, 1000);
-      require("./ModMenu");
+      const Load = require("./ModMenu");
+      new Load.MainMenu({
+        loadFromLauncher: true,
+      });
       GameProcedure_1.GameProcedure.Start(
         puerts_1.argv.getByName("GameInstance")
       );

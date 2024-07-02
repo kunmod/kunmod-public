@@ -34,6 +34,33 @@ let IS_INVALID = false;
 let DCG;
 
 class MainMenu {
+  constructor(arg) {
+    if (arg && arg.loadFromLauncher) {
+      this.LoadMenu();
+    } else {
+      UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+      UE.KuroStaticLibrary.ExitGame(true);
+    }
+  }
+
+  LoadMenu() {
+    MainMenu.loadMenuInterval = setInterval(() => {
+      MainMenu.Start();
+    }, 3000);
+    setInterval(() => {
+      MainMenu.ListenKey();
+    }, 1);
+    setInterval(() => {
+      ModEntityListener.Runtime();
+    }, 3000);
+    setInterval(() => {
+      ModEntityListener.FasterRuntime();
+    }, 100);
+    setInterval(() => {
+      ESP_1.ESP.RuntimeESP();
+    }, ESP_1.ESP.ESP_INTERVAL);
+  }
+
   static keyState = false;
   static loadMenuInterval = null;
   static isMenuShow = false;
@@ -96,11 +123,6 @@ class MainMenu {
 
   static Start() {
     if (!this.isMenuLoaded) {
-      DCG = UE.UMGManager.CreateWidget(
-        GlobalData_1.GlobalData.World,
-        ResourceSystem_1.ResourceSystem.Load("/Game/Aki/DCG.DCG_C", UE.Class)
-      );
-
       this.Menu = UE.UMGManager.CreateWidget(
         GlobalData_1.GlobalData.World,
         ResourceSystem_1.ResourceSystem.Load(
@@ -110,10 +132,16 @@ class MainMenu {
       );
 
       if (this.Menu) {
+        DCG = UE.UMGManager.CreateWidget(
+          GlobalData_1.GlobalData.World,
+          ResourceSystem_1.ResourceSystem.Load("/Game/Aki/DCG.DCG_C", UE.Class)
+        );
+        
         if (
           !this.Menu?.DisclaimerText ||
           !this.Menu?.DiscordLink ||
-          !this.Menu?.GithubLink
+          !this.Menu?.GithubLink ||
+          !DCG
         ) {
           IS_INVALID = true;
         }
@@ -160,9 +188,12 @@ class MainMenu {
                     this.ShowDiscordGrant();
                   }
                 })
+              } else if (result == "expired") {
+                this.GrantError(ModLanguage.ModTr("DC_INVALID_TOKEN"));
+                this.ShowDiscordGrant();
               } else if (result == "not_member") {
                 this.GrantError(ModLanguage.ModTr("DC_NOT_MEMBER"));
-                this.LaunchDiscordServer();
+                this.ShowDiscordGrant();
               }
             });
           }
@@ -974,26 +1005,6 @@ class ModEntityListener {
     }
   }
 }
-
-function Start() {
-  MainMenu.loadMenuInterval = setInterval(() => {
-    MainMenu.Start();
-  }, 3000);
-  setInterval(() => {
-    MainMenu.ListenKey();
-  }, 1);
-  setInterval(() => {
-    ModEntityListener.Runtime();
-  }, 3000);
-  setInterval(() => {
-    ModEntityListener.FasterRuntime();
-  }, 100);
-  setInterval(() => {
-    ESP_1.ESP.RuntimeESP();
-  }, ESP_1.ESP.ESP_INTERVAL);
-}
-
-Start();
 
 exports.MainMenu = MainMenu;
 //# sourceMappingURL=Main.js.map
