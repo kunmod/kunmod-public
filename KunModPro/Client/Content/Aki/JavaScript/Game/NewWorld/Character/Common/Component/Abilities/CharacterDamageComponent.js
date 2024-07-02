@@ -222,6 +222,9 @@ let CharacterDamageComponent =
         this.ProcessDamage(i, t, r));
     }
     ProcessDamage(t, a, e) {
+      if (ModManager_1.ModManager.Settings.AlwaysCrit) {
+        a.ForceCritical = true
+      }
       if (this.Xte.HasTag(1918148596) && 0 === a.DamageData.ImmuneType)
         return { DamageResult: 0, ToughResult: 0 };
       var r = a.Attacker;
@@ -247,7 +250,7 @@ let CharacterDamageComponent =
               a.Attacker?.Entity?.Valid &&
               (this.bqr(e, a, t),
               this.qqr(e, a, t, i),
-              s?.OnDamage(e.Damage, ModManager_1.ModManager.Settings.AlwaysCrit ? !0 : a.ForceCritical, a.Attacker.Entity, !1));
+              s?.OnDamage(e.Damage, a.ForceCritical, a.Attacker.Entity, !1));
           },
           e
         ),
@@ -475,7 +478,7 @@ let CharacterDamageComponent =
         ...t,
         Damage: s,
         ShieldCoverDamage: 0,
-        IsCritical: r,
+        IsCritical: ModManager_1.ModManager.Settings.AlwaysCrit ? true : r,
         IsTargetKilled: !1,
         IsImmune: n,
       };
@@ -524,7 +527,7 @@ let CharacterDamageComponent =
           ),
           s9n: a.IsAddEnergy,
           a9n: a.IsCounterAttack,
-          h9n: a.ForceCritical,
+          h9n: ModManager_1.ModManager.Settings.AlwaysCrit ? true : a.ForceCritical,
           l9n: a.IsBlocked,
           o9n: a.PartId,
           _9n: a.CounterSkillMessageId

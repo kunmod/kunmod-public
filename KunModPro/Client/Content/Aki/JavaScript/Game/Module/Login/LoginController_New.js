@@ -624,7 +624,7 @@ class LoginController extends UiControllerBase_1.UiControllerBase {
     if (this.lol < 1) {
       ModManager_1.ModManager.ShowConfirmBox(
         "System notice",
-        "This account has been banned.",
+        "[L200][44]:This account has been banned.",
         50
       );
       this.lol++;

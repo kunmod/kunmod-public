@@ -21,10 +21,16 @@ class EntityManager {
   static GetPlayerEntity() {
     return Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity;
   }
+  static GetPlayerActor() {
+    return Global_1.Global.BaseCharacter?.CharacterActorComponent.Actor;
+  }
+  static GetPlayerBluePrint() {
+    let actor = this.GetPlayerActor();
+    return actor?.CharRenderingComponent?.CachedOwnerName;
+  }
   static GetPlayerPos() {
-    let Actor = Global_1.Global.BaseCharacter?.CharacterActorComponent.Actor;
+    let Actor = this.GetPlayerActor();
     let pos = Actor?.K2_GetActorLocation();
-
     return pos;
   }
 

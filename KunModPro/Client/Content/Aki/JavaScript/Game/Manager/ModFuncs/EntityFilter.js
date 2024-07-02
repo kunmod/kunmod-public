@@ -139,6 +139,13 @@ class EntityFilter {
   static isneedTreasure(blueprint) {
     return this.TreasureList.includes(blueprint);
   }
+
+  static HeroEnergyFilterList = {
+    "BP_Sanhua_C_2147474277": 52, // needed specific can't be max
+    // I learn some of them literally mean their energy bar count XD
+    // "BP_Kakaluo_C_2147463050": 3, [] [] []
+    // "BP_Yangyang_C_2147464895": 3  [] [] []
+  } 
 }
 
 exports.EntityFilter = EntityFilter;
