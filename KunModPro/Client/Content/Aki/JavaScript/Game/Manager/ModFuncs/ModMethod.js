@@ -19,6 +19,7 @@ const puerts_1 = require("puerts"),
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   WeatherController_1 = require("../../Module/Weather/WeatherController"),
+  TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController"),
   ModDebuger_1 = require("./ModDebuger");
 
 class ModMethod {
@@ -101,6 +102,10 @@ class ModMethod {
   static SetFOV(value) {
     let fov = value.toString();
     ModDebuger_1.ModDebuger.ConsoleCommand("fov " + fov);
+  }
+  static SetTime(hour,minute){
+    let a =hour*60*60+minute*60
+    TimeOfDayController_1.TimeOfDayController.pIo(a);
   }
 }
 //puerts.logger.info(debug)
