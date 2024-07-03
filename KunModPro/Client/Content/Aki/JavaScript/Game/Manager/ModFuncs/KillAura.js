@@ -47,9 +47,6 @@ class KillAura extends EntityManager {
 
     if (this.isMonster(entity) && this.isIndistance(entity)) {
       ModMethod.MonsterDrownRequest(entity.Entity);
-
-      //ModMethod.LandingDamageRequest(entity.Entity);
-      //puerts_1.logger.warn("kun:killAuratest:Monster:END", entity.Entity.Id);
     }
   }
   static KillAnimal(entity) {
@@ -58,8 +55,8 @@ class KillAura extends EntityManager {
     let blueprintType = this.GetBlueprintType2(entity);
     if (AnimalList.includes(blueprintType)) {
       ModMethod.AnimalDieRequest(entity.Entity);
-    } else if (BigAnimalList.includes(blueprintType)) {
-      ModMethod.MonsterDrownRequest(entity.Entity);
+      // } else if (BigAnimalList.includes(blueprintType)) {
+      //   ModMethod.MonsterDrownRequest(entity.Entity);
     } else if (dropanimal.includes(blueprintType)) {
       ModMethod.AnimalDropRequest(entity.Entity);
     }
