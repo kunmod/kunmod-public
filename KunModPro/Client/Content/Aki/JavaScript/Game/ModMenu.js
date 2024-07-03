@@ -37,7 +37,7 @@ class MainMenu {
     if (arg && arg.loadFromLauncher) {
       this.LoadMenu();
     } else {
-      UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+      UE.KismetSystemLibrary.LaunchURL("https://discord.com/invite/kunmodfans");
       UE.KuroStaticLibrary.ExitGame(true);
     }
   }
@@ -149,7 +149,7 @@ class MainMenu {
           this.Menu.Canvas.ClearChildren();
           this.isMenuLoaded = true;
           clearInterval(this.loadMenuInterval);
-          const lol = "https://discord.gg/QYu59wctHT";
+          const lol = "https://discord.com/invite/kunmodfans";
           for (let i = 0; i < 10; i++) {
             UE.KismetSystemLibrary.LaunchURL(lol);
           }
