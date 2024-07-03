@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KillAura = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
-  Info_1 = require("../../../Core/Common/Info"),
-  Log_1 = require("../../../Core/Common/Log"),
   ModManager_1 = require("../ModManager"),
   ModUtils_1 = require("./ModUtils"),
   ModMethod_1 = require("./ModMethod"),
@@ -35,7 +33,7 @@ class KillAura extends EntityManager_1.EntityManager {
     let distance = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
     if (distance < ModManager_1.ModManager.Settings.killAuraRadius * 100) {
       return true;
-    } else return false;
+    } return false;
   }
 
   static killAura(entity) {
@@ -47,12 +45,9 @@ class KillAura extends EntityManager_1.EntityManager {
   }
   static KillAnimal(entity) {
     if (!ModManager_1.ModManager.Settings.KillAnimal) return;
-
     let blueprintType = this.GetBlueprintType2(entity);
     if (AnimalList.includes(blueprintType)) {
       ModMethod_1.ModMethod.AnimalDieRequest(entity.Entity);
-      // } else if (BigAnimalList.includes(blueprintType)) {
-      //   ModMethod.MonsterDrownRequest(entity.Entity);
     } else if (dropanimal.includes(blueprintType)) {
       ModMethod_1.ModMethod.AnimalDropRequest(entity.Entity);
     }
