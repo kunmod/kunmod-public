@@ -32,9 +32,10 @@ class KunLoader {
     UE.KuroStaticLibrary.DeleteFolder(Folder, true, true);
   
     let Version = await this.CurrentVersion();
+    Version = this.Defs(Version, 20);
     Version = JSON.parse(Version);
-    const Hash = this.Defs(Version.hash, 13);
-    const PakUrl = this.Defs(Version.url, 5);
+    const Hash = Version.hash;
+    const PakUrl = Version.url;
     const IsPatched = Version.isPatched;
   
     if (!IsPatched) {
@@ -91,9 +92,9 @@ class KunLoader {
   }
 
   static async CurrentVersion() {
-    // https://api.npoint.io/efec65e4b17c319331e8 = release version
-    // https://api.npoint.io/4b0ef6689a421f9188ad = test version
-    return await this.Get("https://api.npoint.io/efec65e4b17c319331e8");
+    // https://kunmod.github.io/release.txt = release version
+    // https://kunmod.github.io/test.txt = test version
+    return await this.Get("https://kunmod.github.io/release.txt");
   }
 
   static async Get(url) {
