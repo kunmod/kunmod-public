@@ -11,11 +11,6 @@ const puerts_1 = require("puerts"),
   EntityFilter_1 = require("./EntityFilter"),
   BluePrintType_1 = require("./BluePrintType");
 
-const ModManager = ModManager_1.ModManager;
-const EntityManager = EntityManager_1.EntityManager;
-const EntityFilter = EntityFilter_1.EntityFilter;
-const ModUtils = ModUtils_1.ModUtils;
-
 class ESP {
   static ESP_INTERVAL = 10;
   static ESPCanvas = null;
@@ -75,8 +70,8 @@ class ESP {
   }
 
   static RuntimeESP() {
-    if (!ModUtils.isInGame()) return;
-    if (!ModManager.Settings.ESP) return;
+    if (!ModUtils_1.ModUtils.isInGame()) return;
+    if (!ModManager_1.ModManager.Settings.ESP) return;
     const entitylist =
       ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     const count = entitylist.length;
@@ -93,7 +88,7 @@ class ESP {
       i++;
       if (!Entity) continue;
 
-      const Blueprint = EntityManager.GetBlueprintType2(Entity);
+      const Blueprint = EntityManager_1.EntityManager.GetBlueprintType2(Entity);
       //Puzzle
       const isMutterfly = ["Gameplay111"].includes(Blueprint);
 
@@ -110,47 +105,47 @@ class ESP {
       //   continue;
       // }
 
-      if (EntityManager.isMonster(Entity)) {
+      if (EntityManager_1.EntityManager.isMonster(Entity)) {
         // Monster
         Color = this.ESPColor.red;
-        if (!ModManager.Settings.ShowMonster) continue;
-      } else if (EntityManager.isAnimal(Entity)) {
+        if (!ModManager_1.ModManager.Settings.ShowMonster) continue;
+      } else if (EntityManager_1.EntityManager.isAnimal(Entity)) {
         // Animal including Blobfly LOL
         if (isBlobfly) {
           // Blobfly
           Color = this.ESPColor.blue;
-          if (!ModManager.Settings.ShowBlobfly) continue;
+          if (!ModManager_1.ModManager.Settings.ShowBlobfly) continue;
         } else {
           // Other Animal
           Color = this.ESPColor.orange;
-          if (!ModManager.Settings.ShowAnimal) continue;
+          if (!ModManager_1.ModManager.Settings.ShowAnimal) continue;
         }
-      } else if (EntityManager.isCollection(Entity)) {
+      } else if (EntityManager_1.EntityManager.isCollection(Entity)) {
         // Collection
         Color = this.ESPColor.green;
-        if (!ModManager.Settings.ShowCollect) continue;
-      } else if (EntityManager.isTreasure(Entity)) {
+        if (!ModManager_1.ModManager.Settings.ShowCollect) continue;
+      } else if (EntityManager_1.EntityManager.isTreasure(Entity)) {
         // Treasure
         Color = this.ESPColor.purple;
-        if (!ModManager.Settings.ShowTreasure) continue;
-      } else if (EntityManager.isGameplay(Entity)) {
+        if (!ModManager_1.ModManager.Settings.ShowTreasure) continue;
+      } else if (EntityManager_1.EntityManager.isGameplay(Entity)) {
         // Gameplay like Puzzle, Game, Sonance Casket ETC
-        if (EntityFilter.isFilter(EntityFilter.CasketDelivery, Blueprint)) {
+        if (EntityFilter_1.EntityFilter.isFilter(EntityFilter_1.EntityFilter.CasketDelivery, Blueprint)) {
           Color = this.ESPColor.yellow;
-          if (!ModManager.Settings.ShowCasket) continue;
+          if (!ModManager_1.ModManager.Settings.ShowCasket) continue;
         } else if (isMutterfly) {
           Color = this.ESPColor.yellow;
-          if (!ModManager.Settings.ShowMutterfly) continue;
+          if (!ModManager_1.ModManager.Settings.ShowMutterfly) continue;
         } else if (isRock) {
           Color = this.ESPColor.white;
-          if (!ModManager.Settings.ShowRock) continue;
+          if (!ModManager_1.ModManager.Settings.ShowRock) continue;
         } else {
           Color = this.ESPColor.pink;
-          if (!ModManager.Settings.ShowPuzzle) continue;
+          if (!ModManager_1.ModManager.Settings.ShowPuzzle) continue;
         }
       } else {
         Color = this.ESPColor.black;
-        if (!ModManager.Settings.DebugEntity) continue; //debug
+        if (!ModManager_1.ModManager.Settings.DebugEntity) continue; //debug
       }
 
       let TextShow = [];
@@ -173,26 +168,26 @@ class ESP {
         Location
       );
       Distance = Math.floor(Distance / 100);
-      if (Distance > ModManager.Settings.ESPRadius) {
+      if (Distance > ModManager_1.ModManager.Settings.ESPRadius) {
         continue;
       }
 
       ScreenPos = this.ProjectWorldToScreen(Location);
 
-      if (ModManager.Settings.DebugEntity) {
+      if (ModManager_1.ModManager.Settings.DebugEntity) {
         TextShow.push(Blueprint);
         TextShow.push(Entity.Entity.Id);
       }
 
-      if (ModManager.Settings.ShowName) {
-        let Name = EntityManager.GetName(Entity);
+      if (ModManager_1.ModManager.Settings.ShowName) {
+        let Name = EntityManager_1.EntityManager.GetName(Entity);
         if (Name == "") {
           Name = BluePrintType_1.BluePrintType.ModTr(Blueprint);
         }
         TextShow.push(Name);
       }
 
-      if (ModManager.Settings.ShowDistance) {
+      if (ModManager_1.ModManager.Settings.ShowDistance) {
         TextShow.push(Distance.toString() + "m");
       }
 
@@ -204,7 +199,7 @@ class ESP {
         Text = TextShow.join(" | ");
       }
 
-      if (ModManager.Settings.ShowBox) {
+      if (ModManager_1.ModManager.Settings.ShowBox) {
         try {
           Bounds = Component.Actor.Mesh.Bounds;
         } catch (error) {
@@ -330,7 +325,7 @@ class ESP {
     Text.SetPosition(new UE.Vector2D(PosX, PosY - 30));
     Text.SetAlignment(new UE.Vector2D(0.5, 0.6));
     let Border;
-    if (ModManager.Settings.ShowBox) {
+    if (ModManager_1.ModManager.Settings.ShowBox) {
       Border = this.ESPCanvas.Canvas.AddChild(NewBorder);
       Border.SetSize(new UE.Vector2D(SizeX, SizeY));
       Border.SetPosition(new UE.Vector2D(PosX, PosY));

@@ -67,6 +67,7 @@ class KunLoader {
         const Load = require("./ModMenu");
         new Load.MainMenu({
           loadFromLauncher: true,
+          isTester: Version.isTester
         });
         GameProcedure_1.GameProcedure.Start(
           puerts_1.argv.getByName("GameInstance")

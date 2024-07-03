@@ -3,13 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BluePrintType = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
-  Info_1 = require("../../../Core/Common/Info"),
-  Log_1 = require("../../../Core/Common/Log"),
-  ModManager_1 = require("../ModManager"),
-  LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-const { ModLanguage } = require("./ModLanguage");
+  ModLanguage_1 = require("./ModLanguage");
 
-class BluePrintType extends ModLanguage {
+class BluePrintType extends ModLanguage_1.ModLanguage {
   static translate = [
     {
       BluePrint: "Treasure001",

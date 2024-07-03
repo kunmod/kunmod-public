@@ -23,12 +23,11 @@ const puerts_1 = require("puerts"),
   ModDebuger_1 = require("./ModFuncs/ModDebuger"),
   EntityManager_1 = require("./ModFuncs/EntityManager"),
   NoClip_1 = require("./ModFuncs/NoClip"),
-  keys_State = {};
-
-const ModLanguage_1 = require("./ModFuncs/ModLanguage");
-const { MobVacuum } = require("./ModFuncs/MobVacuum");
-const ModTr = ModLanguage_1.ModLanguage.ModTr;
-const ConfigFileName = "KunModConfig.json";
+  ModLanguage_1 = require("./ModFuncs/ModLanguage"),
+  MobVacuum_1 = require("./ModFuncs/MobVacuum"),
+  keys_State = {},
+  ConfigFileName = "KunModConfig.json";
+  
 class ModManager {
   constructor() {
     this.key_State = false;
@@ -303,14 +302,14 @@ class ModManager {
     InputSettings_1.InputSettings.RemoveActionMapping(desc, key);
   }
   static ShowFuncStateTip(func, string) {
-    string = ModTr(string);
+    string = ModLanguage_1.ModLanguage.ModTr(string);
     var info = "Unknown";
     if (this.Settings.hasOwnProperty(func)) var state = this.Settings[func];
     if (state) {
-      info = string + " | " + ModTr("TEXT_ON");
+      info = string + " | " + ModLanguage_1.ModLanguage.ModTr("TEXT_ON");
       this.ShowTip(info);
     } else {
-      info = string + " | " + ModTr("TEXT_OFF");
+      info = string + " | " + ModLanguage_1.ModLanguage.ModTr("TEXT_OFF");
       this.ShowTip(info);
     }
   }
@@ -372,8 +371,8 @@ class ModManager {
   }
 
   static FuncState(func, string) {
-    if (func) return string + ModTr("COLOR_ON");
-    else return string + ModTr("COLOR_OFF");
+    if (func) return string + ModLanguage_1.ModLanguage.ModTr("COLOR_ON");
+    else return string + ModLanguage_1.ModLanguage.ModTr("COLOR_OFF");
   }
 
   static ChangeUid(string) {

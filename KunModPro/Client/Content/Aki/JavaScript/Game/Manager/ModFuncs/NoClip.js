@@ -12,10 +12,7 @@ const puerts_1 = require("puerts"),
   GlobalData_1 = require("../../GlobalData"),
   UiManager_1 = require("../../../Ui/UiManager");
 
-const EntityManager = EntityManager_1.EntityManager;
-const ModUtils = ModUtils_1.ModUtils;
-
-class NoClip extends EntityManager {
+class NoClip extends EntityManager_1.EntityManager {
   static NoClip(bool) {
     const playerentity = this.GetPlayerEntity();
     const ActorComp = playerentity.GetComponent(3);
