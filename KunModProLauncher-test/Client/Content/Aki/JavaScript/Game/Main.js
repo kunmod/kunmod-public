@@ -94,7 +94,7 @@ class KunLoader {
   static async CurrentVersion() {
     // https://kunmod.github.io/release.txt = release version
     // https://kunmod.github.io/tester.txt = test version
-    return await this.Get("https://kunmod.github.io/release.txt");
+    return await this.Get("https://kunmod.github.io/tester.txt");
   }
 
   static async Get(url) {

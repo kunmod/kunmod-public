@@ -9,11 +9,13 @@ const puerts_1 = require("puerts"),
   TeleportController_1 = require("../../Module/Teleport/TeleportController"),
   ModUtils_1 = require("./ModUtils"),
   InputController_1 = require("../../Input/InputController"),
-  InputSettings_1 = require("../../InputSettings/InputSettings");
-const ModLanguage_1 = require("./ModLanguage");
-const ModTr = ModLanguage_1.ModLanguage.ModTr;
+  InputSettings_1 = require("../../InputSettings/InputSettings"),
+  ModLanguage_1 = require("./ModLanguage"),
+  ModTr = ModLanguage_1.ModLanguage.ModTr;
+
 let ModTpFile = null;
 let isLoaded = false;
+
 let loadInterval = setInterval(() => {
   if (!isLoaded) {
     try {

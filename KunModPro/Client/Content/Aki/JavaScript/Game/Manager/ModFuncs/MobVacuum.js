@@ -16,13 +16,10 @@ const puerts_1 = require("puerts"),
   EntityFilter_1 = require("./EntityFilter"),
   UiManager_1 = require("../../../Ui/UiManager");
 
-const EntityManager = EntityManager_1.EntityManager;
-const ModUtils = ModUtils_1.ModUtils;
-
-class MobVacuum extends EntityManager {
+class MobVacuum extends EntityManager_1.EntityManager {
   static isIndistance(entity) {
     let monsterPos = this.GetPosition(entity.Entity);
-    let distance = ModUtils.Getdistance2Player(monsterPos);
+    let distance = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
     if (distance < ModManager_1.ModManager.Settings.VacuumRadius * 100) {
       return true;
     } else return false;
@@ -31,7 +28,7 @@ class MobVacuum extends EntityManager {
   static MobVacuum(entity) {
     if (!ModManager_1.ModManager.Settings.MobVacuum) return;
     if (this.isMonster(entity) && this.isIndistance(entity)) {
-      let playerpos = EntityManager.GetPlayerPos();
+      let playerpos = this.GetPlayerPos();
       let ActorComp = entity.Entity.GetComponent(1);
       ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
       this.SyncMonster(entity, playerpos);
@@ -42,11 +39,11 @@ class MobVacuum extends EntityManager {
     if (!ModManager_1.ModManager.Settings.VacuumCollect) return;
     if (
       EntityFilter_1.EntityFilter.isneedLoot(
-        EntityManager.GetBlueprintType2(entity)
+        this.GetBlueprintType2(entity)
       ) &&
       this.isIndistance(entity)
     ) {
-      let playerpos = EntityManager.GetPlayerPos();
+      let playerpos = this.GetPlayerPos();
       let ActorComp = entity.Entity.GetComponent(1);
       ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
     }

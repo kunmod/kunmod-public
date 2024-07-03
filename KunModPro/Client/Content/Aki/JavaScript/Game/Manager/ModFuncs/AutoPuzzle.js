@@ -13,9 +13,6 @@ const puerts_1 = require("puerts"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   EntityManager_1 = require("./EntityManager");
 
-const ModMethod = ModMethod_1.ModMethod;
-const ModManager = ModManager_1.ModManager;
-const EntityManager = EntityManager_1.EntityManager;
 const HitGearList = [
   "Gameplay050", //玩法_打击机关
   "Gameplay059", //射击靶
@@ -27,14 +24,14 @@ const SetGuidelist = [
   "Gameplay111", //隙声蝶
 ];
 
-class AutoPuzzle extends EntityManager {
+class AutoPuzzle extends EntityManager_1.EntityManager {
   static isneed(entity, list) {
     let blueprintType = this.GetBlueprintType2(entity);
     return list.includes(blueprintType);
   }
 
   static AutoPuzzle(entity) {
-    if (ModManager.Settings.AutoPuzzle) {
+    if (ModManager_1.ModManager.Settings.AutoPuzzle) {
       this.HitGear(entity);
       this.Gameplay004(entity);
       this.SetGuideRange(entity);
@@ -59,7 +56,7 @@ class AutoPuzzle extends EntityManager {
 
   static Gameplay004(entity) {
     if (this.GetBlueprintType2(entity) == "Gameplay004") {
-      ModMethod.ThrowDamageChangeRequest(entity.Entity, 3, 210002001n); //爆裂鸣晶demageid Gameplay018
+      ModMethod_1.ModMethod.ThrowDamageChangeRequest(entity.Entity, 3, 210002001n); //爆裂鸣晶demageid Gameplay018
     }
   }
 

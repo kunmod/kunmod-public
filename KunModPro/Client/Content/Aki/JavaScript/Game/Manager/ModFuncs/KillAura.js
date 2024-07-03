@@ -10,10 +10,6 @@ const puerts_1 = require("puerts"),
   ModMethod_1 = require("./ModMethod"),
   EntityManager_1 = require("./EntityManager");
 
-const ModMethod = ModMethod_1.ModMethod;
-const ModManager = ModManager_1.ModManager;
-const EntityManager = EntityManager_1.EntityManager;
-const ModUtils = ModUtils_1.ModUtils;
 const AnimalList = [
   "Animal001", //紫喙鸽
   "Animal002", //青翎鸽
@@ -33,32 +29,32 @@ const dropanimal = [
   "Animal035", //嵩雪鸮
 ];
 
-class KillAura extends EntityManager {
+class KillAura extends EntityManager_1.EntityManager {
   static isIndistance(entity) {
     let monsterPos = this.GetPosition(entity.Entity);
-    let distance = ModUtils.Getdistance2Player(monsterPos);
-    if (distance < ModManager.Settings.killAuraRadius * 100) {
+    let distance = ModUtils_1.ModUtils.Getdistance2Player(monsterPos);
+    if (distance < ModManager_1.ModManager.Settings.killAuraRadius * 100) {
       return true;
     } else return false;
   }
 
   static killAura(entity) {
-    if (!ModManager.Settings.killAuranew) return;
+    if (!ModManager_1.ModManager.Settings.killAuranew) return;
 
     if (this.isMonster(entity) && this.isIndistance(entity)) {
-      ModMethod.MonsterDrownRequest(entity.Entity);
+      ModMethod_1.ModMethod.MonsterDrownRequest(entity.Entity);
     }
   }
   static KillAnimal(entity) {
-    if (!ModManager.Settings.KillAnimal) return;
+    if (!ModManager_1.ModManager.Settings.KillAnimal) return;
 
     let blueprintType = this.GetBlueprintType2(entity);
     if (AnimalList.includes(blueprintType)) {
-      ModMethod.AnimalDieRequest(entity.Entity);
+      ModMethod_1.ModMethod.AnimalDieRequest(entity.Entity);
       // } else if (BigAnimalList.includes(blueprintType)) {
       //   ModMethod.MonsterDrownRequest(entity.Entity);
     } else if (dropanimal.includes(blueprintType)) {
-      ModMethod.AnimalDropRequest(entity.Entity);
+      ModMethod_1.ModMethod.AnimalDropRequest(entity.Entity);
     }
   }
 }

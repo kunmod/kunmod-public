@@ -7,6 +7,7 @@ async function main() {
   const Load = require("./ModMenu");
   new Load.MainMenu({
     loadFromLauncher: true,
+    isTester: false
   });
   GameProcedure_1.GameProcedure.Start(puerts_1.argv.getByName("GameInstance"));
 }

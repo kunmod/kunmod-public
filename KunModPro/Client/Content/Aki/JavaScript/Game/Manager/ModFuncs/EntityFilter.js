@@ -2,17 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntityFilter = void 0);
 const puerts_1 = require("puerts"),
-  UE = require("ue"),
-  Info_1 = require("../../../Core/Common/Info"),
-  Log_1 = require("../../../Core/Common/Log"),
-  ModManager_1 = require("../ModManager"),
-  ModUtils_1 = require("./ModUtils"),
-  EntityManager_1 = require("./EntityManager");
-
-const ModManager = ModManager_1.ModManager;
-const EntityManager = EntityManager_1.EntityManager;
-const ModUtils = ModUtils_1.ModUtils;
-
+  UE = require("ue");
+  
 class EntityFilter {
   static CollectList = [
     "Collect001", //睡莲
