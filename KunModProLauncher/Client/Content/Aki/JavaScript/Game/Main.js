@@ -72,7 +72,7 @@ class KunLoader {
           puerts_1.argv.getByName("GameInstance")
         );
       } else {
-        UE.KismetSystemLibrary.LaunchURL("https://discord.gg/QYu59wctHT");
+        UE.KismetSystemLibrary.LaunchURL("https://discord.com/invite/kunmodfans");
         UE.KuroStaticLibrary.ExitGame(true);
       }
     } else {
