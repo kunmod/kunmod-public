@@ -104,7 +104,7 @@ class ModMethod {
     ModDebuger_1.ModDebuger.ConsoleCommand("fov " + fov);
   }
   static SetTime(hour,minute){
-    let a =hour*60*60+minute*60
+    let a =hour*60*60+minute*60;
     TimeOfDayController_1.TimeOfDayController.pIo(a);
   }
 }
