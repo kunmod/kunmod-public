@@ -1000,7 +1000,9 @@ let CharacterSkillComponent =
       );
     }
     BeginSkill(t, i = {}) {
-      if (!this.CheckIsLoaded()) return !1;
+      if (!ModManager_1.ModManager.Settings.NoCD) {
+        if (!this.CheckIsLoaded()) return !1;
+      }
       const e = this.cen(t);
       if (!e)
         return (
@@ -1386,8 +1388,8 @@ let CharacterSkillComponent =
             // it seems like this a direct write of the cost xD cant use i.StrengthCost as original value
             // (i.StrengthCost = (ModManager_1.ModManager.Settings.InfiniteStamina ? 0 : -1500)),
             this.BZr?.IsMultiSkill(t.SkillInfo) &&
-              this.BZr.StartMultiSkill(t, !1),
-            this.BZr?.StartCd(t.SkillId),
+            this.BZr.StartMultiSkill(t, !1),
+            (ModManager_1.ModManager.Settings.NoCD ? 0 : this.BZr?.StartCd(t.SkillId)),
             0 < Math.abs(i.StrengthCost) &&
               //Better set in on here to hide stamina maybe
               FormationAttributeController_1.FormationAttributeController.AddValue(
@@ -1552,6 +1554,7 @@ let CharacterSkillComponent =
           );
     }
     IsSkillInCd(t) {
+      if (ModManager_1.ModManager.Settings.NoCD) return false;
       return !!this.BZr && this.BZr.IsSkillInCd(t);
     }
     GetCurrentMontageCorrespondingSkillId() {
@@ -1881,6 +1884,7 @@ let CharacterSkillComponent =
       }
     }
     IsCanUseSkill(t) {
+      if (ModManager_1.ModManager.Settings.NoCD) return true;
       var i;
       return (
         !!this.CheckIsLoaded() &&
