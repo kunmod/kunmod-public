@@ -116,14 +116,16 @@ let BaseAttributeComponent =
       let SPList = EntityFilter_1.EntityFilter.HeroEnergyFilterList;
       if (!ModManager_1.ModManager.Settings.NoCD) return original;
       switch (t) {
+
         // case b.EAttributeType_MAX:
         // case b.Proto_Atk:
         // case b.Proto_AutoAttackSpeed:
+        //   return 3*1e4;
         // case b.Proto_BrakingFrictionFactor:
         // case b.Proto_CastAttackSpeed:
         // case b.Proto_CdReduse:
         // case b.Proto_Crit:
-        // case b.Proto_CritDamage:
+        //case b.Proto_CritDamage:
         // case b.Proto_DamageChange:
         // case b.Proto_DamageChangeAuto:
         // case b.Proto_DamageChangeCast:
@@ -235,37 +237,37 @@ let BaseAttributeComponent =
         // case b.Proto_SpecialEnergy4:
           // return this.CurrentValues[b.Proto_SpecialEnergy4Max]
         // case b.Proto_SpecialEnergy4Max:
-        // case b.Proto_StatusBuildUp1:
-        // case b.Proto_StatusBuildUp1Max:
-        // case b.Proto_StatusBuildUp2:
-        // case b.Proto_StatusBuildUp2Max:
-        // case b.Proto_StatusBuildUp3:
-        // case b.Proto_StatusBuildUp3Max:
-        // case b.Proto_StatusBuildUp4:
-        // case b.Proto_StatusBuildUp4Max:
-        // case b.Proto_StatusBuildUp5:
-        // case b.Proto_StatusBuildUp5Max:
-        // case b.Proto_Strength:
-        // case b.Proto_StrengthClimb:
-        // case b.Proto_StrengthClimbJump:
-        // case b.Proto_StrengthFastClimb:
-        // case b.Proto_StrengthFastClimbCost:
-        // case b.Proto_StrengthFastSwim:
-        // case b.Proto_StrengthGliding:
-        // case b.Proto_StrengthMax:
-        // case b.Proto_StrengthPunishTime:
-        // case b.Proto_StrengthRecover:
-        // case b.Proto_StrengthRun:
-        // case b.Proto_StrengthSwim:
-        // case b.Proto_Tough:
-        // case b.Proto_ToughChange:
-        // case b.Proto_ToughMax:
-        // case b.Proto_ToughRecover:
-        // case b.Proto_ToughRecoverDelayTime:
-        // case b.Proto_ToughReduce:
-        // case b.Proto_WeakTime:
-        // case b.R4n:
-        // case b.Tkn:
+          // case b.Proto_StatusBuildUp1:
+          // case b.Proto_StatusBuildUp1Max:
+          // case b.Proto_StatusBuildUp2:
+          // case b.Proto_StatusBuildUp2Max:
+          // case b.Proto_StatusBuildUp3:
+          // case b.Proto_StatusBuildUp3Max:
+          // case b.Proto_StatusBuildUp4:
+          // case b.Proto_StatusBuildUp4Max:
+          // case b.Proto_StatusBuildUp5:
+          // case b.Proto_StatusBuildUp5Max:
+          // case b.Proto_Strength:
+          // case b.Proto_StrengthClimb:
+          // case b.Proto_StrengthClimbJump:
+          // case b.Proto_StrengthFastClimb:
+          // case b.Proto_StrengthFastClimbCost:
+          // case b.Proto_StrengthFastSwim:
+          // case b.Proto_StrengthGliding:
+          // case b.Proto_StrengthMax:
+          // case b.Proto_StrengthPunishTime:
+          // case b.Proto_StrengthRecover:
+          // case b.Proto_StrengthRun:
+          // case b.Proto_StrengthSwim:
+          // case b.Proto_Tough:
+          // case b.Proto_ToughChange:
+          // case b.Proto_ToughMax:
+          // case b.Proto_ToughRecover:
+          // case b.Proto_ToughRecoverDelayTime:
+          // case b.Proto_ToughReduce:
+          // case b.Proto_WeakTime:
+          // case b.R4n:
+          // case b.Tkn:
         default:
           return original;
       }

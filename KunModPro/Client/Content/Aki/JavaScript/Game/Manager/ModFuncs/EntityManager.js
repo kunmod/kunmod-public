@@ -36,14 +36,14 @@ class EntityManager {
 
   static GetEntityType(entity) {
     let type = entity.Entity.GetComponent(0).GetEntityType();
-    if (type == Protocol_1.Aki.Protocol.EEntityType.Player) return "Player";
-    if (type == Protocol_1.Aki.Protocol.EEntityType.Npc) return "Npc";
-    if (type == Protocol_1.Aki.Protocol.EEntityType.Monster) return "Monster";
-    if (type == Protocol_1.Aki.Protocol.EEntityType.SceneItem)
+    if (type == Protocol_1.Aki.Protocol.HBs.Proto_Player) return "Player";
+    if (type == Protocol_1.Aki.Protocol.HBs.Proto_Npc) return "Npc";
+    if (type == Protocol_1.Aki.Protocol.HBs.Proto_Monster) return "Monster";
+    if (type == Protocol_1.Aki.Protocol.HBs.Proto_SceneItem)
       return "SceneItem";
-    if (type == Protocol_1.Aki.Protocol.EEntityType.Vision) return "Vision";
-    if (type == Protocol_1.Aki.Protocol.EEntityType.Animal) return "Animal";
-    if (type == Protocol_1.Aki.Protocol.EEntityType.Custom) return "Custom";
+    if (type == Protocol_1.Aki.Protocol.HBs.Proto_Vision) return "Vision";
+    if (type == Protocol_1.Aki.Protocol.HBs.Proto_Animal) return "Animal";
+    if (type == Protocol_1.Aki.Protocol.HBs.Proto_Custom) return "Custom";
   }
 
   static GetPosition(Entity) {
