@@ -18,10 +18,13 @@ const puerts_1 = require("puerts"),
 
 class ModUtils {
   static isInGame() {
-    let state = ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
-      LoginDefine_1.ELoginStatus.EnterGameRet
-    );
-    return state;
+    if (ModelManager_1.ModelManager.LoginModel?.IsLoginStatus) {
+      let state = ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
+        LoginDefine_1.ELoginStatus.EnterGameRet
+      );
+      return state;
+    }
+    return false;
   }
   //Kuro SingleInputBox  库洛单输入框
   static KuroSingleInputBox(options) {
