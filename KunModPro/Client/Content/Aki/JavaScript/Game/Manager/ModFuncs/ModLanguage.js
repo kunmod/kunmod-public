@@ -975,15 +975,19 @@ class ModLanguage {
     }
   ];
 
-  static ModTr = (string) => {
-    const Find = ModLanguage.translate.find(
-      (translate) => translate.Text == string
-    );
+  /**
+   * Translate a string to the current language
+   * @param {string} string The string to translate
+   * @returns {string} The translated string
+  */
+  static ModTr(string) {
+    const Find = ModLanguage.translate.reduce((acc, cur) => cur.Text === string ? cur : acc, {});
+
     if (Find) {
       return Find[this.GetCurrLang()] || Find.Text;
-    } else {
-      return string; // return original string if no translation found
     }
+
+    return string; // return original string if no translation found
   };
 }
 
