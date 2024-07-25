@@ -198,6 +198,15 @@ class ModManager {
       }
     }
 
+    if (this.Settings.NoClip) {
+      if (this.IsMyKeyDown("x")) {
+        NoClip_1.NoClip.SetPlayerPos("UP");
+      }
+      if (this.IsMyKeyDown("z")) {
+        NoClip_1.NoClip.SetPlayerPos("DOWN");
+      }
+    }
+
     if (this.Settings.CustomTp) {
       ModCustomTp_1.ModCustomTp.listenAuto();
       ModCustomTp_1.ModCustomTp.listenSelect();

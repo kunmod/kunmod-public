@@ -22,5 +22,14 @@ class NoClip extends EntityManager_1.EntityManager {
     if (bool) Movement.MovementMode = 5;
     else Movement.MovementMode = 1;
   }
+  static SetPlayerPos(event) {
+    const playerentity = this.GetPlayerEntity();
+    const ActorComp = playerentity.GetComponent(3);
+    const playerpos = this.GetPlayerPos();
+    if (event == "UP") playerpos.Z += 10;
+    else if (event == "DOWN") playerpos.Z -= 10;
+    else return;
+    ActorComp.ActorInternal.K2_SetActorLocation(playerpos);
+  }
 }
 exports.NoClip = NoClip;
