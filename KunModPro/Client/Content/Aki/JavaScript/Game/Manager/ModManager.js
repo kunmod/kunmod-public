@@ -340,6 +340,23 @@ class ModManager {
     }
     return false;
   }
+
+  static listenCombineKey(holdKey, key) {
+    var IsInputKeyDown_1 = InputSettings_1.InputSettings.IsInputKeyDown(key);
+    var IsInputKeyDown_LeftControl = InputSettings_1.InputSettings.IsInputKeyDown(holdKey);
+    if (IsInputKeyDown_LeftControl && IsInputKeyDown_1 && !this.keyState) {
+      IsInputKeyDown_1 = false;
+      IsInputKeyDown_LeftControl = false;
+      this.keyState = true;
+      return true;
+    }
+    if (IsInputKeyDown_1 === false) {
+      this.keyState = false;
+      return false;
+    }
+    return false;
+  }
+  
   static listenKey(desc, key) {
     var press = this.IsMyKeyUp(key);
     if (press) {
