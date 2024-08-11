@@ -41,6 +41,8 @@ class ModCustomTp {
     CurreFileNum: 0,
     AutoMode: false,
     Delay: 15000,
+    Loop: 1,
+    CurreLoop: 0,
   };
   static ShowCtpState() {
     this.GetTpInfo();
@@ -71,6 +73,8 @@ class ModCustomTp {
       (this.Settings.AutoMode ? ModTr("TEXT_ON") : ModTr("TEXT_OFF")) +
       ModTr("TEXT_SET_DELAY_LEFT") +
       (this.Settings.Delay / 1000).toString() +
+      ModTr("TEXT_SELECT_LOOP") +
+      (this.Settings.Loop).toString() +
       ModTr("TEXT_SELECT_RIGHT");
 
     ModManager_1.ModManager.ShowConfirmBox(title, readme, 50);
@@ -266,6 +270,20 @@ class ModCustomTp {
     });
   }
 
+  static setLoop() {
+    ModUtils_1.ModUtils.KuroSingleInputBox({
+      title: ModTr("TEXT_CUSTOM_TP_CURR_LOOP_SELECT"),
+      customFunc: async (string) => {
+        var s = ModUtils_1.ModUtils.StringToInt(string);
+        if (s !== "error") this.Settings.Loop = s;
+      },
+      inputText: (this.Settings.Loop).toString(),
+      defaultText: ModTr("TEXT_ENTER_LOOP_NUM"),
+      isCheckNone: true,
+      needFunctionButton: false,
+    });
+  }
+
   static async timer() {
     this.isTimerRunning = true;
     while (this.Settings.AutoMode) {
@@ -290,7 +308,18 @@ class ModCustomTp {
         this.AddPos();
         this.GoTp();
         if (this.Settings.TotalNum == this.Settings.CurreNum) {
-          this.Settings.AutoMode = false;
+          if (this.Settings.CurreLoop < this.Settings.Loop) {
+            this.Settings.CurreLoop++;
+          }
+          if (this.Settings.Loop == this.Settings.CurreLoop) {
+            this.Settings.AutoMode = false;
+            ModManager_1.ModManager.ShowTip("STOP LOOP");
+            this.Settings.CurreLoop = 0;
+            this.Settings.CurreNum = -1;
+            continue;
+          }
+          this.Settings.CurreNum = -1;
+          ModManager_1.ModManager.ShowTip("LOOPING " + (this.Settings.CurreLoop).toString());
         }
       }
     }
@@ -315,7 +344,11 @@ class ModCustomTp {
       }
     }
   }
-
+  static listenLoop() {
+    if (ModManager_1.ModManager.listenCombineKey("LeftAlt", "Z")) {
+      this.setLoop();
+    }
+  }
   static listenDelay() {
     if (ModManager_1.ModManager.listenKey("SetDelay", "Left")) {
       this.setDelay();

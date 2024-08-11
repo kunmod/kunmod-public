@@ -211,6 +211,7 @@ class ModManager {
       ModCustomTp_1.ModCustomTp.listenAuto();
       ModCustomTp_1.ModCustomTp.listenSelect();
       ModCustomTp_1.ModCustomTp.listenDelay();
+      ModCustomTp_1.ModCustomTp.listenLoop();
 
       if (this.listenKey("ShowTpState", "Delete")) {
         ModCustomTp_1.ModCustomTp.ShowCtpState();
@@ -356,7 +357,7 @@ class ModManager {
     }
     return false;
   }
-  
+
   static listenKey(desc, key) {
     var press = this.IsMyKeyUp(key);
     if (press) {
